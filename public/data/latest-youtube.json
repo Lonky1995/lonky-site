@@ -1,0 +1,47 @@
+{
+  "date": "2026-02-16",
+  "count": 5,
+  "items": [
+    {
+      "id": "YFjfBk8HI5o",
+      "title": "OpenClaw: The Viral AI Agent that Broke the Internet - Peter Steinberger | Lex Fridman Podcast #491",
+      "channel": "Lex Fridman",
+      "views": 465000,
+      "summary": "AI代理（OpenClaw）正走向病毒式传播，其成功部分源于优化用户体验的哲学，而不仅是技术本身",
+      "url": "https://youtube.com/watch?v=YFjfBk8HI5o"
+    },
+    {
+      "id": "DGWtSzqCpog",
+      "title": "The $285 Billion Crash Wall Street Won't Explain Honestly",
+      "channel": "Wall Street Insights",
+      "views": 290000,
+      "summary": "企业盲目AI化转型存在巨大风险，强调人机协同的必要性",
+      "url": "https://youtube.com/watch?v=DGWtSzqCpog"
+    },
+    {
+      "id": "JKk77rzOL34",
+      "title": "Claude Opus 4.6: The Biggest AI Jump I've Covered--It's Not Close",
+      "channel": "AI Reviewer",
+      "views": 279000,
+      "summary": "标题党——评论区反映实际体验与宣传严重不符，揭示模型能力局限及高昂使用成本",
+      "url": "https://youtube.com/watch?v=JKk77rzOL34"
+    },
+    {
+      "id": "Sb1RMuwbzhE",
+      "title": "AI Isn't The Future. It's Medieval Alchemy.",
+      "channel": "Tech Critic",
+      "views": 199000,
+      "summary": "从历史哲学角度批判当前AI热潮，认为其充满炒作与盲目性",
+      "url": "https://youtube.com/watch?v=Sb1RMuwbzhE"
+    },
+    {
+      "id": "mb5Lx4auBKI",
+      "title": "The new Claude just generated the worst C compiler ever...",
+      "channel": "Code Review",
+      "views": 127000,
+      "summary": "通过具体案例展示当前AI编码在解决复杂系统性任务上的失败，戳破替代高级工程师的泡沫",
+      "url": "https://youtube.com/watch?v=mb5Lx4auBKI"
+    }
+  ],
+  "generated_at": "2026-02-16T10:00:00"
+}
