@@ -5,6 +5,7 @@ description: "从复杂系统论、商业模式、组织结构等角度，分析
 date: "2018-10-15"
 category: "Crypto"
 tags: ["区块链", "行业分析", "复杂系统"]
+coverImage: "https://images.unsplash.com/photo-1639322537231-2f206e06af84?w=800&h=800&fit=crop&q=80"
 published: true
 ---
 

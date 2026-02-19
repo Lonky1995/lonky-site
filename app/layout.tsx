@@ -1,8 +1,12 @@
 import type { Metadata } from "next";
+import { cookies } from "next/headers";
 import { Geist, Geist_Mono } from "next/font/google";
 import { Navbar } from "@/components/layout/Navbar";
-import { Footer } from "@/components/layout/Footer";
+import { StarField } from "@/components/ui/StarField";
+import { LocaleProvider } from "@/components/locale-provider";
 import { siteConfig } from "@/data/site-config";
+import { defaultLocale, type Locale } from "@/i18n/config";
+import { getDictionary } from "@/i18n";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -35,19 +39,27 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const cookieStore = await cookies();
+  const locale =
+    (cookieStore.get("locale")?.value as Locale) || defaultLocale;
+  const dict = getDictionary(locale);
+
   return (
-    <html lang="en" className="dark">
+    <html lang={locale} className="dark">
       <body
         className={`${geistSans.variable} ${geistMono.variable} min-h-screen bg-background font-sans text-foreground antialiased`}
       >
-        <Navbar />
-        <main className="pt-16">{children}</main>
-        <Footer />
+        <LocaleProvider locale={locale} dict={dict}>
+          <div className="nebula-bg" aria-hidden="true" />
+          <StarField />
+          <Navbar />
+          <main className="relative z-10 pt-16">{children}</main>
+        </LocaleProvider>
       </body>
     </html>
   );

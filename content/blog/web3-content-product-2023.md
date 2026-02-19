@@ -5,6 +5,7 @@ description: "一万字复盘：从 0 到 1 万 DAU，Web3 内容平台的产品
 date: "2024-01-15"
 category: "产品"
 tags: ["产品复盘", "Web3", "内容产品", "创业"]
+coverImage: "https://plus.unsplash.com/premium_photo-1681399975135-252eab5fd2db?w=800&h=800&fit=crop&q=80"
 published: true
 ---
 

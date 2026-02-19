@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
+import { BackLink } from "./back-link";
 
-// Try to get posts, with fallback
 async function getPosts() {
   try {
     const { posts } = await import("@/.velite");
@@ -69,21 +69,11 @@ export default async function BlogPostPage({
           </span>
           <span className="text-sm text-muted">{date}</span>
         </div>
-        <h1 className="mb-4 text-3xl font-bold md:text-4xl">{post.title}</h1>
+        <h1 className="mb-4 text-3xl font-bold md:text-4xl">
+          {post.title}
+        </h1>
         {post.description && (
           <p className="text-lg text-muted">{post.description}</p>
-        )}
-        {post.tags.length > 0 && (
-          <div className="mt-4 flex flex-wrap gap-2">
-            {post.tags.map((tag: string) => (
-              <span
-                key={tag}
-                className="rounded-full border border-border px-2.5 py-0.5 text-xs text-muted"
-              >
-                {tag}
-              </span>
-            ))}
-          </div>
         )}
       </div>
 
@@ -95,12 +85,7 @@ export default async function BlogPostPage({
 
       {/* Back */}
       <div className="mt-16 border-t border-border pt-8">
-        <a
-          href="/blog"
-          className="text-sm text-muted transition-colors hover:text-foreground"
-        >
-          ← Back to all posts
-        </a>
+        <BackLink />
       </div>
     </article>
   );

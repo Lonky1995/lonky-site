@@ -5,6 +5,7 @@ description: "链上数据怎么看？从宏观趋势感知到具体工具推荐
 date: "2024-03-15"
 category: "Crypto"
 tags: ["链上分析", "DeFi", "加密货币", "工具"]
+coverImage: "https://plus.unsplash.com/premium_photo-1764510469133-dde92a0c9d1f?w=800&h=800&fit=crop&q=80"
 published: true
 ---
 

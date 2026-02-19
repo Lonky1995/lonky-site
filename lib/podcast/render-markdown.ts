@@ -1,0 +1,137 @@
+/**
+ * Lightweight client-side Markdown → HTML converter.
+ * Handles: headings, bold, italic, blockquotes, lists, checkboxes, code, hr, links.
+ */
+export function renderMarkdown(md: string): string {
+  const lines = md.split("\n");
+  const html: string[] = [];
+  let inList = false;
+  let inBlockquote = false;
+
+  for (let i = 0; i < lines.length; i++) {
+    let line = lines[i];
+
+    // Horizontal rule
+    if (/^---+\s*$/.test(line)) {
+      closeList();
+      closeBlockquote();
+      html.push('<hr class="my-4 border-border" />');
+      continue;
+    }
+
+    // Headings
+    const headingMatch = line.match(/^(#{1,4})\s+(.+)$/);
+    if (headingMatch) {
+      closeList();
+      closeBlockquote();
+      const level = headingMatch[1].length;
+      const text = inline(headingMatch[2]);
+      const sizes: Record<number, string> = {
+        1: "text-xl font-bold mt-6 mb-3",
+        2: "text-lg font-bold mt-5 mb-2",
+        3: "text-base font-semibold mt-4 mb-2",
+        4: "text-sm font-semibold mt-3 mb-1",
+      };
+      html.push(`<h${level} class="${sizes[level] || sizes[3]}">${text}</h${level}>`);
+      continue;
+    }
+
+    // Blockquote
+    if (line.startsWith("> ")) {
+      closeList();
+      if (!inBlockquote) {
+        inBlockquote = true;
+        html.push('<blockquote class="border-l-2 border-accent/50 pl-3 my-3 text-muted italic">');
+      }
+      html.push(`<p>${inline(line.slice(2))}</p>`);
+      continue;
+    } else if (inBlockquote) {
+      closeBlockquote();
+    }
+
+    // Checkbox list
+    const checkMatch = line.match(/^[-*]\s+\[([x ])\]\s+(.+)$/);
+    if (checkMatch) {
+      if (!inList) {
+        inList = true;
+        html.push('<ul class="space-y-1 my-2">');
+      }
+      const checked = checkMatch[1] === "x";
+      const text = inline(checkMatch[2]);
+      html.push(
+        `<li class="flex items-start gap-2"><span class="mt-0.5 flex-shrink-0">${
+          checked ? "☑" : "☐"
+        }</span><span>${text}</span></li>`
+      );
+      continue;
+    }
+
+    // Unordered list
+    const ulMatch = line.match(/^[-*]\s+(.+)$/);
+    if (ulMatch) {
+      if (!inList) {
+        inList = true;
+        html.push('<ul class="space-y-1 my-2 list-disc list-inside">');
+      }
+      html.push(`<li>${inline(ulMatch[1])}</li>`);
+      continue;
+    }
+
+    // Ordered list
+    const olMatch = line.match(/^\d+\.\s+(.+)$/);
+    if (olMatch) {
+      if (!inList) {
+        inList = true;
+        html.push('<ol class="space-y-1 my-2 list-decimal list-inside">');
+      }
+      html.push(`<li>${inline(olMatch[1])}</li>`);
+      continue;
+    }
+
+    // Close list if we're no longer in one
+    if (inList) closeList();
+
+    // Empty line
+    if (line.trim() === "") {
+      html.push("<br />");
+      continue;
+    }
+
+    // Paragraph
+    html.push(`<p class="my-1">${inline(line)}</p>`);
+  }
+
+  closeList();
+  closeBlockquote();
+
+  return html.join("\n");
+
+  function closeList() {
+    if (inList) {
+      // Check the last opening tag to close properly
+      const lastOpen = html.findLast((h) => h.startsWith("<ul") || h.startsWith("<ol"));
+      html.push(lastOpen?.startsWith("<ol") ? "</ol>" : "</ul>");
+      inList = false;
+    }
+  }
+
+  function closeBlockquote() {
+    if (inBlockquote) {
+      html.push("</blockquote>");
+      inBlockquote = false;
+    }
+  }
+}
+
+/** Inline formatting: bold, italic, code, links */
+function inline(text: string): string {
+  return text
+    // Code
+    .replace(/`([^`]+)`/g, '<code class="rounded bg-border/50 px-1 py-0.5 text-xs font-mono">$1</code>')
+    // Bold
+    .replace(/\*\*([^*]+)\*\*/g, "<strong>$1</strong>")
+    // Italic
+    .replace(/(?<!\*)\*([^*]+)\*(?!\*)/g, "<em>$1</em>")
+    // Links
+    .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" class="text-accent hover:underline" target="_blank" rel="noopener">$1</a>');
+}

@@ -3,8 +3,8 @@ title: "Vol. 161 从开发自己的🦞OpenClaw聊起"
 slug: "vol-161-openclaw"
 description: "听《枫言枫语》上小宇宙。 听见科技与人文的声音。由开发者 @枫影JustinYan 和 设计师 @自力hzlzh 主持的播客节目。"
 date: "2026-02-19"
-category: "播客"
-tags: ["播客"]
+category: "播客笔记"
+tags: ["播客笔记"]
 published: true
 sourceUrl: "https://www.xiaoyuzhoufm.com/episode/698c9a2d66e2c30377102edf"
 platform: "xiaoyuzhou"

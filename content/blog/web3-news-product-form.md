@@ -5,6 +5,7 @@ description: "当传统项目主页无法满足千人千面的交易决策需求
 date: "2023-09-20"
 category: "产品"
 tags: ["产品思考", "Web3", "AI", "内容分发"]
+coverImage: "https://plus.unsplash.com/premium_photo-1754723960374-68c1bfefb7e7?w=800&h=800&fit=crop&q=80"
 published: true
 ---
 

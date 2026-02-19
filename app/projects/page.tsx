@@ -4,8 +4,10 @@ import { useState } from "react";
 import { projects, categories, type Category } from "@/data/projects";
 import { ProjectCard } from "@/components/projects/ProjectCard";
 import { Section } from "@/components/ui/Section";
+import { useLocale } from "@/components/locale-provider";
 
 export default function ProjectsPage() {
+  const { dict } = useLocale();
   const [active, setActive] = useState<Category>("All");
 
   const filtered =
@@ -15,8 +17,8 @@ export default function ProjectsPage() {
 
   return (
     <Section
-      title="Projects"
-      subtitle="Things I've built — AI tools, crypto platforms, and developer utilities."
+      title={dict.projects.pageTitle}
+      subtitle={dict.projects.pageSubtitle}
     >
       {/* Filter */}
       <div className="mb-8 flex flex-wrap gap-2">
@@ -38,7 +40,7 @@ export default function ProjectsPage() {
       {/* Grid */}
       <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
         {filtered.map((project, i) => (
-          <ProjectCard key={project.title} project={project} index={i} />
+          <ProjectCard key={project.id} project={project} index={i} />
         ))}
       </div>
     </Section>

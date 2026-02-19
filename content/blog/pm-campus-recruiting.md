@@ -5,6 +5,7 @@ description: "两个月秋招一波三折：面试策略调整、心态变化、
 date: "2019-12-01"
 category: "产品"
 tags: ["求职", "产品经理", "面试", "校招"]
+coverImage: "https://images.unsplash.com/photo-1596443019365-eb263a588404?w=800&h=800&fit=crop&q=80"
 published: true
 ---
 

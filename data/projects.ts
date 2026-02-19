@@ -1,3 +1,5 @@
+import type { L } from "@/i18n/config";
+
 export type OutputItem = {
   title: string;
   meta: string;
@@ -12,8 +14,9 @@ export type LatestOutput = {
 };
 
 export type Project = {
-  title: string;
-  description: string;
+  id: string;
+  title: L;
+  description: L;
   longDescription?: string;
   category: "AI" | "Crypto" | "Tool";
   techStack: string[];
@@ -27,9 +30,15 @@ export type Project = {
 
 export const projects: Project[] = [
   {
-    title: "Crypto 市场简报",
-    description:
-      "每日自动聚合链上数据、衍生品指标和新闻面，用 AI 生成结构化市场简报并推送。",
+    id: "crypto-briefing",
+    title: {
+      zh: "Crypto 市场简报",
+      en: "Crypto Market Briefing",
+    },
+    description: {
+      zh: "每日自动聚合链上数据、衍生品指标和新闻面，用 AI 生成结构化市场简报并推送。",
+      en: "Daily automated aggregation of on-chain data, derivatives metrics and news, with AI-generated structured market briefings.",
+    },
     category: "Crypto",
     techStack: ["Python", "DeepSeek", "CoinGlass", "Telegram Bot"],
     featured: true,
@@ -60,9 +69,15 @@ export const projects: Project[] = [
     },
   },
   {
-    title: "YouTube AI 总结",
-    description:
-      "自动追踪近期 AI 热门视频，提取关键内容并生成结构化摘要。",
+    id: "youtube-ai",
+    title: {
+      zh: "YouTube AI 热门视频总结",
+      en: "YouTube AI Trending Summary",
+    },
+    description: {
+      zh: "自动追踪近期 AI 热门视频，提取关键内容并生成结构化摘要。",
+      en: "Automatically tracks trending AI videos, extracts key content and generates structured summaries.",
+    },
     category: "AI",
     techStack: ["Python", "Whisper", "DeepSeek", "YouTube API"],
     featured: true,
@@ -71,12 +86,14 @@ export const projects: Project[] = [
       date: "2026-02-16",
       items: [
         {
-          title: "OpenClaw: The Viral AI Agent — Lex Fridman Podcast #491",
+          title:
+            "OpenClaw: The Viral AI Agent — Lex Fridman Podcast #491",
           meta: "46.5万 views · Lex Fridman",
           url: "https://youtube.com/watch?v=YFjfBk8HI5o",
         },
         {
-          title: "The $285 Billion Crash Wall Street Won't Explain Honestly",
+          title:
+            "The $285 Billion Crash Wall Street Won't Explain Honestly",
           meta: "29.0万 views · Wall Street Insights",
           url: "https://youtube.com/watch?v=DGWtSzqCpog",
         },
@@ -89,14 +106,33 @@ export const projects: Project[] = [
     },
   },
   {
-    title: "Alphify",
-    description:
-      "AI 驱动的加密货币交易 Copilot，实时分析市场数据，辅助制定和执行交易策略。",
+    id: "podcast-notes",
+    title: {
+      zh: "播客笔记工具",
+      en: "Podcast Notes Tool",
+    },
+    description: {
+      zh: "贴一个播客链接，自动转录 → AI 生成结构化笔记 → 深入讨论 → 一键生成播客笔记。",
+      en: "Paste a podcast URL, auto-transcribe → AI-generated structured notes → deep discussion → one-click generate podcast notes.",
+    },
     category: "AI",
-    techStack: ["Next.js", "TypeScript", "LangChain", "OpenAI", "Firebase"],
+    techStack: ["Next.js", "AssemblyAI", "DeepSeek", "Vercel AI SDK"],
+    link: "/podcast-notes",
     featured: true,
-    status: "in-progress",
+    status: "live",
   },
+  // {
+  //   id: "alphify",
+  //   title: { zh: "Alphify", en: "Alphify" },
+  //   description: {
+  //     zh: "AI 驱动的加密货币交易 Copilot，实时分析市场数据，辅助制定和执行交易策略。",
+  //     en: "AI-powered crypto trading Copilot for real-time market analysis and strategy execution.",
+  //   },
+  //   category: "AI",
+  //   techStack: ["Next.js", "TypeScript", "LangChain", "OpenAI", "Firebase"],
+  //   featured: true,
+  //   status: "in-progress",
+  // },
 ];
 
 export const categories = ["All", "AI", "Crypto"] as const;

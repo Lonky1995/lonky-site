@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { Section } from "@/components/ui/Section";
 import { AnimatedCard } from "@/components/ui/AnimatedCard";
+import { useLocale } from "@/components/locale-provider";
 
 type BlogPost = {
   slug: string;
@@ -13,14 +14,16 @@ type BlogPost = {
 };
 
 export function BlogPreview({ posts }: { posts: BlogPost[] }) {
+  const { dict } = useLocale();
+
   if (posts.length === 0) {
     return (
       <Section
         id="blog"
-        title="Latest Writing"
-        subtitle="Thoughts on product, technology, and building things."
+        title={dict.blog.title}
+        subtitle={dict.blog.subtitle}
       >
-        <p className="text-muted">Coming soon...</p>
+        <p className="text-muted">{dict.blog.noPosts}</p>
       </Section>
     );
   }
@@ -28,16 +31,13 @@ export function BlogPreview({ posts }: { posts: BlogPost[] }) {
   return (
     <Section
       id="blog"
-      title="Latest Writing"
-      subtitle="Thoughts on product, technology, and building things."
+      title={dict.blog.title}
+      subtitle={dict.blog.subtitle}
     >
       <div className="grid gap-6 md:grid-cols-3">
         {posts.slice(0, 3).map((post, i) => (
-          <Link key={post.slug} href={`/blog/${post.slug}`}>
-            <AnimatedCard delay={i * 0.1}>
-              <span className="mb-2 inline-block text-xs text-accent">
-                {post.category}
-              </span>
+          <Link key={post.slug} href={`/blog/${post.slug}`} className="h-full">
+            <AnimatedCard delay={i * 0.1} className="h-full">
               <h3 className="mb-2 text-lg font-semibold">{post.title}</h3>
               <p className="text-sm text-muted line-clamp-2">
                 {post.description}
@@ -52,7 +52,7 @@ export function BlogPreview({ posts }: { posts: BlogPost[] }) {
           href="/blog"
           className="text-sm text-muted transition-colors hover:text-foreground"
         >
-          Read all posts →
+          {dict.blog.readAll}
         </Link>
       </div>
     </Section>

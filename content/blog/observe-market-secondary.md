@@ -5,6 +5,7 @@ description: "一套系统性的市场观察方法：从量价分析到足迹图
 date: "2024-03-10"
 category: "Crypto"
 tags: ["交易", "市场分析", "加密货币", "方法论"]
+coverImage: "https://plus.unsplash.com/premium_photo-1681487769650-a0c3fbaed85a?w=800&h=800&fit=crop&q=80"
 published: true
 ---
 

@@ -5,10 +5,19 @@ import { usePathname } from "next/navigation";
 import { motion } from "framer-motion";
 import { useState } from "react";
 import { siteConfig } from "@/data/site-config";
+import { useLocale } from "@/components/locale-provider";
+
+const navKeys = ["home", "projects", "blog", "about"] as const;
 
 export function Navbar() {
   const pathname = usePathname();
   const [mobileOpen, setMobileOpen] = useState(false);
+  const { dict, setLocale, locale } = useLocale();
+
+  const links = siteConfig.navLinks.map((link, i) => ({
+    ...link,
+    label: dict.nav[navKeys[i]],
+  }));
 
   return (
     <motion.nav
@@ -24,7 +33,7 @@ export function Navbar() {
 
         {/* Desktop nav */}
         <div className="hidden items-center gap-8 md:flex">
-          {siteConfig.navLinks.map((link) => (
+          {links.map((link) => (
             <Link
               key={link.href}
               href={link.href}
@@ -41,24 +50,38 @@ export function Navbar() {
               )}
             </Link>
           ))}
+          <button
+            onClick={() => setLocale(locale === "zh" ? "en" : "zh")}
+            className="rounded-md border border-border px-2.5 py-1 text-xs text-muted transition-colors hover:border-accent hover:text-foreground"
+          >
+            {dict.common.langSwitch}
+          </button>
         </div>
 
         {/* Mobile toggle */}
-        <button
-          onClick={() => setMobileOpen(!mobileOpen)}
-          className="flex flex-col gap-1.5 md:hidden"
-          aria-label="Toggle menu"
-        >
-          <span
-            className={`h-0.5 w-5 bg-foreground transition-transform ${mobileOpen ? "translate-y-2 rotate-45" : ""}`}
-          />
-          <span
-            className={`h-0.5 w-5 bg-foreground transition-opacity ${mobileOpen ? "opacity-0" : ""}`}
-          />
-          <span
-            className={`h-0.5 w-5 bg-foreground transition-transform ${mobileOpen ? "-translate-y-2 -rotate-45" : ""}`}
-          />
-        </button>
+        <div className="flex items-center gap-3 md:hidden">
+          <button
+            onClick={() => setLocale(locale === "zh" ? "en" : "zh")}
+            className="rounded-md border border-border px-2.5 py-1 text-xs text-muted"
+          >
+            {dict.common.langSwitch}
+          </button>
+          <button
+            onClick={() => setMobileOpen(!mobileOpen)}
+            className="flex flex-col gap-1.5"
+            aria-label="Toggle menu"
+          >
+            <span
+              className={`h-0.5 w-5 bg-foreground transition-transform ${mobileOpen ? "translate-y-2 rotate-45" : ""}`}
+            />
+            <span
+              className={`h-0.5 w-5 bg-foreground transition-opacity ${mobileOpen ? "opacity-0" : ""}`}
+            />
+            <span
+              className={`h-0.5 w-5 bg-foreground transition-transform ${mobileOpen ? "-translate-y-2 -rotate-45" : ""}`}
+            />
+          </button>
+        </div>
       </div>
 
       {/* Mobile menu */}
@@ -68,7 +91,7 @@ export function Navbar() {
           animate={{ opacity: 1, y: 0 }}
           className="border-b border-border bg-background px-6 py-4 md:hidden"
         >
-          {siteConfig.navLinks.map((link) => (
+          {links.map((link) => (
             <Link
               key={link.href}
               href={link.href}

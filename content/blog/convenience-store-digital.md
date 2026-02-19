@@ -5,6 +5,7 @@ description: "从「为什么北京便利店特别少」切入，用数据和实
 date: "2020-02-20"
 category: "产品"
 tags: ["商业分析", "数字化", "产品方案"]
+coverImage: "https://images.unsplash.com/photo-1758788701516-9626fb4f3292?w=800&h=800&fit=crop&q=80"
 published: true
 ---
 

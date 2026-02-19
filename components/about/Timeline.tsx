@@ -2,8 +2,11 @@
 
 import { motion } from "framer-motion";
 import type { Experience } from "@/data/experience";
+import { useLocale } from "@/components/locale-provider";
 
 export function Timeline({ items }: { items: Experience[] }) {
+  const { locale } = useLocale();
+
   return (
     <div className="relative border-l border-border pl-8">
       {items.map((item, i) => (
@@ -19,10 +22,10 @@ export function Timeline({ items }: { items: Experience[] }) {
           <div className="absolute -left-[2.55rem] top-1.5 h-3 w-3 rounded-full border-2 border-accent bg-background" />
 
           <span className="mb-1 inline-block text-sm font-medium text-accent">
-            {item.period}
+            {item.period[locale]}
           </span>
           <h3 className="mb-1 text-lg font-bold">
-            {item.title}
+            {item.title[locale]}
             {item.company && (
               <span className="font-normal text-muted">
                 {" "}
@@ -31,7 +34,7 @@ export function Timeline({ items }: { items: Experience[] }) {
             )}
           </h3>
           <p className="mb-3 text-sm leading-relaxed text-muted">
-            {item.description}
+            {item.description[locale]}
           </p>
           <div className="flex flex-wrap gap-2">
             {item.tags.map((tag) => (

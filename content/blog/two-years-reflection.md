@@ -3,8 +3,9 @@ title: "聊聊我这两年的经历和感受"
 slug: "two-years-reflection"
 description: "从象牙塔走入真实世界：两年职场经历中关于人、事、选择的思考。"
 date: "2024-08-01"
-category: "随笔"
+category: "随想"
 tags: ["职场", "成长", "反思"]
+coverImage: "https://images.unsplash.com/photo-1510596713412-56030de252c8?w=800&h=800&fit=crop&q=80"
 published: true
 ---
 

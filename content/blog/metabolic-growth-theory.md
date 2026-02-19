@@ -5,6 +5,7 @@ description: "陈平的非均衡经济学挑战亚当·斯密：为什么资本�
 date: "2019-06-15"
 category: "读书"
 tags: ["经济学", "书评", "复杂系统"]
+coverImage: "https://images.unsplash.com/photo-1612969307974-ee4e57d2d5a7?w=800&h=800&fit=crop&q=80"
 published: true
 ---
 

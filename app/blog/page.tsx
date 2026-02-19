@@ -4,30 +4,32 @@ import { useState, useEffect } from "react";
 import { BlogCard } from "@/components/blog/BlogCard";
 import { BlogFilter } from "@/components/blog/BlogFilter";
 import { Section } from "@/components/ui/Section";
+import { useLocale } from "@/components/locale-provider";
+import Link from "next/link";
 
-type BlogPost = {
+type ListItem = {
   slug: string;
   title: string;
   description: string;
   date: string;
   category: string;
+  type: "blog" | "podcast";
+  coverImage?: string;
+  platform?: string;
+  duration?: number;
 };
 
 export default function BlogPage() {
-  const [posts, setPosts] = useState<BlogPost[]>([]);
+  const { locale, dict } = useLocale();
+  const [items, setItems] = useState<ListItem[]>([]);
   const [categories, setCategories] = useState<string[]>(["All"]);
   const [active, setActive] = useState("All");
 
   useEffect(() => {
-    // Dynamic import velite data
     import("@/.velite")
-      .then(({ posts: allPosts }) => {
-        const published = allPosts
+      .then((mod) => {
+        const blogItems: ListItem[] = (mod.posts || [])
           .filter((p: { published: boolean }) => p.published)
-          .sort(
-            (a: { date: string }, b: { date: string }) =>
-              new Date(b.date).getTime() - new Date(a.date).getTime()
-          )
           .map(
             (p: {
               slug: string;
@@ -35,50 +37,94 @@ export default function BlogPage() {
               description: string;
               date: string;
               category: string;
+              coverImage?: string;
             }) => ({
               slug: p.slug,
               title: p.title,
               description: p.description || "",
-              date: new Date(p.date).toLocaleDateString("en-US", {
-                year: "numeric",
-                month: "short",
-                day: "numeric",
-              }),
+              date: p.date,
               category: p.category || "Uncategorized",
+              type: "blog" as const,
+              coverImage: p.coverImage,
             })
           );
-        setPosts(published);
+
+        const podcastItems: ListItem[] = (mod.podcastNotes || [])
+          .filter((n: { published: boolean }) => n.published)
+          .map(
+            (n: {
+              slug: string;
+              title: string;
+              description: string;
+              date: string;
+              category: string;
+              coverImage?: string;
+              platform?: string;
+              duration?: number;
+            }) => ({
+              slug: n.slug,
+              title: n.title,
+              description: n.description || "",
+              date: n.date,
+              category: n.category || "播客笔记",
+              type: "podcast" as const,
+              coverImage: n.coverImage,
+              platform: n.platform,
+              duration: n.duration,
+            })
+          );
+
+        const all = [...blogItems, ...podcastItems]
+          .sort(
+            (a, b) =>
+              new Date(b.date).getTime() - new Date(a.date).getTime()
+          )
+          .map((item) => ({
+            ...item,
+            date: new Date(item.date).toLocaleDateString(
+              locale === "zh" ? "zh-CN" : "en-US",
+              { year: "numeric", month: "short", day: "numeric" }
+            ),
+          }));
+
+        setItems(all);
         const cats = [
           "All",
-          ...new Set(published.map((p: BlogPost) => p.category)),
+          ...new Set(all.map((item) => item.category)),
         ] as string[];
         setCategories(cats);
       })
-      .catch(() => {
-        // No posts yet
-      });
-  }, []);
+      .catch(() => {});
+  }, [locale]);
 
   const filtered =
-    active === "All" ? posts : posts.filter((p) => p.category === active);
+    active === "All" ? items : items.filter((item) => item.category === active);
 
   return (
     <Section
-      title="Blog"
-      subtitle="Thoughts on product management, AI, crypto, and building things."
+      title={dict.blog.title}
+      subtitle={dict.blog.subtitle || undefined}
     >
-      <BlogFilter
-        categories={categories}
-        active={active}
-        onSelect={setActive}
-      />
+      <div className="mb-6 flex items-center justify-between">
+        <BlogFilter
+          categories={categories}
+          active={active}
+          onSelect={setActive}
+        />
+        <Link
+          href="/podcast-notes/new"
+          className="flex-shrink-0 rounded-lg bg-accent px-4 py-2 text-sm font-medium text-white transition-opacity hover:opacity-90"
+        >
+          + {dict.podcast.newNote}
+        </Link>
+      </div>
 
       {filtered.length === 0 ? (
-        <p className="text-muted">No posts yet. Coming soon...</p>
+        <p className="text-muted">{dict.blog.noPostsFiltered}</p>
       ) : (
         <div className="space-y-4">
-          {filtered.map((post, i) => (
-            <BlogCard key={post.slug} post={post} index={i} />
+          {filtered.map((item, i) => (
+            <BlogCard key={`${item.type}-${item.slug}`} post={item} index={i} />
           ))}
         </div>
       )}
