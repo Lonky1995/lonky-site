@@ -147,8 +147,7 @@ export function ChatPanel({
   // Auto-trigger summary generation on mount (skip if restored)
   useEffect(() => {
     if (skipInitialSummary) return;
-    const initialPrompt = `以下是播客「${meta.title}」的完整转录：\n\n${transcript}\n\n请根据以上转录内容，生成结构化播客笔记。`;
-    sendMessage(initialPrompt, []);
+    sendMessage("请根据转录内容，生成结构化播客笔记。", []);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -160,10 +159,14 @@ export function ChatPanel({
     sendMessage(text, messages);
   };
 
-  // Filter out initial transcript prompt (and auto summary) from display
+  // Hide the auto-generated pair (user prompt + AI summary) from chat view.
+  // Summary is shown separately outside ChatPanel. Only show follow-up discussion.
+  // During generation (messages.length <= 2), show the streaming AI response.
   const displayMessages = skipInitialSummary
     ? messages
-    : messages.filter((m, i) => !(i === 0 && m.role === "user"));
+    : messages.length <= 2
+      ? messages.filter((_, i) => i !== 0)  // hide prompt, show streaming summary
+      : messages.slice(2);                   // summary done, show only follow-up chat
 
   return (
     <div className="flex flex-col rounded-xl border border-border bg-card">
@@ -190,8 +193,8 @@ export function ChatPanel({
         <div ref={messagesEndRef} />
       </div>
 
-      {/* Suggested questions */}
-      {!isLoading && displayMessages.length > 0 && !displayMessages.some((m) => m.role === "user") && (
+      {/* Suggested questions — show when no user messages yet in the discussion */}
+      {!isLoading && !displayMessages.some((m) => m.role === "user") && (
         <div className="flex flex-wrap gap-2 border-t border-border px-4 pt-3">
           {[
             "哪个观点你觉得最有争议？",

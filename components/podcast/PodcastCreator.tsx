@@ -658,7 +658,7 @@ export function PodcastCreator() {
             systemPrompt={
               summary
                 ? buildChatSystemPrompt(transcript, { title: meta.title, description: meta.description })
-                : buildSummarySystemPrompt(meta)
+                : buildSummarySystemPrompt(meta, transcript)
             }
             secret={secret}
             onSummaryComplete={summary ? undefined : handleSummaryComplete}

@@ -1,9 +1,15 @@
-export function buildSummarySystemPrompt(meta: {
-  title: string;
-  description?: string;
-  platform?: string;
-}) {
-  return `你是一个专业的播客内容分析师，擅长从长对话中提炼高密度信息。用户会给你一段播客的完整转录文本，你需要生成一份"听完就能用"的笔记。
+export function buildSummarySystemPrompt(
+  meta: {
+    title: string;
+    description?: string;
+    platform?: string;
+  },
+  transcript?: string
+) {
+  const transcriptBlock = transcript
+    ? `\n\n以下是完整转录（带时间戳）：\n<transcript>\n${transcript}\n</transcript>`
+    : "";
+  return `你是一个专业的播客内容分析师，擅长从长对话中提炼高密度信息。根据播客的完整转录文本，生成一份"听完就能用"的笔记。
 
 播客信息：
 - 标题：${meta.title}
@@ -48,7 +54,7 @@ ${meta.description ? `- 简介：${meta.description}` : ""}
 - 不要编造播客中没有的内容
 - 保持客观，但可以在"批注"部分加入分析视角
 - **直接输出笔记内容，不要有任何开场白**（如"以下是…的总结"、"根据转录内容…"等），第一行就是「## 一句话总结」
-- 转录文本带有 [MM:SS] 时间戳，**每个章节都必须引用对应的时间戳**，方便读者跳转到原音频对应位置`;
+- 转录文本带有 [MM:SS] 时间戳，**每个章节都必须引用对应的时间戳**，方便读者跳转到原音频对应位置${transcriptBlock}`;
 }
 
 export function buildChatSystemPrompt(
