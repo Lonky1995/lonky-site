@@ -56,7 +56,7 @@ export default async function Home() {
             <Tweet id={tweetId} />
           </Suspense>
         }
-        wechatArticle={wechatArticle}
+        wechatArticle={wechatArticle ?? undefined}
       />
     </>
   );
