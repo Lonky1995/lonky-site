@@ -135,5 +135,5 @@ export const projects: Project[] = [
   // },
 ];
 
-export const categories = ["All", "AI", "Crypto"] as const;
+export const categories = ["Tool"] as const;
 export type Category = (typeof categories)[number];
