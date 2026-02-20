@@ -41,7 +41,6 @@ published: true
 
 以此类推，可以去找一些 tvl 增长比较多的项目，看看最近的钱都留在那里了。如果你是专注某条链的话，可以增加筛选条件等。具体深入分析的话，可能就根据自己的思路，去看白皮书、看看 dune 上的看板等。
 
-![](../images/blog/market-onchain-3.png)
 
 ![](../images/blog/market-onchain-4.png)
 
