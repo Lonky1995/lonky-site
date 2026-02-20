@@ -112,7 +112,7 @@ export const projects: Project[] = [
       en: "Podcast Notes Tool",
     },
     description: {
-      zh: "贴一个播客链接，自动转录 → AI 生成结构化笔记 → 深入讨论 → 一键生成播客笔记。",
+      zh: "贴一个播客链接，自动转录 → AI 生成结构化笔记 → 和 AI 深入讨论 → 一键生成播客笔记。",
       en: "Paste a podcast URL, auto-transcribe → AI-generated structured notes → deep discussion → one-click generate podcast notes.",
     },
     category: "AI",

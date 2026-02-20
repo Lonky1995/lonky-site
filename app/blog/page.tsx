@@ -115,7 +115,7 @@ export default function BlogPage() {
           href="/podcast-notes/new"
           className="flex-shrink-0 rounded-lg bg-accent px-4 py-2 text-sm font-medium text-white transition-opacity hover:opacity-90"
         >
-          + {dict.podcast.newNote}
+          + 增加播客笔记
         </Link>
       </div>
 

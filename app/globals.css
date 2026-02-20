@@ -115,6 +115,13 @@ body {
   opacity: 1;
 }
 
+/* Scroll offset for fixed navbar */
+.prose-custom h2[id],
+.prose-custom h3[id],
+.discussion-card[id] {
+  scroll-margin-top: 5rem;
+}
+
 /* Prose styles for blog */
 /* react-tweet dark theme overrides */
 [data-theme="dark"] {
@@ -191,4 +198,105 @@ body {
 .prose-custom th {
   background: #1e293b;
   font-weight: 600;
+}
+
+/* Discussion Q&A cards — chat bubble style */
+.discussion-card {
+  margin: 1.5rem 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+.discussion-q {
+  align-self: flex-end;
+  max-width: 85%;
+  background: #6366f1;
+  color: #fff;
+  font-weight: 600;
+  font-size: 0.95rem;
+  padding: 0.75rem 1rem;
+  line-height: 1.5;
+  border-radius: 1.25rem 1.25rem 0.25rem 1.25rem;
+}
+.discussion-q::before {
+  content: "🙋 ";
+}
+.discussion-a {
+  align-self: flex-start;
+  max-width: 95%;
+  background: #1e293b;
+  padding: 1rem 1.25rem;
+  font-size: 0.9rem;
+  line-height: 1.8;
+  color: #cbd5e1;
+  border-radius: 1.25rem 1.25rem 1.25rem 0.25rem;
+  border: 1px solid #334155;
+}
+.discussion-a::before {
+  content: "🤖 AI";
+  display: block;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #6366f1;
+  margin-bottom: 0.5rem;
+}
+.discussion-a p {
+  margin-bottom: 0.75rem;
+}
+.discussion-a p:last-child {
+  margin-bottom: 0;
+}
+.discussion-a ol, .discussion-a ul {
+  margin-bottom: 0.75rem;
+  padding-left: 1.25rem;
+}
+.discussion-a li {
+  margin-bottom: 0.25rem;
+}
+.discussion-a blockquote {
+  border-left: 3px solid #f59e0b;
+  padding-left: 0.75rem;
+  margin: 0.75rem 0;
+  color: #fbbf24;
+  font-style: normal;
+  font-size: 0.85rem;
+}
+.discussion-a strong {
+  color: #e2e8f0;
+}
+.discussion-a code {
+  background: #0f172a;
+  padding: 0.1rem 0.3rem;
+  border-radius: 0.25rem;
+  font-size: 0.8rem;
+}
+
+/* Collapsible sections (full discussion, transcript) */
+.prose-custom details {
+  margin: 1.5rem 0;
+  border: 1px solid #1e293b;
+  border-radius: 0.75rem;
+  overflow: hidden;
+}
+.prose-custom details summary {
+  cursor: pointer;
+  padding: 0.75rem 1rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #94a3b8;
+  background: #111827;
+  user-select: none;
+  transition: color 0.2s;
+}
+.prose-custom details summary:hover {
+  color: #f1f5f9;
+}
+.prose-custom details[open] summary {
+  border-bottom: 1px solid #1e293b;
+}
+.prose-custom details > :not(summary) {
+  padding: 0 1rem;
+}
+.prose-custom details > p:first-of-type {
+  padding-top: 1rem;
 }

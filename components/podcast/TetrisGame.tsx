@@ -4,7 +4,7 @@ import { useEffect, useRef, useCallback, useState } from "react";
 
 const COLS = 10;
 const ROWS = 20;
-const CELL = 20;
+const CELL = 28;
 const COLORS = [
   "#6366f1", // I - indigo
   "#8b5cf6", // O - violet
@@ -61,6 +61,7 @@ export function TetrisGame() {
   const loopRef = useRef<ReturnType<typeof setInterval>>(undefined);
   const [score, setScore] = useState(0);
   const [gameOver, setGameOver] = useState(false);
+  const [started, setStarted] = useState(false);
 
   const collides = useCallback((board: (string | null)[][], piece: Piece, dx = 0, dy = 0, shape?: number[][]) => {
     const s = shape || piece.shape;
@@ -180,15 +181,21 @@ export function TetrisGame() {
 
     // Game over overlay
     if (gameOverRef.current) {
-      ctx.fillStyle = "rgba(0,0,0,0.7)";
+      ctx.fillStyle = "rgba(0,0,0,0.85)";
       ctx.fillRect(0, 0, canvas.width, canvas.height);
-      ctx.fillStyle = "#f1f5f9";
-      ctx.font = "bold 18px sans-serif";
       ctx.textAlign = "center";
-      ctx.fillText("GAME OVER", canvas.width / 2, canvas.height / 2 - 10);
-      ctx.font = "13px sans-serif";
-      ctx.fillStyle = "#94a3b8";
-      ctx.fillText("按 R 重新开始", canvas.width / 2, canvas.height / 2 + 15);
+      ctx.fillStyle = "#ffffff";
+      ctx.font = "bold 26px sans-serif";
+      ctx.fillText("GAME OVER", canvas.width / 2, canvas.height / 2 - 36);
+      ctx.fillStyle = "#e2e8f0";
+      ctx.font = "bold 16px sans-serif";
+      ctx.fillText("最终得分", canvas.width / 2, canvas.height / 2 - 6);
+      ctx.fillStyle = "#818cf8";
+      ctx.font = "bold 40px sans-serif";
+      ctx.fillText(`${scoreRef.current}`, canvas.width / 2, canvas.height / 2 + 38);
+      ctx.fillStyle = "#cbd5e1";
+      ctx.font = "bold 14px sans-serif";
+      ctx.fillText("按 R 或点击下方按钮再来一局", canvas.width / 2, canvas.height / 2 + 65);
     }
   }, [collides]);
 
@@ -214,54 +221,82 @@ export function TetrisGame() {
     draw();
   }, [draw]);
 
-  useEffect(() => {
-    const handler = (e: KeyboardEvent) => {
-      if (e.key === "r" || e.key === "R") {
-        if (gameOverRef.current) reset();
-        return;
+  const handleAction = useCallback((action: "left" | "right" | "down" | "up" | "drop" | "reset") => {
+    if (action === "reset") {
+      if (gameOverRef.current) reset();
+      return;
+    }
+    if (gameOverRef.current) return;
+    const board = boardRef.current;
+    const piece = pieceRef.current;
+    switch (action) {
+      case "left":
+        if (!collides(board, piece, -1, 0)) piece.x--;
+        break;
+      case "right":
+        if (!collides(board, piece, 1, 0)) piece.x++;
+        break;
+      case "down":
+        if (!collides(board, piece, 0, 1)) piece.y++;
+        break;
+      case "up": {
+        const rotated = rotate(piece.shape);
+        if (!collides(board, piece, 0, 0, rotated)) piece.shape = rotated;
+        break;
       }
-      if (gameOverRef.current) return;
-      const board = boardRef.current;
-      const piece = pieceRef.current;
-
-      switch (e.key) {
-        case "ArrowLeft":
-          if (!collides(board, piece, -1, 0)) piece.x--;
-          break;
-        case "ArrowRight":
-          if (!collides(board, piece, 1, 0)) piece.x++;
-          break;
-        case "ArrowDown":
-          if (!collides(board, piece, 0, 1)) piece.y++;
-          break;
-        case "ArrowUp": {
-          const rotated = rotate(piece.shape);
-          if (!collides(board, piece, 0, 0, rotated)) piece.shape = rotated;
-          break;
-        }
-        case " ":
-          while (!collides(board, piece, 0, 1)) piece.y++;
-          lock();
-          break;
-      }
-      draw();
-    };
-
-    document.addEventListener("keydown", handler);
-    return () => document.removeEventListener("keydown", handler);
+      case "drop":
+        while (!collides(board, piece, 0, 1)) piece.y++;
+        lock();
+        break;
+    }
+    draw();
   }, [collides, lock, draw, reset]);
 
+  // Keyboard controls — active only after game starts
   useEffect(() => {
+    if (!started) return;
+    const handler = (e: KeyboardEvent) => {
+      const map: Record<string, "left" | "right" | "down" | "up" | "drop" | "reset"> = {
+        ArrowLeft: "left", ArrowRight: "right", ArrowDown: "down", ArrowUp: "up",
+        " ": "drop", r: "reset", R: "reset",
+      };
+      const action = map[e.key];
+      if (!action) return;
+      e.preventDefault();
+      handleAction(action);
+    };
+    document.addEventListener("keydown", handler);
+    return () => document.removeEventListener("keydown", handler);
+  }, [handleAction, started]);
+
+  useEffect(() => {
+    if (!started) return;
     draw();
     loopRef.current = setInterval(tick, 500);
     return () => {
       if (loopRef.current) clearInterval(loopRef.current);
     };
-  }, [tick, draw]);
+  }, [tick, draw, started]);
+
+  if (!started) {
+    return (
+      <div className="flex flex-col items-center gap-4 py-6">
+        <div className="text-4xl">🧱</div>
+        <p className="text-lg font-bold text-foreground">AI 正在努力转录中...</p>
+        <p className="text-sm text-muted">不如先来一局经典俄罗斯方块？</p>
+        <button
+          onClick={() => setStarted(true)}
+          className="mt-2 rounded-xl bg-accent px-8 py-3 text-base font-bold text-white shadow-lg shadow-accent/25 transition-all hover:scale-105 hover:shadow-accent/40 active:scale-95"
+        >
+          开始挑战
+        </button>
+      </div>
+    );
+  }
 
   return (
     <div className="flex flex-col items-center gap-3">
-      <div className="flex items-center justify-between w-full max-w-[200px]">
+      <div className="flex items-center justify-between w-full" style={{ maxWidth: COLS * CELL }}>
         <span className="text-xs text-muted">得分</span>
         <span className="text-sm font-mono font-medium text-accent">{score}</span>
       </div>
@@ -271,9 +306,26 @@ export function TetrisGame() {
         height={ROWS * CELL}
         className="rounded-lg border border-border"
       />
-      <div className="text-[10px] text-muted text-center space-y-0.5">
-        <p>← → 移动 &nbsp; ↑ 旋转 &nbsp; ↓ 加速 &nbsp; 空格 落下</p>
-      </div>
+      {/* Controls */}
+      {gameOver ? (
+        <button
+          onClick={() => handleAction("reset")}
+          className="rounded-xl bg-accent px-6 py-2.5 text-sm font-bold text-white shadow-lg shadow-accent/25 transition-all hover:scale-105 active:scale-95"
+        >
+          再来一局
+        </button>
+      ) : (
+        <>
+          <div className="flex items-center gap-3">
+            <button onPointerDown={() => handleAction("left")} className="rounded-lg border border-border px-3 py-2 text-sm text-muted active:bg-accent/20">←</button>
+            <button onPointerDown={() => handleAction("down")} className="rounded-lg border border-border px-3 py-2 text-sm text-muted active:bg-accent/20">↓</button>
+            <button onPointerDown={() => handleAction("up")} className="rounded-lg border border-border px-3 py-2 text-sm text-muted active:bg-accent/20">↑</button>
+            <button onPointerDown={() => handleAction("right")} className="rounded-lg border border-border px-3 py-2 text-sm text-muted active:bg-accent/20">→</button>
+            <button onPointerDown={() => handleAction("drop")} className="rounded-lg border border-border px-4 py-2 text-xs text-muted active:bg-accent/20">落下</button>
+          </div>
+          <p className="text-[10px] text-muted">← → 移动 · ↑ 旋转 · ↓ 加速 · 空格落下</p>
+        </>
+      )}
     </div>
   );
 }

@@ -14,8 +14,8 @@ type NoteData = {
   coverImage?: string;
   duration?: number;
   summary: string;
+  discussionSummary?: string;
   discussion?: ChatMessage[];
-  transcript?: string;
 };
 
 export function generateMarkdown(data: NoteData): string {
@@ -39,20 +39,21 @@ export function generateMarkdown(data: NoteData): string {
 
   let body = `${frontmatter}\n\n${data.summary}`;
 
-  if (data.discussion && data.discussion.length > 0) {
-    body += `\n\n---\n\n## 深入讨论\n\n`;
+  if (data.discussionSummary) {
+    body += `\n\n---\n\n## 和 AI 深入讨论\n\n${data.discussionSummary}\n`;
+  } else if (data.discussion && data.discussion.length > 0) {
+    // Fallback: raw Q&A if no summary available
+    body += `\n\n---\n\n## 和 AI 深入讨论\n\n`;
     for (const msg of data.discussion) {
       if (msg.role === "user") {
-        body += `**🙋 我：** ${msg.content}\n\n`;
+        body += `**🙋 ${msg.content}**\n\n`;
       } else {
         body += `${msg.content}\n\n`;
       }
     }
   }
 
-  if (data.transcript) {
-    body += `\n\n---\n\n<details>\n<summary>完整转录</summary>\n\n${data.transcript}\n\n</details>`;
-  }
+
 
   return body;
 }

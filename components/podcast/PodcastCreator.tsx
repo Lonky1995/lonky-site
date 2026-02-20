@@ -6,6 +6,7 @@ import { TetrisGame } from "./TetrisGame";
 import {
   buildSummarySystemPrompt,
   buildChatSystemPrompt,
+  buildDiscussionSummaryPrompt,
 } from "@/lib/podcast/prompts";
 import { generateMarkdown, generateSlug, generateObsidianMarkdown } from "@/lib/podcast/markdown";
 import { renderMarkdown } from "@/lib/podcast/render-markdown";
@@ -242,12 +243,55 @@ export function PodcastCreator() {
     [meta]
   );
 
+  // Summarize discussion via AI
+  async function summarizeDiscussion(): Promise<string> {
+    if (!meta || chatHistory.length === 0) return "";
+    const discussionMessages = chatHistory
+      .filter((m) => m.role === "user" || m.role === "assistant")
+      .map((m) => ({ role: m.role, content: m.content }));
+    if (discussionMessages.length === 0) return "";
+
+    // Build a single user message with the full discussion for summarization
+    const rawDiscussion = discussionMessages
+      .map((m) => (m.role === "user" ? `用户：${m.content}` : `AI：${m.content}`))
+      .join("\n\n---\n\n");
+
+    const res = await fetch("/api/podcast/chat", {
+      method: "POST",
+      headers: headers(),
+      body: JSON.stringify({
+        system: buildDiscussionSummaryPrompt({ title: meta.title, description: meta.description }),
+        messages: [{ role: "user", content: `以下是用户和 AI 的完整讨论记录：\n\n${rawDiscussion}` }],
+      }),
+    });
+
+    if (!res.ok) throw new Error("讨论总结失败");
+
+    // Read the stream to completion
+    const reader = res.body?.getReader();
+    if (!reader) return "";
+    const decoder = new TextDecoder();
+    let result = "";
+    while (true) {
+      const { done, value } = await reader.read();
+      if (done) break;
+      result += decoder.decode(value, { stream: true });
+    }
+    return result;
+  }
+
   // Step 5: Publish
   async function handlePublish() {
     if (!meta) return;
     setPublishing(true);
     setError("");
     try {
+      // Summarize discussion before generating markdown
+      let discussionSummary = "";
+      if (chatHistory.length > 0) {
+        discussionSummary = await summarizeDiscussion();
+      }
+
       const markdown = generateMarkdown({
         title: editTitle,
         slug: editSlug,
@@ -259,10 +303,10 @@ export function PodcastCreator() {
         coverImage: meta.coverImage,
         duration: meta.duration,
         summary,
+        discussionSummary,
         discussion: chatHistory
           .filter((m) => m.role === "user" || m.role === "assistant")
           .map((m) => ({ role: m.role, content: m.content })),
-        transcript,
       });
 
       // Encode to base64 on client side (handles Chinese correctly)
@@ -384,17 +428,26 @@ export function PodcastCreator() {
       {/* Step 1: URL + Secret */}
       {step === 1 && (
         <div className="space-y-4">
+          {/* Secret first */}
+          <div className="rounded-xl border border-border bg-card/60 p-5 space-y-3">
+            <h2 className="text-base font-semibold text-foreground">体验码</h2>
+            <p className="text-sm text-muted">
+              为避免 API 被滥用，请联系 Lonky 获取体验码后使用
+            </p>
+            <input
+              type="password"
+              value={secret}
+              onChange={(e) => setSecret(e.target.value)}
+              placeholder="输入体验码"
+              className="w-full rounded-lg border border-border bg-background px-4 py-3 text-foreground placeholder:text-muted focus:border-accent focus:outline-none"
+            />
+          </div>
+
+          {/* URL input */}
           <h2 className="text-xl font-bold">输入播客链接</h2>
           <p className="text-sm text-muted">
             支持小宇宙和 Apple Podcasts
           </p>
-          <input
-            type="password"
-            value={secret}
-            onChange={(e) => setSecret(e.target.value)}
-            placeholder="体验码"
-            className="w-full rounded-lg border border-border bg-background px-4 py-3 text-foreground placeholder:text-muted focus:border-accent focus:outline-none"
-          />
           <input
             type="url"
             value={url}
@@ -424,7 +477,7 @@ export function PodcastCreator() {
                 { icon: "🔗", title: "贴入链接", desc: "粘贴小宇宙 / Apple Podcasts 链接" },
                 { icon: "🎙️", title: "自动转录", desc: "AI 语音识别，生成完整文字稿" },
                 { icon: "📝", title: "结构化笔记", desc: "AI 提炼要点，生成结构化笔记" },
-                { icon: "💬", title: "深入讨论", desc: "基于内容与 AI 对话，追问细节" },
+                { icon: "💬", title: "和 AI 深入讨论", desc: "基于内容与 AI 对话，追问细节" },
                 { icon: "🚀", title: "一键生成", desc: "生成播客笔记，方便回顾" },
               ].map((s, i, arr) => (
                 <div
@@ -500,22 +553,27 @@ export function PodcastCreator() {
 
       {/* Step 3: Transcribing */}
       {step === 3 && (
-        <div className="space-y-6">
-          <h2 className="text-xl font-bold text-center">正在转录</h2>
-
-          {/* Progress bar */}
-          <div className="space-y-2">
-            <div className="flex items-center justify-between text-xs text-muted">
-              <span>
-                {transcribeStatus === "queued" ? "排队中..." :
-                 transcribeStatus === "processing" ? "转录中..." :
-                 "处理中..."}
-              </span>
-              <span>
+        <div className="space-y-5">
+          {/* Compact status + progress card */}
+          <div className="rounded-xl border border-border bg-card p-4 space-y-3">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-2 text-sm">
+                <span className={`h-2 w-2 rounded-full ${
+                  transcribeStatus === "queued" ? "bg-yellow-400 animate-pulse" :
+                  transcribeStatus === "processing" ? "bg-accent animate-pulse" :
+                  "bg-muted"
+                }`} />
+                <span className="font-medium">
+                  {transcribeStatus === "queued" ? "排队等待中" :
+                   transcribeStatus === "processing" ? "正在转录" :
+                   transcribeStatus}
+                </span>
+              </div>
+              <span className="text-xs tabular-nums text-muted">
                 {Math.floor(transcribeElapsed / 60)}:{String(transcribeElapsed % 60).padStart(2, "0")}
               </span>
             </div>
-            <div className="h-2 w-full overflow-hidden rounded-full bg-border">
+            <div className="h-1.5 w-full overflow-hidden rounded-full bg-border">
               <div
                 className="h-full rounded-full bg-accent transition-all duration-1000 ease-out"
                 style={{
@@ -527,58 +585,28 @@ export function PodcastCreator() {
                 }}
               />
             </div>
-            <div className="flex justify-between text-[10px] text-muted">
-              <span>排队</span>
-              <span>转录</span>
-              <span>完成</span>
-            </div>
-          </div>
-
-          {/* Status details */}
-          <div className="rounded-xl border border-border bg-card p-4 text-sm space-y-2">
-            <div className="flex items-center gap-2">
-              <span className={`h-2 w-2 rounded-full ${
-                transcribeStatus === "queued" ? "bg-yellow-400 animate-pulse" :
-                transcribeStatus === "processing" ? "bg-accent animate-pulse" :
-                "bg-muted"
-              }`} />
-              <span className="text-muted">状态：</span>
-              <span className="font-medium">
-                {transcribeStatus === "queued" ? "排队等待" :
-                 transcribeStatus === "processing" ? "正在转录" :
-                 transcribeStatus}
-              </span>
-            </div>
             {meta?.title && (
-              <div className="text-xs text-muted truncate">
-                {meta.title}
-              </div>
+              <p className="text-xs text-muted truncate">{meta.title}</p>
             )}
-          </div>
-
-          <div className="flex items-center justify-center gap-4">
-            <p className="text-xs text-muted">
-              每 5 秒自动检查状态，刷新页面也不会丢失进度
-            </p>
-            <button
-              onClick={() => {
-                clearState();
-                setStep(1);
-                setTranscriptId("");
-                setTranscribeStatus("queued");
-                setTranscribeElapsed(0);
-              }}
-              className="shrink-0 text-xs text-muted hover:text-red-400 transition-colors"
-            >
-              取消转录
-            </button>
+            <div className="flex items-center justify-between text-[10px] text-muted pt-1">
+              <span>每 5 秒自动检查 · 刷新不丢失</span>
+              <button
+                onClick={() => {
+                  clearState();
+                  setStep(1);
+                  setTranscriptId("");
+                  setTranscribeStatus("queued");
+                  setTranscribeElapsed(0);
+                }}
+                className="text-muted hover:text-red-400 transition-colors"
+              >
+                取消
+              </button>
+            </div>
           </div>
 
           {/* Mini game while waiting */}
-          <div className="mt-8 space-y-3">
-            <p className="text-center text-sm text-muted">等待的时候来一局？</p>
-            <TetrisGame />
-          </div>
+          <TetrisGame />
         </div>
       )}
 
@@ -732,7 +760,7 @@ export function PodcastCreator() {
               disabled={publishing || !editSlug}
               className="rounded-lg bg-accent px-6 py-3 font-medium text-white transition-opacity hover:opacity-90 disabled:opacity-50"
             >
-              {publishing ? "发布中..." : "发布到网站"}
+              {publishing ? (chatHistory.length > 0 ? "总结讨论 & 发布中..." : "发布中...") : "发布到网站"}
             </button>
           </div>
         </div>
@@ -790,7 +818,7 @@ export function PodcastCreator() {
               />
               {chatHistory.length > 0 && (
                 <div className="mt-8">
-                  <h2 className="mb-4 text-lg font-bold">深入讨论</h2>
+                  <h2 className="mb-4 text-lg font-bold">和 AI 深入讨论</h2>
                   <div className="space-y-3">
                     {chatHistory
                       .filter((m) => m.role === "user" || m.role === "assistant")
