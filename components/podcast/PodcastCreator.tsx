@@ -556,9 +556,23 @@ export function PodcastCreator() {
             )}
           </div>
 
-          <p className="text-xs text-muted text-center">
-            每 5 秒自动检查状态，刷新页面也不会丢失进度
-          </p>
+          <div className="flex items-center justify-center gap-4">
+            <p className="text-xs text-muted">
+              每 5 秒自动检查状态，刷新页面也不会丢失进度
+            </p>
+            <button
+              onClick={() => {
+                clearState();
+                setStep(1);
+                setTranscriptId("");
+                setTranscribeStatus("queued");
+                setTranscribeElapsed(0);
+              }}
+              className="shrink-0 text-xs text-muted hover:text-red-400 transition-colors"
+            >
+              取消转录
+            </button>
+          </div>
 
           {/* Mini game while waiting */}
           <div className="mt-8 space-y-3">

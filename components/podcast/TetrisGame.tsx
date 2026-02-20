@@ -58,7 +58,7 @@ export function TetrisGame() {
   const pieceRef = useRef<Piece>(randomPiece());
   const scoreRef = useRef(0);
   const gameOverRef = useRef(false);
-  const loopRef = useRef<ReturnType<typeof setInterval>>();
+  const loopRef = useRef<ReturnType<typeof setInterval>>(undefined);
   const [score, setScore] = useState(0);
   const [gameOver, setGameOver] = useState(false);
 
