@@ -652,6 +652,10 @@ export function PodcastCreator() {
             </div>
           )}
 
+          <p className="text-xs text-muted">
+            笔记生成后可继续对话，提问细节或要求扩展某个观点
+          </p>
+
           <ChatPanel
             transcript={transcript}
             meta={{ title: meta.title, description: meta.description }}
@@ -665,10 +669,6 @@ export function PodcastCreator() {
             skipInitialSummary={!!summary}
             onMessagesChange={(msgs) => setChatHistory(msgs)}
           />
-
-          <p className="text-xs text-muted">
-            笔记生成后可继续对话，提问细节或要求扩展某个观点
-          </p>
 
           <button
             onClick={() => {
