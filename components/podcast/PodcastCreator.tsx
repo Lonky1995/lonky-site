@@ -633,17 +633,7 @@ export function PodcastCreator() {
           {/* Audio player */}
           {meta.audioUrl && <AudioPlayer audioUrl={meta.audioUrl} />}
 
-          {/* Transcript toggle */}
-          <details className="rounded-xl border border-border bg-card">
-            <summary className="cursor-pointer px-4 py-3 text-xs font-medium text-muted hover:text-foreground select-none">
-              查看转录原文
-            </summary>
-            <div className="max-h-[300px] overflow-y-auto border-t border-border px-4 py-3 text-xs leading-relaxed text-muted whitespace-pre-wrap font-mono">
-              {transcript}
-            </div>
-          </details>
-
-          {/* Show saved summary if exists */}
+{/* Show saved summary if exists */}
           {summary && (
             <div className="rounded-xl border border-border bg-card p-4">
               <div className="mb-2 flex items-center justify-between">
