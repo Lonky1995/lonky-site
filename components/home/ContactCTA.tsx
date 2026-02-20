@@ -118,8 +118,13 @@ export function ContactCTA({ tweetSlot, wechatArticle }: { tweetSlot?: ReactNode
                 {t.officialAccount}
               </p>
               {wechatArticle ? (
-                <div>
-                  <h3 className="font-medium text-foreground mb-2">
+                <a
+                  href={wechatArticle.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="block group"
+                >
+                  <h3 className="font-medium text-foreground mb-2 group-hover:text-accent transition-colors">
                     {wechatArticle.title}
                   </h3>
                   <p className="text-sm text-muted line-clamp-3">
@@ -128,10 +133,7 @@ export function ContactCTA({ tweetSlot, wechatArticle }: { tweetSlot?: ReactNode
                   <p className="text-xs text-muted/60 mt-3">
                     @{wechatArticle.author} · {wechatArticle.updated_at}
                   </p>
-                  <p className="text-xs text-muted/50 mt-1">
-                    微信搜索「{wechatArticle.author}」阅读全文
-                  </p>
-                </div>
+                </a>
               ) : (
                 <div className="flex justify-center">
                   <Image
