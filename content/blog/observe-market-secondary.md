@@ -57,7 +57,7 @@ k 线代表的是成交量，是真金白银的交易，其中最重要几个点
 
 我个人的理解，所有的k 线的形态、方法，都是基于历史数据回测抽象出来的概率性的方法。有相关性，不一定有因果性。
 
-![](/images/blog/market-secondary-1.png)
+![](../images/blog/market-secondary-1.png)
 
 ### 微观：足迹图
 
@@ -85,7 +85,7 @@ k 线代表的是交易历史。接下来的问题是：这个 k 线我只能看
 
 - 总计：这根 k 线总共成交数量
 
-![](/images/blog/market-secondary-2.png)
+![](../images/blog/market-secondary-2.png)
 
 基于此，做一些推导：
 
@@ -95,7 +95,7 @@ k 线代表的是交易历史。接下来的问题是：这个 k 线我只能看
 
 足迹图还有很多值得说的东西，比如说如何通过足迹图来寻找潜在的反转点、如何通过足迹图来判定真假突破等等，大家感兴趣的话后面再单独说足迹图。目前足迹图做的比较好的是 coinank，相比于 tradingview 他的精度更高，体验也更好。他有个入门教程非常详细 https://coinank.com/zh/articles
 
-![](/images/blog/market-secondary-3.png)
+![](../images/blog/market-secondary-3.png)
 
 ### 合约指标
 
@@ -103,15 +103,15 @@ k 线代表的是交易历史。接下来的问题是：这个 k 线我只能看
 
 - 持仓 openinterst（oi） 是指未平仓合约，代表有多少人开着单。
 
-![](/images/blog/market-secondary-4.png)
+![](../images/blog/market-secondary-4.png)
 
 - 资金费率：资金费率是永续合约市场价格与现货价格之间价差的体现。简单来说，当合约价格高于现货价格时，资金费率通常为正，多头需要向空头支付费用；反之，当合约价格低于现货价格时，资金费率为负，空头需要向多头支付费用。通过查看资金费率的正负，可以判断市场情绪。如果资金费率持续为正且较高，说明市场看多情绪浓厚，但需警惕回调风险；若资金费率持续为负且较低，说明市场看空情绪较浓，可能有反弹机会。
 
-![](/images/blog/market-secondary-5.png)
+![](../images/blog/market-secondary-5.png)
 
 - 多空比是衡量市场多空力量对比的指标。它通常通过计算市场中多头持仓量与空头持仓量的比例来得出。一般可以看多空人数
 
-![](/images/blog/market-secondary-6.png)
+![](../images/blog/market-secondary-6.png)
 
 一般来说
 
@@ -135,15 +135,15 @@ k 线代表的是交易历史。接下来的问题是：这个 k 线我只能看
 
 - 支持多种个筛选，我一般是选择 4 大交易所，然后加一个成交量的过滤条件，减少一些低市值的噪音。
 
-![](/images/blog/market-secondary-7.png)
+![](../images/blog/market-secondary-7.png)
 
-![](/images/blog/market-secondary-8.png)
+![](../images/blog/market-secondary-8.png)
 
 如果想看合约市场的情况，可以通过 coinglass 或 coinank 来看，比较简单，这里就不赘述了。
 
-![](/images/blog/market-secondary-9.png)
+![](../images/blog/market-secondary-9.png)
 
-![](/images/blog/market-secondary-10.png)
+![](../images/blog/market-secondary-10.png)
 
 ### 通过 tradingview 的筛选器建立自己监控看板
 
@@ -151,10 +151,10 @@ k 线代表的是交易历史。接下来的问题是：这个 k 线我只能看
 
 此外，tradingview 还支持自选提醒，满足某个指标之后就给提醒。适合有比较成熟的交易策略的人使用。
 
-![](/images/blog/market-secondary-11.png)
+![](../images/blog/market-secondary-11.png)
 
-![](/images/blog/market-secondary-12.png)
+![](../images/blog/market-secondary-12.png)
 
-![](/images/blog/market-secondary-13.png)
+![](../images/blog/market-secondary-13.png)
 
-![](/images/blog/market-secondary-14.png)
+![](../images/blog/market-secondary-14.png)

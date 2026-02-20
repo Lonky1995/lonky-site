@@ -33,17 +33,17 @@ published: true
 
 在应用榜单的维度中，增加筛选项「7 天的平均地址＞1000」，按照 7D 变化% 倒序，这样就可以发现最近一周，从活跃地址角度什么项目比较火。
 
-![](/images/blog/market-onchain-1.png)
+![](../images/blog/market-onchain-1.png)
 
-![](/images/blog/market-onchain-2.png)
+![](../images/blog/market-onchain-2.png)
 
 举个例子，通过数据发现了 B3 这个项目，是 base 上的 gamefi。然后去 rootdata 上了解下基本面。如果还想了解下，可以用 grok 快速了解下最近做了什么带来的用户增长，得到的结论是有个空投活动以及和 supergaming 合作了。
 
 以此类推，可以去找一些 tvl 增长比较多的项目，看看最近的钱都留在那里了。如果你是专注某条链的话，可以增加筛选条件等。具体深入分析的话，可能就根据自己的思路，去看白皮书、看看 dune 上的看板等。
 
-![](/images/blog/market-onchain-3.png)
+![](../images/blog/market-onchain-3.png)
 
-![](/images/blog/market-onchain-4.png)
+![](../images/blog/market-onchain-4.png)
 
 ### 发现潜在TGE可交互协议
 
@@ -51,9 +51,9 @@ published: true
 
 如果想看最新的协议的话，可以看最近新上了哪些协议，不过这个信息太多了，所以我看的比较少。
 
-![](/images/blog/market-onchain-5.png)
+![](../images/blog/market-onchain-5.png)
 
-![](/images/blog/market-onchain-6.png)
+![](../images/blog/market-onchain-6.png)
 
 ### 链上宏观数据：链的资金流入情况
 
@@ -61,18 +61,18 @@ published: true
 
 所以，如果你想验证「 bsc 被 cz 喊起来」的说法正确与否，就看链上的数据的活跃度、inflow 就知道对不对了。
 
-![](/images/blog/market-onchain-7.png)
+![](../images/blog/market-onchain-7.png)
 
-![](/images/blog/market-onchain-8.png)
+![](../images/blog/market-onchain-8.png)
 
 ### 链上宏观数据：比特币的链上情况
 
 我主要通过 @BGeometrics 看比特币的链上情况（主要是因为免费）。这块也没啥好说的，每个指标代表不同的含义，自己研究就行了。我看的比较多的UPRD这个指标，
 
-![](/images/blog/market-onchain-9.png)
+![](../images/blog/market-onchain-9.png)
 
 ### 看看是谁造成了链上拥堵
 
 有的时候会看到一些新闻，说以太坊的 gas 突然爆表了。这时候可能是某个热门合约导致的，也可能是行情清算导致的。这时候可以通过 @mctxyz 查看高 gas 的消耗情况，然后去 oklink 查看这个合约情况，搜一下就知道谁是凶手。
 
-![](/images/blog/market-onchain-10.png)
+![](../images/blog/market-onchain-10.png)

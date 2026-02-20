@@ -50,7 +50,7 @@ published: true
 
 这个事情，是属于那种，想想会让人兴奋的事情。
 
-![内容分发框架](/images/blog/web3-news-1.png)
+![内容分发框架](../images/blog/web3-news-1.png)
 
 大宇哥反馈一个问题：用户的提问门槛很高，不知道问什么。
 
@@ -58,4 +58,4 @@ published: true
 
 具体的体验：用户在刷推特的时候看到一个东西，识别到实体（项目、名词）之后，鼠标放上去就能看到基础数据，如果想要了解更多，就可以去向 BOT 提问，类似于这样。
 
-![浏览器插件交互](/images/blog/web3-news-2.png)
+![浏览器插件交互](../images/blog/web3-news-2.png)
