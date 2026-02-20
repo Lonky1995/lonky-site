@@ -7,7 +7,7 @@ import { useState } from "react";
 import { siteConfig } from "@/data/site-config";
 import { useLocale } from "@/components/locale-provider";
 
-const navKeys = ["home", "projects", "blog", "about"] as const;
+const navKeys = ["home", "projects", "blog"] as const;
 
 export function Navbar() {
   const pathname = usePathname();

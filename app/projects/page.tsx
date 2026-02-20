@@ -3,8 +3,24 @@
 import { useState } from "react";
 import { projects, categories, type Category } from "@/data/projects";
 import { ProjectCard } from "@/components/projects/ProjectCard";
+import { BriefingCard } from "@/components/projects/BriefingCard";
+import { YouTubeCard } from "@/components/projects/YouTubeCard";
+import { PodcastCard } from "@/components/projects/PodcastCard";
 import { Section } from "@/components/ui/Section";
 import { useLocale } from "@/components/locale-provider";
+
+function renderProjectCard(project: (typeof projects)[number], index: number) {
+  switch (project.id) {
+    case "crypto-briefing":
+      return <BriefingCard key={project.id} project={project} index={index} />;
+    case "youtube-ai":
+      return <YouTubeCard key={project.id} project={project} index={index} />;
+    case "podcast-notes":
+      return <PodcastCard key={project.id} project={project} index={index} />;
+    default:
+      return <ProjectCard key={project.id} project={project} index={index} />;
+  }
+}
 
 export default function ProjectsPage() {
   const { dict } = useLocale();
@@ -38,10 +54,8 @@ export default function ProjectsPage() {
       </div>
 
       {/* Grid */}
-      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-        {filtered.map((project, i) => (
-          <ProjectCard key={project.id} project={project} index={i} />
-        ))}
+      <div className="space-y-6">
+        {filtered.map((project, i) => renderProjectCard(project, i))}
       </div>
     </Section>
   );

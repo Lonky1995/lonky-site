@@ -1,23 +1,44 @@
 import { siteConfig } from "@/data/site-config";
+import { readFile } from "fs/promises";
+import { join } from "path";
 
 const TWITTER_USERNAME = "ImLonky";
 
 /**
  * Get the tweet ID to display.
- * 1. Try env var TWEET_ID (updatable via Vercel dashboard without code change)
- * 2. Try syndication API for auto-latest (unreliable as of 2026)
- * 3. Fall back to featuredTweetId in site-config.ts
+ * 1. Try latest-tweet.json (auto-synced by OpenClaw host alert)
+ * 2. Try env var TWEET_ID (updatable via Vercel dashboard without code change)
+ * 3. Try syndication API for auto-latest (unreliable as of 2026)
+ * 4. Fall back to featuredTweetId in site-config.ts
  */
 export async function getLatestTweetId(): Promise<string> {
-  // Priority 1: Environment variable (easy update from Vercel dashboard)
+  // Priority 1: JSON file from automated sync
+  const jsonId = await readTweetJson();
+  if (jsonId) return jsonId;
+
+  // Priority 2: Environment variable (easy update from Vercel dashboard)
   if (process.env.TWEET_ID) return process.env.TWEET_ID;
 
-  // Priority 2: Try syndication API (best-effort auto-detection)
+  // Priority 3: Try syndication API (best-effort auto-detection)
   const autoId = await fetchFromSyndication();
   if (autoId) return autoId;
 
-  // Priority 3: Manual config fallback
+  // Priority 4: Manual config fallback
   return siteConfig.featuredTweetId;
+}
+
+async function readTweetJson(): Promise<string | null> {
+  try {
+    const filePath = join(process.cwd(), "public", "data", "latest-tweet.json");
+    const raw = await readFile(filePath, "utf-8");
+    const data = JSON.parse(raw);
+    if (data?.tweet_id && typeof data.tweet_id === "string") {
+      return data.tweet_id;
+    }
+    return null;
+  } catch {
+    return null;
+  }
 }
 
 async function fetchFromSyndication(): Promise<string | null> {
