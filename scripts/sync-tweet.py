@@ -30,6 +30,12 @@ RSSHUB_INSTANCES = [
     "https://rsshub.rssforever.com",
 ]
 
+# Nitter instances (fallback)
+NITTER_INSTANCES = [
+    "https://nitter.net",
+    "https://nitter.privacydev.net",
+]
+
 UA = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36"
 
 
@@ -47,20 +53,28 @@ def get_github_token() -> str:
 
 
 def github_api(method: str, endpoint: str, data: dict | None = None) -> dict:
+    """GitHub API using curl to avoid SSL issues on macOS."""
+    import subprocess
     token = get_github_token()
     url = f"https://api.github.com/repos/{GITHUB_REPO}/{endpoint}"
-    body = json.dumps(data).encode() if data else None
-    req = urllib.request.Request(
-        url, data=body, method=method,
-        headers={
-            "Authorization": f"Bearer {token}",
-            "Accept": "application/vnd.github+json",
-            "X-GitHub-Api-Version": "2022-11-28",
-            "Content-Type": "application/json",
-        },
-    )
-    with urllib.request.urlopen(req, timeout=30) as resp:
-        return json.loads(resp.read().decode())
+    
+    cmd = [
+        "curl", "-sk", "-X", method,
+        "-H", f"Authorization: Bearer {token}",
+        "-H", "Accept: application/vnd.github+json",
+        "-H", "X-GitHub-Api-Version: 2022-11-28",
+        "-H", "Content-Type: application/json",
+        url
+    ]
+    
+    if data:
+        cmd.extend(["-d", json.dumps(data)])
+    
+    result = subprocess.run(cmd, capture_output=True, text=True, timeout=30)
+    if result.returncode != 0:
+        raise Exception(f"curl failed: {result.stderr}")
+    
+    return json.loads(result.stdout)
 
 
 # ---------- Tweet ID extraction ----------
@@ -71,14 +85,28 @@ def extract_tweet_id_from_url(url: str) -> str | None:
     return m.group(1) if m else None
 
 
+def fetch_with_curl(url: str) -> str | None:
+    """Fetch URL using curl (handles SSL better on macOS)."""
+    import subprocess
+    try:
+        result = subprocess.run(
+            ["curl", "-sk", "-A", UA, url],
+            capture_output=True, text=True, timeout=15
+        )
+        if result.returncode == 0:
+            return result.stdout
+    except Exception as e:
+        log(f"WARN: curl failed for {url}: {e}")
+    return None
+
 def fetch_from_rsshub() -> str | None:
     """Best-effort: parse latest tweet ID from RSSHub (public instances unreliable)."""
     for base in RSSHUB_INSTANCES:
         url = f"{base}/twitter/user/{TWITTER_USER}"
         try:
-            req = urllib.request.Request(url, headers={"User-Agent": UA})
-            with urllib.request.urlopen(req, timeout=15) as resp:
-                xml = resp.read().decode()
+            xml = fetch_with_curl(url)
+            if not xml:
+                continue
             ids = re.findall(r'/status/(\d{15,25})', xml)
             if ids:
                 newest = str(max(ids, key=int))
@@ -87,6 +115,22 @@ def fetch_from_rsshub() -> str | None:
             log(f"WARN: RSSHub ({base}) returned no tweet IDs")
         except Exception as e:
             log(f"WARN: RSSHub ({base}) failed: {e}")
+    
+    # Fallback to Nitter
+    for base in NITTER_INSTANCES:
+        url = f"{base}/{TWITTER_USER}/rss"
+        try:
+            xml = fetch_with_curl(url)
+            if not xml:
+                continue
+            ids = re.findall(r'/status/(\d{15,25})', xml)
+            if ids:
+                newest = str(max(ids, key=int))
+                log(f"Nitter ({base}): found tweet {newest}")
+                return newest
+        except Exception as e:
+            log(f"WARN: Nitter ({base}) failed: {e}")
+    
     return None
 
 

@@ -5,7 +5,15 @@ import { motion } from "framer-motion";
 import type { ReactNode } from "react";
 import { useLocale } from "@/components/locale-provider";
 
-export function ContactCTA({ tweetSlot }: { tweetSlot?: ReactNode }) {
+interface WechatArticle {
+  title: string;
+  content: string;
+  author: string;
+  url: string;
+  updated_at: string;
+}
+
+export function ContactCTA({ tweetSlot, wechatArticle }: { tweetSlot?: ReactNode; wechatArticle?: WechatArticle }) {
   const { dict } = useLocale();
   const { contact: t } = dict;
 
@@ -104,20 +112,39 @@ export function ContactCTA({ tweetSlot }: { tweetSlot?: ReactNode }) {
               )
             )}
 
-            {/* 公众号 QR */}
+            {/* 公众号 Latest Article */}
             <div className="rounded-xl border border-border bg-card p-5">
               <p className="mb-3 text-sm text-muted">
                 {t.officialAccount}
               </p>
-              <div className="flex justify-center">
-                <Image
-                  src="/images/wechat-mp-qr.jpg"
-                  alt={t.officialAccountAlt}
-                  width={160}
-                  height={160}
-                  className="rounded-lg"
-                />
-              </div>
+              {wechatArticle ? (
+                <a
+                  href={wechatArticle.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="block hover:opacity-80 transition-opacity"
+                >
+                  <h3 className="font-medium text-foreground mb-2">
+                    {wechatArticle.title}
+                  </h3>
+                  <p className="text-sm text-muted line-clamp-3">
+                    {wechatArticle.content}
+                  </p>
+                  <p className="text-xs text-muted/60 mt-2">
+                    @{wechatArticle.author} · {wechatArticle.updated_at}
+                  </p>
+                </a>
+              ) : (
+                <div className="flex justify-center">
+                  <Image
+                    src="/images/wechat-mp-qr.jpg"
+                    alt={t.officialAccountAlt}
+                    width={160}
+                    height={160}
+                    className="rounded-lg"
+                  />
+                </div>
+              )}
             </div>
           </motion.div>
         </div>

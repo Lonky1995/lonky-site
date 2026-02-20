@@ -6,6 +6,7 @@ import { ProjectsPreview } from "@/components/home/ProjectsPreview";
 import { BlogPreview } from "@/components/home/BlogPreview";
 import { ContactCTA } from "@/components/home/ContactCTA";
 import { getLatestTweetId } from "@/lib/twitter";
+import { getLatestWechatArticle } from "@/lib/wechat";
 
 // Try to import blog posts + podcast notes from velite, fallback to empty
 let blogPosts: { slug: string; title: string; description: string; date: string; category: string; type: string }[] = [];
@@ -41,6 +42,7 @@ try {
 
 export default async function Home() {
   const tweetId = await getLatestTweetId();
+  const wechatArticle = await getLatestWechatArticle();
 
   return (
     <>
@@ -54,6 +56,7 @@ export default async function Home() {
             <Tweet id={tweetId} />
           </Suspense>
         }
+        wechatArticle={wechatArticle}
       />
     </>
   );
