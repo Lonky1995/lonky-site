@@ -2,8 +2,6 @@ import { streamText } from "ai";
 import { createOpenAICompatible } from "@ai-sdk/openai-compatible";
 import { NextRequest } from "next/server";
 
-export const runtime = "edge";
-
 const deepseek = createOpenAICompatible({
   name: "deepseek",
   baseURL: "https://api.deepseek.com/v1",

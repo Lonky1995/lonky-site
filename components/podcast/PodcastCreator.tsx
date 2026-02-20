@@ -563,23 +563,7 @@ export function PodcastCreator() {
       {/* Step 4: AI Chat */}
       {step === 4 && meta && transcript && (
         <div className="space-y-4">
-          <div className="flex items-center justify-between">
-            <h2 className="text-xl font-bold">AI 笔记 & 对话</h2>
-            <button
-              onClick={() => {
-                if (summary) {
-                  setEditTitle(meta.title);
-                  setEditSlug(generateSlug(meta.title));
-                  setEditTags("播客");
-                  setStep(5);
-                }
-              }}
-              disabled={!summary}
-              className="rounded-lg bg-accent px-4 py-2 text-sm font-medium text-white transition-opacity hover:opacity-90 disabled:opacity-50"
-            >
-              下一步：编辑 & 发布
-            </button>
-          </div>
+          <h2 className="text-xl font-bold">AI 笔记 & 对话</h2>
 
           {/* Show saved summary if exists */}
           {summary && (
@@ -617,6 +601,21 @@ export function PodcastCreator() {
           <p className="text-xs text-muted">
             笔记生成后可继续对话，提问细节或要求扩展某个观点
           </p>
+
+          <button
+            onClick={() => {
+              if (summary) {
+                setEditTitle(meta.title);
+                setEditSlug(generateSlug(meta.title));
+                setEditTags("播客");
+                setStep(5);
+              }
+            }}
+            disabled={!summary}
+            className="w-full rounded-lg bg-accent px-6 py-3 font-medium text-white transition-opacity hover:opacity-90 disabled:opacity-50"
+          >
+            下一步：编辑 & 发布
+          </button>
         </div>
       )}
 
