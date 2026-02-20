@@ -89,17 +89,19 @@ export function StarField() {
     }
 
     function spawnShootingStar() {
+      const c = canvasRef.current;
+      if (!c) return;
       const edge = Math.random();
       let x: number, y: number, angle: number;
       if (edge < 0.5) {
         // From top
-        x = Math.random() * canvas.width;
+        x = Math.random() * c.width;
         y = -10;
         angle = Math.PI * 0.2 + Math.random() * 0.3;
       } else {
         // From right
-        x = canvas.width + 10;
-        y = Math.random() * canvas.height * 0.5;
+        x = c.width + 10;
+        y = Math.random() * c.height * 0.5;
         angle = Math.PI * 0.6 + Math.random() * 0.3;
       }
       const speed = 8 + Math.random() * 6;
@@ -125,6 +127,7 @@ export function StarField() {
     const cy = canvas.height / 2;
 
     const animate = () => {
+      if (!canvas) return;
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       time += 1;
 
