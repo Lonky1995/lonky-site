@@ -11,7 +11,14 @@ type BlogPost = {
   description: string;
   date: string;
   category: string;
+  type?: string;
 };
+
+function getPostHref(post: BlogPost) {
+  return post.type === "podcast"
+    ? `/podcast-notes/${post.slug}`
+    : `/blog/${post.slug}`;
+}
 
 export function BlogPreview({ posts }: { posts: BlogPost[] }) {
   const { dict } = useLocale();
@@ -36,7 +43,7 @@ export function BlogPreview({ posts }: { posts: BlogPost[] }) {
     >
       <div className="grid gap-6 md:grid-cols-3">
         {posts.slice(0, 3).map((post, i) => (
-          <Link key={post.slug} href={`/blog/${post.slug}`} className="h-full">
+          <Link key={post.slug} href={getPostHref(post)} className="h-full">
             <AnimatedCard delay={i * 0.1} className="h-full">
               <h3 className="mb-2 text-lg font-semibold">{post.title}</h3>
               <p className="text-sm text-muted line-clamp-2">
