@@ -64,7 +64,7 @@ const zh: Dictionary = {
     subtitle: "用 AI 整理我听过的播客精华。",
     noNotes: "暂无播客笔记。",
     backToAll: "← 返回全部播客笔记",
-    newNote: "新建播客笔记",
+    newNote: "去体验",
     sourceLink: "收听原节目 →",
     transcript: "完整转录",
   },

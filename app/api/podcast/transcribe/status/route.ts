@@ -19,9 +19,26 @@ export async function GET(req: NextRequest) {
   try {
     const transcript = await client.transcripts.get(id);
 
+    if (transcript.status === "completed") {
+      // Get sentences with timestamps
+      const { sentences } = await client.transcripts.sentences(id);
+      const timestampedText = sentences
+        .map((s) => {
+          const totalSec = Math.floor(s.start / 1000);
+          const mm = String(Math.floor(totalSec / 60)).padStart(2, "0");
+          const ss = String(totalSec % 60).padStart(2, "0");
+          return `[${mm}:${ss}] ${s.text}`;
+        })
+        .join("\n");
+
+      return NextResponse.json({
+        status: "completed",
+        text: timestampedText,
+      });
+    }
+
     return NextResponse.json({
       status: transcript.status,
-      text: transcript.status === "completed" ? transcript.text : undefined,
       error: transcript.status === "error" ? transcript.error : undefined,
     });
   } catch (e) {

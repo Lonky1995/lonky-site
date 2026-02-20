@@ -407,6 +407,45 @@ export function PodcastCreator() {
           >
             {loading ? "解析中..." : "解析链接"}
           </button>
+
+          {/* How it works */}
+          <div className="mt-16">
+            <h2 className="mb-10 text-center text-2xl font-bold">
+              <span className="bg-gradient-to-r from-[#6366f1] to-[#8b5cf6] bg-clip-text text-transparent">
+                How it works
+              </span>
+            </h2>
+            <div className="relative flex flex-col items-center gap-0 md:flex-row md:items-start md:justify-between md:gap-0">
+              <div className="absolute left-[10%] right-[10%] top-8 hidden h-[2px] bg-gradient-to-r from-[#6366f1]/10 via-[#6366f1]/50 to-[#6366f1]/10 md:block" />
+              <div className="absolute bottom-0 left-8 top-0 w-[2px] bg-gradient-to-b from-[#6366f1]/10 via-[#6366f1]/50 to-[#6366f1]/10 md:hidden" />
+              {[
+                { icon: "🔗", title: "贴入链接", desc: "粘贴小宇宙 / Apple Podcasts 链接" },
+                { icon: "🎙️", title: "自动转录", desc: "AI 语音识别，生成完整文字稿" },
+                { icon: "📝", title: "结构化笔记", desc: "AI 提炼要点，生成结构化笔记" },
+                { icon: "💬", title: "深入讨论", desc: "基于内容与 AI 对话，追问细节" },
+                { icon: "🚀", title: "一键生成", desc: "生成播客笔记，方便回顾" },
+              ].map((s, i, arr) => (
+                <div
+                  key={s.title}
+                  className="relative z-10 flex items-start gap-4 py-4 md:flex-col md:items-center md:gap-0 md:py-0"
+                  style={{ flex: 1 }}
+                >
+                  <div className="flex h-16 w-16 shrink-0 items-center justify-center rounded-full border border-[#6366f1]/20 bg-[#111827] text-2xl shadow-lg shadow-[#6366f1]/10">
+                    {s.icon}
+                  </div>
+                  <div className="md:mt-4 md:text-center">
+                    <p className="text-sm font-semibold text-[#f1f5f9]">{s.title}</p>
+                    <p className="mt-1 text-xs leading-relaxed text-[#94a3b8] md:max-w-[120px]">{s.desc}</p>
+                  </div>
+                  {i < arr.length - 1 && (
+                    <svg className="absolute -right-3 top-6 hidden h-6 w-6 text-[#6366f1]/70 md:block" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                      <path d="M9 5l7 7-7 7" />
+                    </svg>
+                  )}
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
       )}
 
