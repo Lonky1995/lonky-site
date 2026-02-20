@@ -168,6 +168,11 @@ body {
 .prose-custom img {
   border-radius: 0.5rem;
   margin: 1.5rem 0;
+  cursor: zoom-in;
+  transition: opacity 0.15s;
+}
+.prose-custom img:hover {
+  opacity: 0.85;
 }
 .prose-custom hr {
   border-color: #1e293b;

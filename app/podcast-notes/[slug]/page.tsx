@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Link from "next/link";
+import { ImageZoom } from "@/components/ui/ImageZoom";
 
 type PodcastNote = {
   slug: string;
@@ -133,10 +134,7 @@ export default async function PodcastNoteDetailPage({
       </div>
 
       {/* Content */}
-      <div
-        className="prose-custom"
-        dangerouslySetInnerHTML={{ __html: note.body }}
-      />
+      <ImageZoom html={note.body} className="prose-custom" />
 
       {/* Back */}
       <div className="mt-16 border-t border-border pt-8">

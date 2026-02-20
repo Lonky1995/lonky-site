@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { BackLink } from "./back-link";
+import { ImageZoom } from "@/components/ui/ImageZoom";
 
 async function getPosts() {
   try {
@@ -78,10 +79,7 @@ export default async function BlogPostPage({
       </div>
 
       {/* Content */}
-      <div
-        className="prose-custom"
-        dangerouslySetInnerHTML={{ __html: post.body }}
-      />
+      <ImageZoom html={post.body} className="prose-custom" />
 
       {/* Back */}
       <div className="mt-16 border-t border-border pt-8">
