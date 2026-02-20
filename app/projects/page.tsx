@@ -1,3 +1,5 @@
+"use client";
+
 import { projects } from "@/data/projects";
 import { ProjectCard } from "@/components/projects/ProjectCard";
 import { BriefingCard } from "@/components/projects/BriefingCard";
