@@ -123,9 +123,16 @@ export function renderMarkdown(md: string): string {
   }
 }
 
-/** Inline formatting: bold, italic, code, links */
+/** Inline formatting: bold, italic, code, links, timestamps */
 function inline(text: string): string {
   return text
+    // Timestamp links [MM:SS] - convert to clickable buttons
+    // Match both `[12:34]` (in code) and plain [12:34]
+    .replace(/`?\[(\d{1,2}:\d{2})\]`?/g, (_, time) => {
+      const [mm, ss] = time.split(":").map(Number);
+      const seconds = mm * 60 + ss;
+      return `<button class="inline-flex items-center gap-0.5 rounded bg-accent/10 px-1.5 py-0.5 text-xs font-mono text-accent hover:bg-accent/20 transition-colors cursor-pointer" onclick="document.dispatchEvent(new CustomEvent('podcast-seek',{detail:${seconds}}))">${time}</button>`;
+    })
     // Code
     .replace(/`([^`]+)`/g, '<code class="rounded bg-border/50 px-1 py-0.5 text-xs font-mono">$1</code>')
     // Bold

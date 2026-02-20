@@ -2,6 +2,7 @@
 
 import { useState, useCallback, useEffect, useRef } from "react";
 import { ChatPanel } from "./ChatPanel";
+import { TetrisGame } from "./TetrisGame";
 import {
   buildSummarySystemPrompt,
   buildChatSystemPrompt,
@@ -90,6 +91,7 @@ export function PodcastCreator() {
   const [editSlug, setEditSlug] = useState("");
   const [editTags, setEditTags] = useState("");
   const [publishing, setPublishing] = useState(false);
+  const [showPreview, setShowPreview] = useState(false);
 
   // Restore state from localStorage on mount
   useEffect(() => {
@@ -234,7 +236,7 @@ export function PodcastCreator() {
       if (meta) {
         setEditTitle(meta.title);
         setEditSlug(generateSlug(meta.title));
-        setEditTags("播客");
+        setEditTags("播客笔记");
       }
     },
     [meta]
@@ -557,6 +559,12 @@ export function PodcastCreator() {
           <p className="text-xs text-muted text-center">
             每 5 秒自动检查状态，刷新页面也不会丢失进度
           </p>
+
+          {/* Mini game while waiting */}
+          <div className="mt-8 space-y-3">
+            <p className="text-center text-sm text-muted">等待的时候来一局？</p>
+            <TetrisGame />
+          </div>
         </div>
       )}
 
@@ -564,6 +572,19 @@ export function PodcastCreator() {
       {step === 4 && meta && transcript && (
         <div className="space-y-4">
           <h2 className="text-xl font-bold">AI 笔记 & 对话</h2>
+
+          {/* Audio player */}
+          {meta.audioUrl && <AudioPlayer audioUrl={meta.audioUrl} />}
+
+          {/* Transcript toggle */}
+          <details className="rounded-xl border border-border bg-card">
+            <summary className="cursor-pointer px-4 py-3 text-xs font-medium text-muted hover:text-foreground select-none">
+              查看转录原文
+            </summary>
+            <div className="max-h-[300px] overflow-y-auto border-t border-border px-4 py-3 text-xs leading-relaxed text-muted whitespace-pre-wrap font-mono">
+              {transcript}
+            </div>
+          </details>
 
           {/* Show saved summary if exists */}
           {summary && (
@@ -607,12 +628,12 @@ export function PodcastCreator() {
               if (summary) {
                 setEditTitle(meta.title);
                 setEditSlug(generateSlug(meta.title));
-                setEditTags("播客");
+                setEditTags("播客笔记");
                 setStep(5);
               }
             }}
             disabled={!summary}
-            className="w-full rounded-lg bg-accent px-6 py-3 font-medium text-white transition-opacity hover:opacity-90 disabled:opacity-50"
+            className="w-full rounded-lg border border-border px-6 py-2.5 text-sm text-muted transition-colors hover:border-accent hover:text-accent disabled:opacity-30"
           >
             下一步：编辑 & 发布
           </button>
@@ -624,38 +645,22 @@ export function PodcastCreator() {
         <div className="space-y-6">
           <h2 className="text-xl font-bold">编辑 & 发布</h2>
 
-          {/* 1. Summary */}
+          {/* 1. Summary — AI 客观提炼 */}
           <div className="rounded-xl border border-border bg-card p-5">
-            <h3 className="mb-3 text-sm font-semibold text-accent">播客总结</h3>
+            <div className="mb-3 flex items-center gap-2">
+              <span className="flex h-5 w-5 items-center justify-center rounded bg-accent/15 text-xs text-accent">AI</span>
+              <h3 className="text-sm font-semibold text-foreground">播客总结</h3>
+              <span className="text-xs text-muted">— AI 基于转录生成的结构化笔记</span>
+            </div>
             <div
               className="prose-custom prose-sm max-w-none"
               dangerouslySetInnerHTML={{ __html: renderMarkdown(summary) }}
             />
           </div>
 
-          {/* 2. Chat history */}
+          {/* 2. Discussion — 用户主观思考 */}
           {chatHistory.length > 0 && (
-            <div className="rounded-xl border border-border bg-card p-5">
-              <h3 className="mb-3 text-sm font-semibold text-accent">深入讨论</h3>
-              <div className="space-y-3 max-h-[400px] overflow-y-auto">
-                {chatHistory.map((m) => (
-                  <div key={m.id} className={`flex ${m.role === "user" ? "justify-end" : "justify-start"}`}>
-                    <div className={`text-sm ${m.role === "user" ? "max-w-[80%]" : "max-w-full w-full"}`}>
-                      {m.role === "user" ? (
-                        <div className="rounded-2xl rounded-tr-sm bg-accent px-3 py-2 text-white whitespace-pre-wrap">
-                          {m.content}
-                        </div>
-                      ) : (
-                        <div
-                          className="rounded-2xl rounded-tl-sm border border-border bg-background px-3 py-2 prose-custom prose-sm max-w-none"
-                          dangerouslySetInnerHTML={{ __html: renderMarkdown(m.content) }}
-                        />
-                      )}
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
+            <DiscussionSection chatHistory={chatHistory} />
           )}
 
           {/* Edit fields */}
@@ -689,12 +694,18 @@ export function PodcastCreator() {
             </div>
           </div>
 
-          <div className="flex gap-3">
+          <div className="flex flex-wrap gap-3">
             <button
               onClick={() => setStep(4)}
               className="rounded-lg border border-border px-4 py-2 text-sm text-muted hover:text-foreground"
             >
               返回对话
+            </button>
+            <button
+              onClick={() => setShowPreview(true)}
+              className="rounded-lg border border-border px-4 py-2 text-sm text-muted hover:text-foreground"
+            >
+              预览最终效果
             </button>
             <button
               onClick={handleExport}
@@ -712,6 +723,182 @@ export function PodcastCreator() {
           </div>
         </div>
       )}
+
+      {/* Preview modal */}
+      {showPreview && meta && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4"
+          onClick={() => setShowPreview(false)}
+        >
+          <div
+            className="relative max-h-[90vh] w-full max-w-3xl overflow-y-auto rounded-2xl border border-border bg-background p-8"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <button
+              onClick={() => setShowPreview(false)}
+              className="absolute right-4 top-4 text-muted hover:text-foreground"
+            >
+              ✕
+            </button>
+
+            {/* Simulated detail page */}
+            <article>
+              <div className="mb-8">
+                <div className="mb-3 flex flex-wrap items-center gap-3">
+                  <span className="text-sm font-medium text-accent">播客笔记</span>
+                  <span className="text-sm text-muted">
+                    {new Date().toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" })}
+                  </span>
+                  <span className="rounded-full border border-border px-2 py-0.5 text-xs text-muted">
+                    {meta.platform === "xiaoyuzhou" ? "小宇宙" : "Apple Podcasts"}
+                  </span>
+                  {meta.duration && (
+                    <span className="text-sm text-muted">
+                      {Math.floor(meta.duration / 60)} min
+                    </span>
+                  )}
+                </div>
+                <h1 className="mb-4 text-3xl font-bold">{editTitle || meta.title}</h1>
+                <p className="text-lg text-muted">{meta.description}</p>
+                {editTags && (
+                  <div className="mt-4 flex flex-wrap gap-2">
+                    {editTags.split(",").map((t) => t.trim()).filter(Boolean).map((tag) => (
+                      <span key={tag} className="rounded-full border border-border px-3 py-1 text-xs text-muted">
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
+                )}
+              </div>
+              <div
+                className="prose-custom"
+                dangerouslySetInnerHTML={{ __html: renderMarkdown(summary) }}
+              />
+              {chatHistory.length > 0 && (
+                <div className="mt-8">
+                  <h2 className="mb-4 text-lg font-bold">深入讨论</h2>
+                  <div className="space-y-3">
+                    {chatHistory
+                      .filter((m) => m.role === "user" || m.role === "assistant")
+                      .map((m) => (
+                        <div key={m.id}>
+                          <p className="text-xs font-medium text-muted mb-1">
+                            {m.role === "user" ? "Q" : "A"}
+                          </p>
+                          <div
+                            className="prose-custom prose-sm"
+                            dangerouslySetInnerHTML={{ __html: renderMarkdown(m.content) }}
+                          />
+                        </div>
+                      ))}
+                  </div>
+                </div>
+              )}
+            </article>
+          </div>
+        </div>
+      )}
     </div>
+  );
+}
+
+function DiscussionSection({ chatHistory }: { chatHistory: { id: string; role: string; content: string }[] }) {
+  const [showRaw, setShowRaw] = useState(false);
+
+  // Pair up Q&A: each user message + following assistant message
+  const pairs: { question: string; answer: string }[] = [];
+  for (let i = 0; i < chatHistory.length; i++) {
+    if (chatHistory[i].role === "user") {
+      pairs.push({
+        question: chatHistory[i].content,
+        answer: chatHistory[i + 1]?.role === "assistant" ? chatHistory[i + 1].content : "",
+      });
+    }
+  }
+
+  return (
+    <div className="rounded-xl border border-dashed border-amber-500/30 bg-amber-500/5 p-5">
+      <div className="mb-4 flex items-center justify-between">
+        <div className="flex items-center gap-2">
+          <span className="flex h-5 w-5 items-center justify-center rounded bg-amber-500/15 text-xs">💭</span>
+          <h3 className="text-sm font-semibold text-foreground">我的思考</h3>
+          <span className="text-xs text-muted">— 听完后的追问与讨论</span>
+        </div>
+        <button
+          onClick={() => setShowRaw(!showRaw)}
+          className="text-xs text-muted hover:text-foreground"
+        >
+          {showRaw ? "精简视图" : "查看原始对话"}
+        </button>
+      </div>
+
+      {showRaw ? (
+        /* Raw chat view */
+        <div className="space-y-3 max-h-[400px] overflow-y-auto">
+          {chatHistory.map((m) => (
+            <div key={m.id} className={`flex ${m.role === "user" ? "justify-end" : "justify-start"}`}>
+              <div className={`text-sm ${m.role === "user" ? "max-w-[80%]" : "max-w-full w-full"}`}>
+                {m.role === "user" ? (
+                  <div className="rounded-2xl rounded-tr-sm bg-amber-500/20 px-3 py-2 text-foreground whitespace-pre-wrap">
+                    {m.content}
+                  </div>
+                ) : (
+                  <div
+                    className="rounded-2xl rounded-tl-sm border border-border bg-background px-3 py-2 prose-custom prose-sm max-w-none"
+                    dangerouslySetInnerHTML={{ __html: renderMarkdown(m.content) }}
+                  />
+                )}
+              </div>
+            </div>
+          ))}
+        </div>
+      ) : (
+        /* Condensed Q&A view */
+        <div className="space-y-4 max-h-[400px] overflow-y-auto">
+          {pairs.map((pair, i) => (
+            <div key={i} className="space-y-2">
+              <div className="flex items-start gap-2">
+                <span className="mt-0.5 shrink-0 rounded bg-amber-500/20 px-1.5 py-0.5 text-[10px] font-bold text-amber-400">Q</span>
+                <p className="text-sm font-medium text-foreground whitespace-pre-wrap">{pair.question}</p>
+              </div>
+              {pair.answer && (
+                <div className="ml-6 border-l-2 border-border pl-3">
+                  <div
+                    className="text-sm prose-custom prose-sm max-w-none text-muted"
+                    dangerouslySetInnerHTML={{ __html: renderMarkdown(pair.answer) }}
+                  />
+                </div>
+              )}
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
+
+function AudioPlayer({ audioUrl }: { audioUrl: string }) {
+  const audioRef = useRef<HTMLAudioElement>(null);
+
+  useEffect(() => {
+    const handler = (e: Event) => {
+      const seconds = (e as CustomEvent<number>).detail;
+      if (audioRef.current) {
+        audioRef.current.currentTime = seconds;
+        audioRef.current.play();
+      }
+    };
+    document.addEventListener("podcast-seek", handler);
+    return () => document.removeEventListener("podcast-seek", handler);
+  }, []);
+
+  return (
+    <audio
+      ref={audioRef}
+      src={audioUrl}
+      controls
+      preload="none"
+      className="w-full rounded-lg"
+    />
   );
 }

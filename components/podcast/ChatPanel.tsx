@@ -40,6 +40,19 @@ export function ChatPanel({
   // Track if user has manually scrolled up
   const userScrolledUp = useRef(false);
 
+  // Esc to abort streaming
+  useEffect(() => {
+    const handler = (e: KeyboardEvent) => {
+      if (e.key === "Escape" && abortRef.current) {
+        abortRef.current.abort();
+        abortRef.current = null;
+        setIsLoading(false);
+      }
+    };
+    document.addEventListener("keydown", handler);
+    return () => document.removeEventListener("keydown", handler);
+  }, []);
+
   useEffect(() => {
     // Only auto-scroll if user hasn't scrolled up
     if (!userScrolledUp.current && scrollContainerRef.current) {
@@ -177,6 +190,26 @@ export function ChatPanel({
         <div ref={messagesEndRef} />
       </div>
 
+      {/* Suggested questions */}
+      {!isLoading && displayMessages.length > 0 && !displayMessages.some((m) => m.role === "user") && (
+        <div className="flex flex-wrap gap-2 border-t border-border px-4 pt-3">
+          {[
+            "哪个观点你觉得最有争议？",
+            "展开讲讲最核心的那个点",
+            "有没有反面案例？",
+            "这对我有什么实际启发？",
+          ].map((q) => (
+            <button
+              key={q}
+              onClick={() => sendMessage(q, messages)}
+              className="rounded-full border border-border px-3 py-1.5 text-xs text-muted hover:border-accent hover:text-accent transition-colors"
+            >
+              {q}
+            </button>
+          ))}
+        </div>
+      )}
+
       {/* Input */}
       <form
         onSubmit={handleSubmit}
@@ -191,7 +224,7 @@ export function ChatPanel({
             e.target.style.height = Math.min(e.target.scrollHeight, 72) + "px";
           }}
           onKeyDown={(e) => {
-            if (e.key === "Enter" && !e.shiftKey) {
+            if (e.key === "Enter" && (e.metaKey || e.altKey)) {
               e.preventDefault();
               handleSubmit(e);
             }
