@@ -1,7 +1,7 @@
 ---
 title: "Vol. 161 从开发自己的🦞OpenClaw聊起"
 slug: "vol-161-openclaw"
-description: "听《枫言枫语》上小宇宙。 听见科技与人文的声音。由开发者 @枫影JustinYan 和 设计师 @自力hzlzh 主持的播客节目。"
+description: "围绕 AI 个人助理项目 OpenClaw（小龙虾）展开，从亲手复刻简化版的经历出发，探讨以 Agent 为核心构建软件的新范式、安全隐患，以及这种技术如何颠覆未来的软件形态与人机关系。"
 date: "2026-02-19"
 category: "播客笔记"
 tags: ["播客笔记"]
