@@ -174,6 +174,21 @@ export function PodcastCreator() {
       });
       const data = await res.json();
       if (!res.ok) throw new Error(data.error);
+
+      // Cache hit — already completed, fetch text and skip to Step 4
+      if (data.cached && data.status === "completed") {
+        const statusRes = await fetch(
+          `/api/podcast/transcribe/status?id=${data.transcriptId}`,
+          { headers: { Authorization: `Bearer ${secret}` } }
+        );
+        const statusData = await statusRes.json();
+        if (statusData.status === "completed" && statusData.text) {
+          setTranscript(statusData.text);
+          setStep(4);
+          return;
+        }
+      }
+
       setTranscriptId(data.transcriptId);
       setStep(3);
     } catch (e) {

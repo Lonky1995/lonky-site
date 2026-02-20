@@ -17,6 +17,32 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: "audioUrl is required" }, { status: 400 });
     }
 
+    // Check recent transcripts for the same audio URL (avoid duplicate submissions)
+    const { transcripts: recent } = await client.transcripts.list({ limit: 20 });
+    const existing = recent
+      ?.filter((t) => t.audio_url === audioUrl)
+      .sort((a, b) => new Date(b.created!).getTime() - new Date(a.created!).getTime());
+
+    if (existing?.length) {
+      // Prefer completed, then processing/queued
+      const completed = existing.find((t) => t.status === "completed");
+      if (completed) {
+        return NextResponse.json({
+          transcriptId: completed.id,
+          status: completed.status,
+          cached: true,
+        });
+      }
+      const inProgress = existing.find((t) => t.status === "processing" || t.status === "queued");
+      if (inProgress) {
+        return NextResponse.json({
+          transcriptId: inProgress.id,
+          status: inProgress.status,
+          cached: true,
+        });
+      }
+    }
+
     const transcript = await client.transcripts.submit({
       audio_url: audioUrl,
       language_code: "zh",
