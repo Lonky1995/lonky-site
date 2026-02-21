@@ -797,7 +797,7 @@ export function PodcastCreator() {
               onClick={handleExport}
               className="rounded-lg border border-border px-4 py-2 text-sm text-muted hover:text-foreground"
             >
-              导出 Markdown
+              导出播客 AI 总结
             </button>
             <button
               onClick={handlePublish}
