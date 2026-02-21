@@ -940,17 +940,19 @@ function DiscussionSection({ chatHistory }: { chatHistory: { id: string; role: s
         </div>
       ) : (
         /* Condensed Q&A view */
-        <div className="space-y-4 max-h-[400px] overflow-y-auto">
+        <div className="space-y-5 max-h-[400px] overflow-y-auto">
           {pairs.map((pair, i) => (
-            <div key={i} className="space-y-2">
-              <div className="flex items-start gap-2">
-                <span className="mt-0.5 shrink-0 rounded bg-amber-500/20 px-1.5 py-0.5 text-[10px] font-bold text-amber-400">Q</span>
-                <p className="text-sm font-medium text-foreground whitespace-pre-wrap">{pair.question}</p>
+            <div key={i} className="flex flex-col gap-2">
+              {/* Question — right-aligned bubble */}
+              <div className="self-end max-w-[85%] rounded-2xl rounded-br-sm bg-amber-500/20 px-4 py-2.5">
+                <p className="text-sm font-medium text-foreground whitespace-pre-wrap">🙋 {pair.question}</p>
               </div>
+              {/* Answer — left-aligned bubble */}
               {pair.answer && (
-                <div className="ml-6 border-l-2 border-border pl-3">
+                <div className="self-start max-w-[95%] rounded-2xl rounded-bl-sm border border-border bg-background px-4 py-3">
+                  <p className="text-[10px] font-semibold text-accent mb-1.5">AI</p>
                   <div
-                    className="text-sm prose-custom prose-sm max-w-none text-muted"
+                    className="text-sm prose-custom prose-sm max-w-none"
                     dangerouslySetInnerHTML={{ __html: renderMarkdown(pair.answer) }}
                   />
                 </div>
