@@ -957,7 +957,7 @@ function DiscussionSection({ chatHistory }: { chatHistory: { id: string; role: s
         /* Condensed Q&A view */
         <div className="space-y-5 max-h-[400px] overflow-y-auto">
           {pairs.map((pair, i) => (
-            <div key={i} id={`preview-q-${pair.idx}`} className="flex flex-col gap-2">
+            <div key={i} className="flex flex-col gap-2">
               {/* Question — right-aligned bubble */}
               <div className="self-end max-w-[85%] rounded-2xl rounded-br-sm bg-accent/15 px-4 py-2.5">
                 <p className="text-sm font-medium text-foreground whitespace-pre-wrap">🙋 {pair.question}</p>
@@ -1108,7 +1108,7 @@ function PreviewToc({ summary, chatHistory }: { summary: string; chatHistory: { 
             <button
               onClick={() => {
                 const container = document.getElementById("preview-scroll-container");
-                const target = document.getElementById(item.id);
+                const target = container?.querySelector(`#${CSS.escape(item.id)}`) as HTMLElement | null;
                 if (container && target) {
                   container.scrollTo({ top: target.offsetTop - container.offsetTop - 16, behavior: "smooth" });
                 }
