@@ -222,7 +222,7 @@ export default async function PodcastNoteDetailPage({
             href={note.sourceUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="mt-4 inline-block text-sm text-accent hover:underline"
+            className="inline-block text-sm text-accent hover:underline"
           >
             收听原节目 →
           </a>
@@ -241,6 +241,9 @@ export default async function PodcastNoteDetailPage({
           </div>
         )}
       </div>
+
+      {/* Audio player — sticky, outside header so it sticks on scroll */}
+      {note.audioUrl && <PodcastPlayer audioUrl={note.audioUrl} />}
 
       {/* TOC */}
       {toc.length > 0 && (
@@ -264,9 +267,6 @@ export default async function PodcastNoteDetailPage({
           </ul>
         </nav>
       )}
-
-      {/* Audio player */}
-      {note.audioUrl && <PodcastPlayer audioUrl={note.audioUrl} />}
 
       {/* Content */}
       {note.audioUrl ? (

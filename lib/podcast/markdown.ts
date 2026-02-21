@@ -12,6 +12,7 @@ type NoteData = {
   sourceUrl?: string;
   platform?: string;
   coverImage?: string;
+  audioUrl?: string;
   duration?: number;
   summary: string;
   discussionSummary?: string;
@@ -31,6 +32,7 @@ export function generateMarkdown(data: NoteData): string {
     data.sourceUrl ? `sourceUrl: "${data.sourceUrl}"` : null,
     data.platform ? `platform: "${data.platform}"` : null,
     data.coverImage ? `coverImage: "${data.coverImage}"` : null,
+    data.audioUrl ? `audioUrl: "${data.audioUrl}"` : null,
     data.duration ? `duration: ${data.duration}` : null,
     "---",
   ]

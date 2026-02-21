@@ -365,6 +365,7 @@ export function PodcastCreator() {
         sourceUrl: url,
         platform: meta.platform,
         coverImage: meta.coverImage,
+        audioUrl: meta.audioUrl,
         duration: meta.duration,
         summary,
         discussionSummary,
