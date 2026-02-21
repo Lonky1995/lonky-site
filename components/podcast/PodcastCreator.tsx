@@ -390,6 +390,7 @@ export function PodcastCreator() {
       if (!res.ok) throw new Error(data.error);
       clearState();
       alert(`发布成功！Vercel 将在 1-2 分钟后自动重建。\n路径: ${data.path}`);
+      window.location.href = "/";
     } catch (e) {
       setError(e instanceof Error ? e.message : "发布失败");
     } finally {
