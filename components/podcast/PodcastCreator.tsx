@@ -877,9 +877,31 @@ export function PodcastCreator() {
                 dangerouslySetInnerHTML={{ __html: renderMarkdown(summary) }}
               />
               {chatHistory.length > 0 && (
-                <div className="mt-8">
-                  <h2 id="preview-discussion" className="mb-4 text-lg font-bold">和 AI 深入讨论</h2>
-                  <DiscussionSection chatHistory={chatHistory} />
+                <div className="mt-8 prose-custom">
+                  <h2 id="preview-discussion">和 AI 深入讨论</h2>
+                  {(() => {
+                    const pairs: { question: string; answer: string; idx: number }[] = [];
+                    for (let i = 0; i < chatHistory.length; i++) {
+                      if (chatHistory[i].role === "user") {
+                        pairs.push({
+                          question: chatHistory[i].content,
+                          answer: chatHistory[i + 1]?.role === "assistant" ? chatHistory[i + 1].content : "",
+                          idx: i,
+                        });
+                      }
+                    }
+                    return pairs.map((pair, i) => (
+                      <div key={i} id={`preview-q-${pair.idx}`} className="discussion-card">
+                        <div className="discussion-q">{pair.question}</div>
+                        {pair.answer && (
+                          <div
+                            className="discussion-a"
+                            dangerouslySetInnerHTML={{ __html: renderMarkdown(pair.answer) }}
+                          />
+                        )}
+                      </div>
+                    ));
+                  })()}
                 </div>
               )}
             </article>
