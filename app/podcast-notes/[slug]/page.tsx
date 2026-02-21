@@ -207,10 +207,6 @@ export default async function PodcastNoteDetailPage({
         <h1 className="mb-4 text-3xl font-bold md:text-4xl">
           {note.title}
         </h1>
-        {note.description && (
-          <p className="text-lg text-muted">{note.description}</p>
-        )}
-
         {note.sourceUrl && (
           <a
             href={note.sourceUrl}
