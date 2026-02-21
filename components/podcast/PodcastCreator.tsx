@@ -466,7 +466,7 @@ export function PodcastCreator() {
           </span>
           <button
             onClick={handleReset}
-            className="text-xs text-muted hover:text-foreground"
+            className="cursor-pointer text-xs text-muted transition-colors hover:text-foreground"
           >
             重新开始
           </button>
@@ -512,7 +512,7 @@ export function PodcastCreator() {
           <button
             onClick={handleParse}
             disabled={loading || !url || !secret}
-            className="rounded-lg bg-accent px-6 py-3 font-medium text-white transition-opacity hover:opacity-90 disabled:opacity-50"
+            className="cursor-pointer rounded-lg bg-accent px-6 py-3 font-medium text-white transition-all hover:-translate-y-0.5 hover:shadow-lg hover:shadow-accent/25 disabled:opacity-50 disabled:hover:translate-y-0 disabled:hover:shadow-none"
           >
             {loading ? "解析中..." : "解析链接"}
           </button>
@@ -590,14 +590,14 @@ export function PodcastCreator() {
           <div className="flex gap-3">
             <button
               onClick={() => setStep(1)}
-              className="rounded-lg border border-border px-4 py-2 text-sm text-muted hover:text-foreground"
+              className="cursor-pointer rounded-lg border border-border px-4 py-2 text-sm text-muted transition-colors hover:border-accent hover:text-foreground"
             >
               返回
             </button>
             <button
               onClick={handleTranscribe}
               disabled={loading}
-              className="rounded-lg bg-accent px-6 py-3 font-medium text-white transition-opacity hover:opacity-90 disabled:opacity-50"
+              className="cursor-pointer rounded-lg bg-accent px-6 py-3 font-medium text-white transition-all hover:-translate-y-0.5 hover:shadow-lg hover:shadow-accent/25 disabled:opacity-50 disabled:hover:translate-y-0 disabled:hover:shadow-none"
             >
               {loading ? "提交中..." : "开始转录"}
             </button>
@@ -679,7 +679,7 @@ export function PodcastCreator() {
               {summary && !summaryLoading && (
                 <button
                   onClick={generateSummary}
-                  className="text-xs text-accent hover:underline"
+                  className="cursor-pointer text-xs text-accent transition-colors hover:underline"
                 >
                   重新生成
                 </button>
@@ -783,26 +783,26 @@ export function PodcastCreator() {
           <div className="flex flex-wrap gap-3">
             <button
               onClick={() => setStep(4)}
-              className="rounded-lg border border-border px-4 py-2 text-sm text-muted hover:text-foreground"
+              className="cursor-pointer rounded-lg border border-border px-4 py-2 text-sm text-muted transition-colors hover:border-accent hover:text-foreground"
             >
               返回对话
             </button>
             <button
               onClick={() => setShowPreview(true)}
-              className="rounded-lg border border-border px-4 py-2 text-sm text-muted hover:text-foreground"
+              className="cursor-pointer rounded-lg border border-border px-4 py-2 text-sm text-muted transition-colors hover:border-accent hover:text-foreground"
             >
               预览最终效果
             </button>
             <button
               onClick={handleExport}
-              className="rounded-lg border border-border px-4 py-2 text-sm text-muted hover:text-foreground"
+              className="cursor-pointer rounded-lg border border-border px-4 py-2 text-sm text-muted transition-colors hover:border-accent hover:text-foreground"
             >
               导出播客 AI 总结
             </button>
             <button
               onClick={handlePublish}
               disabled={publishing || !editSlug}
-              className="rounded-lg bg-accent px-6 py-3 font-medium text-white transition-opacity hover:opacity-90 disabled:opacity-50"
+              className="cursor-pointer rounded-lg bg-accent px-6 py-3 font-medium text-white transition-all hover:-translate-y-0.5 hover:shadow-lg hover:shadow-accent/25 disabled:opacity-50 disabled:hover:translate-y-0 disabled:hover:shadow-none"
             >
               {publishing ? (chatHistory.length > 0 ? "总结讨论 & 发布中..." : "发布中...") : "发布到网站"}
             </button>
@@ -823,7 +823,7 @@ export function PodcastCreator() {
           >
             <button
               onClick={() => setShowPreview(false)}
-              className="absolute right-4 top-4 text-muted hover:text-foreground"
+              className="cursor-pointer absolute right-4 top-4 text-muted transition-colors hover:text-foreground"
             >
               ✕
             </button>
@@ -904,7 +904,7 @@ function DiscussionSection({ chatHistory }: { chatHistory: { id: string; role: s
         </div>
         <button
           onClick={() => setShowRaw(!showRaw)}
-          className="text-xs text-muted hover:text-foreground"
+          className="cursor-pointer text-xs text-muted transition-colors hover:text-foreground"
         >
           {showRaw ? "精简视图" : "查看原始对话"}
         </button>

@@ -177,7 +177,7 @@ export function ChatPanel({
             <button
               key={q}
               onClick={() => sendMessage(q, messages)}
-              className="rounded-full border border-border px-3 py-1.5 text-xs text-muted hover:border-accent hover:text-accent transition-colors"
+              className="cursor-pointer rounded-full border border-border px-3 py-1.5 text-xs text-muted transition-colors hover:border-accent hover:text-accent"
             >
               {q}
             </button>
@@ -214,7 +214,7 @@ export function ChatPanel({
           <button
             type="submit"
             disabled={isLoading || !input.trim()}
-            className="rounded-lg bg-accent px-4 py-2 text-sm font-medium text-white transition-opacity hover:opacity-90 disabled:opacity-50"
+            className="cursor-pointer rounded-lg bg-accent px-4 py-2 text-sm font-medium text-white transition-all hover:-translate-y-0.5 hover:shadow-lg hover:shadow-accent/25 disabled:opacity-50 disabled:hover:translate-y-0 disabled:hover:shadow-none"
           >
             发送
           </button>
