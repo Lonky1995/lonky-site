@@ -119,7 +119,9 @@ export function ContactCTA({ tweetSlot, wechatArticle }: { tweetSlot?: ReactNode
               </p>
               {wechatArticle ? (
                 <a
-                  href="/wechat"
+                  href={wechatArticle.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="block group"
                 >
                   <h3 className="font-medium text-foreground mb-2 group-hover:text-accent transition-colors">
