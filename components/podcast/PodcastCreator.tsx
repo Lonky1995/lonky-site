@@ -874,7 +874,7 @@ export function PodcastCreator() {
 
               <div
                 className="prose-custom"
-                dangerouslySetInnerHTML={{ __html: renderMarkdown(summary) }}
+                dangerouslySetInnerHTML={{ __html: renderMarkdown(summary, { injectIds: true }) }}
               />
               {chatHistory.length > 0 && (
                 <div className="mt-8 prose-custom">
