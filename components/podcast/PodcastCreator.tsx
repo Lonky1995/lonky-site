@@ -795,7 +795,7 @@ export function PodcastCreator() {
             </button>
             <button
               onClick={handleExport}
-              className="rounded-lg border border-accent px-4 py-2 text-sm text-accent hover:bg-accent/10"
+              className="rounded-lg border border-border px-4 py-2 text-sm text-muted hover:text-foreground"
             >
               导出 Markdown
             </button>
