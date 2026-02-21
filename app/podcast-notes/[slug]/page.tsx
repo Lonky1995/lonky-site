@@ -48,7 +48,17 @@ export async function generateMetadata({
   return {
     title: note.title,
     description: note.description,
-    openGraph: note.coverImage ? { images: [note.coverImage] } : undefined,
+    openGraph: {
+      title: note.title,
+      description: note.description,
+      ...(note.coverImage ? { images: [note.coverImage] } : {}),
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: note.title,
+      description: note.description,
+      ...(note.coverImage ? { images: [note.coverImage] } : {}),
+    },
   };
 }
 
