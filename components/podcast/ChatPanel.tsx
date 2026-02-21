@@ -14,7 +14,7 @@ type ChatPanelProps = {
   meta: { title: string; description?: string };
   systemPrompt: string;
   secret: string;
-  skipInitialSummary?: boolean;
+  initialMessages?: Message[];
   onMessagesChange?: (messages: Message[]) => void;
 };
 
@@ -23,10 +23,10 @@ export function ChatPanel({
   meta,
   systemPrompt,
   secret,
-  skipInitialSummary = false,
+  initialMessages,
   onMessagesChange,
 }: ChatPanelProps) {
-  const [messages, setMessages] = useState<Message[]>([]);
+  const [messages, setMessages] = useState<Message[]>(initialMessages ?? []);
   const [input, setInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const scrollContainerRef = useRef<HTMLDivElement>(null);

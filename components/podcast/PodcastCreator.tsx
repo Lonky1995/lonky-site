@@ -705,7 +705,7 @@ export function PodcastCreator() {
             meta={{ title: meta.title, description: meta.description }}
             systemPrompt={buildChatSystemPrompt(transcript, { title: meta.title, description: meta.description })}
             secret={secret}
-            skipInitialSummary
+            initialMessages={restored && chatHistory.length > 0 ? chatHistory.map((m) => ({ id: m.id, role: m.role as "user" | "assistant", content: m.content })) : undefined}
             onMessagesChange={(msgs) => setChatHistory(msgs)}
           />
 
