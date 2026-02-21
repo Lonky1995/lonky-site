@@ -1159,7 +1159,9 @@ function SummaryEditor({ summary, onChange }: { summary: string; onChange: (v: s
         />
       ) : (
         <div
-          className="prose-custom prose-sm max-w-none"
+          onDoubleClick={() => setEditing(true)}
+          className="prose-custom prose-sm max-w-none cursor-text"
+          title="双击编辑"
           dangerouslySetInnerHTML={{ __html: renderMarkdown(summary) }}
         />
       )}
