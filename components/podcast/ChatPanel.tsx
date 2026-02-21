@@ -210,13 +210,16 @@ export function ChatPanel({
           style={{ maxHeight: 72 }}
           disabled={isLoading}
         />
-        <button
-          type="submit"
-          disabled={isLoading || !input.trim()}
-          className="rounded-lg bg-accent px-4 py-2 text-sm font-medium text-white transition-opacity hover:opacity-90 disabled:opacity-50"
-        >
-          发送
-        </button>
+        <div className="flex flex-col items-center gap-0.5">
+          <button
+            type="submit"
+            disabled={isLoading || !input.trim()}
+            className="rounded-lg bg-accent px-4 py-2 text-sm font-medium text-white transition-opacity hover:opacity-90 disabled:opacity-50"
+          >
+            发送
+          </button>
+          <span className="text-[10px] text-muted">⌘/Alt+Enter</span>
+        </div>
       </form>
     </div>
   );
