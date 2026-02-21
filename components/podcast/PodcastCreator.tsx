@@ -40,6 +40,7 @@ type SavedState = {
   transcript: string;
   summary: string;
   editTitle: string;
+  editDescription: string;
   editSlug: string;
   editTags: string;
   chatHistory: { id: string; role: string; content: string }[];
@@ -89,10 +90,21 @@ export function PodcastCreator() {
 
   // Step 5 editable fields
   const [editTitle, setEditTitle] = useState("");
+  const [editDescription, setEditDescription] = useState("");
   const [editSlug, setEditSlug] = useState("");
   const [editTags, setEditTags] = useState("");
   const [publishing, setPublishing] = useState(false);
   const [showPreview, setShowPreview] = useState(false);
+
+  // Lock body scroll when preview modal is open
+  useEffect(() => {
+    if (showPreview) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+    return () => { document.body.style.overflow = ""; };
+  }, [showPreview]);
 
   // Restore state from localStorage on mount
   useEffect(() => {
@@ -108,6 +120,7 @@ export function PodcastCreator() {
       setTranscript(state.transcript);
       setSummary(state.summary);
       setEditTitle(state.editTitle);
+      setEditDescription(state.editDescription || "");
       setEditSlug(state.editSlug);
       setEditTags(state.editTags);
       setChatHistory(state.chatHistory || []);
@@ -126,13 +139,14 @@ export function PodcastCreator() {
         transcript,
         summary,
         editTitle,
+        editDescription,
         editSlug,
         editTags,
         chatHistory,
         savedAt: Date.now(),
       });
     }
-  }, [step, url, meta, transcriptId, transcript, summary, editTitle, editSlug, editTags, chatHistory]);
+  }, [step, url, meta, transcriptId, transcript, summary, editTitle, editDescription, editSlug, editTags, chatHistory]);
 
   const headers = useCallback(
     () => ({ Authorization: `Bearer ${secret}`, "Content-Type": "application/json" }),
@@ -279,6 +293,7 @@ export function PodcastCreator() {
       }
       // Set publish fields
       setEditTitle(meta.title);
+      setEditDescription(meta.description);
       setEditSlug(generateSlug(meta.title));
       setEditTags("播客笔记");
     } catch (e) {
@@ -349,7 +364,7 @@ export function PodcastCreator() {
       const markdown = generateMarkdown({
         title: editTitle,
         slug: editSlug,
-        description: meta.description,
+        description: editDescription || meta.description,
         date: new Date().toISOString().split("T")[0],
         tags: editTags.split(",").map((t) => t.trim()).filter(Boolean),
         sourceUrl: url,
@@ -418,6 +433,7 @@ export function PodcastCreator() {
     setTranscript("");
     setSummary("");
     setEditTitle("");
+    setEditDescription("");
     setEditSlug("");
     setEditTags("");
     setChatHistory([]);
@@ -713,6 +729,7 @@ export function PodcastCreator() {
             onClick={() => {
               if (summary) {
                 setEditTitle(meta.title);
+                setEditDescription(meta.description);
                 setEditSlug(generateSlug(meta.title));
                 setEditTags("播客笔记");
                 setStep(5);
@@ -747,6 +764,15 @@ export function PodcastCreator() {
                 value={editTitle}
                 onChange={(e) => setEditTitle(e.target.value)}
                 className="w-full rounded-lg border border-border bg-background px-4 py-2 text-foreground focus:border-accent focus:outline-none"
+              />
+            </div>
+            <div>
+              <label className="mb-1 block text-sm text-muted">简介</label>
+              <textarea
+                value={editDescription}
+                onChange={(e) => setEditDescription(e.target.value)}
+                rows={3}
+                className="w-full rounded-lg border border-border bg-background px-4 py-2 text-foreground focus:border-accent focus:outline-none resize-y"
               />
             </div>
             <div>
@@ -804,12 +830,14 @@ export function PodcastCreator() {
       {/* Preview modal */}
       {showPreview && meta && (
         <div
-          className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4"
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4 overflow-hidden"
+          style={{ overscrollBehavior: "none" }}
           onClick={() => setShowPreview(false)}
         >
           <div
             id="preview-scroll-container"
             className="relative max-h-[90vh] w-full max-w-3xl overflow-y-auto rounded-2xl border border-border bg-background p-8"
+            style={{ overscrollBehavior: "contain" }}
             onClick={(e) => e.stopPropagation()}
           >
             <button
@@ -837,7 +865,7 @@ export function PodcastCreator() {
                   )}
                 </div>
                 <h1 className="mb-4 text-3xl font-bold">{editTitle || meta.title}</h1>
-                <p className="text-lg text-muted">{meta.description}</p>
+                <p className="text-lg text-muted">{editDescription || meta.description}</p>
                 {url && (
                   <a
                     href={url}
@@ -1110,7 +1138,8 @@ function PreviewToc({ summary, chatHistory }: { summary: string; chatHistory: { 
                 const container = document.getElementById("preview-scroll-container");
                 const target = container?.querySelector(`#${CSS.escape(item.id)}`) as HTMLElement | null;
                 if (container && target) {
-                  container.scrollTo({ top: target.offsetTop - container.offsetTop - 16, behavior: "smooth" });
+                  const scrollTop = target.getBoundingClientRect().top - container.getBoundingClientRect().top + container.scrollTop - 16;
+                  container.scrollTo({ top: scrollTop, behavior: "smooth" });
                 }
               }}
               className={`cursor-pointer text-left transition-colors hover:text-accent ${
