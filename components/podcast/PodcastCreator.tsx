@@ -807,6 +807,7 @@ export function PodcastCreator() {
               {publishing ? (chatHistory.length > 0 ? "总结讨论 & 发布中..." : "发布中...") : "发布到网站"}
             </button>
           </div>
+          <p className="text-[11px] text-muted">仅管理员可发布，访客可导出 Markdown 到本地</p>
         </div>
       )}
 
