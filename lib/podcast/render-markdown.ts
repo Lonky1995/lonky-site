@@ -7,9 +7,41 @@ export function renderMarkdown(md: string): string {
   const html: string[] = [];
   let inList = false;
   let inBlockquote = false;
+  let inTable = false;
 
   for (let i = 0; i < lines.length; i++) {
     let line = lines[i];
+
+    // Table row
+    if (line.trim().startsWith("|") && line.trim().endsWith("|")) {
+      // Skip separator row (| :--- | :--- |)
+      if (/^\s*\|[\s:-]+\|\s*$/.test(line)) continue;
+
+      closeList();
+      closeBlockquote();
+
+      const cells = line.trim().slice(1, -1).split("|").map((c) => c.trim());
+
+      if (!inTable) {
+        inTable = true;
+        // First row is header
+        html.push('<div class="overflow-x-auto my-4"><table class="w-full border-collapse text-sm">');
+        html.push("<thead><tr>");
+        for (const cell of cells) {
+          html.push(`<th class="border border-border bg-card px-3 py-2 text-left font-semibold">${inline(cell)}</th>`);
+        }
+        html.push("</tr></thead><tbody>");
+      } else {
+        html.push("<tr>");
+        for (const cell of cells) {
+          html.push(`<td class="border border-border px-3 py-2 align-top">${inline(cell.replace(/<br\s*\/?>/g, "<br />"))}</td>`);
+        }
+        html.push("</tr>");
+      }
+      continue;
+    } else if (inTable) {
+      closeTable();
+    }
 
     // Horizontal rule
     if (/^---+\s*$/.test(line)) {
@@ -103,6 +135,7 @@ export function renderMarkdown(md: string): string {
 
   closeList();
   closeBlockquote();
+  closeTable();
 
   return html.join("\n");
 
@@ -119,6 +152,13 @@ export function renderMarkdown(md: string): string {
     if (inBlockquote) {
       html.push("</blockquote>");
       inBlockquote = false;
+    }
+  }
+
+  function closeTable() {
+    if (inTable) {
+      html.push("</tbody></table></div>");
+      inTable = false;
     }
   }
 }
