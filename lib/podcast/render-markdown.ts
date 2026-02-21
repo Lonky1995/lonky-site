@@ -123,11 +123,8 @@ export function renderMarkdown(md: string): string {
     // Close list if we're no longer in one
     if (inList) closeList();
 
-    // Empty line
-    if (line.trim() === "") {
-      html.push("<br />");
-      continue;
-    }
+    // Empty line — skip (spacing handled by element margins)
+    if (line.trim() === "") continue;
 
     // Paragraph
     html.push(`<p class="my-1">${inline(line)}</p>`);
