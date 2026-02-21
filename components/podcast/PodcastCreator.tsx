@@ -856,13 +856,17 @@ export function PodcastCreator() {
                   </div>
                 )}
               </div>
+
+              {/* TOC */}
+              <PreviewToc summary={summary} hasDiscussion={chatHistory.length > 0} />
+
               <div
                 className="prose-custom"
                 dangerouslySetInnerHTML={{ __html: renderMarkdown(summary) }}
               />
               {chatHistory.length > 0 && (
                 <div className="mt-8">
-                  <h2 className="mb-4 text-lg font-bold">和 AI 深入讨论</h2>
+                  <h2 id="preview-discussion" className="mb-4 text-lg font-bold">和 AI 深入讨论</h2>
                   <div className="space-y-3">
                     {chatHistory
                       .filter((m) => m.role === "user" || m.role === "assistant")
@@ -1056,5 +1060,40 @@ function AudioPlayer({ audioUrl }: { audioUrl: string }) {
       </div>
       <span className="text-xs tabular-nums text-muted w-10 shrink-0 text-right">{duration > 0 ? fmt(duration) : "--:--"}</span>
     </div>
+  );
+}
+
+function PreviewToc({ summary, hasDiscussion }: { summary: string; hasDiscussion: boolean }) {
+  const items: { id: string; text: string }[] = [];
+  const lines = summary.split("\n");
+  for (const line of lines) {
+    const match = line.match(/^##\s+(.+)$/);
+    if (match) {
+      const text = match[1].replace(/\*\*/g, "").trim();
+      const id = "preview-" + text.replace(/[^\w\u4e00-\u9fff\s-]/g, "").trim().replace(/\s+/g, "-").toLowerCase();
+      items.push({ id, text });
+    }
+  }
+  if (hasDiscussion) {
+    items.push({ id: "preview-discussion", text: "和 AI 深入讨论" });
+  }
+  if (items.length === 0) return null;
+
+  return (
+    <nav className="mb-8 rounded-lg border border-border bg-card/50 p-5">
+      <p className="mb-3 text-sm font-semibold text-foreground">目录</p>
+      <ul className="space-y-1.5">
+        {items.map((item) => (
+          <li key={item.id}>
+            <a
+              href={`#${item.id}`}
+              className="text-sm text-muted transition-colors hover:text-accent"
+            >
+              {item.text}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </nav>
   );
 }

@@ -58,13 +58,15 @@ export function renderMarkdown(md: string): string {
       closeBlockquote();
       const level = headingMatch[1].length;
       const text = inline(headingMatch[2]);
+      const rawText = headingMatch[2].replace(/\*\*/g, "").trim();
+      const id = "preview-" + rawText.replace(/[^\w\u4e00-\u9fff\s-]/g, "").trim().replace(/\s+/g, "-").toLowerCase();
       const sizes: Record<number, string> = {
         1: "text-xl font-bold mt-6 mb-3",
         2: "text-lg font-bold mt-5 mb-2",
         3: "text-base font-semibold mt-4 mb-2",
         4: "text-sm font-semibold mt-3 mb-1",
       };
-      html.push(`<h${level} class="${sizes[level] || sizes[3]}">${text}</h${level}>`);
+      html.push(`<h${level} id="${id}" class="${sizes[level] || sizes[3]}">${text}</h${level}>`);
       continue;
     }
 
