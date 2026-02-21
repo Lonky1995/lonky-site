@@ -245,18 +245,57 @@ export function PodcastCreator() {
     };
   }, [step, transcriptId, secret]);
 
-  // Step 4: Summary complete callback
-  const handleSummaryComplete = useCallback(
-    (content: string) => {
-      setSummary(content);
-      if (meta) {
-        setEditTitle(meta.title);
-        setEditSlug(generateSlug(meta.title));
-        setEditTags("播客笔记");
+  // Step 4: Generate summary independently (stream from API, not via ChatPanel)
+  const summaryAbortRef = useRef<AbortController | null>(null);
+  const [summaryLoading, setSummaryLoading] = useState(false);
+
+  const generateSummary = useCallback(async () => {
+    if (!meta || !transcript) return;
+    setSummaryLoading(true);
+    setSummary("");
+    try {
+      summaryAbortRef.current = new AbortController();
+      const systemPrompt = buildSummarySystemPrompt(meta, transcript);
+      const res = await fetch("/api/podcast/chat", {
+        method: "POST",
+        headers: { Authorization: `Bearer ${secret}`, "Content-Type": "application/json" },
+        body: JSON.stringify({
+          system: systemPrompt,
+          messages: [{ role: "user", content: "请根据转录内容，生成结构化播客笔记。" }],
+        }),
+        signal: summaryAbortRef.current.signal,
+      });
+      if (!res.ok) throw new Error(`API error: ${res.status}`);
+      if (!res.body) throw new Error("No response body");
+
+      const reader = res.body.getReader();
+      const decoder = new TextDecoder();
+      let fullContent = "";
+      while (true) {
+        const { done, value } = await reader.read();
+        if (done) break;
+        fullContent += decoder.decode(value, { stream: true });
+        setSummary(fullContent);
       }
-    },
-    [meta]
-  );
+      // Set publish fields
+      setEditTitle(meta.title);
+      setEditSlug(generateSlug(meta.title));
+      setEditTags("播客笔记");
+    } catch (e) {
+      if ((e as Error).name !== "AbortError") {
+        setError(`笔记生成失败: ${(e as Error).message}`);
+      }
+    } finally {
+      setSummaryLoading(false);
+    }
+  }, [meta, transcript, secret]);
+
+  // Auto-generate summary when entering Step 4 without one
+  useEffect(() => {
+    if (step === 4 && !summary && transcript && meta && !summaryLoading) {
+      generateSummary();
+    }
+  }, [step, transcript, meta]);
 
   // Summarize discussion via AI
   async function summarizeDiscussion(): Promise<string> {
@@ -633,24 +672,29 @@ export function PodcastCreator() {
           {/* Audio player */}
           {meta.audioUrl && <AudioPlayer audioUrl={meta.audioUrl} />}
 
-{/* Show saved summary if exists */}
-          {summary && (
-            <div className="rounded-xl border border-border bg-card p-4">
-              <div className="mb-2 flex items-center justify-between">
-                <span className="text-xs font-medium text-muted">AI 笔记</span>
+{/* AI Summary card */}
+          <div className="rounded-xl border border-border bg-card p-4">
+            <div className="mb-2 flex items-center justify-between">
+              <span className="text-xs font-medium text-muted">AI 笔记</span>
+              {summary && !summaryLoading && (
                 <button
-                  onClick={() => setSummary("")}
+                  onClick={generateSummary}
                   className="text-xs text-accent hover:underline"
                 >
                   重新生成
                 </button>
-              </div>
+              )}
+            </div>
+            {summaryLoading && !summary && (
+              <div className="text-sm text-muted animate-pulse">AI 正在生成笔记...</div>
+            )}
+            {summary && (
               <div
                 className="prose-custom prose-sm max-h-[400px] overflow-y-auto"
                 dangerouslySetInnerHTML={{ __html: renderMarkdown(summary) }}
               />
-            </div>
-          )}
+            )}
+          </div>
 
           <p className="text-xs text-muted">
             笔记生成后可继续对话，提问细节或要求扩展某个观点
@@ -659,14 +703,9 @@ export function PodcastCreator() {
           <ChatPanel
             transcript={transcript}
             meta={{ title: meta.title, description: meta.description }}
-            systemPrompt={
-              summary
-                ? buildChatSystemPrompt(transcript, { title: meta.title, description: meta.description })
-                : buildSummarySystemPrompt(meta, transcript)
-            }
+            systemPrompt={buildChatSystemPrompt(transcript, { title: meta.title, description: meta.description })}
             secret={secret}
-            onSummaryComplete={summary ? undefined : handleSummaryComplete}
-            skipInitialSummary={!!summary}
+            skipInitialSummary
             onMessagesChange={(msgs) => setChatHistory(msgs)}
           />
 
