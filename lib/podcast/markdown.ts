@@ -41,6 +41,18 @@ export function generateMarkdown(data: NoteData): string {
 
   if (data.discussionSummary) {
     body += `\n\n---\n\n## 和 AI 深入讨论\n\n${data.discussionSummary}\n`;
+    // Append raw conversation in collapsible block
+    if (data.discussion && data.discussion.length > 0) {
+      body += `\n<details>\n<summary>查看原始对话</summary>\n\n`;
+      for (const msg of data.discussion) {
+        if (msg.role === "user") {
+          body += `**🙋 用户**\n\n${msg.content}\n\n---\n\n`;
+        } else {
+          body += `**🤖 AI**\n\n${msg.content}\n\n---\n\n`;
+        }
+      }
+      body += `</details>\n`;
+    }
   } else if (data.discussion && data.discussion.length > 0) {
     // Fallback: raw Q&A if no summary available
     body += `\n\n---\n\n## 和 AI 深入讨论\n\n`;

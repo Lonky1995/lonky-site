@@ -214,10 +214,10 @@ body {
 
 /* Discussion Q&A cards — chat bubble style */
 .discussion-card {
-  margin: 1.5rem 0;
+  margin: 2rem 0;
   display: flex;
   flex-direction: column;
-  gap: 0.75rem;
+  gap: 1rem;
 }
 .discussion-q {
   align-self: flex-end;
@@ -235,14 +235,14 @@ body {
 }
 .discussion-a {
   align-self: flex-start;
-  max-width: 95%;
-  background: #1e293b;
-  padding: 1rem 1.25rem;
-  font-size: 0.9rem;
-  line-height: 1.8;
+  max-width: 100%;
+  background: #111827;
+  padding: 1.25rem 1.5rem;
+  font-size: 0.9375rem;
+  line-height: 1.85;
   color: #cbd5e1;
-  border-radius: 1.25rem 1.25rem 1.25rem 0.25rem;
-  border: 1px solid #334155;
+  border-radius: 1rem;
+  border: 1px solid #1e293b;
 }
 .discussion-a::before {
   content: "🤖 AI";
@@ -250,37 +250,76 @@ body {
   font-size: 0.75rem;
   font-weight: 600;
   color: #6366f1;
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.75rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid #1e293b;
 }
 .discussion-a p {
-  margin-bottom: 0.75rem;
+  margin-bottom: 0.875rem;
 }
 .discussion-a p:last-child {
   margin-bottom: 0;
 }
-.discussion-a ol, .discussion-a ul {
-  margin-bottom: 0.75rem;
+.discussion-a ol {
+  margin: 0.75rem 0;
+  padding-left: 0;
+  list-style: none;
+  counter-reset: disc-list;
+}
+.discussion-a ol > li {
+  counter-increment: disc-list;
+  position: relative;
+  padding-left: 1.5rem;
+  margin-bottom: 0.5rem;
+}
+.discussion-a ol > li::before {
+  content: counter(disc-list) ".";
+  position: absolute;
+  left: 0;
+  color: #6366f1;
+  font-weight: 600;
+}
+.discussion-a ul {
+  margin: 0.75rem 0;
   padding-left: 1.25rem;
+  list-style: disc;
+}
+.discussion-a ul > li::marker {
+  color: #6366f1;
 }
 .discussion-a li {
-  margin-bottom: 0.25rem;
+  margin-bottom: 0.375rem;
+  line-height: 1.75;
 }
 .discussion-a blockquote {
-  border-left: 3px solid #f59e0b;
-  padding-left: 0.75rem;
-  margin: 0.75rem 0;
-  color: #fbbf24;
+  border-left: 3px solid #6366f1;
+  padding: 0.75rem 1rem;
+  margin: 1rem 0;
+  color: #94a3b8;
   font-style: normal;
-  font-size: 0.85rem;
+  font-size: 0.875rem;
+  background: #0f172a;
+  border-radius: 0 0.5rem 0.5rem 0;
+  line-height: 1.7;
+}
+.discussion-a blockquote strong {
+  color: #f1f5f9;
 }
 .discussion-a strong {
   color: #e2e8f0;
+  font-weight: 600;
 }
 .discussion-a code {
   background: #0f172a;
-  padding: 0.1rem 0.3rem;
+  padding: 0.15rem 0.4rem;
   border-radius: 0.25rem;
   font-size: 0.8rem;
+}
+.discussion-a h3, .discussion-a h4 {
+  color: #f1f5f9;
+  font-weight: 600;
+  margin-top: 1rem;
+  margin-bottom: 0.5rem;
 }
 
 /* Collapsible sections (full discussion, transcript) */
