@@ -141,18 +141,30 @@ body {
 
 .prose-custom h1 { font-size: 2rem; font-weight: 700; margin-top: 2rem; margin-bottom: 1rem; }
 .prose-custom h2 { font-size: 1.5rem; font-weight: 600; margin-top: 1.75rem; margin-bottom: 0.75rem; }
-.prose-custom h3 { font-size: 1.25rem; font-weight: 600; margin-top: 1.5rem; margin-bottom: 0.5rem; }
+.prose-custom h3 { font-size: 1.125rem; font-weight: 600; margin-top: 2rem; margin-bottom: 0.75rem; padding-bottom: 0.5rem; border-bottom: 1px solid #1e293b; }
 .prose-custom p { margin-bottom: 1rem; line-height: 1.8; color: #cbd5e1; }
 .prose-custom a { color: #8b5cf6; text-decoration: underline; text-underline-offset: 2px; }
 .prose-custom a:hover { color: #a78bfa; }
 .prose-custom ul, .prose-custom ol { margin-bottom: 1rem; padding-left: 1.5rem; color: #cbd5e1; }
-.prose-custom li { margin-bottom: 0.25rem; line-height: 1.7; }
+.prose-custom ol { counter-reset: item; list-style: none; }
+.prose-custom ol > li { counter-increment: item; position: relative; padding-left: 0.25rem; }
+.prose-custom ol > li::before { content: counter(item); position: absolute; left: -1.5rem; width: 1.25rem; height: 1.25rem; background: #6366f1; color: #fff; border-radius: 50%; font-size: 0.7rem; font-weight: 700; display: flex; align-items: center; justify-content: center; margin-top: 0.3rem; }
+.prose-custom li { margin-bottom: 0.5rem; line-height: 1.7; }
+.prose-custom li > p { margin-bottom: 0.25rem; }
 .prose-custom blockquote {
   border-left: 3px solid #6366f1;
-  padding-left: 1rem;
-  margin: 1.5rem 0;
+  padding: 0.75rem 1rem;
+  margin: 0.75rem 0;
   color: #94a3b8;
   font-style: italic;
+  background: #1e293b40;
+  border-radius: 0 0.5rem 0.5rem 0;
+}
+.prose-custom blockquote p {
+  margin-bottom: 0.25rem;
+}
+.prose-custom blockquote p:last-child {
+  margin-bottom: 0;
 }
 .prose-custom code {
   background: #1e293b;
