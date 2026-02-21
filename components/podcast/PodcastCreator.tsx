@@ -859,7 +859,7 @@ export function PodcastCreator() {
               </div>
 
               {/* TOC */}
-              <PreviewToc summary={summary} hasDiscussion={chatHistory.length > 0} />
+              <PreviewToc summary={summary} chatHistory={chatHistory} />
 
               <div
                 className="prose-custom"
@@ -868,21 +868,7 @@ export function PodcastCreator() {
               {chatHistory.length > 0 && (
                 <div className="mt-8">
                   <h2 id="preview-discussion" className="mb-4 text-lg font-bold">和 AI 深入讨论</h2>
-                  <div className="space-y-3">
-                    {chatHistory
-                      .filter((m) => m.role === "user" || m.role === "assistant")
-                      .map((m) => (
-                        <div key={m.id}>
-                          <p className="text-xs font-medium text-muted mb-1">
-                            {m.role === "user" ? "Q" : "A"}
-                          </p>
-                          <div
-                            className="prose-custom prose-sm"
-                            dangerouslySetInnerHTML={{ __html: renderMarkdown(m.content) }}
-                          />
-                        </div>
-                      ))}
-                  </div>
+                  <DiscussionSection chatHistory={chatHistory} />
                 </div>
               )}
             </article>
@@ -897,12 +883,13 @@ function DiscussionSection({ chatHistory }: { chatHistory: { id: string; role: s
   const [showRaw, setShowRaw] = useState(false);
 
   // Pair up Q&A: each user message + following assistant message
-  const pairs: { question: string; answer: string }[] = [];
+  const pairs: { question: string; answer: string; idx: number }[] = [];
   for (let i = 0; i < chatHistory.length; i++) {
     if (chatHistory[i].role === "user") {
       pairs.push({
         question: chatHistory[i].content,
         answer: chatHistory[i + 1]?.role === "assistant" ? chatHistory[i + 1].content : "",
+        idx: i,
       });
     }
   }
@@ -947,7 +934,7 @@ function DiscussionSection({ chatHistory }: { chatHistory: { id: string; role: s
         /* Condensed Q&A view */
         <div className="space-y-5 max-h-[400px] overflow-y-auto">
           {pairs.map((pair, i) => (
-            <div key={i} className="flex flex-col gap-2">
+            <div key={i} id={`preview-q-${pair.idx}`} className="flex flex-col gap-2">
               {/* Question — right-aligned bubble */}
               <div className="self-end max-w-[85%] rounded-2xl rounded-br-sm bg-accent/15 px-4 py-2.5">
                 <p className="text-sm font-medium text-foreground whitespace-pre-wrap">🙋 {pair.question}</p>
@@ -1064,19 +1051,28 @@ function AudioPlayer({ audioUrl }: { audioUrl: string }) {
   );
 }
 
-function PreviewToc({ summary, hasDiscussion }: { summary: string; hasDiscussion: boolean }) {
-  const items: { id: string; text: string }[] = [];
+function PreviewToc({ summary, chatHistory }: { summary: string; chatHistory: { id: string; role: string; content: string }[] }) {
+  type TocItem = { id: string; text: string; level: 2 | 3 };
+  const items: TocItem[] = [];
   const lines = summary.split("\n");
   for (const line of lines) {
     const match = line.match(/^##\s+(.+)$/);
     if (match) {
       const text = match[1].replace(/\*\*/g, "").trim();
       const id = "preview-" + text.replace(/[^\w\u4e00-\u9fff\s-]/g, "").trim().replace(/\s+/g, "-").toLowerCase();
-      items.push({ id, text });
+      items.push({ id, text, level: 2 });
     }
   }
-  if (hasDiscussion) {
-    items.push({ id: "preview-discussion", text: "和 AI 深入讨论" });
+  if (chatHistory.length > 0) {
+    items.push({ id: "preview-discussion", text: "和 AI 深入讨论", level: 2 });
+    // Extract discussion questions as sub-items
+    for (let i = 0; i < chatHistory.length; i++) {
+      if (chatHistory[i].role === "user") {
+        const q = chatHistory[i].content.slice(0, 40) + (chatHistory[i].content.length > 40 ? "..." : "");
+        const qId = "preview-q-" + i;
+        items.push({ id: qId, text: q, level: 3 });
+      }
+    }
   }
   if (items.length === 0) return null;
 
@@ -1085,12 +1081,14 @@ function PreviewToc({ summary, hasDiscussion }: { summary: string; hasDiscussion
       <p className="mb-3 text-sm font-semibold text-foreground">目录</p>
       <ul className="space-y-1.5">
         {items.map((item) => (
-          <li key={item.id}>
+          <li key={item.id} className={item.level === 3 ? "pl-4" : ""}>
             <a
               href={`#${item.id}`}
-              className="text-sm text-muted transition-colors hover:text-accent"
+              className={`transition-colors hover:text-accent ${
+                item.level === 3 ? "text-xs text-muted/70" : "text-sm text-muted"
+              }`}
             >
-              {item.text}
+              {item.level === 3 ? `💬 ${item.text}` : item.text}
             </a>
           </li>
         ))}
