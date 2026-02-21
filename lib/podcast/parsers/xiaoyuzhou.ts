@@ -23,8 +23,27 @@ export async function parseXiaoyuzhou(url: string): Promise<PodcastMeta> {
   if (!audioMatch) throw new Error("Could not find audio URL in xiaoyuzhou page");
 
   const title = extractMeta(html, "og:title") || "Untitled Episode";
-  const description = extractMeta(html, "og:description") || "";
   const coverImage = extractMeta(html, "og:image") || "";
+
+  // Extract episode-level description from __NEXT_DATA__ JSON
+  let description = "";
+  const nextDataMatch = html.match(/<script id="__NEXT_DATA__"[^>]*>(.*?)<\/script>/);
+  if (nextDataMatch) {
+    try {
+      const data = JSON.parse(nextDataMatch[1]);
+      const ep = data?.props?.pageProps?.episode;
+      if (ep?.description) {
+        description = ep.description;
+      } else if (ep?.shownotes) {
+        // shownotes is HTML, strip tags for plain text
+        description = ep.shownotes.replace(/<[^>]+>/g, "").trim().slice(0, 500);
+      }
+    } catch { /* ignore */ }
+  }
+  // Fallback to og:description if episode description not found
+  if (!description) {
+    description = extractMeta(html, "og:description") || "";
+  }
 
   return {
     title,

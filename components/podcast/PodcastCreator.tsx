@@ -847,6 +847,16 @@ export function PodcastCreator() {
                 </div>
                 <h1 className="mb-4 text-3xl font-bold">{editTitle || meta.title}</h1>
                 <p className="text-lg text-muted">{meta.description}</p>
+                {url && (
+                  <a
+                    href={url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="mt-3 inline-block text-sm text-accent hover:underline"
+                  >
+                    收听原节目 →
+                  </a>
+                )}
                 {editTags && (
                   <div className="mt-4 flex flex-wrap gap-2">
                     {editTags.split(",").map((t) => t.trim()).filter(Boolean).map((tag) => (
@@ -1082,14 +1092,14 @@ function PreviewToc({ summary, chatHistory }: { summary: string; chatHistory: { 
       <ul className="space-y-1.5">
         {items.map((item) => (
           <li key={item.id} className={item.level === 3 ? "pl-4" : ""}>
-            <a
-              href={`#${item.id}`}
-              className={`transition-colors hover:text-accent ${
+            <button
+              onClick={() => document.getElementById(item.id)?.scrollIntoView({ behavior: "smooth", block: "start" })}
+              className={`cursor-pointer text-left transition-colors hover:text-accent ${
                 item.level === 3 ? "text-xs text-muted/70" : "text-sm text-muted"
               }`}
             >
               {item.level === 3 ? `💬 ${item.text}` : item.text}
-            </a>
+            </button>
           </li>
         ))}
       </ul>
