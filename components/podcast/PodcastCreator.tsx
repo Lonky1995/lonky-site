@@ -907,10 +907,10 @@ function DiscussionSection({ chatHistory }: { chatHistory: { id: string; role: s
   }
 
   return (
-    <div className="rounded-xl border border-dashed border-amber-500/30 bg-amber-500/5 p-5">
+    <div className="rounded-xl border border-dashed border-accent/30 bg-accent/5 p-5">
       <div className="mb-4 flex items-center justify-between">
         <div className="flex items-center gap-2">
-          <span className="flex h-5 w-5 items-center justify-center rounded bg-amber-500/15 text-xs">💭</span>
+          <span className="flex h-5 w-5 items-center justify-center rounded bg-accent/15 text-xs">💭</span>
           <h3 className="text-sm font-semibold text-foreground">我的思考</h3>
           <span className="text-xs text-muted">— 听完后的追问与讨论</span>
         </div>
@@ -929,7 +929,7 @@ function DiscussionSection({ chatHistory }: { chatHistory: { id: string; role: s
             <div key={m.id} className={`flex ${m.role === "user" ? "justify-end" : "justify-start"}`}>
               <div className={`text-sm ${m.role === "user" ? "max-w-[80%]" : "max-w-full w-full"}`}>
                 {m.role === "user" ? (
-                  <div className="rounded-2xl rounded-tr-sm bg-amber-500/20 px-3 py-2 text-foreground whitespace-pre-wrap">
+                  <div className="rounded-2xl rounded-tr-sm bg-accent/15 px-3 py-2 text-foreground whitespace-pre-wrap">
                     {m.content}
                   </div>
                 ) : (
@@ -948,7 +948,7 @@ function DiscussionSection({ chatHistory }: { chatHistory: { id: string; role: s
           {pairs.map((pair, i) => (
             <div key={i} className="flex flex-col gap-2">
               {/* Question — right-aligned bubble */}
-              <div className="self-end max-w-[85%] rounded-2xl rounded-br-sm bg-amber-500/20 px-4 py-2.5">
+              <div className="self-end max-w-[85%] rounded-2xl rounded-br-sm bg-accent/15 px-4 py-2.5">
                 <p className="text-sm font-medium text-foreground whitespace-pre-wrap">🙋 {pair.question}</p>
               </div>
               {/* Answer — left-aligned bubble */}
