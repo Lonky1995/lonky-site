@@ -818,6 +818,7 @@ export function PodcastCreator() {
           onClick={() => setShowPreview(false)}
         >
           <div
+            id="preview-scroll-container"
             className="relative max-h-[90vh] w-full max-w-3xl overflow-y-auto rounded-2xl border border-border bg-background p-8"
             onClick={(e) => e.stopPropagation()}
           >
@@ -1093,7 +1094,13 @@ function PreviewToc({ summary, chatHistory }: { summary: string; chatHistory: { 
         {items.map((item) => (
           <li key={item.id} className={item.level === 3 ? "pl-4" : ""}>
             <button
-              onClick={() => document.getElementById(item.id)?.scrollIntoView({ behavior: "smooth", block: "start" })}
+              onClick={() => {
+                const container = document.getElementById("preview-scroll-container");
+                const target = document.getElementById(item.id);
+                if (container && target) {
+                  container.scrollTo({ top: target.offsetTop - container.offsetTop - 16, behavior: "smooth" });
+                }
+              }}
               className={`cursor-pointer text-left transition-colors hover:text-accent ${
                 item.level === 3 ? "text-xs text-muted/70" : "text-sm text-muted"
               }`}
