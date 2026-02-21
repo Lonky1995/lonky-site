@@ -732,17 +732,7 @@ export function PodcastCreator() {
           <h2 className="text-xl font-bold">编辑 & 发布</h2>
 
           {/* 1. Summary — AI 客观提炼 */}
-          <div className="rounded-xl border border-border bg-card p-5">
-            <div className="mb-3 flex items-center gap-2">
-              <span className="flex h-5 w-5 items-center justify-center rounded bg-accent/15 text-xs text-accent">AI</span>
-              <h3 className="text-sm font-semibold text-foreground">播客总结</h3>
-              <span className="text-xs text-muted">— AI 基于转录生成的结构化笔记</span>
-            </div>
-            <div
-              className="prose-custom prose-sm max-w-none"
-              dangerouslySetInnerHTML={{ __html: renderMarkdown(summary) }}
-            />
-          </div>
+          <SummaryEditor summary={summary} onChange={setSummary} />
 
           {/* 2. Discussion — 用户主观思考 */}
           {chatHistory.length > 0 && (
@@ -1133,5 +1123,46 @@ function PreviewToc({ summary, chatHistory }: { summary: string; chatHistory: { 
         ))}
       </ul>
     </nav>
+  );
+}
+
+function SummaryEditor({ summary, onChange }: { summary: string; onChange: (v: string) => void }) {
+  const [editing, setEditing] = useState(false);
+  const [draft, setDraft] = useState(summary);
+
+  // Sync when summary changes externally (e.g. regeneration)
+  useEffect(() => { setDraft(summary); }, [summary]);
+
+  return (
+    <div className="rounded-xl border border-border bg-card p-5">
+      <div className="mb-3 flex items-center justify-between">
+        <div className="flex items-center gap-2">
+          <span className="flex h-5 w-5 items-center justify-center rounded bg-accent/15 text-xs text-accent">AI</span>
+          <h3 className="text-sm font-semibold text-foreground">播客总结</h3>
+          <span className="text-xs text-muted">— 可直接编辑</span>
+        </div>
+        <button
+          onClick={() => {
+            if (editing) onChange(draft);
+            setEditing(!editing);
+          }}
+          className="cursor-pointer text-xs text-accent transition-colors hover:underline"
+        >
+          {editing ? "保存并预览" : "编辑 Markdown"}
+        </button>
+      </div>
+      {editing ? (
+        <textarea
+          value={draft}
+          onChange={(e) => setDraft(e.target.value)}
+          className="w-full min-h-[400px] rounded-lg border border-border bg-background px-4 py-3 text-sm font-mono text-foreground placeholder:text-muted focus:border-accent focus:outline-none resize-y"
+        />
+      ) : (
+        <div
+          className="prose-custom prose-sm max-w-none"
+          dangerouslySetInnerHTML={{ __html: renderMarkdown(summary) }}
+        />
+      )}
+    </div>
   );
 }
