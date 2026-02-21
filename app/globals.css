@@ -146,9 +146,9 @@ body {
 .prose-custom a { color: #8b5cf6; text-decoration: underline; text-underline-offset: 2px; }
 .prose-custom a:hover { color: #a78bfa; }
 .prose-custom ul, .prose-custom ol { margin-bottom: 1rem; padding-left: 1.5rem; color: #cbd5e1; }
-.prose-custom ol { counter-reset: item; list-style: none; }
-.prose-custom ol > li { counter-increment: item; position: relative; padding-left: 0.25rem; }
-.prose-custom ol > li::before { content: counter(item) "."; position: absolute; left: -1.5rem; color: #6366f1; font-size: 0.875rem; font-weight: 600; line-height: 1.7; }
+.prose-custom ol { list-style: none; padding-left: 1.5rem; }
+.prose-custom ol > li { position: relative; padding-left: 0.25rem; }
+.prose-custom ol > li::before { content: "•"; position: absolute; left: -1rem; color: #6366f1; font-weight: 700; }
 .prose-custom li { margin-bottom: 0.5rem; line-height: 1.7; }
 .prose-custom li > p { margin-bottom: 0.25rem; }
 .prose-custom blockquote {
