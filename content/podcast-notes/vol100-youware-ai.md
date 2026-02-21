@@ -9,6 +9,7 @@ published: true
 sourceUrl: "https://www.xiaoyuzhoufm.com/episode/698680b766e2c3037733d1d7"
 platform: "xiaoyuzhou"
 coverImage: "https://image.xyzcdn.net/Fkm-DmJ_lCbLxtekkyHx2McjuUUB.png"
+audioUrl: "https://media.xyzcdn.net/626b46ea9cbbf0451cf5a962/lhO_DypJQFbhkcdm1FPQRo2wY9aP.m4a"
 ---
 
 ## 一句话总结

@@ -3,6 +3,8 @@ import { notFound } from "next/navigation";
 import Link from "next/link";
 import { ImageZoom } from "@/components/ui/ImageZoom";
 import { ContinueChat } from "@/components/podcast/ContinueChat";
+import { PodcastPlayer } from "@/components/podcast/PodcastPlayer";
+import { TimestampContent } from "@/components/podcast/TimestampContent";
 
 type PodcastNote = {
   slug: string;
@@ -17,6 +19,7 @@ type PodcastNote = {
   platform?: string;
   coverImage?: string;
   duration?: number;
+  audioUrl?: string;
 };
 
 async function getNotes() {
@@ -256,8 +259,15 @@ export default async function PodcastNoteDetailPage({
         </nav>
       )}
 
+      {/* Audio player */}
+      {note.audioUrl && <PodcastPlayer audioUrl={note.audioUrl} />}
+
       {/* Content */}
-      <ImageZoom html={bodyWithIds} className="prose-custom" />
+      {note.audioUrl ? (
+        <TimestampContent html={bodyWithIds} className="prose-custom" />
+      ) : (
+        <ImageZoom html={bodyWithIds} className="prose-custom" />
+      )}
 
       {/* Continue chatting */}
       <ContinueChat

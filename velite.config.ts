@@ -46,6 +46,7 @@ export default defineConfig({
           platform: s.string().optional(),
           coverImage: s.string().optional(),
           duration: s.number().optional(),
+          audioUrl: s.string().optional(),
           body: s.markdown(),
         })
         .transform((data) => ({
