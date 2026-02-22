@@ -35,8 +35,6 @@ published: true
 
 ![](../images/blog/market-onchain-1.png)
 
-![](../images/blog/market-onchain-2.png)
-
 举个例子，通过数据发现了 B3 这个项目，是 base 上的 gamefi。然后去 rootdata 上了解下基本面。如果还想了解下，可以用 grok 快速了解下最近做了什么带来的用户增长，得到的结论是有个空投活动以及和 supergaming 合作了。
 
 以此类推，可以去找一些 tvl 增长比较多的项目，看看最近的钱都留在那里了。如果你是专注某条链的话，可以增加筛选条件等。具体深入分析的话，可能就根据自己的思路，去看白皮书、看看 dune 上的看板等。
