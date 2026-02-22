@@ -1,47 +1,87 @@
 {
-  "date": "2026-02-16",
-  "count": 5,
+  "date": "2026-02-22",
+  "count": 10,
   "items": [
     {
-      "id": "YFjfBk8HI5o",
-      "title": "OpenClaw: The Viral AI Agent that Broke the Internet - Peter Steinberger | Lex Fridman Podcast #491",
-      "channel": "Lex Fridman",
-      "views": 465000,
-      "summary": "AI代理（OpenClaw）正走向病毒式传播，其成功部分源于优化用户体验的哲学，而不仅是技术本身",
-      "url": "https://youtube.com/watch?v=YFjfBk8HI5o"
+      "id": "cxcb55zr2Q8",
+      "title": "How AI is breaking the SaaS business model...",
+      "channel": "Fireship",
+      "views": 626663,
+      "summary": "AI agent 可以替代多人工作，企业不再需要购买 SaaS 席位，Adobe/Salesforce 等公司市值蒸发 1 万亿美元；开源模型（Qwen、GLM5、Minimax M2.5）快速追赶闭源模型，打破厂商锁定优势，企业可自托管 AI 替代多个付费工具；GitHub 正从代码托管转型为 AI agent 编排平台，实现自动化项目管理、QA 和 DevOps",
+      "url": "https://youtube.com/watch?v=cxcb55zr2Q8"
     },
     {
-      "id": "DGWtSzqCpog",
-      "title": "The $285 Billion Crash Wall Street Won't Explain Honestly",
-      "channel": "Wall Street Insights",
-      "views": 290000,
-      "summary": "企业盲目AI化转型存在巨大风险，强调人机协同的必要性",
-      "url": "https://youtube.com/watch?v=DGWtSzqCpog"
+      "id": "bzWI3Dil9Ig",
+      "title": "My Multi-Agent Team with OpenClaw",
+      "channel": "Brian Casel",
+      "views": 264354,
+      "summary": "OpenClaw 的核心是 'gateway'，一个 24/7 持续运行的进程，与 Claude Code 的本质区别在于它是 always-on 的，能在后台自主完成任务；安全设计要像雇佣员工一样：给 agent 专用邮箱、独立 GitHub 账号、受限的文件访问权限，而不是直接开放个人账户；不要在日常使用的电脑上运行 OpenClaw，应该用专用机器（$5/月的 VPS 或 $600 的 Mac Mini 都可以）",
+      "url": "https://youtube.com/watch?v=bzWI3Dil9Ig"
     },
     {
-      "id": "JKk77rzOL34",
-      "title": "Claude Opus 4.6: The Biggest AI Jump I've Covered--It's Not Close",
-      "channel": "AI Reviewer",
-      "views": 279000,
-      "summary": "标题党——评论区反映实际体验与宣传严重不符，揭示模型能力局限及高昂使用成本",
-      "url": "https://youtube.com/watch?v=JKk77rzOL34"
+      "id": "xWxycwzAHA0",
+      "title": "Anthropic CEO: Claude Might Be CONSCIOUS. Pentagon Already Using for WAR",
+      "channel": "Breaking Points",
+      "views": 165162,
+      "summary": "Anthropic CEO Dario Amodei 承认不确定 AI 是否有意识，但采取了预防措施，包括给模型设置「退出按钮」让其拒绝处理某些任务；主持人批评 AI 发展缺乏民主监管，少数科技大佬（Dario、Sam Altman、Elon Musk、Zuckerberg）掌控了过多权力，不应用纯粹自由市场的方式对待如此强大的技术；Anthropic 标榜自己是「安全负责任的 AI」，但其 Claude 模型已通过 Palantir 被五角大楼用于委内瑞拉突袭行动（包括轰炸），这与其使用准则相矛盾",
+      "url": "https://youtube.com/watch?v=xWxycwzAHA0"
     },
     {
-      "id": "Sb1RMuwbzhE",
-      "title": "AI Isn't The Future. It's Medieval Alchemy.",
-      "channel": "Tech Critic",
-      "views": 199000,
-      "summary": "从历史哲学角度批判当前AI热潮，认为其充满炒作与盲目性",
-      "url": "https://youtube.com/watch?v=Sb1RMuwbzhE"
+      "id": "We7BZVKbCVw",
+      "title": "Head of Claude Code: What happens after coding is solved | Boris Cherny",
+      "channel": "Lenny's Podcast",
+      "views": 149944,
+      "summary": "编程已基本被解决：Boris 自 2024 年 11 月起 100% 代码由 Claude Code 生成，每天提交 10-30 个 PR，工程师生产力提升 200%；职业身份转变：「软件工程师」头衔将消失，被「Builder」取代——未来人人都是产品经理，人人都能写代码；Claude Code 增长惊人：目前占 GitHub 4% 的提交量，预计年底达 20%；过去一个月 DAU 翻倍，增速仍在加速",
+      "url": "https://youtube.com/watch?v=We7BZVKbCVw"
     },
     {
-      "id": "mb5Lx4auBKI",
-      "title": "The new Claude just generated the worst C compiler ever...",
-      "channel": "Code Review",
-      "views": 127000,
-      "summary": "通过具体案例展示当前AI编码在解决复杂系统性任务上的失败，戳破替代高级工程师的泡沫",
-      "url": "https://youtube.com/watch?v=mb5Lx4auBKI"
+      "id": "_kZCoW-Qxnc",
+      "title": "100 hours of OpenClaw lessons in 35 minutes",
+      "channel": "Alex Finn",
+      "views": 139036,
+      "summary": "OpenClaw 是一个 24/7 运行的 AI 员工，能在你睡觉时主动完成工作并创造经济价值；它能做任何人类在电脑上能做的事：控制浏览器、写代码、刷推特、生成图片等；它会记住关于你的一切（目标、偏好、生活细节）并基于这些信息不断自我改进和定制化",
+      "url": "https://youtube.com/watch?v=_kZCoW-Qxnc"
+    },
+    {
+      "id": "_yfiUQSbdPY",
+      "title": "become an AI HACKER (it's easier than you think)",
+      "channel": "NetworkChuck",
+      "views": 133406,
+      "summary": "AI 无处不在，现在是学习 AI 安全测试（AI Hacking）的最佳时机，有大量赚钱机会；Gandalf 密码泄露游戏只是入门级别的「派对把戏」，真正的 AI 黑客需要学习如何攻击实际的 AI Agent 应用；LLM 是非确定性的（non-deterministic），同样的攻击 prompt 可能需要尝试 5-10 次甚至更多才能成功",
+      "url": "https://youtube.com/watch?v=_yfiUQSbdPY"
+    },
+    {
+      "id": "_42sUaf037k",
+      "title": "What Claude Cowork Actually Does (And Why It's Different)",
+      "channel": "Tiago Forte",
+      "views": 128473,
+      "summary": "传统 AI 聊天的痛点：对话结束后没有留下实际成果，AI 只能聊天而无法执行；Claude Cowork 的核心变化：从「聊天」变成「在共享文件夹中协同工作」，AI 可以实际执行任务；界面从「新建聊天」变成「新建任务」，重新定义了人机交互的目标导向",
+      "url": "https://youtube.com/watch?v=_42sUaf037k"
+    },
+    {
+      "id": "GYfgjYVEYQ0",
+      "title": "AI May DOOM humans After All. I may have been wrong.",
+      "channel": "Internet of Bugs",
+      "views": 117754,
+      "summary": "MoltBOOK 是一个号称「AI专用」的社交网络，被多位AI业界名人（Elon Musk、Simon Willison、Andrej Karpathy）大肆吹捧为「奇点早期阶段」；作者认为人类可能毁于自身愚蠢——因为专业人士竟然相信聊天机器人在「自我组织社会」甚至「创造宗教」；MoltBOT 是一个以用户身份运行的 AI 代理，可访问密码管理器、邮箱、社交媒体等所有敏感信息，存在严重安全隐患",
+      "url": "https://youtube.com/watch?v=GYfgjYVEYQ0"
+    },
+    {
+      "id": "WbqxcTLVknQ",
+      "title": "AI's rapid development sparks resignations from industry heavyweights | ABC NEWS",
+      "channel": "ABC News (Australia)",
+      "views": 113803,
+      "summary": "AI生成的假新闻已足够逼真，能完美伪造新闻网站、图片和2000字深度报道，普通人难以辨别真伪；Anthropic安全负责人辞职并警告'世界处于危险中'，AI行业内部人士对发展速度感到担忧；智能的成本正在向零崩塌，这比互联网革命更深刻——因为智能是人类的核心特质",
+      "url": "https://youtube.com/watch?v=WbqxcTLVknQ"
+    },
+    {
+      "id": "hSQciQsxV2w",
+      "title": "Google wins again. Gemini 3.1 Pro review",
+      "channel": "AI Search",
+      "views": 107672,
+      "summary": "Gemini 3.1 Pro 是 Google 迄今最强大的 AI 模型，在创意生成、3D 建模、音乐创作等方面全面提升；3D 和空间理解能力显著增强，生成的 3D 模型比前代更精细，SVG 动画更流畅准确；具备内置音乐创作知识，能生成和谐的 32 小节钢琴曲，优于同类模型 JLM5",
+      "url": "https://youtube.com/watch?v=hSQciQsxV2w"
     }
   ],
-  "generated_at": "2026-02-16T10:00:00"
+  "generated_at": "2026-02-22T22:42:34.944095"
 }
