@@ -114,7 +114,7 @@ export function PodcastCard({
       <h3 className="mb-2 text-xl font-bold">{project.title[locale]}</h3>
 
       {/* Pain points */}
-      <div className="mb-5 rounded-lg border border-border/50 bg-background/50 p-4">
+      <div className="mb-4 rounded-lg border border-border/50 bg-background/50 p-4">
         <p className="mb-2.5 text-sm font-semibold text-foreground">
           {pain.heading}
         </p>
@@ -132,7 +132,7 @@ export function PodcastCard({
       </div>
 
       {/* Flow steps */}
-      <div className="mb-5 space-y-3">
+      <div className="mb-4 space-y-3">
         {steps.map((step, i) => (
           <div key={step.title} className="flex items-start gap-3">
             {/* Step indicator */}
