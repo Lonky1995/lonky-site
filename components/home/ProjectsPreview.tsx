@@ -24,7 +24,7 @@ export function ProjectsPreview() {
           <BriefingCard project={featured[0]} index={0} />
         )}
         {featured.length > 1 && (
-          <div className={`grid gap-6 ${featured.length > 2 ? "md:grid-cols-2" : ""}`}>
+          <div className={`grid gap-6 ${featured.length > 2 ? "md:grid-cols-2" : ""} items-start`}>
             {featured.slice(1).map((project, i) =>
               project.id === "youtube-ai" ? (
                 <YouTubeCard
