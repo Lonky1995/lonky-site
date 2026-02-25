@@ -45,7 +45,7 @@ const en = {
     expandAll: "Expand all ({count} sections) ↓",
     generatedAt: "Generated at",
     updatedAt: "Updated at",
-    subscribeCTA: "Join Telegram channel for more alerts",
+    subscribeCTA: "Join Telegram channel for more content",
     recentVideos: "Recent Featured Videos",
     liveDemo: "Live Demo →",
     source: "Source →",

@@ -46,7 +46,7 @@ const zh: Dictionary = {
     expandAll: "展开全部（{count} 个板块）↓",
     generatedAt: "生成于",
     updatedAt: "更新于",
-    subscribeCTA: "加入 Telegram 频道获得更多监控",
+    subscribeCTA: "加入 Telegram 频道获得更多内容",
     recentVideos: "最近精选视频",
     liveDemo: "在线体验 →",
     source: "源码 →",
