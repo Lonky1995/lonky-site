@@ -121,6 +121,21 @@ export const projects: Project[] = [
     featured: true,
     status: "live",
   },
+  {
+    id: "trade-style-analyzer",
+    title: {
+      zh: "交易风格分析器",
+      en: "Trade Style Analyzer",
+    },
+    description: {
+      zh: "导入交易所历史订单，AI 从习惯、择时、纪律三个维度深度复盘，给出职业交易员视角的针对性建议。",
+      en: "Import exchange trade history, AI analyzes habits, timing & discipline from a pro trader's perspective with actionable advice.",
+    },
+    category: "Crypto",
+    techStack: ["Next.js", "TypeScript", "Claude CLI", "SQLite", "CCXT"],
+    featured: true,
+    status: "live",
+  },
   // {
   //   id: "alphify",
   //   title: { zh: "Alphify", en: "Alphify" },
