@@ -55,26 +55,22 @@ echo "Content saved: $CONTENT_FILE"
 
 # 3. Git commit + push (with pull-rebase retry)
 cd "$REPO" || exit 1
-git stash --quiet 2>/dev/null
-git add "$JSON_FILE" "$CONTENT_FILE" 2>/dev/null
+git add "$JSON_FILE" "$CONTENT_FILE"
 if git diff --cached --quiet; then
-  git stash pop --quiet 2>/dev/null
   echo "No changes to commit"
 else
-  git commit -m "chore: update briefing $TODAY $(date +%H:%M)" --quiet 2>/dev/null
+  git commit -m "chore: update briefing $TODAY $(date +%H:%M)"
 
   # 最多重试 3 次：pull --rebase 后再 push
   for i in 1 2 3; do
-    if git push --quiet 2>/dev/null; then
+    if git push 2>&1; then
       echo "Push success"
-      git stash pop --quiet 2>/dev/null
       exit 0
     fi
     echo "Push failed (attempt $i), pulling and retrying..."
-    git pull --rebase --quiet 2>/dev/null
+    git pull --rebase 2>&1
   done
 
   echo "Push failed after 3 attempts" >&2
-  git stash pop --quiet 2>/dev/null
   exit 1
 fi
