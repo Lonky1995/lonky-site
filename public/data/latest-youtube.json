@@ -1,55 +1,55 @@
 {
-  "date": "2026-02-24",
+  "date": "2026-03-01",
   "count": 6,
   "items": [
     {
-      "id": "BHol8DA2dJ0",
-      "title": "First victim of AI agent harassment warns 'thousands' more could be next • FRANCE 24 English",
-      "channel": "FRANCE 24 English",
-      "views": 500694,
-      "summary": "First victim of AI agent harassment warns 'thousands' more could be next • FRANCE 24 English",
-      "url": "https://youtube.com/watch?v=BHol8DA2dJ0"
+      "id": "aV4j5pXLP-I",
+      "title": "I Trained My Own AI... It beat ChatGPT",
+      "channel": "PewDiePie",
+      "views": 1321200,
+      "summary": "对于个人或小团队，在特定垂直领域（如代码编辑）超越通用大模型是可行的，但路径不是从零训练，而是：1）选择强大的开源基础模型（如Qwen）；2）获取或合成高质量、格式正确的领域数据；3）关键是在数据中注入“推理步骤”训练；4）必须严格进行数据",
+      "url": "https://youtube.com/watch?v=aV4j5pXLP-I"
     },
     {
-      "id": "Q8wVMdwhlh4",
-      "title": "The AI Agent Economy Is Here",
-      "channel": "Y Combinator",
-      "views": 91925,
-      "summary": "The AI Agent Economy Is Here",
-      "url": "https://youtube.com/watch?v=Q8wVMdwhlh4"
+      "id": "jhDfq9sj-u8",
+      "title": "The AI Collapse Is MUCH Worse Than You Think",
+      "channel": "Graham Stephan",
+      "views": 176787,
+      "summary": "视频核心价值在于呈现AI经济影响的正反推演框架，而非单一结论。可执行建议：1）收入多元化，特别是重复性白领工作；2）主动学习AI工具（视频承诺提供免费资源链接）；3）持续定投并跨行业分散投资（避免杠杆和单押）；4）维持6个月应急资金；5）避",
+      "url": "https://youtube.com/watch?v=jhDfq9sj-u8"
     },
     {
-      "id": "5cMZqjrgq6Y",
-      "title": "AI News: 5 New Models Dropped This Week!",
-      "channel": "Matt Wolfe",
-      "views": 71441,
-      "summary": "AI News: 5 New Models Dropped This Week!",
-      "url": "https://youtube.com/watch?v=5cMZqjrgq6Y"
+      "id": "D_YzcH0VsGY",
+      "title": "The most powerful AI Agent I’ve ever used in my life",
+      "channel": "Dan Martell",
+      "views": 260306,
+      "summary": "用户应立即从“与AI聊天”转向“指挥AI工作”，具体行动路径为：1）根据身份选择一款AI智能体工具（企业主用Manis AI，创意者用Claude Co-work，开发者用Cloud Code）；2）选取一项每周耗时的重复性任务；3）当天尝",
+      "url": "https://youtube.com/watch?v=D_YzcH0VsGY"
     },
     {
-      "id": "ibFJ--CH3cQ",
-      "title": "You’re Not Behind (Yet): How to Build AI Agents in 2026 (no coding)",
-      "channel": "Futurepedia",
-      "views": 57574,
-      "summary": "You’re Not Behind (Yet): How to Build AI Agents in 2026 (no coding)",
-      "url": "https://youtube.com/watch?v=ibFJ--CH3cQ"
+      "id": "-zOCrWxCqUU",
+      "title": "Anthropic AI rejects Pentagon's weapons & surveillance ultimatum",
+      "channel": "",
+      "views": 0,
+      "summary": "总结生成失败",
+      "url": "https://youtube.com/watch?v=-zOCrWxCqUU"
     },
     {
-      "id": "56IeB1CZEYY",
-      "title": "Claude Cowork Is the First AI That Feels Like a Real Employee",
-      "channel": "Skill Leap AI",
-      "views": 54056,
-      "summary": "Claude Cowork Is the First AI That Feels Like a Real Employee",
-      "url": "https://youtube.com/watch?v=56IeB1CZEYY"
+      "id": "iR_b09xcDjs",
+      "title": "CLAUDE JUST GOT BANNED",
+      "channel": "Wes Roth",
+      "views": 56126,
+      "summary": "视频的核心结论是：Anthropic与美国政府（尤其是国防部）在AI军事化应用伦理与管控权上的根本冲突已导致其被联邦政府封杀。这并非单纯的商业合同纠纷，而是涉及国家安全、技术伦理与公司生存权的重大事件。其最有价值的洞察在于指出，AI公司（如",
+      "url": "https://youtube.com/watch?v=iR_b09xcDjs"
     },
     {
-      "id": "pXR_bShli10",
-      "title": "Claude Cowork: The AI That Actually Does Your Work",
-      "channel": "The Tech Girl",
-      "views": 83311,
-      "summary": "Claude Cowork: The AI That Actually Does Your Work",
-      "url": "https://youtube.com/watch?v=pXR_bShli10"
+      "id": "UsfpzxZNsPo",
+      "title": "Python Essentials for AI Agents – Tutorial",
+      "channel": "freeCodeCamp.org",
+      "views": 66058,
+      "summary": "该课程为AI智能体开发提供了明确的技术路径：先通过Anaconda搭建本地Python数据科学环境（Jupyter Lab），掌握基础语法与数据处理后，再接入API和语言模型。建议初学者严格遵循‘环境配置→基础语法→工具链集成’的实操顺序，",
+      "url": "https://youtube.com/watch?v=UsfpzxZNsPo"
     }
   ],
-  "generated_at": "2026-02-24T23:05:35.351636"
+  "generated_at": "2026-03-01T08:06:41.101407"
 }
