@@ -6,6 +6,7 @@ import { ProjectCard } from "@/components/projects/ProjectCard";
 import { BriefingCard } from "@/components/projects/BriefingCard";
 import { YouTubeCard } from "@/components/projects/YouTubeCard";
 import { PodcastCard } from "@/components/projects/PodcastCard";
+import { TradeMirrorCard } from "@/components/projects/TradeMirrorCard";
 import { Section } from "@/components/ui/Section";
 import { useLocale } from "@/components/locale-provider";
 
@@ -34,6 +35,12 @@ export function ProjectsPreview() {
                 />
               ) : project.id === "podcast-notes" ? (
                 <PodcastCard
+                  key={project.id}
+                  project={project}
+                  index={i + 1}
+                />
+              ) : project.id === "trade-style-analyzer" ? (
+                <TradeMirrorCard
                   key={project.id}
                   project={project}
                   index={i + 1}

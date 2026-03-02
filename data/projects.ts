@@ -124,15 +124,17 @@ export const projects: Project[] = [
   {
     id: "trade-style-analyzer",
     title: {
-      zh: "交易风格分析器",
-      en: "Trade Style Analyzer",
+      zh: "TradeMirror",
+      en: "TradeMirror",
     },
     description: {
-      zh: "导入交易所历史订单，AI 从习惯、择时、纪律三个维度深度复盘，给出职业交易员视角的针对性建议。",
-      en: "Import exchange trade history, AI analyzes habits, timing & discipline from a pro trader's perspective with actionable advice.",
+      zh: "连接交易所，AI 自动复盘你的每一笔交易。从习惯、择时、纪律三维度深度诊断，用数据告诉你为什么赚、为什么亏。",
+      en: "Connect your exchange, AI reviews every trade. Deep diagnosis across habits, timing & discipline — data-driven insights on why you win or lose.",
     },
     category: "Crypto",
-    techStack: ["Next.js", "TypeScript", "Claude CLI", "SQLite", "CCXT"],
+    techStack: ["Next.js", "DeepSeek", "CCXT", "SQLite", "Recharts"],
+    link: "https://trademirror.lonky.me",
+    github: "https://github.com/Lonky1995/trademirror",
     featured: true,
     status: "live",
   },
