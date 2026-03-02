@@ -13,23 +13,35 @@ type Briefing = {
   generated_at: string;
 };
 
-/** 从简报纯文本中提取各段落 */
+/** 从简报纯文本中提取各段落（支持 emoji━━━ 分隔格式和 Markdown ## 格式） */
 function parseBriefing(content: string) {
-  const titleMatch = content.match(/^(📊[^\n]+)/);
+  const titleMatch = content.match(/^(📊[^\n]+)/m);
   const title = titleMatch?.[1] ?? "";
 
-  const sectionRegex =
-    /(?:^|\n)((?:🔴|⚡|📰|💎|🎯)[^\n]*)\n([\s\S]*?)(?=\n(?:🔴|⚡|📰|💎|🎯)|\n*$)/g;
-  const sections: { heading: string; body: string }[] = [];
-  let match;
-  while ((match = sectionRegex.exec(content)) !== null) {
-    sections.push({
-      heading: match[1].trim(),
-      body: match[2].trim(),
-    });
+  // 新格式：用 ━━━ 分隔线切分 sections
+  if (content.includes("━━━")) {
+    const blocks = content.split(/━+/).filter((s) => s.trim());
+    const sections = blocks.slice(1).map((block) => {
+      const lines = block.trim().split("\n");
+      return {
+        heading: lines[0] || "",
+        body: lines.slice(1).join("\n").trim(),
+      };
+    }).filter((s) => s.heading && s.body);
+    return { title, sections };
   }
 
-  return { title, sections };
+  // 旧格式：Markdown ## 标题
+  const mdBlocks = content.split(/(?=^## )/m).filter((s) => s.startsWith("## "));
+  const sections = mdBlocks.map((block) => {
+    const lines = block.trim().split("\n");
+    return {
+      heading: lines[0].replace(/^## /, ""),
+      body: lines.slice(1).join("\n").trim(),
+    };
+  }).filter((s) => s.body);
+
+  return { title: title || content.split("\n")[0] || "", sections };
 }
 
 export function BriefingCard({
