@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { BackLink } from "./back-link";
 import { ImageZoom } from "@/components/ui/ImageZoom";
+import { siteConfig } from "@/data/site-config";
 
 async function getPosts() {
   try {
@@ -40,6 +41,21 @@ export async function generateMetadata({
   return {
     title: post.title,
     description: post.description,
+    alternates: {
+      canonical: `${siteConfig.url}/blog/${post.slug}`,
+    },
+    openGraph: {
+      title: post.title,
+      description: post.description,
+      url: `${siteConfig.url}/blog/${post.slug}`,
+      type: "article",
+      publishedTime: post.date,
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: post.title,
+      description: post.description,
+    },
   };
 }
 
@@ -60,8 +76,26 @@ export default async function BlogPostPage({
     day: "numeric",
   });
 
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    headline: post.title,
+    description: post.description,
+    datePublished: post.date,
+    url: `${siteConfig.url}/blog/${post.slug}`,
+    author: {
+      "@type": "Person",
+      name: "Lonky",
+      url: siteConfig.url,
+    },
+  };
+
   return (
     <article className="mx-auto max-w-3xl px-6 py-20 md:px-8">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       {/* Header */}
       <div className="mb-10">
         <div className="mb-3 flex items-center gap-3">

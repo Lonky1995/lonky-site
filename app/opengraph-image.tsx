@@ -1,11 +1,14 @@
 import { ImageResponse } from "next/og";
+import { siteConfig } from "@/data/site-config";
 
 export const runtime = "edge";
-export const alt = "Lonky - Product Manager & Vibecoder";
+export const alt = siteConfig.title;
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
 export default function OGImage() {
+  const domain = siteConfig.url.replace(/^https?:\/\//, "");
+
   return new ImageResponse(
     (
       <div
@@ -44,7 +47,7 @@ export default function OGImage() {
             marginBottom: 24,
           }}
         >
-          {"lonky'home"}
+          {siteConfig.name}
         </div>
         {/* Tagline */}
         <div
@@ -66,7 +69,7 @@ export default function OGImage() {
             marginTop: 32,
           }}
         >
-          lonky.me
+          {domain}
         </div>
       </div>
     ),

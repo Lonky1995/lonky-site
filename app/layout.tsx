@@ -21,6 +21,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL(siteConfig.url),
   title: {
     default: siteConfig.title,
     template: `%s | ${siteConfig.name}`,
@@ -45,12 +46,12 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const hasClerk = !!process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY;
   const cookieStore = await cookies();
   const locale =
     (cookieStore.get("locale")?.value as Locale) || defaultLocale;
   const dict = getDictionary(locale);
-
-  return (
+  const html = (
     <html lang={locale} className="dark">
       <head>
         <Script
@@ -63,6 +64,25 @@ export default async function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} min-h-screen bg-background font-sans text-foreground antialiased`}
       >
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "WebSite",
+              name: siteConfig.name,
+              url: siteConfig.url,
+              description: siteConfig.description,
+              author: {
+                "@type": "Person",
+                name: "Lonky",
+                url: siteConfig.url,
+                jobTitle: "Product Manager & Vibecoder",
+                sameAs: [siteConfig.socials.github, siteConfig.socials.twitter],
+              },
+            }),
+          }}
+        />
         <LocaleProvider locale={locale} dict={dict}>
           <div className="nebula-bg" aria-hidden="true" />
           <StarField />
@@ -72,4 +92,11 @@ export default async function RootLayout({
       </body>
     </html>
   );
+
+  if (hasClerk) {
+    const { ClerkProvider } = await import("@clerk/nextjs");
+    return <ClerkProvider>{html}</ClerkProvider>;
+  }
+
+  return html;
 }

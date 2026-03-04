@@ -5,6 +5,7 @@ import { ImageZoom } from "@/components/ui/ImageZoom";
 import { ContinueChat } from "@/components/podcast/ContinueChat";
 import { PodcastPlayer } from "@/components/podcast/PodcastPlayer";
 import { TimestampContent } from "@/components/podcast/TimestampContent";
+import { siteConfig } from "@/data/site-config";
 
 type PodcastNote = {
   slug: string;
@@ -48,9 +49,15 @@ export async function generateMetadata({
   return {
     title: note.title,
     description: note.description,
+    alternates: {
+      canonical: `${siteConfig.url}/podcast-notes/${note.slug}`,
+    },
     openGraph: {
       title: note.title,
       description: note.description,
+      url: `${siteConfig.url}/podcast-notes/${note.slug}`,
+      type: "article",
+      publishedTime: note.date,
       ...(note.coverImage ? { images: [note.coverImage] } : {}),
     },
     twitter: {
@@ -193,8 +200,27 @@ export default async function PodcastNoteDetailPage({
         ? "Apple Podcasts"
         : null;
 
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    headline: note.title,
+    description: note.description,
+    datePublished: note.date,
+    url: `${siteConfig.url}/podcast-notes/${note.slug}`,
+    ...(note.coverImage ? { image: note.coverImage } : {}),
+    author: {
+      "@type": "Person",
+      name: "Lonky",
+      url: siteConfig.url,
+    },
+  };
+
   return (
     <article className="mx-auto max-w-3xl px-6 py-20 md:px-8">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       {/* Header */}
       <div className="mb-10">
         <div className="mb-3 flex flex-wrap items-center gap-3">

@@ -3,7 +3,7 @@ export const siteConfig = {
   title: "Lonky - Product Manager & Vibecoder",
   description:
     "Product Manager turned Vibecoder. Building AI-powered tools, crypto platforms, and everything in between.",
-  url: "https://lonky.dev",
+  url: "https://lonky.me",
   // Update this to your latest tweet ID (or set TWEET_ID env var in Vercel)
   featuredTweetId: "2024704897174622263",
   socials: {
