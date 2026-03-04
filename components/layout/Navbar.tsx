@@ -13,7 +13,11 @@ export function Navbar() {
   const pathname = usePathname();
   const [mobileOpen, setMobileOpen] = useState(false);
   const { dict, setLocale, locale } = useLocale();
-  const hideNavbar = pathname === "/sign-in" || pathname.startsWith("/sign-in/");
+  const hideNavbar =
+    pathname === "/sign-in" ||
+    pathname.startsWith("/sign-in/") ||
+    pathname === "/sign-up" ||
+    pathname.startsWith("/sign-up/");
 
   if (hideNavbar) {
     return null;
