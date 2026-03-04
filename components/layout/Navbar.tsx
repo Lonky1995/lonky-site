@@ -13,6 +13,11 @@ export function Navbar() {
   const pathname = usePathname();
   const [mobileOpen, setMobileOpen] = useState(false);
   const { dict, setLocale, locale } = useLocale();
+  const hideNavbar = pathname === "/sign-in" || pathname.startsWith("/sign-in/");
+
+  if (hideNavbar) {
+    return null;
+  }
 
   const links = siteConfig.navLinks.map((link, i) => ({
     ...link,
