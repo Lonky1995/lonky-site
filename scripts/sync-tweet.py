@@ -25,12 +25,14 @@ GITHUB_REPO = "Lonky1995/lonky-site"
 GITHUB_BRANCH = "main"
 FILE_PATH = "public/data/latest-tweet.json"
 
+# 6551 API (primary)
+API_6551_BASE = "https://ai.6551.io"
+
+# Fallback: RSSHub/Nitter (deprecated, usually down)
 RSSHUB_INSTANCES = [
     "https://rsshub.app",
     "https://rsshub.rssforever.com",
 ]
-
-# Nitter instances (fallback)
 NITTER_INSTANCES = [
     "https://nitter.net",
     "https://nitter.privacydev.net",
@@ -98,6 +100,68 @@ def fetch_with_curl(url: str) -> str | None:
     except Exception as e:
         log(f"WARN: curl failed for {url}: {e}")
     return None
+
+
+def fetch_from_6551_api() -> str | None:
+    """Fetch latest original tweet ID using 6551 API (primary source)."""
+    import subprocess
+    
+    token = os.environ.get("TWITTER_TOKEN", "")
+    if not token:
+        log("WARN: TWITTER_TOKEN not set, skipping 6551 API")
+        return None
+    
+    try:
+        payload = json.dumps({
+            "username": TWITTER_USER,
+            "maxResults": 10,
+            "product": "Latest",
+            "includeReplies": False,
+            "includeRetweets": False
+        })
+        
+        result = subprocess.run([
+            "curl", "-sk", "-X", "POST",
+            f"{API_6551_BASE}/open/twitter_user_tweets",
+            "-H", f"Authorization: Bearer {token}",
+            "-H", "Content-Type: application/json",
+            "-d", payload
+        ], capture_output=True, text=True, timeout=30)
+        
+        if result.returncode != 0:
+            log(f"WARN: 6551 API curl failed: {result.stderr}")
+            return None
+        
+        data = json.loads(result.stdout)
+        
+        # Handle API response structure
+        tweets = data.get("data", data.get("tweets", []))
+        if isinstance(data, list):
+            tweets = data
+        
+        if not tweets:
+            log("WARN: 6551 API returned no tweets")
+            return None
+        
+        # Get the newest tweet ID
+        tweet_ids = []
+        for t in tweets:
+            tid = t.get("id") or t.get("tweetId") or t.get("id_str")
+            if tid:
+                tweet_ids.append(str(tid))
+        
+        if tweet_ids:
+            newest = max(tweet_ids, key=int)
+            log(f"6551 API: found tweet {newest}")
+            return newest
+        
+        log("WARN: 6551 API response had no valid tweet IDs")
+        return None
+        
+    except Exception as e:
+        log(f"WARN: 6551 API failed: {e}")
+        return None
+
 
 def fetch_from_rsshub() -> str | None:
     """Best-effort: parse latest tweet ID from RSSHub (public instances unreliable)."""
@@ -191,9 +255,17 @@ def main() -> None:
                 log(f"ERROR: Could not extract tweet ID from: {url_arg}")
                 sys.exit(1)
     else:
-        # Mode 2: Cron auto-fetch (best-effort)
+        # Mode 2: Cron auto-fetch
         log(f"Fetching latest tweet for @{TWITTER_USER}")
-        tweet_id = fetch_from_rsshub()
+        
+        # Try 6551 API first (primary)
+        tweet_id = fetch_from_6551_api()
+        
+        # Fallback to RSSHub/Nitter (usually down)
+        if not tweet_id:
+            log("6551 API failed, trying fallback sources...")
+            tweet_id = fetch_from_rsshub()
+        
         if not tweet_id:
             log("WARN: Auto-fetch failed (all sources down). No update.")
             sys.exit(0)  # Exit 0 — not an error, just no data

@@ -1,7 +1,7 @@
 <!-- gitnexus:start -->
 # GitNexus MCP
 
-This project is indexed by GitNexus as **lonky-site** (366 symbols, 714 relationships, 24 execution flows).
+This project is indexed by GitNexus as **lonky-site** (516 symbols, 1027 relationships, 35 execution flows).
 
 GitNexus provides a knowledge graph over this codebase — call chains, blast radius, execution flows, and semantic search.
 

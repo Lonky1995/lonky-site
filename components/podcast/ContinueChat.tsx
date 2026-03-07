@@ -5,10 +5,26 @@ import { renderMarkdown } from "@/lib/podcast/render-markdown";
 
 type Discussion = {
   id: string;
-  visitorId: string;
+  userId: string | null;
+  displayName: string;
+  avatarUrl: string;
   question: string;
   answer: string;
   createdAt: string;
+  isCurrentUser: boolean;
+};
+
+type CurrentUser = {
+  id: string;
+  name: string;
+  image: string | null;
+};
+
+type DiscussionResponse = {
+  currentUser: CurrentUser;
+  canPost: boolean;
+  alreadyParticipated: boolean;
+  discussions: Discussion[];
 };
 
 const ANSWER_MAX_H = 160; // px
@@ -57,16 +73,6 @@ function CollapsibleAnswer({ html }: { html: string }) {
   );
 }
 
-function getVisitorId(): string {
-  const KEY = "lonky_visitor_id";
-  let id = localStorage.getItem(KEY);
-  if (!id) {
-    id = crypto.randomUUID();
-    localStorage.setItem(KEY, id);
-  }
-  return id;
-}
-
 export function ContinueChat({
   title,
   description,
@@ -80,14 +86,18 @@ export function ContinueChat({
   keyTopics: string[];
   slug: string;
 }) {
+  const signInTarget = process.env.NEXT_PUBLIC_PODCAST_SIGN_IN_URL || "/sign-in";
   const [discussions, setDiscussions] = useState<Discussion[]>([]);
+  const [currentUser, setCurrentUser] = useState<CurrentUser | null>(null);
   const [loading, setLoading] = useState(true);
-  const [visitorId, setVisitorId] = useState<string | null>(null);
+  const [authRequired, setAuthRequired] = useState(false);
+  const [loginUrl, setLoginUrl] = useState(signInTarget);
   const [hasAsked, setHasAsked] = useState(false);
   const [input, setInput] = useState("");
   const [isStreaming, setIsStreaming] = useState(false);
   const [streamingAnswer, setStreamingAnswer] = useState("");
   const [streamingQuestion, setStreamingQuestion] = useState("");
+  const [saveError, setSaveError] = useState("");
   const [saving, setSaving] = useState(false);
   const scrollRef = useRef<HTMLDivElement>(null);
   const abortRef = useRef<AbortController | null>(null);
@@ -114,19 +124,20 @@ ${truncated}
 - 使用中文`;
   }, [title, description, bodyText, keyTopics]);
 
-  // Load visitor ID + discussions
+  // Load current user + discussions
   useEffect(() => {
-    const vid = getVisitorId();
-    setVisitorId(vid);
-
     fetch(`/api/podcast/discuss?slug=${encodeURIComponent(slug)}`)
-      .then((r) => r.json())
-      .then((data: Discussion[]) => {
-        if (Array.isArray(data)) {
-          setDiscussions(data);
-          if (data.some((d) => d.visitorId === vid)) {
-            setHasAsked(true);
-          }
+      .then(async (r) => {
+        if (r.status === 401) {
+          setAuthRequired(true);
+          return;
+        }
+        const data = (await r.json()) as DiscussionResponse;
+        if (Array.isArray(data.discussions)) {
+          setAuthRequired(false);
+          setCurrentUser(data.currentUser || null);
+          setDiscussions(data.discussions);
+          setHasAsked(Boolean(data.alreadyParticipated));
         }
       })
       .catch(() => {})
@@ -153,33 +164,61 @@ ${truncated}
     return () => document.removeEventListener("keydown", handler);
   }, []);
 
+  // Build cross-site login URL with return target.
+  useEffect(() => {
+    try {
+      const base =
+        typeof window !== "undefined" ? window.location.origin : "https://lonky.me";
+      const url = new URL(signInTarget, base);
+      if (typeof window !== "undefined") {
+        url.searchParams.set("redirect_url", window.location.href);
+      }
+      setLoginUrl(url.toString());
+    } catch {
+      setLoginUrl(signInTarget);
+    }
+  }, [signInTarget]);
+
   const saveDiscussion = useCallback(
     async (question: string, answer: string) => {
-      if (!visitorId) return;
       setSaving(true);
+      setSaveError("");
       try {
         const res = await fetch("/api/podcast/discuss/save", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ slug, visitorId, question, answer }),
+          body: JSON.stringify({ slug, question, answer }),
         });
+        if (res.status === 401) {
+          setAuthRequired(true);
+          return;
+        }
+        if (res.status === 409) {
+          setHasAsked(true);
+          setSaveError("你已在本文参与讨论");
+          return;
+        }
         if (res.ok) {
           const thread: Discussion = await res.json();
           setDiscussions((prev) => [...prev, thread]);
           setHasAsked(true);
+        } else {
+          const data = await res.json().catch(() => ({ error: "保存失败，请重试" }));
+          setSaveError(data.error || "保存失败，请重试");
         }
       } catch {
-        // Silently fail — the streamed answer is still visible
+        setSaveError("保存失败，请重试");
       } finally {
         setSaving(false);
         setStreamingAnswer("");
         setStreamingQuestion("");
       }
     },
-    [slug, visitorId]
+    [slug]
   );
 
   async function sendMessage(userContent: string) {
+    setSaveError("");
     setIsStreaming(true);
     setStreamingQuestion(userContent);
     setStreamingAnswer("");
@@ -196,6 +235,13 @@ ${truncated}
         signal: abortRef.current.signal,
       });
 
+      if (res.status === 401) {
+        setAuthRequired(true);
+        setSaveError("请先登录后参与讨论");
+        setStreamingAnswer("");
+        setStreamingQuestion("");
+        throw new Error("Unauthorized");
+      }
       if (!res.ok || !res.body) throw new Error("Failed");
 
       const reader = res.body.getReader();
@@ -213,7 +259,7 @@ ${truncated}
       setIsStreaming(false);
       await saveDiscussion(userContent, full);
     } catch (e) {
-      if ((e as Error).name !== "AbortError") {
+      if ((e as Error).name !== "AbortError" && (e as Error).message !== "Unauthorized") {
         setStreamingAnswer("出错了，请重试");
       }
       setIsStreaming(false);
@@ -228,7 +274,7 @@ ${truncated}
     sendMessage(text);
   }
 
-  const canAsk = !hasAsked && !isStreaming && !saving && !streamingQuestion;
+  const canAsk = !authRequired && !!currentUser && !hasAsked && !isStreaming && !saving && !streamingQuestion;
 
   return (
     <div className="mt-12 rounded-xl border border-border bg-card/60 overflow-hidden">
@@ -237,7 +283,7 @@ ${truncated}
         <div>
           <p className="text-sm font-semibold text-foreground">公开讨论区</p>
           <p className="text-xs text-muted">
-            每位访客可提问一次，AI 回答后对所有人可见
+            登录后可读写，每位账号限提问一次
           </p>
         </div>
         {discussions.length > 0 && (
@@ -273,11 +319,18 @@ ${truncated}
                       })}
                     </span>
                     <span className="text-xs font-medium text-foreground">
-                      🙋 {d.visitorId === visitorId ? "你" : "访客"}
+                      🙋 {d.isCurrentUser ? "你" : d.displayName}
                     </span>
                   </div>
-                  <div className="max-w-[85%] rounded-2xl rounded-tr-sm bg-accent px-4 py-2.5 text-sm text-white whitespace-pre-wrap">
-                    {d.question}
+                  <div className="flex max-w-[85%] items-start gap-2 rounded-2xl rounded-tr-sm bg-accent px-4 py-2.5 text-sm text-white">
+                    <img
+                      src={d.avatarUrl}
+                      alt={d.displayName}
+                      className="h-6 w-6 rounded-full object-cover ring-1 ring-white/40"
+                    />
+                    <div className="whitespace-pre-wrap">
+                      {d.question}
+                    </div>
                   </div>
                 </div>
                 {/* Answer bubble — left aligned */}
@@ -295,9 +348,18 @@ ${truncated}
               <div className="flex flex-col gap-3">
                 {/* Question bubble */}
                 <div className="flex flex-col items-end">
-                  <span className="text-xs font-medium text-foreground mb-1 mr-1">🙋 你 · 刚刚</span>
-                  <div className="max-w-[85%] rounded-2xl rounded-tr-sm bg-accent px-4 py-2.5 text-sm text-white whitespace-pre-wrap">
-                    {streamingQuestion}
+                  <span className="text-xs font-medium text-foreground mb-1 mr-1">
+                    🙋 {currentUser?.name || "你"} · 刚刚
+                  </span>
+                  <div className="flex max-w-[85%] items-start gap-2 rounded-2xl rounded-tr-sm bg-accent px-4 py-2.5 text-sm text-white">
+                    <img
+                      src={currentUser?.image || "/images/avatar-default.svg"}
+                      alt={currentUser?.name || "你"}
+                      className="h-6 w-6 rounded-full object-cover ring-1 ring-white/40"
+                    />
+                    <div className="whitespace-pre-wrap">
+                      {streamingQuestion}
+                    </div>
                   </div>
                 </div>
                 {/* Answer bubble */}
@@ -321,6 +383,11 @@ ${truncated}
                         保存中...
                       </p>
                     )}
+                    {saveError && (
+                      <p className="mt-2 text-xs text-red-400">
+                        {saveError}
+                      </p>
+                    )}
                   </div>
                 </div>
               </div>
@@ -332,7 +399,20 @@ ${truncated}
       {/* Input area */}
       {!loading && (
         <div className="border-t border-border p-4">
-          {hasAsked && !streamingQuestion ? (
+          {saveError && !streamingQuestion && (
+            <p className="mb-3 text-center text-xs text-red-400">{saveError}</p>
+          )}
+          {authRequired ? (
+            <div className="space-y-3 text-center">
+              <p className="text-sm text-muted">请先登录后参与讨论</p>
+              <a
+                href={loginUrl}
+                className="inline-block rounded-lg bg-accent px-4 py-2 text-sm font-medium text-white transition-opacity hover:opacity-90"
+              >
+                去登录
+              </a>
+            </div>
+          ) : hasAsked && !streamingQuestion ? (
             <p className="text-center text-sm text-muted">
               ✓ 你已在本文参与讨论
             </p>
@@ -368,7 +448,7 @@ ${truncated}
                 </button>
               </form>
               <p className="text-xs text-muted text-center">
-                每位访客限提问一次，问答将公开显示
+                每位账号限提问一次，问答将公开显示
               </p>
             </div>
           ) : null}

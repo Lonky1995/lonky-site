@@ -13,19 +13,19 @@ type ChatPanelProps = {
   transcript: string;
   meta: { title: string; description?: string };
   systemPrompt: string;
-  secret: string;
   initialMessages?: Message[];
   onMessagesChange?: (messages: Message[]) => void;
 };
 
 export function ChatPanel({
-  transcript,
-  meta,
+  transcript: _transcript,
+  meta: _meta,
   systemPrompt,
-  secret,
   initialMessages,
   onMessagesChange,
 }: ChatPanelProps) {
+  void _transcript;
+  void _meta;
   const [messages, setMessages] = useState<Message[]>(initialMessages ?? []);
   const [input, setInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -56,7 +56,7 @@ export function ChatPanel({
     if (onMessagesChange) {
       onMessagesChange(messages);
     }
-  }, [messages]);
+  }, [messages, onMessagesChange]);
 
   const sendMessage = useCallback(
     async (userContent: string, allMessages: Message[]) => {
@@ -86,7 +86,6 @@ export function ChatPanel({
           method: "POST",
           headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer ${secret}`,
           },
           body: JSON.stringify({ messages: apiMessages, system: systemPrompt }),
           signal: abortRef.current.signal,
@@ -127,7 +126,7 @@ export function ChatPanel({
         setIsLoading(false);
       }
     },
-    [secret, systemPrompt]
+    [systemPrompt]
   );
 
   const handleSubmit = (e: React.FormEvent) => {

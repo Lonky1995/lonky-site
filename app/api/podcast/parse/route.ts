@@ -1,9 +1,10 @@
 import { NextRequest, NextResponse } from "next/server";
 import { parsePodcastUrl } from "@/lib/podcast/parser";
+import { auth } from "@/lib/podcast/auth";
 
 export async function POST(req: NextRequest) {
-  const secret = req.headers.get("authorization")?.replace("Bearer ", "");
-  if (secret !== process.env.PODCAST_SECRET) {
+  const session = await auth(req);
+  if (!session?.user) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 

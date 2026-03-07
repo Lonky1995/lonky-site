@@ -74,7 +74,6 @@ function clearState() {
 
 export function PodcastCreator() {
   const [step, setStep] = useState<Step>(1);
-  const [secret, setSecret] = useState("");
   const [url, setUrl] = useState("");
   const [meta, setMeta] = useState<PodcastMeta | null>(null);
   const [transcriptId, setTranscriptId] = useState("");
@@ -106,9 +105,6 @@ export function PodcastCreator() {
 
   // Restore state from localStorage on mount
   useEffect(() => {
-    const saved = sessionStorage.getItem("podcast_secret");
-    if (saved) setSecret(saved);
-
     const state = loadState();
     if (state) {
       setStep(state.step);
@@ -145,8 +141,8 @@ export function PodcastCreator() {
   }, [step, url, meta, transcriptId, transcript, summary, editTitle, editSlug, editTags, chatHistory]);
 
   const headers = useCallback(
-    () => ({ Authorization: `Bearer ${secret}`, "Content-Type": "application/json" }),
-    [secret]
+    () => ({ "Content-Type": "application/json" }),
+    []
   );
 
   // Step 1: Parse URL
@@ -154,7 +150,6 @@ export function PodcastCreator() {
     setError("");
     setLoading(true);
     try {
-      sessionStorage.setItem("podcast_secret", secret);
       const res = await fetch("/api/podcast/parse", {
         method: "POST",
         headers: headers(),
@@ -189,7 +184,7 @@ export function PodcastCreator() {
       if (data.cached && data.status === "completed") {
         const statusRes = await fetch(
           `/api/podcast/transcribe/status?id=${data.transcriptId}`,
-          { headers: { Authorization: `Bearer ${secret}` } }
+          { headers: headers() }
         );
         const statusData = await statusRes.json();
         if (statusData.status === "completed" && statusData.text) {
@@ -227,7 +222,7 @@ export function PodcastCreator() {
       try {
         const res = await fetch(
           `/api/podcast/transcribe/status?id=${transcriptId}`,
-          { headers: { Authorization: `Bearer ${secret}` } }
+          { headers: headers() }
         );
         const data = await res.json();
         if (data.status) setTranscribeStatus(data.status);
@@ -253,7 +248,7 @@ export function PodcastCreator() {
       if (pollingRef.current) clearInterval(pollingRef.current);
       if (timerRef.current) clearInterval(timerRef.current);
     };
-  }, [step, transcriptId, secret]);
+  }, [step, transcriptId, headers]);
 
   // Step 4: Generate summary independently (stream from API, not via ChatPanel)
   const summaryAbortRef = useRef<AbortController | null>(null);
@@ -268,7 +263,7 @@ export function PodcastCreator() {
       const systemPrompt = buildSummarySystemPrompt(meta, transcript);
       const res = await fetch("/api/podcast/chat", {
         method: "POST",
-        headers: { Authorization: `Bearer ${secret}`, "Content-Type": "application/json" },
+        headers: headers(),
         body: JSON.stringify({
           system: systemPrompt,
           messages: [{ role: "user", content: "请根据转录内容，生成结构化播客笔记。" }],
@@ -298,14 +293,14 @@ export function PodcastCreator() {
     } finally {
       setSummaryLoading(false);
     }
-  }, [meta, transcript, secret]);
+  }, [meta, transcript, headers]);
 
   // Auto-generate summary when entering Step 4 without one
   useEffect(() => {
     if (step === 4 && !summary && transcript && meta && !summaryLoading) {
       generateSummary();
     }
-  }, [step, transcript, meta]);
+  }, [step, summary, transcript, meta, summaryLoading, generateSummary]);
 
   // Summarize discussion via AI
   async function summarizeDiscussion(): Promise<string> {
@@ -491,24 +486,9 @@ export function PodcastCreator() {
         </div>
       )}
 
-      {/* Step 1: URL + Secret */}
+      {/* Step 1: URL input */}
       {step === 1 && (
         <div className="space-y-4">
-          {/* Secret first */}
-          <div className="rounded-xl border border-border bg-card/60 p-5 space-y-3">
-            <h2 className="text-base font-semibold text-foreground">体验码</h2>
-            <p className="text-sm text-muted">
-              为避免 API 被滥用，请联系 Lonky 获取体验码后使用
-            </p>
-            <input
-              type="password"
-              value={secret}
-              onChange={(e) => setSecret(e.target.value)}
-              placeholder="输入体验码"
-              className="w-full rounded-lg border border-border bg-background px-4 py-3 text-foreground placeholder:text-muted focus:border-accent focus:outline-none"
-            />
-          </div>
-
           {/* URL input */}
           <h2 className="text-xl font-bold">输入播客链接</h2>
           <p className="text-sm text-muted">
@@ -523,7 +503,7 @@ export function PodcastCreator() {
           />
           <button
             onClick={handleParse}
-            disabled={loading || !url || !secret}
+            disabled={loading || !url}
             className="cursor-pointer rounded-lg bg-accent px-6 py-3 font-medium text-white transition-all hover:-translate-y-0.5 hover:shadow-lg hover:shadow-accent/25 disabled:opacity-50 disabled:hover:translate-y-0 disabled:hover:shadow-none"
           >
             {loading ? "解析中..." : "解析链接"}
@@ -716,7 +696,6 @@ export function PodcastCreator() {
             transcript={transcript}
             meta={{ title: meta.title, description: meta.description }}
             systemPrompt={buildChatSystemPrompt(transcript, { title: meta.title, description: meta.description })}
-            secret={secret}
             initialMessages={restored && chatHistory.length > 0 ? chatHistory.map((m) => ({ id: m.id, role: m.role as "user" | "assistant", content: m.content })) : undefined}
             onMessagesChange={(msgs) => setChatHistory(msgs)}
           />

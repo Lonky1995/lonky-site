@@ -1,6 +1,7 @@
 import { streamText } from "ai";
 import { createOpenAICompatible } from "@ai-sdk/openai-compatible";
 import { NextRequest } from "next/server";
+import { auth } from "@/lib/podcast/auth";
 
 const deepseek = createOpenAICompatible({
   name: "deepseek",
@@ -9,8 +10,8 @@ const deepseek = createOpenAICompatible({
 });
 
 export async function POST(req: NextRequest) {
-  const secret = req.headers.get("authorization")?.replace("Bearer ", "");
-  if (secret !== process.env.PODCAST_SECRET) {
+  const session = await auth(req);
+  if (!session?.user) {
     return new Response("Unauthorized", { status: 401 });
   }
 

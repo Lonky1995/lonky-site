@@ -1,13 +1,14 @@
 import { NextRequest, NextResponse } from "next/server";
 import { AssemblyAI } from "assemblyai";
+import { auth } from "@/lib/podcast/auth";
 
 const client = new AssemblyAI({
   apiKey: process.env.ASSEMBLYAI_API_KEY!,
 });
 
 export async function GET(req: NextRequest) {
-  const secret = req.headers.get("authorization")?.replace("Bearer ", "");
-  if (secret !== process.env.PODCAST_SECRET) {
+  const session = await auth(req);
+  if (!session?.user) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 

@@ -1,15 +1,16 @@
 #!/bin/bash
 # Auto-push content changes from Obsidian to GitHub
-# Runs via cron every 10 minutes
+# Runs via cron
 
 REPO="/Users/lonky/lonky-site"
 LOG="/tmp/lonky-site-autopush.log"
+WATCH_PATHS=("content/" "public/data/latest-briefing.json")
 
 cd "$REPO" || exit 1
 
-# Only watch content/ directory (blog articles, podcast notes)
-CHANGES=$(git diff --name-only content/ 2>/dev/null)
-UNTRACKED=$(git ls-files --others --exclude-standard content/ 2>/dev/null)
+# Watch content and briefing index json
+CHANGES=$(git diff --name-only -- "${WATCH_PATHS[@]}" 2>/dev/null)
+UNTRACKED=$(git ls-files --others --exclude-standard -- "${WATCH_PATHS[@]}" 2>/dev/null)
 
 if [ -z "$CHANGES" ] && [ -z "$UNTRACKED" ]; then
   exit 0
@@ -19,13 +20,17 @@ echo "[$(date '+%Y-%m-%d %H:%M:%S')] Changes detected:" >> "$LOG"
 echo "$CHANGES $UNTRACKED" >> "$LOG"
 
 # Pull first to avoid conflicts
-git pull --rebase --quiet 2>> "$LOG"
+git pull --rebase --autostash --quiet 2>> "$LOG"
 
-# Stage only content/ changes
-git add content/ 2>> "$LOG"
+# Stage watched paths only
+git add -- "${WATCH_PATHS[@]}" 2>> "$LOG"
+if git diff --cached --quiet; then
+  echo "[$(date '+%Y-%m-%d %H:%M:%S')] No staged changes after add" >> "$LOG"
+  exit 0
+fi
 
 # Commit with auto message
-git commit -m "Auto-sync: update content from Obsidian" --quiet 2>> "$LOG"
+git commit -m "Auto-sync: update content and briefing" --quiet 2>> "$LOG"
 
 # Push
 if git push --quiet 2>> "$LOG"; then

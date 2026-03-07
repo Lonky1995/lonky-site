@@ -26,7 +26,7 @@ PAGES = [
 
 # 关键数据文件检测
 DATA_FILES = [
-    {"path": "/data/latest-tweet.json", "name": "推特同步", "max_age_hours": 48},
+    {"path": "/data/latest-tweet.json", "name": "推特同步", "max_age_hours": 168},  # 7天，用户可能几天不发推
 ]
 
 # 阈值
@@ -116,8 +116,9 @@ def check_data_freshness(path: str, max_age_hours: int) -> dict:
         data = resp.json()
         
         # 尝试从数据中提取时间戳
+        # 优先用 checked_at（同步检查时间），其次 updated_at（内容更新时间）
         timestamp = None
-        for key in ['updated_at', 'timestamp', 'created_at', 'date']:
+        for key in ['checked_at', 'updated_at', 'timestamp', 'created_at', 'date']:
             if key in data:
                 timestamp = data[key]
                 break

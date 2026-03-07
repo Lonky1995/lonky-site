@@ -1,24 +1,36 @@
 import { NextRequest, NextResponse } from "next/server";
+import { auth } from "@/lib/podcast/auth";
+import {
+  createStoredDiscussion,
+  hasPosted,
+  normalizeStoredDiscussions,
+  toDiscussionView,
+  type StoredDiscussion,
+} from "@/lib/podcast/discussions";
 
 const OWNER = "Lonky1995";
 const REPO = "lonky-site";
 
-type Discussion = {
-  id: string;
-  visitorId: string;
-  question: string;
-  answer: string;
-  createdAt: string;
-};
-
 export async function POST(req: NextRequest) {
+  const session = await auth(req);
+  if (!session?.user) {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
+
   const githubToken = process.env.GITHUB_TOKEN;
   if (!githubToken) {
     return NextResponse.json({ error: "GITHUB_TOKEN not configured" }, { status: 500 });
   }
 
-  const { slug, visitorId, question, answer } = await req.json();
-  if (!slug || !visitorId || !question || !answer) {
+  const { slug, question, answer } = await req.json();
+  if (
+    typeof slug !== "string" ||
+    typeof question !== "string" ||
+    typeof answer !== "string" ||
+    !slug.trim() ||
+    !question.trim() ||
+    !answer.trim()
+  ) {
     return NextResponse.json({ error: "Missing required fields" }, { status: 400 });
   }
 
@@ -28,7 +40,7 @@ export async function POST(req: NextRequest) {
   for (let attempt = 0; attempt < maxRetries; attempt++) {
     try {
       // Read existing file (if any)
-      let existing: Discussion[] = [];
+      let existing: StoredDiscussion[] = [];
       let sha: string | undefined;
 
       const getRes = await fetch(
@@ -40,24 +52,22 @@ export async function POST(req: NextRequest) {
         const data = await getRes.json();
         sha = data.sha;
         const content = Buffer.from(data.content, "base64").toString("utf-8");
-        existing = JSON.parse(content);
+        existing = normalizeStoredDiscussions(JSON.parse(content));
       } else if (getRes.status !== 404) {
         throw new Error(`GitHub read error: ${getRes.status}`);
       }
 
-      // Server-side check: has this visitor already asked?
-      if (existing.some((d) => d.visitorId === visitorId)) {
+      // Server-side check: one account can only ask once per note
+      if (hasPosted(existing, session.user.id)) {
         return NextResponse.json({ error: "Already participated" }, { status: 409 });
       }
 
       // Append new discussion
-      const newThread: Discussion = {
-        id: crypto.randomUUID(),
-        visitorId,
+      const newThread = createStoredDiscussion({
         question,
         answer,
-        createdAt: new Date().toISOString(),
-      };
+        user: session.user,
+      });
       existing.push(newThread);
 
       // Write back to GitHub
@@ -78,7 +88,7 @@ export async function POST(req: NextRequest) {
       );
 
       if (putRes.ok) {
-        return NextResponse.json(newThread);
+        return NextResponse.json(toDiscussionView(newThread, session.user));
       }
 
       // 409 = SHA conflict, retry
