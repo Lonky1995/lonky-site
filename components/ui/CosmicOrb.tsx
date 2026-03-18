@@ -46,14 +46,14 @@ export function CosmicOrb() {
       const ringRadius = baseRadius * 0.4 + (baseRadius * 0.7 * r) / RING_COUNT;
       const tilt = (Math.PI * 0.15 * r) / RING_COUNT + Math.random() * 0.1;
       for (let i = 0; i < PER_RING; i++) {
-        const hueBase = r % 2 === 0 ? 250 : 200;
+        const hueBase = r % 2 === 0 ? 215 : 210;
         particles.push({
           angle: (Math.PI * 2 * i) / PER_RING + Math.random() * 0.3,
           radius: ringRadius + (Math.random() - 0.5) * 15,
           speed: (0.003 + Math.random() * 0.004) * (r % 2 === 0 ? 1 : -1),
-          size: Math.random() * 1.8 + 0.5,
-          hue: hueBase + Math.random() * 40,
-          opacity: Math.random() * 0.5 + 0.3,
+          size: Math.random() * 2.2 + 0.6,
+          hue: hueBase + Math.random() * 15,
+          opacity: Math.random() * 0.6 + 0.4,
           orbitTilt: tilt,
           phase: Math.random() * Math.PI * 2,
         });
@@ -68,7 +68,7 @@ export function CosmicOrb() {
         radius: Math.random() * baseRadius * 1.2,
         speed: (Math.random() - 0.5) * 0.002,
         size: Math.random() * 1 + 0.3,
-        hue: 220 + Math.random() * 60,
+        hue: 210 + Math.random() * 20,
         opacity: Math.random() * 0.25 + 0.05,
         orbitTilt: Math.random() * 0.5,
         phase: Math.random() * Math.PI * 2,
@@ -96,32 +96,32 @@ export function CosmicOrb() {
       const tiltX = mouse.active ? mouse.y * 0.0008 : 0;
       const tiltY = mouse.active ? mouse.x * 0.0006 : 0;
 
-      // --- Core glow ---
-      const coreGlow = ctx.createRadialGradient(cx, cy, 0, cx, cy, baseRadius * 0.5);
-      coreGlow.addColorStop(0, "rgba(139, 92, 246, 0.25)");
-      coreGlow.addColorStop(0.3, "rgba(99, 102, 241, 0.12)");
-      coreGlow.addColorStop(0.6, "rgba(6, 182, 212, 0.04)");
+      // --- Core glow — bolder ---
+      const coreGlow = ctx.createRadialGradient(cx, cy, 0, cx, cy, baseRadius * 0.7);
+      coreGlow.addColorStop(0, "rgba(59, 130, 246, 0.35)");
+      coreGlow.addColorStop(0.25, "rgba(59, 130, 246, 0.18)");
+      coreGlow.addColorStop(0.55, "rgba(96, 165, 250, 0.07)");
       coreGlow.addColorStop(1, "transparent");
       ctx.beginPath();
-      ctx.arc(cx, cy, baseRadius * 0.5, 0, Math.PI * 2);
+      ctx.arc(cx, cy, baseRadius * 0.7, 0, Math.PI * 2);
       ctx.fillStyle = coreGlow;
       ctx.fill();
 
       // Pulsing inner core
       const pulse = Math.sin(time * 0.015) * 0.3 + 0.7;
-      const innerGlow = ctx.createRadialGradient(cx, cy, 0, cx, cy, baseRadius * 0.18);
-      innerGlow.addColorStop(0, `rgba(167, 139, 250, ${0.35 * pulse})`);
-      innerGlow.addColorStop(0.5, `rgba(129, 140, 248, ${0.15 * pulse})`);
+      const innerGlow = ctx.createRadialGradient(cx, cy, 0, cx, cy, baseRadius * 0.22);
+      innerGlow.addColorStop(0, `rgba(147, 197, 253, ${0.55 * pulse})`);
+      innerGlow.addColorStop(0.4, `rgba(96, 165, 250, ${0.25 * pulse})`);
       innerGlow.addColorStop(1, "transparent");
       ctx.beginPath();
-      ctx.arc(cx, cy, baseRadius * 0.18, 0, Math.PI * 2);
+      ctx.arc(cx, cy, baseRadius * 0.22, 0, Math.PI * 2);
       ctx.fillStyle = innerGlow;
       ctx.fill();
 
       // Bright center dot
       ctx.beginPath();
-      ctx.arc(cx, cy, 2.5, 0, Math.PI * 2);
-      ctx.fillStyle = `rgba(220, 210, 255, ${0.6 + pulse * 0.3})`;
+      ctx.arc(cx, cy, 3.5, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(220, 235, 255, ${0.8 + pulse * 0.2})`;
       ctx.fill();
 
       // --- Orbit rings (faint ellipses) ---
@@ -135,7 +135,7 @@ export function CosmicOrb() {
         ctx.scale(1, 0.35 + tiltX);
         ctx.beginPath();
         ctx.arc(0, 0, ringR, 0, Math.PI * 2);
-        ctx.strokeStyle = `rgba(139, 92, 246, ${0.06 - r * 0.008})`;
+        ctx.strokeStyle = `rgba(59, 130, 246, ${0.06 - r * 0.008})`;
         ctx.lineWidth = 0.8;
         ctx.stroke();
         ctx.restore();
@@ -188,11 +188,11 @@ export function CosmicOrb() {
         ctx.fill();
       }
 
-      // --- Outer halo ---
-      const halo = ctx.createRadialGradient(cx, cy, baseRadius * 0.7, cx, cy, baseRadius * 1.3);
+      // --- Outer halo — more luminous ---
+      const halo = ctx.createRadialGradient(cx, cy, baseRadius * 0.6, cx, cy, baseRadius * 1.4);
       halo.addColorStop(0, "transparent");
-      halo.addColorStop(0.5, "rgba(99, 102, 241, 0.015)");
-      halo.addColorStop(0.8, "rgba(6, 182, 212, 0.01)");
+      halo.addColorStop(0.4, "rgba(59, 130, 246, 0.04)");
+      halo.addColorStop(0.7, "rgba(96, 165, 250, 0.025)");
       halo.addColorStop(1, "transparent");
       ctx.beginPath();
       ctx.arc(cx, cy, baseRadius * 1.3, 0, Math.PI * 2);

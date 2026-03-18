@@ -2,11 +2,11 @@
 
 export function GradientText({
   children,
-  variant = "purple",
+  variant = "blue",
   className = "",
 }: {
   children: React.ReactNode;
-  variant?: "purple" | "cyan";
+  variant?: "blue" | "cyan";
   className?: string;
 }) {
   return (

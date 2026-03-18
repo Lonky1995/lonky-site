@@ -22,7 +22,7 @@ export function AnimatedCard({
     >
       {/* Gradient border glow on hover */}
       <div className="pointer-events-none absolute inset-0 rounded-xl opacity-0 transition-opacity duration-300 group-hover:opacity-100">
-        <div className="absolute inset-[-1px] rounded-xl bg-gradient-to-br from-accent via-accent-light to-cyan opacity-20" />
+        <div className="absolute inset-[-1px] rounded-xl bg-gradient-to-br from-accent to-accent-light opacity-20" />
       </div>
       <div className="relative z-10">{children}</div>
     </motion.div>

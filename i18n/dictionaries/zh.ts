@@ -9,9 +9,9 @@ const zh: Dictionary = {
   },
   hero: {
     greeting: "Hey, I'm",
-    roles: ["Product Thinker", "AI Builder"],
+    roles: ["产品经理", "AI 构建者", "Vibecoder"],
     description:
-      "欢迎来到我的 digital garden。\n这里记录了我一些思考。",
+      "从微信到 OKX，做了 8 年产品。\n现在用 AI 构建自己想要的工具。",
     cards: {
       projects: {
         title: "Projects",
@@ -29,15 +29,15 @@ const zh: Dictionary = {
   },
   aboutTimeline: {
     title: "关于我",
-    subtitle: "从微信到 Web3，打造用户喜爱的产品。",
-    viewLink: "去查看 →",
+    subtitle: "8 年产品经验，横跨社交、内容、加密货币。现在用 AI 自己造工具。",
+    viewLink: "了解更多 →",
   },
   projects: {
-    homeTitle: "Vibecoding 作品集",
-    homeSubtitle: "我构建的 AI、加密货币和开发者工具。",
+    homeTitle: "我造的东西",
+    homeSubtitle: "边用边做——AI 工具、加密市场数据、播客笔记。",
     pageTitle: "项目",
-    pageSubtitle: "我构建的作品 — AI 工具、加密货币平台和开发者工具。",
-    viewAll: "查看全部项目 →",
+    pageSubtitle: "边用边做——AI 工具、加密市场数据、播客笔记。",
+    viewAll: "查看全部 →",
     inProgress: "开发中",
     dailyUpdate: "每日更新",
     weeklyUpdate: "每周更新",
@@ -53,24 +53,24 @@ const zh: Dictionary = {
   },
   blog: {
     title: "想法和笔记",
-    subtitle: "",
-    readAll: "阅读全部文章 →",
+    subtitle: "产品决策、AI 趋势、构建过程中踩的坑。",
+    readAll: "看全部文章 →",
     noPosts: "即将发布...",
     noPostsFiltered: "暂无文章，即将发布...",
     backToAll: "← 返回全部文章",
   },
   podcast: {
     title: "播客笔记",
-    subtitle: "用 AI 整理我听过的播客精华。",
+    subtitle: "AI 提炼播客精华，自动生成可搜索的结构化笔记。",
     noNotes: "暂无播客笔记。",
     backToAll: "← 返回全部播客笔记",
-    newNote: "去体验",
+    newNote: "试试看 →",
     sourceLink: "收听原节目 →",
     transcript: "完整转录",
   },
   contact: {
-    title: "联系我",
-    subtitle: "随时欢迎有趣的交流与合作。",
+    title: "聊聊？",
+    subtitle: "产品、AI、加密货币，或者只是想打个招呼——都行。",
     latestOnX: "最新推文",
     findMeOn: "找到我",
     wechatCopied: "微信号已复制：",
@@ -85,7 +85,7 @@ const zh: Dictionary = {
       "产品经理转型 Vibecoder。5 年产品经验，用 AI 构建产品。",
   },
   footer: {
-    builtWith: "使用 Next.js 和 Framer Motion 构建。",
+    builtWith: "用 AI 构建，在深夜维护。",
   },
   common: {
     views: "次观看",

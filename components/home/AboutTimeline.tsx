@@ -93,15 +93,19 @@ export function AboutTimeline() {
     <section id="about-me" className="px-6 py-20 md:px-8">
       <div className="mx-auto max-w-6xl">
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="mb-12"
+          transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+          className="mb-16"
         >
-          <h2 className="text-3xl font-bold md:text-4xl">
-            <span className="gradient-text">{t.title}</span>
+          <h2
+            className="font-bold leading-[0.88] tracking-tight gradient-text"
+            style={{ fontSize: "clamp(2.8rem, 8vw, 6rem)" }}
+          >
+            {t.title}
           </h2>
-          <p className="mt-3 text-lg text-muted">{t.subtitle}</p>
+          <p className="mt-5 text-base text-muted font-light max-w-xl leading-relaxed">{t.subtitle}</p>
         </motion.div>
 
         <div className="relative ml-4 border-l border-border pl-8">

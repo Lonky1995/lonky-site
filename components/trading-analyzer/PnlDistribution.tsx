@@ -7,7 +7,7 @@ export default function PnlDistribution({ data }: { data: PnlBucket[] }) {
   return (
     <ResponsiveContainer width="100%" height={220}>
       <BarChart data={data} margin={{ top: 5, right: 5, bottom: 5, left: 5 }}>
-        <XAxis dataKey="label" tick={{ fill: '#94a3b8', fontSize: 10 }} />
+        <XAxis dataKey="label" tick={{ fill: '#71717a', fontSize: 10 }} />
         <YAxis tick={{ fill: '#64748b', fontSize: 10 }} />
         <Tooltip
           contentStyle={{

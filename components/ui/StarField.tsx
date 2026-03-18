@@ -185,8 +185,8 @@ export function StarField() {
           mouseX, mouseY, 0,
           mouseX, mouseY, MOUSE_RADIUS
         );
-        g.addColorStop(0, "rgba(99, 102, 241, 0.04)");
-        g.addColorStop(0.5, "rgba(139, 92, 246, 0.02)");
+        g.addColorStop(0, "rgba(59, 130, 246, 0.04)");
+        g.addColorStop(0.5, "rgba(59, 130, 246, 0.02)");
         g.addColorStop(1, "transparent");
         ctx.beginPath();
         ctx.arc(mouseX, mouseY, MOUSE_RADIUS, 0, Math.PI * 2);

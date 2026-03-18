@@ -6,12 +6,12 @@ const COLS = 10;
 const ROWS = 20;
 const CELL = 28;
 const COLORS = [
-  "#6366f1", // I - indigo
-  "#8b5cf6", // O - violet
-  "#ec4899", // T - pink
+  "#3b82f6", // I - blue
+  "#60a5fa", // O - light blue
+  "#06b6d4", // T - cyan
   "#10b981", // S - emerald
   "#f59e0b", // Z - amber
-  "#3b82f6", // L - blue
+  "#2563eb", // L - deeper blue
   "#ef4444", // J - red
 ];
 
@@ -124,11 +124,11 @@ export function TetrisGame() {
     const piece = pieceRef.current;
 
     // Clear
-    ctx.fillStyle = "#0f172a";
+    ctx.fillStyle = "#18181b";
     ctx.fillRect(0, 0, canvas.width, canvas.height);
 
     // Grid
-    ctx.strokeStyle = "#1e293b";
+    ctx.strokeStyle = "#27272a";
     ctx.lineWidth = 0.5;
     for (let r = 0; r <= ROWS; r++) {
       ctx.beginPath();
@@ -190,10 +190,10 @@ export function TetrisGame() {
       ctx.fillStyle = "#e2e8f0";
       ctx.font = "bold 16px sans-serif";
       ctx.fillText("最终得分", canvas.width / 2, canvas.height / 2 - 6);
-      ctx.fillStyle = "#818cf8";
+      ctx.fillStyle = "#60a5fa";
       ctx.font = "bold 40px sans-serif";
       ctx.fillText(`${scoreRef.current}`, canvas.width / 2, canvas.height / 2 + 38);
-      ctx.fillStyle = "#cbd5e1";
+      ctx.fillStyle = "#a1a1aa";
       ctx.font = "bold 14px sans-serif";
       ctx.fillText("按 R 或点击下方按钮再来一局", canvas.width / 2, canvas.height / 2 + 65);
     }

@@ -100,12 +100,12 @@ export default function FlaggedTradeDetail({ trade, prevTrade, flagType, flagDet
           width: chartRef.current.clientWidth,
           height: 300,
           layout: {
-            background: { color: '#111827' },
-            textColor: '#94a3b8',
+            background: { color: '#18181b' },
+            textColor: '#71717a',
           },
           grid: {
-            vertLines: { color: '#1e293b' },
-            horzLines: { color: '#1e293b' },
+            vertLines: { color: '#27272a' },
+            horzLines: { color: '#27272a' },
           },
           crosshair: { mode: 0 },
           timeScale: {
@@ -136,7 +136,7 @@ export default function FlaggedTradeDetail({ trade, prevTrade, flagType, flagDet
           {
             time: entryTime,
             position: isLong ? 'belowBar' : 'aboveBar',
-            color: '#6366f1',
+            color: '#3b82f6',
             shape: isLong ? 'arrowUp' : 'arrowDown',
             text: `${isLong ? '做多' : '做空'} $${trade.entry_price?.toFixed(1)}`,
           },
@@ -159,7 +159,7 @@ export default function FlaggedTradeDetail({ trade, prevTrade, flagType, flagDet
           markers.push({
             time: prevExitTime,
             position: 'aboveBar',
-            color: '#94a3b8',
+            color: '#71717a',
             shape: 'circle',
             text: `前一笔 ${prevPnl >= 0 ? '+' : ''}$${prevPnl.toFixed(0)}`,
           });
@@ -173,7 +173,7 @@ export default function FlaggedTradeDetail({ trade, prevTrade, flagType, flagDet
         if (trade.entry_price) {
           series.createPriceLine({
             price: trade.entry_price,
-            color: '#6366f1',
+            color: '#3b82f6',
             lineWidth: 1,
             lineStyle: 2, // dashed
             axisLabelVisible: true,

@@ -20,17 +20,20 @@ export function Section({
       <div className="mx-auto max-w-6xl">
         {title && (
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.5 }}
-            className="mb-12"
+            transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+            className="mb-16"
           >
-            <h2 className="text-3xl font-bold md:text-4xl">
-              <span className="gradient-text">{title}</span>
+            <h2
+              className="font-bold leading-[0.88] tracking-tight gradient-text"
+              style={{ fontSize: "clamp(2.8rem, 8vw, 6rem)" }}
+            >
+              {title}
             </h2>
             {subtitle && (
-              <p className="mt-3 text-lg text-muted">{subtitle}</p>
+              <p className="mt-5 text-base text-muted font-light max-w-xl leading-relaxed">{subtitle}</p>
             )}
           </motion.div>
         )}

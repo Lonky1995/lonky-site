@@ -26,13 +26,13 @@ export default function TraderProfile({ scores }: Props) {
   return (
     <ResponsiveContainer width="100%" height={240}>
       <RadarChart data={data} cx="50%" cy="50%" outerRadius="68%">
-        <PolarGrid stroke="rgba(99,102,241,0.2)" />
-        <PolarAngleAxis dataKey="dim" tick={{ fill: '#94a3b8', fontSize: 11 }} />
+        <PolarGrid stroke="rgba(59,130,246,0.2)" />
+        <PolarAngleAxis dataKey="dim" tick={{ fill: '#71717a', fontSize: 11 }} />
         <PolarRadiusAxis domain={[0, 100]} tick={false} axisLine={false} />
         <Radar
           dataKey="value"
-          stroke="#6366f1"
-          fill="#6366f1"
+          stroke="#3b82f6"
+          fill="#3b82f6"
           fillOpacity={0.25}
           strokeWidth={2}
         />

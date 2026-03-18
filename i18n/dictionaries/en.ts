@@ -7,9 +7,9 @@ const en = {
   },
   hero: {
     greeting: "Hey, I'm",
-    roles: ["Product Thinker", "AI Builder"] as string[],
+    roles: ["Product Manager", "AI Builder", "Vibecoder"] as string[],
     description:
-      "Welcome to my digital garden.\nA place for my thoughts and reflections.",
+      "8 years in product — WeChat to OKX.\nNow building tools I actually want to use.",
     cards: {
       projects: {
         title: "Projects",
@@ -27,16 +27,15 @@ const en = {
   },
   aboutTimeline: {
     title: "About Me",
-    subtitle: "From WeChat to Web3, building products people love.",
-    viewLink: "View →",
+    subtitle: "8 years in product across social, content, and crypto. Now I build my own tools with AI.",
+    viewLink: "Learn more →",
   },
   projects: {
-    homeTitle: "Vibecoding Portfolio",
-    homeSubtitle: "AI, crypto, and developer tools I've built.",
+    homeTitle: "Things I've Built",
+    homeSubtitle: "Built for my own use — AI tools, crypto market data, podcast notes.",
     pageTitle: "Projects",
-    pageSubtitle:
-      "Things I've built — AI tools, crypto platforms, and developer utilities.",
-    viewAll: "View all projects →",
+    pageSubtitle: "Built for my own use — AI tools, crypto market data, podcast notes.",
+    viewAll: "View all →",
     inProgress: "In Progress",
     dailyUpdate: "Daily Update",
     weeklyUpdate: "Weekly Update",
@@ -52,25 +51,25 @@ const en = {
   },
   blog: {
     title: "Ideas & Notes",
-    subtitle: "",
-    readAll: "Read all posts →",
+    subtitle: "Product decisions, AI observations, and lessons from building.",
+    readAll: "Read all →",
     noPosts: "Coming soon...",
     noPostsFiltered: "No posts yet. Coming soon...",
     backToAll: "← Back to all posts",
   },
   podcast: {
     title: "Podcast Notes",
-    subtitle: "AI-powered notes from podcasts I listen to.",
+    subtitle: "AI extracts the best parts — searchable, structured, ready to revisit.",
     noNotes: "No podcast notes yet.",
     backToAll: "← Back to all podcast notes",
-    newNote: "New Podcast Note",
+    newNote: "Try it →",
     sourceLink: "Listen to original →",
     transcript: "Full Transcript",
   },
   contact: {
-    title: "Let's Connect",
+    title: "Say Hello",
     subtitle:
-      "Always open to interesting conversations and collaborations.",
+      "Product, AI, crypto — or just want to chat. I'm here.",
     latestOnX: "Latest on X",
     findMeOn: "Find me on",
     wechatCopied: "WeChat ID copied:",
@@ -85,7 +84,7 @@ const en = {
       "Product Manager turned Vibecoder. 5 years of PM experience, now building with AI.",
   },
   footer: {
-    builtWith: "Built with Next.js & Framer Motion.",
+    builtWith: "Built with AI. Maintained at midnight.",
   },
   common: {
     views: "views",
