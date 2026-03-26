@@ -31,8 +31,8 @@ const en = {
     viewLink: "Learn more →",
   },
   projects: {
-    homeTitle: "Things I've Built",
-    homeSubtitle: "Built for my own use — AI tools, crypto market data, podcast notes.",
+    homeTitle: "Vibecoding Portfolio",
+    homeSubtitle: "Zero coding background, all built with AI — from idea to production.",
     pageTitle: "Projects",
     pageSubtitle: "Built for my own use — AI tools, crypto market data, podcast notes.",
     viewAll: "View all →",

@@ -33,8 +33,8 @@ const zh: Dictionary = {
     viewLink: "了解更多 →",
   },
   projects: {
-    homeTitle: "我造的东西",
-    homeSubtitle: "边用边做——AI 工具、加密市场数据、播客笔记。",
+    homeTitle: "Vibecoding 作品集",
+    homeSubtitle: "零代码基础，全部用 AI 构建——从想法到上线。",
     pageTitle: "项目",
     pageSubtitle: "边用边做——AI 工具、加密市场数据、播客笔记。",
     viewAll: "查看全部 →",

@@ -3,7 +3,7 @@
 @theme inline {
   --color-background: #09090b;
   --color-foreground: #fafafa;
-  --color-muted: #71717a;
+  --color-muted: #a1a1aa;
   --color-card: #18181b;
   --color-card-hover: #27272a;
   --color-border: #27272a;
@@ -136,7 +136,7 @@ body {
   --tweet-bg-color: #18181b;
   --tweet-border: 1px solid #27272a;
   --tweet-font-color: #fafafa;
-  --tweet-font-color-secondary: #71717a;
+  --tweet-font-color-secondary: #a1a1aa;
   --tweet-link-color: #3b82f6;
   --tweet-link-color-hover: #60a5fa;
   --tweet-color-blue-secondary: #3b82f6;
@@ -163,7 +163,7 @@ body {
   border-left: 3px solid #3b82f6;
   padding: 0.75rem 1rem;
   margin: 0.75rem 0;
-  color: #71717a;
+  color: #a1a1aa;
   font-style: italic;
   background: #27272a40;
   border-radius: 0 0.5rem 0.5rem 0;
@@ -303,7 +303,7 @@ body {
   border-left: 3px solid #3b82f6;
   padding: 0.75rem 1rem;
   margin: 1rem 0;
-  color: #71717a;
+  color: #a1a1aa;
   font-style: normal;
   font-size: 0.875rem;
   background: #18181b;
@@ -342,7 +342,7 @@ body {
   padding: 0.75rem 1rem;
   font-size: 0.875rem;
   font-weight: 500;
-  color: #71717a;
+  color: #a1a1aa;
   background: #18181b;
   user-select: none;
   transition: color 0.2s;
