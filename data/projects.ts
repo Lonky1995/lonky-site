@@ -138,18 +138,22 @@ export const projects: Project[] = [
     featured: true,
     status: "live",
   },
-  // {
-  //   id: "alphify",
-  //   title: { zh: "Alphify", en: "Alphify" },
-  //   description: {
-  //     zh: "AI 驱动的加密货币交易 Copilot，实时分析市场数据，辅助制定和执行交易策略。",
-  //     en: "AI-powered crypto trading Copilot for real-time market analysis and strategy execution.",
-  //   },
-  //   category: "AI",
-  //   techStack: ["Next.js", "TypeScript", "LangChain", "OpenAI", "Firebase"],
-  //   featured: true,
-  //   status: "in-progress",
-  // },
+  {
+    id: "tg-channel-digest",
+    title: {
+      zh: "TG 频道摘要",
+      en: "TG Channel Digest",
+    },
+    description: {
+      zh: "实时监控 53 个 Telegram 加密货币频道，每 8 小时用 AI 生成交易信号、市场情绪和 KOL 观点的结构化摘要。",
+      en: "Monitors 53 Telegram crypto channels in real-time, generates AI-powered trading signal and market sentiment digests every 8 hours.",
+    },
+    category: "Crypto",
+    techStack: ["Python", "Telethon", "Claude", "SQLite", "Discord"],
+    github: "https://github.com/Lonky1995/tg-channel-digest",
+    featured: true,
+    status: "live",
+  },
 ];
 
 export const categories = ["Tool"] as const;
