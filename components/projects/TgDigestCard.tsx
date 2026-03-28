@@ -3,6 +3,7 @@
 import type { Project } from "@/data/projects";
 import { AnimatedCard } from "@/components/ui/AnimatedCard";
 import { useLocale } from "@/components/locale-provider";
+import { Broadcast, Robot, Bell } from "@phosphor-icons/react";
 
 const painPoints = {
   zh: {
@@ -30,38 +31,14 @@ const painPoints = {
 
 const flowSteps = {
   zh: [
-    {
-      icon: "📡",
-      title: "实时监听",
-      desc: "Telethon 接入 53 个频道，消息实时写入 SQLite",
-    },
-    {
-      icon: "🤖",
-      title: "AI 总结",
-      desc: "每 8 小时拉取消息，Claude / GPT 生成交易信号+情绪摘要",
-    },
-    {
-      icon: "🔔",
-      title: "Discord 推送",
-      desc: "结构化摘要自动发到 Discord，醒来就能看",
-    },
+    { icon: <Broadcast size={16} weight="duotone" className="text-accent-light" />, title: "实时监听", desc: "Telethon 接入 53 个频道，消息实时写入 SQLite" },
+    { icon: <Robot size={16} weight="duotone" className="text-accent-light" />, title: "AI 总结", desc: "每 8 小时拉取消息，Claude / GPT 生成交易信号+情绪摘要" },
+    { icon: <Bell size={16} weight="duotone" className="text-accent-light" />, title: "Discord 推送", desc: "结构化摘要自动发到 Discord，醒来就能看" },
   ],
   en: [
-    {
-      icon: "📡",
-      title: "Real-time Listener",
-      desc: "Telethon monitors 53 channels, messages stored in SQLite",
-    },
-    {
-      icon: "🤖",
-      title: "AI Digest",
-      desc: "Every 8h, pull messages → Claude/GPT generates trading signals + sentiment",
-    },
-    {
-      icon: "🔔",
-      title: "Discord Push",
-      desc: "Structured digest auto-posted to Discord — ready when you wake up",
-    },
+    { icon: <Broadcast size={16} weight="duotone" className="text-accent-light" />, title: "Real-time Listener", desc: "Telethon monitors 53 channels, messages stored in SQLite" },
+    { icon: <Robot size={16} weight="duotone" className="text-accent-light" />, title: "AI Digest", desc: "Every 8h, pull messages → Claude/GPT generates trading signals + sentiment" },
+    { icon: <Bell size={16} weight="duotone" className="text-accent-light" />, title: "Discord Push", desc: "Structured digest auto-posted to Discord — ready when you wake up" },
   ],
 };
 
@@ -98,7 +75,7 @@ export function TgDigestCard({
       <h3 className="mb-2 text-xl font-bold">{project.title[locale]}</h3>
 
       {/* Pain points */}
-      <div className="mb-4 rounded-lg border border-border/50 bg-background/50 p-4">
+      <div className="mb-4 rounded-none border border-foreground/20 bg-background/50 p-4">
         <p className="mb-2.5 text-sm font-semibold text-foreground">
           {pain.heading}
         </p>
@@ -148,7 +125,7 @@ export function TgDigestCard({
           href={project.github}
           target="_blank"
           rel="noopener noreferrer"
-          className="inline-flex items-center gap-2 rounded-lg border border-border bg-card px-5 py-2.5 text-sm font-medium text-foreground transition-colors hover:border-accent hover:text-accent"
+          className="inline-flex items-center gap-2 rounded-none border-2 border-foreground bg-card px-5 py-2.5 text-sm font-medium text-foreground transition-colors hover:border-accent hover:text-accent"
         >
           <svg className="h-4 w-4" viewBox="0 0 24 24" fill="currentColor">
             <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z" />

@@ -28,7 +28,7 @@ export default async function SignUpPage({ searchParams }: SignUpPageProps) {
         </p>
         <Link
           href={fallback.toString()}
-          className="mt-6 inline-block rounded-lg bg-accent px-4 py-2 text-sm font-medium text-white transition-opacity hover:opacity-90"
+          className="mt-6 inline-block rounded-none bg-accent px-4 py-2 text-sm font-medium text-white transition-opacity hover:opacity-90"
         >
           前往 TradeMirror 注册
         </Link>

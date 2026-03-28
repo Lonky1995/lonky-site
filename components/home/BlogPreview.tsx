@@ -41,8 +41,8 @@ export function BlogPreview({ posts }: { posts: BlogPost[] }) {
       title={dict.blog.title}
       subtitle={dict.blog.subtitle}
     >
-      <div className="grid gap-6 md:grid-cols-3">
-        {posts.slice(0, 3).map((post, i) => (
+      <div className="grid gap-6 md:grid-cols-2">
+        {posts.slice(0, 2).map((post, i) => (
           <Link key={post.slug} href={getPostHref(post)} className="h-full">
             <AnimatedCard delay={i * 0.1} className="h-full">
               <h3 className="mb-2 text-lg font-semibold">{post.title}</h3>

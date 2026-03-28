@@ -2,8 +2,6 @@
 
 import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
-import { ParticleBackground } from "@/components/ui/ParticleBackground";
-import { CosmicOrb } from "@/components/ui/CosmicOrb";
 import { useLocale } from "@/components/locale-provider";
 
 export function Hero() {
@@ -41,9 +39,7 @@ export function Hero() {
   }, [text, isDeleting, roleIndex, roles]);
 
   return (
-    <section className="relative z-10 flex min-h-screen items-center overflow-hidden px-6 md:px-12 lg:px-20">
-      <ParticleBackground />
-
+    <section className="relative z-10 flex min-h-[100dvh] items-center overflow-hidden px-6 md:px-12 lg:px-20">
       <div className="relative z-10 w-full max-w-7xl mx-auto">
         {/* Greeting line */}
         <motion.p
@@ -64,11 +60,9 @@ export function Hero() {
           style={{ fontSize: "clamp(4rem, 16vw, 12rem)" }}
         >
           <span style={{
-            background: "linear-gradient(135deg, #60a5fa 0%, #93c5fd 50%, #22d3ee 100%)",
-            WebkitBackgroundClip: "text",
-            WebkitTextFillColor: "transparent",
-            backgroundClip: "text",
-            filter: "drop-shadow(0 0 40px rgba(59,130,246,0.65)) drop-shadow(0 0 90px rgba(59,130,246,0.35))",
+            color: "#050505",
+            textTransform: "uppercase",
+            fontWeight: 900,
           }}>Lonky</span>
         </motion.h1>
 
@@ -86,32 +80,20 @@ export function Hero() {
           </span>
         </motion.div>
 
-        {/* Description + Orb row */}
-        <div className="flex items-end justify-between gap-12">
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.6, ease: [0.22, 1, 0.36, 1] }}
-            className="max-w-sm text-muted leading-relaxed text-base"
-          >
-            {dict.hero.description.split("\n").map((line, i) => (
-              <span key={i}>
-                {i > 0 && <br />}
-                {line}
-              </span>
-            ))}
-          </motion.p>
-
-          {/* Orb — right side, only on large screens */}
-          <motion.div
-            initial={{ opacity: 0, scale: 0.7 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 1.4, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
-            className="hidden lg:block flex-shrink-0"
-          >
-            <CosmicOrb />
-          </motion.div>
-        </div>
+        {/* Description */}
+        <motion.p
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7, delay: 0.6, ease: [0.22, 1, 0.36, 1] }}
+          className="max-w-sm text-muted leading-relaxed text-base"
+        >
+          {dict.hero.description.split("\n").map((line, i) => (
+            <span key={i}>
+              {i > 0 && <br />}
+              {line}
+            </span>
+          ))}
+        </motion.p>
       </div>
     </section>
   );

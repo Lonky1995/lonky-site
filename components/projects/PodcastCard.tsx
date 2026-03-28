@@ -4,61 +4,22 @@ import Link from "next/link";
 import type { Project } from "@/data/projects";
 import { AnimatedCard } from "@/components/ui/AnimatedCard";
 import { useLocale } from "@/components/locale-provider";
+import { LinkSimple, Microphone, NotePencil, ChatCircle, RocketLaunch } from "@phosphor-icons/react";
 
 const flowSteps = {
   zh: [
-    {
-      icon: "🔗",
-      title: "贴入链接",
-      desc: "粘贴小宇宙或 Apple Podcasts 链接，支持任意单集",
-    },
-    {
-      icon: "🎙️",
-      title: "AI 转录",
-      desc: "自动语音识别，生成带时间戳的完整文字稿",
-    },
-    {
-      icon: "📝",
-      title: "结构化笔记",
-      desc: "AI 提炼核心观点、金句、行动建议，一目了然",
-    },
-    {
-      icon: "💬",
-      title: "和 AI 深入讨论",
-      desc: "基于播客内容与 AI 对话，追问细节，激发新思考",
-    },
-    {
-      icon: "🚀",
-      title: "一键生成",
-      desc: "生成带讨论记录的播客笔记，随时回顾",
-    },
+    { icon: <LinkSimple size={16} weight="duotone" className="text-accent-light" />, title: "贴入链接", desc: "粘贴小宇宙或 Apple Podcasts 链接，支持任意单集" },
+    { icon: <Microphone size={16} weight="duotone" className="text-accent-light" />, title: "AI 转录", desc: "自动语音识别，生成带时间戳的完整文字稿" },
+    { icon: <NotePencil size={16} weight="duotone" className="text-accent-light" />, title: "结构化笔记", desc: "AI 提炼核心观点、金句、行动建议，一目了然" },
+    { icon: <ChatCircle size={16} weight="duotone" className="text-accent-light" />, title: "和 AI 深入讨论", desc: "基于播客内容与 AI 对话，追问细节，激发新思考" },
+    { icon: <RocketLaunch size={16} weight="duotone" className="text-accent-light" />, title: "一键生成", desc: "生成带讨论记录的播客笔记，随时回顾" },
   ],
   en: [
-    {
-      icon: "🔗",
-      title: "Paste Link",
-      desc: "Paste a podcast episode URL from Xiaoyuzhou or Apple Podcasts",
-    },
-    {
-      icon: "🎙️",
-      title: "AI Transcribe",
-      desc: "Auto speech-to-text with timestamps for the full episode",
-    },
-    {
-      icon: "📝",
-      title: "Structured Notes",
-      desc: "AI extracts key insights, quotes, and action items at a glance",
-    },
-    {
-      icon: "💬",
-      title: "Deep Discussion",
-      desc: "Chat with AI about the content, ask follow-ups, spark new ideas",
-    },
-    {
-      icon: "🚀",
-      title: "Generate",
-      desc: "One-click generate podcast notes with discussion, ready to revisit",
-    },
+    { icon: <LinkSimple size={16} weight="duotone" className="text-accent-light" />, title: "Paste Link", desc: "Paste a podcast episode URL from Xiaoyuzhou or Apple Podcasts" },
+    { icon: <Microphone size={16} weight="duotone" className="text-accent-light" />, title: "AI Transcribe", desc: "Auto speech-to-text with timestamps for the full episode" },
+    { icon: <NotePencil size={16} weight="duotone" className="text-accent-light" />, title: "Structured Notes", desc: "AI extracts key insights, quotes, and action items at a glance" },
+    { icon: <ChatCircle size={16} weight="duotone" className="text-accent-light" />, title: "Deep Discussion", desc: "Chat with AI about the content, ask follow-ups, spark new ideas" },
+    { icon: <RocketLaunch size={16} weight="duotone" className="text-accent-light" />, title: "Generate", desc: "One-click generate podcast notes with discussion, ready to revisit" },
   ],
 };
 
@@ -114,7 +75,7 @@ export function PodcastCard({
       <h3 className="mb-2 text-xl font-bold">{project.title[locale]}</h3>
 
       {/* Pain points */}
-      <div className="mb-4 rounded-lg border border-border/50 bg-background/50 p-4">
+      <div className="mb-4 rounded-none border border-foreground/20 bg-background/50 p-4">
         <p className="mb-2.5 text-sm font-semibold text-foreground">
           {pain.heading}
         </p>
@@ -160,7 +121,7 @@ export function PodcastCard({
       {/* CTA */}
       <Link
         href="/podcast-notes/new"
-        className="inline-flex items-center gap-2 rounded-lg bg-accent px-5 py-2.5 text-sm font-medium text-white transition-opacity hover:opacity-90"
+        className="inline-flex items-center gap-2 rounded-none bg-accent px-5 py-2.5 text-sm font-medium text-background transition-opacity hover:opacity-90"
       >
         {dict.podcast.newNote}
         <svg className="h-4 w-4" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="2">

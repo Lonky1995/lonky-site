@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { motion } from "framer-motion";
 import type { ReactNode } from "react";
+import { RocketLaunch } from "@phosphor-icons/react";
 import { useLocale } from "@/components/locale-provider";
 
 /* ── OKX inline SVG (5-square cross pattern) ── */
@@ -56,7 +57,7 @@ const timelineStructure: TimelineEntry[] = [
   },
   {
     year: "2023 - 2024",
-    icons: <Logo src="/images/logos/followin.svg" alt="Followin" />,
+    icons: <Logo src="/images/logos/followin.png" alt="Followin" />,
     title: "Followin",
     role: "Product Co-founder",
   },
@@ -74,7 +75,7 @@ const timelineStructure: TimelineEntry[] = [
   },
   {
     year: "2018",
-    icons: <span className="text-xl leading-none">🚀</span>,
+    icons: <RocketLaunch size={24} weight="duotone" className="text-accent-light" />,
     title: "Token Galaxy",
     role: "Founder",
     link: {
@@ -100,7 +101,7 @@ export function AboutTimeline() {
           className="mb-16"
         >
           <h2
-            className="font-bold leading-[0.88] tracking-tight gradient-text"
+            className="font-bold leading-[0.88] tracking-tight text-foreground uppercase"
             style={{ fontSize: "clamp(2.8rem, 8vw, 6rem)" }}
           >
             {t.title}
@@ -108,7 +109,7 @@ export function AboutTimeline() {
           <p className="mt-5 text-base text-muted font-light max-w-xl leading-relaxed">{t.subtitle}</p>
         </motion.div>
 
-        <div className="relative ml-4 border-l border-border pl-8">
+        <div className="relative ml-4 border-l-2 border-foreground pl-8">
           {timelineStructure.map((item, i) => (
             <motion.div
               key={item.year}
@@ -119,7 +120,7 @@ export function AboutTimeline() {
               className="relative mb-10 last:mb-0"
             >
               {/* Dot */}
-              <div className="absolute -left-[calc(2rem+5px)] top-1.5 h-2.5 w-2.5 rounded-full border-2 border-accent bg-background" />
+              <div className="absolute -left-[calc(2rem+5px)] top-1.5 h-2.5 w-2.5 rounded-full border-2 border-foreground bg-accent" />
 
               <span className="text-xs font-medium text-accent">
                 {item.year}

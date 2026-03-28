@@ -27,7 +27,7 @@ export function Section({
             className="mb-16"
           >
             <h2
-              className="font-bold leading-[0.88] tracking-tight gradient-text"
+              className="font-bold leading-[0.88] tracking-tight text-foreground uppercase"
               style={{ fontSize: "clamp(2.8rem, 8vw, 6rem)" }}
             >
               {title}

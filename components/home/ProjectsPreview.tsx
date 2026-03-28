@@ -32,8 +32,12 @@ export function ProjectsPreview() {
       title={dict.projects.homeTitle}
       subtitle={dict.projects.homeSubtitle}
     >
-      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3 items-start">
-        {featured.map((project, i) => renderCard(project, i))}
+      <div className="grid gap-6 md:grid-cols-[2fr_1fr] items-start">
+        {featured.map((project, i) => (
+          <div key={project.id} className={i === 0 ? "md:row-span-2" : i === 2 ? "md:col-span-full" : ""}>
+            {renderCard(project, i)}
+          </div>
+        ))}
       </div>
       <div className="mt-8 text-center">
         <Link

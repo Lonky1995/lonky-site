@@ -161,7 +161,7 @@ export default function TradingAnalyzerPage() {
             exit={{ opacity: 0, y: -20 }}
             className="mx-auto max-w-md text-center"
           >
-            <div className="rounded-xl border border-border bg-card p-8">
+            <div className="rounded-none border border-border bg-card p-8">
               <motion.div
                 animate={{ rotate: 360 }}
                 transition={{ repeat: Infinity, duration: 2, ease: 'linear' }}

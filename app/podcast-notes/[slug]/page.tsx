@@ -273,7 +273,7 @@ export default async function PodcastNoteDetailPage({
 
       {/* TOC */}
       {toc.length > 0 && (
-        <nav className="mb-10 rounded-lg border border-border bg-card/50 p-5">
+        <nav className="mb-10 rounded-none border border-border bg-card/50 p-5">
           <p className="mb-3 text-sm font-semibold text-foreground">目录</p>
           <ul className="space-y-1.5">
             {toc.map((item) => (

@@ -52,7 +52,7 @@ export default async function Home() {
       <BlogPreview posts={blogPosts} />
       <ContactCTA
         tweetSlot={
-          <Suspense fallback={<div className="h-[200px] animate-pulse rounded-xl bg-card" />}>
+          <Suspense fallback={<div className="h-[200px] animate-pulse rounded-none bg-card" />}>
             <Tweet id={tweetId} />
           </Suspense>
         }

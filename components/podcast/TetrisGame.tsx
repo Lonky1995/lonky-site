@@ -6,13 +6,13 @@ const COLS = 10;
 const ROWS = 20;
 const CELL = 28;
 const COLORS = [
-  "#3b82f6", // I - blue
-  "#60a5fa", // O - light blue
-  "#06b6d4", // T - cyan
-  "#10b981", // S - emerald
-  "#f59e0b", // Z - amber
-  "#2563eb", // L - deeper blue
-  "#ef4444", // J - red
+  "#8B7355", // I - warm brown
+  "#A08B6E", // O - light warm
+  "#6B8E7B", // T - sage
+  "#7A8B6E", // S - olive
+  "#B8956A", // Z - camel
+  "#6E7A8B", // L - steel blue
+  "#8B6E6E", // J - dusty rose
 ];
 
 const SHAPES = [
@@ -124,11 +124,11 @@ export function TetrisGame() {
     const piece = pieceRef.current;
 
     // Clear
-    ctx.fillStyle = "#18181b";
+    ctx.fillStyle = "#F4F4F0";
     ctx.fillRect(0, 0, canvas.width, canvas.height);
 
     // Grid
-    ctx.strokeStyle = "#27272a";
+    ctx.strokeStyle = "#d4d4d0";
     ctx.lineWidth = 0.5;
     for (let r = 0; r <= ROWS; r++) {
       ctx.beginPath();
@@ -190,7 +190,7 @@ export function TetrisGame() {
       ctx.fillStyle = "#e2e8f0";
       ctx.font = "bold 16px sans-serif";
       ctx.fillText("最终得分", canvas.width / 2, canvas.height / 2 - 6);
-      ctx.fillStyle = "#60a5fa";
+      ctx.fillStyle = "#8B7355";
       ctx.font = "bold 40px sans-serif";
       ctx.fillText(`${scoreRef.current}`, canvas.width / 2, canvas.height / 2 + 38);
       ctx.fillStyle = "#a1a1aa";
@@ -286,7 +286,7 @@ export function TetrisGame() {
         <p className="text-sm text-muted">不如先来一局经典俄罗斯方块？</p>
         <button
           onClick={() => setStarted(true)}
-          className="mt-2 rounded-xl bg-accent px-8 py-3 text-base font-bold text-white shadow-lg shadow-accent/25 transition-all hover:scale-105 hover:shadow-accent/40 active:scale-95"
+          className="mt-2 rounded-none bg-accent px-8 py-3 text-base font-bold text-background transition-all hover:scale-105 active:scale-95"
         >
           开始挑战
         </button>
@@ -304,24 +304,24 @@ export function TetrisGame() {
         ref={canvasRef}
         width={COLS * CELL}
         height={ROWS * CELL}
-        className="rounded-lg border border-border"
+        className="rounded-none border border-border"
       />
       {/* Controls */}
       {gameOver ? (
         <button
           onClick={() => handleAction("reset")}
-          className="rounded-xl bg-accent px-6 py-2.5 text-sm font-bold text-white shadow-lg shadow-accent/25 transition-all hover:scale-105 active:scale-95"
+          className="rounded-none bg-accent px-6 py-2.5 text-sm font-bold text-background transition-all hover:scale-105 active:scale-95"
         >
           再来一局
         </button>
       ) : (
         <>
           <div className="flex items-center gap-3">
-            <button onPointerDown={() => handleAction("left")} className="rounded-lg border border-border px-3 py-2 text-sm text-muted active:bg-accent/20">←</button>
-            <button onPointerDown={() => handleAction("down")} className="rounded-lg border border-border px-3 py-2 text-sm text-muted active:bg-accent/20">↓</button>
-            <button onPointerDown={() => handleAction("up")} className="rounded-lg border border-border px-3 py-2 text-sm text-muted active:bg-accent/20">↑</button>
-            <button onPointerDown={() => handleAction("right")} className="rounded-lg border border-border px-3 py-2 text-sm text-muted active:bg-accent/20">→</button>
-            <button onPointerDown={() => handleAction("drop")} className="rounded-lg border border-border px-4 py-2 text-xs text-muted active:bg-accent/20">落下</button>
+            <button onPointerDown={() => handleAction("left")} className="rounded-none border border-border px-3 py-2 text-sm text-muted active:bg-accent/20">←</button>
+            <button onPointerDown={() => handleAction("down")} className="rounded-none border border-border px-3 py-2 text-sm text-muted active:bg-accent/20">↓</button>
+            <button onPointerDown={() => handleAction("up")} className="rounded-none border border-border px-3 py-2 text-sm text-muted active:bg-accent/20">↑</button>
+            <button onPointerDown={() => handleAction("right")} className="rounded-none border border-border px-3 py-2 text-sm text-muted active:bg-accent/20">→</button>
+            <button onPointerDown={() => handleAction("drop")} className="rounded-none border border-border px-4 py-2 text-xs text-muted active:bg-accent/20">落下</button>
           </div>
           <p className="text-[10px] text-muted">← → 移动 · ↑ 旋转 · ↓ 加速 · 空格落下</p>
         </>

@@ -1,9 +1,8 @@
 import type { Metadata } from "next";
 import { cookies } from "next/headers";
 import Script from "next/script";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Geist, Geist_Mono, JetBrains_Mono } from "next/font/google";
 import { Navbar } from "@/components/layout/Navbar";
-import { StarField } from "@/components/ui/StarField";
 import { LocaleProvider } from "@/components/locale-provider";
 import { siteConfig } from "@/data/site-config";
 import { defaultLocale, type Locale } from "@/i18n/config";
@@ -17,6 +16,11 @@ const geistSans = Geist({
 
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
+  subsets: ["latin"],
+});
+
+const jetbrainsMono = JetBrains_Mono({
+  variable: "--font-jetbrains-mono",
   subsets: ["latin"],
 });
 
@@ -52,7 +56,7 @@ export default async function RootLayout({
     (cookieStore.get("locale")?.value as Locale) || defaultLocale;
   const dict = getDictionary(locale);
   const html = (
-    <html lang={locale} className="dark">
+    <html lang={locale}>
       <head>
         <Script
           defer
@@ -62,7 +66,7 @@ export default async function RootLayout({
         />
       </head>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} min-h-screen bg-background font-sans text-foreground antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} ${jetbrainsMono.variable} min-h-[100dvh] bg-background font-sans text-foreground antialiased`}
       >
         <script
           type="application/ld+json"
@@ -85,7 +89,6 @@ export default async function RootLayout({
         />
         <LocaleProvider locale={locale} dict={dict}>
           <div className="nebula-bg" aria-hidden="true" />
-          <StarField />
           <Navbar />
           <main className="relative z-10 pt-16">{children}</main>
         </LocaleProvider>

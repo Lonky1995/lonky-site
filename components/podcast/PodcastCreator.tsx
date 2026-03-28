@@ -442,10 +442,10 @@ export function PodcastCreator() {
               <div
                 className={`flex h-8 w-8 items-center justify-center rounded-full text-xs font-medium transition-all ${
                   s === step
-                    ? "bg-accent text-white"
+                    ? "bg-accent text-background"
                     : s < step
                       ? "bg-accent/20 text-accent"
-                      : "bg-border text-muted"
+                      : "border-2 border-border/30 bg-card text-muted"
                 }`}
               >
                 {s < step ? "✓" : s}
@@ -467,7 +467,7 @@ export function PodcastCreator() {
 
       {/* Restored state banner */}
       {restored && step >= 2 && (
-        <div className="flex items-center justify-between rounded-lg border border-accent/30 bg-accent/10 px-4 py-3 text-sm">
+        <div className="flex items-center justify-between rounded-none border border-accent/30 bg-accent/10 px-4 py-3 text-sm">
           <span className="text-accent">
             已恢复上次进度（{meta?.title ? `"${meta.title.slice(0, 30)}..."` : ""}）
           </span>
@@ -481,7 +481,7 @@ export function PodcastCreator() {
       )}
 
       {error && (
-        <div className="rounded-lg border border-red-500/30 bg-red-500/10 px-4 py-3 text-sm text-red-400">
+        <div className="rounded-none border border-red-500/30 bg-red-500/10 px-4 py-3 text-sm text-red-400">
           {error}
         </div>
       )}
@@ -499,12 +499,12 @@ export function PodcastCreator() {
             value={url}
             onChange={(e) => setUrl(e.target.value)}
             placeholder="https://www.xiaoyuzhoufm.com/episode/..."
-            className="w-full rounded-lg border border-border bg-background px-4 py-3 text-foreground placeholder:text-muted focus:border-accent focus:outline-none"
+            className="w-full rounded-none border border-border bg-background px-4 py-3 text-foreground placeholder:text-muted focus:border-accent focus:outline-none"
           />
           <button
             onClick={handleParse}
             disabled={loading || !url}
-            className="cursor-pointer rounded-lg bg-accent px-6 py-3 font-medium text-white transition-all hover:-translate-y-0.5 hover:shadow-lg hover:shadow-accent/25 disabled:opacity-50 disabled:hover:translate-y-0 disabled:hover:shadow-none"
+            className="cursor-pointer rounded-none bg-accent px-6 py-3 font-medium text-background transition-all hover:-translate-y-0.5 disabled:opacity-50 disabled:hover:translate-y-0 disabled:hover:shadow-none"
           >
             {loading ? "解析中..." : "解析链接"}
           </button>
@@ -512,13 +512,13 @@ export function PodcastCreator() {
           {/* How it works */}
           <div className="mt-16">
             <h2 className="mb-10 text-center text-2xl font-bold">
-              <span className="bg-gradient-to-r from-[#3b82f6] to-[#60a5fa] bg-clip-text text-transparent">
+              <span className="text-foreground">
                 How it works
               </span>
             </h2>
             <div className="relative flex flex-col items-center gap-0 md:flex-row md:items-start md:justify-between md:gap-0">
-              <div className="absolute left-[10%] right-[10%] top-8 hidden h-[2px] bg-gradient-to-r from-[#3b82f6]/10 via-[#3b82f6]/50 to-[#3b82f6]/10 md:block" />
-              <div className="absolute bottom-0 left-8 top-0 w-[2px] bg-gradient-to-b from-[#3b82f6]/10 via-[#3b82f6]/50 to-[#3b82f6]/10 md:hidden" />
+              <div className="absolute left-[10%] right-[10%] top-8 hidden h-[2px] bg-gradient-to-r from-border/10 via-border/50 to-border/10 md:block" />
+              <div className="absolute bottom-0 left-8 top-0 w-[2px] bg-gradient-to-b from-border/10 via-border/50 to-border/10 md:hidden" />
               {[
                 { icon: "🔗", title: "贴入链接", desc: "粘贴小宇宙 / Apple Podcasts 链接" },
                 { icon: "🎙️", title: "自动转录", desc: "AI 语音识别，生成完整文字稿" },
@@ -531,15 +531,15 @@ export function PodcastCreator() {
                   className="relative z-10 flex items-start gap-4 py-4 md:flex-col md:items-center md:gap-0 md:py-0"
                   style={{ flex: 1 }}
                 >
-                  <div className="flex h-16 w-16 shrink-0 items-center justify-center rounded-full border border-[#3b82f6]/20 bg-[#18181b] text-2xl shadow-lg shadow-[#3b82f6]/10">
+                  <div className="flex h-16 w-16 shrink-0 items-center justify-center rounded-full border-2 border-border bg-card text-2xl">
                     {s.icon}
                   </div>
                   <div className="md:mt-4 md:text-center">
-                    <p className="text-sm font-semibold text-[#fafafa]">{s.title}</p>
-                    <p className="mt-1 text-xs leading-relaxed text-[#71717a] md:max-w-[120px]">{s.desc}</p>
+                    <p className="text-sm font-semibold text-foreground">{s.title}</p>
+                    <p className="mt-1 text-xs leading-relaxed text-muted md:max-w-[120px]">{s.desc}</p>
                   </div>
                   {i < arr.length - 1 && (
-                    <svg className="absolute -right-3 top-6 hidden h-6 w-6 text-[#3b82f6]/70 md:block" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <svg className="absolute -right-3 top-6 hidden h-6 w-6 text-muted md:block" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                       <path d="M9 5l7 7-7 7" />
                     </svg>
                   )}
@@ -554,12 +554,12 @@ export function PodcastCreator() {
       {step === 2 && meta && (
         <div className="space-y-4">
           <h2 className="text-xl font-bold">确认播客信息</h2>
-          <div className="flex gap-4 rounded-xl border border-border bg-card p-4">
+          <div className="flex gap-4 rounded-none border border-border bg-card p-4">
             {meta.coverImage && (
               <img
                 src={meta.coverImage}
                 alt={meta.title}
-                className="h-24 w-24 flex-shrink-0 rounded-lg object-cover"
+                className="h-24 w-24 flex-shrink-0 rounded-none object-cover"
               />
             )}
             <div>
@@ -582,14 +582,14 @@ export function PodcastCreator() {
           <div className="flex gap-3">
             <button
               onClick={() => setStep(1)}
-              className="cursor-pointer rounded-lg border border-border px-4 py-2 text-sm text-muted transition-colors hover:border-accent hover:text-foreground"
+              className="cursor-pointer rounded-none border border-border px-4 py-2 text-sm text-muted transition-colors hover:border-accent hover:text-foreground"
             >
               返回
             </button>
             <button
               onClick={handleTranscribe}
               disabled={loading}
-              className="cursor-pointer rounded-lg bg-accent px-6 py-3 font-medium text-white transition-all hover:-translate-y-0.5 hover:shadow-lg hover:shadow-accent/25 disabled:opacity-50 disabled:hover:translate-y-0 disabled:hover:shadow-none"
+              className="cursor-pointer rounded-none bg-accent px-6 py-3 font-medium text-background transition-all hover:-translate-y-0.5 disabled:opacity-50 disabled:hover:translate-y-0 disabled:hover:shadow-none"
             >
               {loading ? "提交中..." : "开始转录"}
             </button>
@@ -601,7 +601,7 @@ export function PodcastCreator() {
       {step === 3 && (
         <div className="space-y-5">
           {/* Compact status + progress card */}
-          <div className="rounded-xl border border-border bg-card p-4 space-y-3">
+          <div className="rounded-none border border-border bg-card p-4 space-y-3">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2 text-sm">
                 <span className={`h-2 w-2 rounded-full ${
@@ -665,7 +665,7 @@ export function PodcastCreator() {
           {meta.audioUrl && <AudioPlayer audioUrl={meta.audioUrl} />}
 
 {/* AI Summary card */}
-          <div className="rounded-xl border border-border bg-card p-4">
+          <div className="rounded-none border border-border bg-card p-4">
             <div className="mb-2 flex items-center justify-between">
               <span className="text-xs font-medium text-muted">AI 笔记</span>
               {summary && !summaryLoading && (
@@ -710,7 +710,7 @@ export function PodcastCreator() {
               }
             }}
             disabled={!summary}
-            className="w-full rounded-lg border border-border px-6 py-2.5 text-sm text-muted transition-colors hover:border-accent hover:text-accent disabled:opacity-30"
+            className="w-full rounded-none border border-border px-6 py-2.5 text-sm text-muted transition-colors hover:border-accent hover:text-accent disabled:opacity-30"
           >
             下一步：编辑 & 发布
           </button>
@@ -737,7 +737,7 @@ export function PodcastCreator() {
               <input
                 value={editTitle}
                 onChange={(e) => setEditTitle(e.target.value)}
-                className="w-full rounded-lg border border-border bg-background px-4 py-2 text-foreground focus:border-accent focus:outline-none"
+                className="w-full rounded-none border border-border bg-background px-4 py-2 text-foreground focus:border-accent focus:outline-none"
               />
             </div>
             <div>
@@ -745,7 +745,7 @@ export function PodcastCreator() {
               <input
                 value={editSlug}
                 onChange={(e) => setEditSlug(e.target.value)}
-                className="w-full rounded-lg border border-border bg-background px-4 py-2 text-foreground focus:border-accent focus:outline-none"
+                className="w-full rounded-none border border-border bg-background px-4 py-2 text-foreground focus:border-accent focus:outline-none"
               />
             </div>
             <div>
@@ -756,7 +756,7 @@ export function PodcastCreator() {
                 value={editTags}
                 onChange={(e) => setEditTags(e.target.value)}
                 placeholder="播客, AI, 产品"
-                className="w-full rounded-lg border border-border bg-background px-4 py-2 text-foreground focus:border-accent focus:outline-none"
+                className="w-full rounded-none border border-border bg-background px-4 py-2 text-foreground focus:border-accent focus:outline-none"
               />
             </div>
           </div>
@@ -764,26 +764,26 @@ export function PodcastCreator() {
           <div className="flex flex-wrap gap-3">
             <button
               onClick={() => setStep(4)}
-              className="cursor-pointer rounded-lg border border-border px-4 py-2 text-sm text-muted transition-colors hover:border-accent hover:text-foreground"
+              className="cursor-pointer rounded-none border border-border px-4 py-2 text-sm text-muted transition-colors hover:border-accent hover:text-foreground"
             >
               返回对话
             </button>
             <button
               onClick={() => setShowPreview(true)}
-              className="cursor-pointer rounded-lg border border-border px-4 py-2 text-sm text-muted transition-colors hover:border-accent hover:text-foreground"
+              className="cursor-pointer rounded-none border border-border px-4 py-2 text-sm text-muted transition-colors hover:border-accent hover:text-foreground"
             >
               预览最终效果
             </button>
             <button
               onClick={handleExport}
-              className="cursor-pointer rounded-lg border border-border px-4 py-2 text-sm text-muted transition-colors hover:border-accent hover:text-foreground"
+              className="cursor-pointer rounded-none border border-border px-4 py-2 text-sm text-muted transition-colors hover:border-accent hover:text-foreground"
             >
               导出播客 AI 总结
             </button>
             <button
               onClick={handlePublish}
               disabled={publishing || !editSlug}
-              className="cursor-pointer rounded-lg bg-accent px-6 py-3 font-medium text-white transition-all hover:-translate-y-0.5 hover:shadow-lg hover:shadow-accent/25 disabled:opacity-50 disabled:hover:translate-y-0 disabled:hover:shadow-none"
+              className="cursor-pointer rounded-none bg-accent px-6 py-3 font-medium text-background transition-all hover:-translate-y-0.5 disabled:opacity-50 disabled:hover:translate-y-0 disabled:hover:shadow-none"
             >
               {publishing ? (chatHistory.length > 0 ? "总结讨论 & 发布中..." : "发布中...") : "发布到网站"}
             </button>
@@ -801,7 +801,7 @@ export function PodcastCreator() {
         >
           <div
             id="preview-scroll-container"
-            className="relative max-h-[90vh] w-full max-w-3xl overflow-y-auto rounded-2xl border border-border bg-background p-8"
+            className="relative max-h-[90vh] w-full max-w-3xl overflow-y-auto rounded-none border-2 border-border bg-background p-8"
             style={{ overscrollBehavior: "contain" }}
             onClick={(e) => e.stopPropagation()}
           >
@@ -910,7 +910,7 @@ function DiscussionSection({ chatHistory }: { chatHistory: { id: string; role: s
   }
 
   return (
-    <div className="rounded-xl border border-dashed border-accent/30 bg-accent/5 p-5">
+    <div className="rounded-none border border-dashed border-accent/30 bg-accent/5 p-5">
       <div className="mb-4 flex items-center justify-between">
         <div className="flex items-center gap-2">
           <span className="flex h-5 w-5 items-center justify-center rounded bg-accent/15 text-xs">💭</span>
@@ -932,12 +932,12 @@ function DiscussionSection({ chatHistory }: { chatHistory: { id: string; role: s
             <div key={m.id} className={`flex ${m.role === "user" ? "justify-end" : "justify-start"}`}>
               <div className={`text-sm ${m.role === "user" ? "max-w-[80%]" : "max-w-full w-full"}`}>
                 {m.role === "user" ? (
-                  <div className="rounded-2xl rounded-tr-sm bg-accent/15 px-3 py-2 text-foreground whitespace-pre-wrap">
+                  <div className="rounded-none bg-accent/15 px-3 py-2 text-foreground whitespace-pre-wrap">
                     {m.content}
                   </div>
                 ) : (
                   <div
-                    className="rounded-2xl rounded-tl-sm border border-border bg-background px-3 py-2 prose-custom prose-sm max-w-none"
+                    className="rounded-none border border-border bg-background px-3 py-2 prose-custom prose-sm max-w-none"
                     dangerouslySetInnerHTML={{ __html: renderMarkdown(m.content) }}
                   />
                 )}
@@ -951,12 +951,12 @@ function DiscussionSection({ chatHistory }: { chatHistory: { id: string; role: s
           {pairs.map((pair, i) => (
             <div key={i} className="flex flex-col gap-2">
               {/* Question — right-aligned bubble */}
-              <div className="self-end max-w-[85%] rounded-2xl rounded-br-sm bg-accent/15 px-4 py-2.5">
+              <div className="self-end max-w-[85%] rounded-none bg-accent/15 px-4 py-2.5">
                 <p className="text-sm font-medium text-foreground whitespace-pre-wrap">🙋 {pair.question}</p>
               </div>
               {/* Answer — left-aligned bubble */}
               {pair.answer && (
-                <div className="self-start max-w-[95%] rounded-2xl rounded-bl-sm border border-border bg-background px-4 py-3">
+                <div className="self-start max-w-[95%] rounded-none border border-border bg-background px-4 py-3">
                   <p className="text-[10px] font-semibold text-accent mb-1.5">AI</p>
                   <div
                     className="text-sm prose-custom prose-sm max-w-none"
@@ -1038,7 +1038,7 @@ function AudioPlayer({ audioUrl }: { audioUrl: string }) {
   const pct = duration > 0 ? (current / duration) * 100 : 0;
 
   return (
-    <div className="flex items-center gap-3 rounded-xl border border-border bg-card px-4 py-3">
+    <div className="flex items-center gap-3 rounded-none border border-border bg-card px-4 py-3">
       <audio ref={audioRef} src={audioUrl} preload="metadata" />
       <button
         onClick={toggle}
@@ -1092,7 +1092,7 @@ function PreviewToc({ summary, chatHistory }: { summary: string; chatHistory: { 
   if (items.length === 0) return null;
 
   return (
-    <nav className="mb-8 rounded-lg border border-border bg-card/50 p-5">
+    <nav className="mb-8 rounded-none border border-border bg-card/50 p-5">
       <p className="mb-3 text-sm font-semibold text-foreground">目录</p>
       <ul className="space-y-1.5">
         {items.map((item) => (
@@ -1127,7 +1127,7 @@ function SummaryEditor({ summary, onChange }: { summary: string; onChange: (v: s
   useEffect(() => { setDraft(summary); }, [summary]);
 
   return (
-    <div className="rounded-xl border border-border bg-card p-5">
+    <div className="rounded-none border border-border bg-card p-5">
       <div className="mb-3 flex items-center justify-between">
         <div className="flex items-center gap-2">
           <span className="flex h-5 w-5 items-center justify-center rounded bg-accent/15 text-xs text-accent">AI</span>
@@ -1148,7 +1148,7 @@ function SummaryEditor({ summary, onChange }: { summary: string; onChange: (v: s
         <textarea
           value={draft}
           onChange={(e) => setDraft(e.target.value)}
-          className="w-full min-h-[400px] rounded-lg border border-border bg-background px-4 py-3 text-sm font-mono text-foreground placeholder:text-muted focus:border-accent focus:outline-none resize-y"
+          className="w-full min-h-[400px] rounded-none border border-border bg-background px-4 py-3 text-sm font-mono text-foreground placeholder:text-muted focus:border-accent focus:outline-none resize-y"
         />
       ) : (
         <div

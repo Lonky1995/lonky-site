@@ -17,7 +17,7 @@ export function BlogFilter({
           onClick={() => onSelect(cat)}
           className={`rounded-full px-4 py-1.5 text-sm transition-all ${
             active === cat
-              ? "bg-accent text-white"
+              ? "bg-accent text-background"
               : "border border-border text-muted hover:border-accent hover:text-foreground"
           }`}
         >

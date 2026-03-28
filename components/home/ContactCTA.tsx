@@ -48,10 +48,10 @@ export function ContactCTA({ tweetSlot, wechatArticle }: { tweetSlot?: ReactNode
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="mb-12 text-center"
+          className="mb-12"
         >
           <h2 className="mb-4 text-3xl font-bold md:text-4xl">
-            <span className="gradient-text">{t.title}</span>
+            <span className="text-accent-light">{t.title}</span>
           </h2>
           <p className="text-muted">{t.subtitle}</p>
         </motion.div>
@@ -69,7 +69,7 @@ export function ContactCTA({ tweetSlot, wechatArticle }: { tweetSlot?: ReactNode
               <p className="mb-3 text-sm font-medium text-muted">
                 {t.latestOnX}
               </p>
-              <div data-theme="dark" className="min-h-0 flex-1 overflow-hidden [&>div]:h-full [&_article]:h-full">
+              <div data-theme="light" className="min-h-0 flex-1 overflow-hidden [&>div]:h-full [&_article]:h-full">
                 {tweetSlot}
               </div>
             </motion.div>
@@ -93,7 +93,7 @@ export function ContactCTA({ tweetSlot, wechatArticle }: { tweetSlot?: ReactNode
                     navigator.clipboard.writeText(ch.copyValue!);
                     alert(`${t.wechatCopied} ${ch.copyValue}`);
                   }}
-                  className="flex cursor-pointer items-center gap-3 rounded-xl border border-border bg-card px-5 py-4 text-left text-sm text-muted transition-all hover:-translate-y-0.5 hover:border-accent hover:text-foreground"
+                  className="flex cursor-pointer items-center gap-3 rounded-none border-2 border-foreground bg-card px-5 py-4 text-left text-sm text-muted transition-all hover:-translate-y-0.5 hover:border-accent hover:text-foreground"
                 >
                   {ch.icon}
                   {ch.label}
@@ -104,7 +104,7 @@ export function ContactCTA({ tweetSlot, wechatArticle }: { tweetSlot?: ReactNode
                   href={ch.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center gap-3 rounded-xl border border-border bg-card px-5 py-4 text-sm text-muted transition-all hover:-translate-y-0.5 hover:border-accent hover:text-foreground"
+                  className="flex items-center gap-3 rounded-none border-2 border-foreground bg-card px-5 py-4 text-sm text-muted transition-all hover:-translate-y-0.5 hover:border-accent hover:text-foreground"
                 >
                   {ch.icon}
                   {ch.label}
@@ -113,7 +113,7 @@ export function ContactCTA({ tweetSlot, wechatArticle }: { tweetSlot?: ReactNode
             )}
 
             {/* 公众号 Latest Article */}
-            <div className="rounded-xl border border-border bg-card p-5">
+            <div className="rounded-none border-2 border-foreground bg-card p-5">
               <p className="mb-3 text-sm text-muted">
                 {t.officialAccount}
               </p>
@@ -141,7 +141,7 @@ export function ContactCTA({ tweetSlot, wechatArticle }: { tweetSlot?: ReactNode
                     alt={t.officialAccountAlt}
                     width={160}
                     height={160}
-                    className="rounded-lg"
+                    className="rounded-none"
                   />
                 </div>
               )}

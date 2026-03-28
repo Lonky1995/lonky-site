@@ -37,7 +37,7 @@ export default function StatCards({ stats }: { stats: TradeStats }) {
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: i * 0.05 }}
-          className="rounded-xl border border-border bg-card p-4"
+          className="rounded-none border border-border bg-card p-4"
         >
           <p className="text-xs text-muted">{c.label}</p>
           <p className={`mt-1 text-xl font-bold ${c.color}`}>{c.value}</p>

@@ -3,51 +3,20 @@
 import type { Project } from "@/data/projects";
 import { AnimatedCard } from "@/components/ui/AnimatedCard";
 import { useLocale } from "@/components/locale-provider";
+import { LinkSimple, ChartBar, Brain, TrendUp } from "@phosphor-icons/react";
 
 const flowSteps = {
   zh: [
-    {
-      icon: "🔗",
-      title: "连接交易所",
-      desc: "API Key 只读同步，支持 OKX / Binance / Hyperliquid",
-    },
-    {
-      icon: "📊",
-      title: "数据分析",
-      desc: "自动计算胜率、盈利因子、持仓习惯等 20+ 指标",
-    },
-    {
-      icon: "🧠",
-      title: "AI 诊断",
-      desc: "DeepSeek 从习惯、择时、纪律三维度深度复盘",
-    },
-    {
-      icon: "📈",
-      title: "可视化报告",
-      desc: "雷达图、交易热力图、盈亏分布、K 线回放",
-    },
+    { icon: <LinkSimple size={16} weight="duotone" className="text-accent-light" />, title: "连接交易所", desc: "API Key 只读同步，支持 OKX / Binance / Hyperliquid" },
+    { icon: <ChartBar size={16} weight="duotone" className="text-accent-light" />, title: "数据分析", desc: "自动计算胜率、盈利因子、持仓习惯等 20+ 指标" },
+    { icon: <Brain size={16} weight="duotone" className="text-accent-light" />, title: "AI 诊断", desc: "DeepSeek 从习惯、择时、纪律三维度深度复盘" },
+    { icon: <TrendUp size={16} weight="duotone" className="text-accent-light" />, title: "可视化报告", desc: "雷达图、交易热力图、盈亏分布、K 线回放" },
   ],
   en: [
-    {
-      icon: "🔗",
-      title: "Connect Exchange",
-      desc: "Read-only API sync, supports OKX / Binance / Hyperliquid",
-    },
-    {
-      icon: "📊",
-      title: "Data Analysis",
-      desc: "Auto-calculate win rate, profit factor, position habits & 20+ metrics",
-    },
-    {
-      icon: "🧠",
-      title: "AI Diagnosis",
-      desc: "DeepSeek reviews habits, timing & discipline in depth",
-    },
-    {
-      icon: "📈",
-      title: "Visual Report",
-      desc: "Radar chart, trade heatmap, P&L distribution, K-line replay",
-    },
+    { icon: <LinkSimple size={16} weight="duotone" className="text-accent-light" />, title: "Connect Exchange", desc: "Read-only API sync, supports OKX / Binance / Hyperliquid" },
+    { icon: <ChartBar size={16} weight="duotone" className="text-accent-light" />, title: "Data Analysis", desc: "Auto-calculate win rate, profit factor, position habits & 20+ metrics" },
+    { icon: <Brain size={16} weight="duotone" className="text-accent-light" />, title: "AI Diagnosis", desc: "DeepSeek reviews habits, timing & discipline in depth" },
+    { icon: <TrendUp size={16} weight="duotone" className="text-accent-light" />, title: "Visual Report", desc: "Radar chart, trade heatmap, P&L distribution, K-line replay" },
   ],
 };
 
@@ -108,7 +77,7 @@ export function TradeMirrorCard({
       <h3 className="mb-2 text-xl font-bold">{project.title[locale]}</h3>
 
       {/* Pain points */}
-      <div className="mb-4 rounded-lg border border-border/50 bg-background/50 p-4">
+      <div className="mb-4 rounded-none border border-foreground/20 bg-background/50 p-4">
         <p className="mb-2.5 text-sm font-semibold text-foreground">
           {pain.heading}
         </p>
@@ -158,7 +127,7 @@ export function TradeMirrorCard({
           href="https://trademirror.lonky.me"
           target="_blank"
           rel="noopener noreferrer"
-          className="inline-flex items-center gap-2 rounded-lg bg-accent px-5 py-2.5 text-sm font-medium text-white transition-opacity hover:opacity-90"
+          className="inline-flex items-center gap-2 rounded-none bg-accent px-5 py-2.5 text-sm font-medium text-background transition-opacity hover:opacity-90"
         >
           {cta[locale]}
           <svg

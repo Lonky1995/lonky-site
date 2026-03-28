@@ -140,7 +140,7 @@ export function ChatPanel({
   const displayMessages = messages;
 
   return (
-    <div className="flex flex-col rounded-xl border border-border bg-card">
+    <div className="flex flex-col rounded-none border border-border bg-card">
       {/* Messages area */}
       <div
         ref={scrollContainerRef}
@@ -205,7 +205,7 @@ export function ChatPanel({
           }}
           placeholder="继续讨论这期播客..."
           rows={1}
-          className="flex-1 resize-none rounded-lg border border-border bg-background px-4 py-2 text-sm text-foreground placeholder:text-muted focus:border-accent focus:outline-none"
+          className="flex-1 resize-none rounded-none border border-border bg-background px-4 py-2 text-sm text-foreground placeholder:text-muted focus:border-accent focus:outline-none"
           style={{ maxHeight: 72 }}
           disabled={isLoading}
         />
@@ -213,7 +213,7 @@ export function ChatPanel({
           <button
             type="submit"
             disabled={isLoading || !input.trim()}
-            className="cursor-pointer rounded-lg bg-accent px-4 py-2 text-sm font-medium text-white transition-all hover:-translate-y-0.5 hover:shadow-lg hover:shadow-accent/25 disabled:opacity-50 disabled:hover:translate-y-0 disabled:hover:shadow-none"
+            className="cursor-pointer rounded-none bg-accent px-4 py-2 text-sm font-medium text-background transition-all hover:-translate-y-0.5 disabled:opacity-50 disabled:hover:translate-y-0"
           >
             发送
           </button>
@@ -239,16 +239,16 @@ function MessageBubble({ message }: { message: Message }) {
           {isUser ? "You" : "AI"}
         </div>
         {isUser ? (
-          <div className="select-text cursor-text rounded-2xl rounded-tr-sm bg-accent px-4 py-2.5 text-white whitespace-pre-wrap">
+          <div className="select-text cursor-text rounded-none bg-accent px-4 py-2.5 text-background whitespace-pre-wrap">
             {message.content}
           </div>
         ) : message.content ? (
           <div
-            className="select-text cursor-text rounded-2xl rounded-tl-sm border border-border bg-card px-4 py-3 prose-custom prose-sm max-w-none"
+            className="select-text cursor-text rounded-none border border-border bg-card px-4 py-3 prose-custom prose-sm max-w-none"
             dangerouslySetInnerHTML={{ __html: html }}
           />
         ) : (
-          <div className="rounded-2xl rounded-tl-sm border border-border bg-card px-4 py-3">
+          <div className="rounded-none border border-border bg-card px-4 py-3">
             <span className="animate-pulse text-muted">...</span>
           </div>
         )}

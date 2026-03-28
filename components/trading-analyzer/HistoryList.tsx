@@ -31,7 +31,7 @@ export default function HistoryList({ records, onSelect, onDelete }: Props) {
               initial={{ opacity: 0, y: 5 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: i * 0.03 }}
-              className="group flex items-center gap-3 rounded-lg border border-border bg-card px-4 py-3 transition-colors hover:bg-card-hover cursor-pointer"
+              className="group flex items-center gap-3 rounded-none border border-border bg-card px-4 py-3 transition-colors hover:bg-card-hover cursor-pointer"
               onClick={() => onSelect(r)}
             >
               <div className="flex-1 min-w-0">

@@ -33,13 +33,9 @@ export function Navbar() {
       initial={{ y: -20, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.5 }}
-      className="fixed top-0 z-50 w-full border-b border-border/50 bg-background/80 backdrop-blur-md"
+      className="fixed top-0 z-50 w-full border-b border-foreground bg-background/92 backdrop-blur-md"
     >
-      <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-6 md:px-8">
-        <Link href="/" className="text-xl font-bold">
-          <span className="gradient-text">{siteConfig.name}</span>
-        </Link>
-
+      <div className="mx-auto flex h-16 max-w-6xl items-center justify-end px-6 md:px-8">
         {/* Desktop nav */}
         <div className="hidden items-center gap-8 md:flex">
           {links.map((link) => (

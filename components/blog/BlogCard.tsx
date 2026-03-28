@@ -42,7 +42,7 @@ export function BlogCard({
             <img
               src={post.coverImage}
               alt={post.title}
-              className="h-14 w-14 flex-shrink-0 rounded-lg object-cover"
+              className="h-14 w-14 flex-shrink-0 rounded-none object-cover"
             />
           )}
           <div className="min-w-0 flex-1">

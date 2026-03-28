@@ -54,7 +54,7 @@ export function ImageZoom({
           <img
             src={src}
             alt=""
-            className="max-h-[90vh] max-w-[90vw] rounded-lg object-contain"
+            className="max-h-[90vh] max-w-[90vw] rounded-none object-contain"
           />
         </div>
       )}
