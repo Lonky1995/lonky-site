@@ -11,12 +11,18 @@ import requests
 import ssl
 import socket
 import json
+import urllib.request
+import urllib.parse
 from datetime import datetime, timedelta
 from pathlib import Path
 
 # ===== 配置 =====
 DOMAIN = "www.lonky.me"
 BASE_URL = f"https://{DOMAIN}"
+
+# Telegram 推送配置
+TG_BOT_TOKEN = "7985102321:AAE4gtP3PvTwSG5aigYMqcNriP_ihPMz7TA"
+TG_CHAT_ID = "444098821"
 
 # 要监控的页面
 PAGES = [
@@ -250,19 +256,57 @@ def format_report(results: dict, verbose: bool = False) -> str:
     return "\n".join(lines)
 
 
+def send_telegram(text: str):
+    """直接推送到 Telegram（不依赖 OpenClaw）"""
+    url = f"https://api.telegram.org/bot{TG_BOT_TOKEN}/sendMessage"
+    data = urllib.parse.urlencode({
+        "chat_id": TG_CHAT_ID,
+        "text": text,
+        "parse_mode": "Markdown",
+    }).encode()
+    try:
+        req = urllib.request.Request(url, data=data)
+        urllib.request.urlopen(req, timeout=10)
+    except Exception as e:
+        print(f"Telegram 推送失败: {e}")
+
+
+def should_alert(results: dict) -> bool:
+    """连续告警去重：只在状态变化时推送（正常→异常 或 异常→恢复）"""
+    prev = load_state()
+    prev_had_alerts = prev.get("had_alerts", False)
+    now_has_alerts = bool(results["alerts"])
+
+    # 保存当前状态
+    save_state({"had_alerts": now_has_alerts, "timestamp": results["timestamp"]})
+
+    # 状态变化才推送
+    if now_has_alerts and not prev_had_alerts:
+        return True  # 新告警
+    if not now_has_alerts and prev_had_alerts:
+        return True  # 恢复正常
+    return False
+
+
 if __name__ == "__main__":
     import sys
-    
+
     verbose = "--verbose" in sys.argv or "-v" in sys.argv
     json_output = "--json" in sys.argv
-    
+
     results = run_monitor()
-    
+
     if json_output:
         print(json.dumps(results, indent=2, ensure_ascii=False))
     else:
         report = format_report(results, verbose=verbose)
         print(report)
-    
-    # 有告警时返回非零状态码
+
+    # 状态变化时自动推送 Telegram
+    if should_alert(results):
+        if results["alerts"]:
+            send_telegram(format_report(results, verbose=False))
+        else:
+            send_telegram("✅ **lonky.me 已恢复正常**")
+
     sys.exit(1 if results["alerts"] else 0)

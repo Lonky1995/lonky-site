@@ -63,6 +63,22 @@ export const projects: Project[] = [
     status: "live",
   },
   {
+    id: "claude-oauth-proxy",
+    title: {
+      zh: "Claude OAuth Proxy",
+      en: "Claude OAuth Proxy",
+    },
+    description: {
+      zh: "逆向 Claude Code 的 OAuth 认证流程，让你用 Max/Pro 订阅额度直接调用 Messages API。纯 Python 标准库，零依赖。",
+      en: "Reverse-engineered Claude Code's OAuth auth flow. Use your Max/Pro subscription quota to call the Messages API directly. Pure Python stdlib, zero dependencies.",
+    },
+    category: "Tool",
+    techStack: ["Python", "Reverse Engineering", "OAuth", "HTTP Proxy"],
+    github: "https://github.com/Lonky1995/claude-oauth-proxy",
+    featured: true,
+    status: "live",
+  },
+  {
     id: "tg-channel-digest",
     title: {
       zh: "TG 频道摘要",
