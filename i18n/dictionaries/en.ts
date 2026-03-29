@@ -33,8 +33,8 @@ const en = {
   projects: {
     homeTitle: "Vibecoding Portfolio",
     homeSubtitle: "Zero coding background, all built with AI — from idea to production.",
-    pageTitle: "Projects",
-    pageSubtitle: "Built for my own use — AI tools, crypto market data, podcast notes.",
+    pageTitle: "Vibecoding Portfolio",
+    pageSubtitle: "Zero coding background, all built with AI — from idea to production.",
     viewAll: "View all →",
     inProgress: "In Progress",
     dailyUpdate: "Daily Update",

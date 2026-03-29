@@ -35,8 +35,8 @@ const zh: Dictionary = {
   projects: {
     homeTitle: "Vibecoding 作品集",
     homeSubtitle: "零代码基础，全部用 AI 构建——从想法到上线。",
-    pageTitle: "项目",
-    pageSubtitle: "边用边做——AI 工具、加密市场数据、播客笔记。",
+    pageTitle: "Vibecoding 作品集",
+    pageSubtitle: "零代码基础，全部用 AI 构建——从想法到上线。",
     viewAll: "查看全部 →",
     inProgress: "开发中",
     dailyUpdate: "每日更新",
