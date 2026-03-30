@@ -79,6 +79,22 @@ export const projects: Project[] = [
     status: "live",
   },
   {
+    id: "x-kit",
+    title: {
+      zh: "X Kit",
+      en: "X Kit",
+    },
+    description: {
+      zh: "面向 AI / Crypto 研究者的 X 私人情报工作台。把关注列表、推荐流和高信号推文沉淀成可查询数据库，用于研究跟踪、内容选题和爆款复盘。",
+      en: "A private X intelligence workspace for AI and crypto researchers. Turn follows, timeline recommendations, and high-signal tweets into a searchable database for research tracking, content ideation, and viral post review.",
+    },
+    category: "Tool",
+    techStack: ["Next.js", "TypeScript", "Drizzle", "SQLite", "Clerk", "X API"],
+    github: "https://github.com/Lonky1995/x-kit",
+    featured: true,
+    status: "in-progress",
+  },
+  {
     id: "tg-channel-digest",
     title: {
       zh: "TG 频道摘要",

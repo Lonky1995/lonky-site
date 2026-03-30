@@ -6,6 +6,7 @@ import { PodcastCard } from "@/components/projects/PodcastCard";
 import { TradeMirrorCard } from "@/components/projects/TradeMirrorCard";
 import { TgDigestCard } from "@/components/projects/TgDigestCard";
 import { OAuthProxyCard } from "@/components/projects/OAuthProxyCard";
+import { XKitCard } from "@/components/projects/XKitCard";
 
 export function renderProjectCard(
   project: (typeof projects)[number],
@@ -28,6 +29,8 @@ export function renderProjectCard(
       return (
         <OAuthProxyCard key={project.id} project={project} index={index} />
       );
+    case "x-kit":
+      return <XKitCard key={project.id} project={project} index={index} />;
     default:
       return <ProjectCard key={project.id} project={project} index={index} />;
   }
