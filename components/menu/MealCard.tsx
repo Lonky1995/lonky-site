@@ -5,9 +5,12 @@ import { motion } from "framer-motion";
 export interface Meal {
   name: string;
   category: string;
-  nutrition: string;
+  nutrition?: string;
   ingredients: string[];
   steps: string[];
+  sourceUrl?: string;
+  difficulty?: number;
+  basedOn?: string;
 }
 
 export function MealCard({ meal, index }: { meal: Meal; index: number }) {
@@ -20,12 +23,22 @@ export function MealCard({ meal, index }: { meal: Meal; index: number }) {
     >
       {/* Header */}
       <div className="mb-3 flex items-start justify-between gap-2">
-        <h3 className="text-base font-bold text-foreground">{meal.name}</h3>
+        <div className="min-w-0 flex-1">
+          <h3 className="text-base font-bold text-foreground">{meal.name}</h3>
+          {meal.basedOn && (
+            <p className="mt-0.5 text-xs text-muted">改自：{meal.basedOn}</p>
+          )}
+        </div>
         <div className="flex shrink-0 flex-col items-end gap-1">
           <span className="text-xs font-medium text-accent">{meal.category}</span>
-          <span className="rounded-full bg-accent/10 px-2 py-0.5 text-xs text-accent">
-            {meal.nutrition}
-          </span>
+          {meal.nutrition && (
+            <span className="rounded-full bg-accent/10 px-2 py-0.5 text-xs text-accent">
+              {meal.nutrition}
+            </span>
+          )}
+          {typeof meal.difficulty === "number" && meal.difficulty > 0 && (
+            <span className="text-xs text-muted">{"★".repeat(meal.difficulty)}</span>
+          )}
         </div>
       </div>
 
@@ -53,6 +66,20 @@ export function MealCard({ meal, index }: { meal: Meal; index: number }) {
           ))}
         </ol>
       </div>
+
+      {/* Source link */}
+      {meal.sourceUrl && (
+        <div className="mt-3 border-t border-border/30 pt-2">
+          <a
+            href={meal.sourceUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-xs text-muted transition-colors hover:text-accent"
+          >
+            ↗ 完整做法 · HowToCook
+          </a>
+        </div>
+      )}
     </motion.div>
   );
 }

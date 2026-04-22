@@ -1,6 +1,7 @@
 import { streamText } from "ai";
 import { createOpenAICompatible } from "@ai-sdk/openai-compatible";
 import { NextRequest } from "next/server";
+import recipesData from "@/data/recipes.json";
 
 const deepseek = createOpenAICompatible({
   name: "deepseek",
@@ -8,62 +9,144 @@ const deepseek = createOpenAICompatible({
   apiKey: process.env.DEEPSEEK_API_KEY!,
 });
 
-const SYSTEM_PROMPT = `你是一位专业的营养师和中国家庭厨师。请为一个6人家庭（2位大人、2位阿姨、2位1岁半的宝宝）设计今日菜谱。
-
-请严格按照以下 JSON 格式返回，不要有任何多余文字：
-
-{
-  "date": "今天的日期（如：2024年1月15日 周一）",
-  "adult": {
-    "label": "大人菜谱（4人份）",
-    "meals": [
-      {
-        "name": "菜名",
-        "category": "分类（如：荤菜/素菜/汤/主食）",
-        "nutrition": "主要营养（如：高蛋白·补铁）",
-        "ingredients": ["食材1 适量", "食材2 适量"],
-        "steps": ["步骤1", "步骤2", "步骤3"]
-      }
-    ]
-  },
-  "baby": {
-    "label": "宝宝菜谱（1岁半，2人份）",
-    "meals": [
-      {
-        "name": "菜名",
-        "category": "分类",
-        "nutrition": "主要营养",
-        "ingredients": ["食材1 适量", "食材2 适量"],
-        "steps": ["步骤1", "步骤2", "步骤3"]
-      }
-    ]
-  }
+interface Recipe {
+  id: string;
+  name: string;
+  category: string;
+  difficulty: number;
+  ingredients: string[];
+  steps: string[];
+  sourceUrl: string;
 }
 
-大人菜谱要求：
-- 3道菜（1荤1素1汤）+ 主食
-- 营养均衡，符合中国饮食习惯
-- 食材易购买，做法家常
+const RECIPES = (recipesData as { recipes: Recipe[] }).recipes;
 
-宝宝菜谱要求：
-- 2道（1主食1菜/粥）
-- 食物软烂，不加盐、不加味精
-- 食材新鲜，适合1岁半幼儿
-- 与大人菜谱尽量使用相同食材，减少采购
+// 宝宝禁忌/高风险食材（1岁半）
+const BABY_UNSAFE = [
+  "辣椒", "花椒", "胡椒", "芥末", "白酒", "啤酒", "料酒过多",
+  "整颗坚果", "蜂蜜", // 蜂蜜主要是1岁以下禁忌，1岁半可少量，但保守起见避开
+];
 
-每次生成不同的菜谱，保证多样性。`;
+function isBabyFriendlyBase(recipe: Recipe): boolean {
+  const text = (recipe.name + recipe.ingredients.join("") + recipe.steps.join("")).toLowerCase();
+  const spicy = ["辣", "麻辣", "香辣", "剁椒", "泡椒", "咖喱", "芥末", "孜然"];
+  return !spicy.some((k) => text.includes(k));
+}
+
+function pickRandom<T>(arr: T[], n: number): T[] {
+  const pool = [...arr];
+  const result: T[] = [];
+  for (let i = 0; i < n && pool.length > 0; i++) {
+    const idx = Math.floor(Math.random() * pool.length);
+    result.push(pool.splice(idx, 1)[0]);
+  }
+  return result;
+}
+
+function pickTodayMenu() {
+  const meat = RECIPES.filter((r) => r.category === "meat" && r.difficulty <= 3);
+  const veg = RECIPES.filter((r) => r.category === "vegetable" && r.difficulty <= 3);
+  const soup = RECIPES.filter((r) => r.category === "soup" && r.difficulty <= 3);
+  const staple = RECIPES.filter((r) => r.category === "staple" && r.difficulty <= 3);
+
+  return {
+    adult: [
+      ...pickRandom(meat, 1),
+      ...pickRandom(veg, 1),
+      ...pickRandom(soup, 1),
+      ...pickRandom(staple, 1),
+    ],
+  };
+}
 
 export async function POST(_req: NextRequest) {
-  const result = streamText({
-    model: deepseek.chatModel("deepseek-chat"),
-    system: SYSTEM_PROMPT,
-    messages: [
-      {
-        role: "user",
-        content: `今天是 ${new Date().toLocaleDateString("zh-CN", { weekday: "long", year: "numeric", month: "long", day: "numeric" })}，请生成今日菜谱。`,
-      },
-    ],
+  const { adult } = pickTodayMenu();
+
+  // 从大人菜谱中挑出适合宝宝的原菜，让 AI 改造
+  const babyBaseCandidates = adult.filter(isBabyFriendlyBase);
+  const babyBase = babyBaseCandidates.length > 0
+    ? pickRandom(babyBaseCandidates, Math.min(2, babyBaseCandidates.length))
+    : pickRandom(adult, 2);
+
+  const date = new Date().toLocaleDateString("zh-CN", {
+    weekday: "long",
+    year: "numeric",
+    month: "long",
+    day: "numeric",
   });
 
-  return result.toTextStreamResponse();
+  const systemPrompt = `你是一位专业的营养师和儿童饮食专家。我会给你一份成人菜谱（已从权威菜谱库选出），请你完成两件事：
+
+1. 为每道成人菜补充一个「营养标签」（如"高蛋白·补铁"），10字以内
+2. 基于其中 2 道成人菜，改造成适合【1岁半宝宝】的版本（2 人份）
+
+宝宝版改造原则：
+- 不加盐、不加味精、不加酱油（或改用少量婴儿酱油）
+- 不加辣椒、花椒、料酒等刺激性调料
+- 食物切小丁/剁碎/煮软烂，避免坚果整颗、葡萄整颗等噎呛风险
+- 可以调整食材，比如把"红烧肉"改成"清蒸肉末"
+- 给宝宝版菜品起一个新名字（如"宝宝版番茄鸡肉软饭"）
+
+严格按照以下 JSON 格式输出，不要有任何多余文字或 markdown 代码块标记：
+
+{
+  "adult_tags": {
+    "菜名1": "营养标签",
+    "菜名2": "营养标签"
+  },
+  "baby_meals": [
+    {
+      "name": "宝宝版菜名",
+      "based_on": "来源成人菜名",
+      "category": "主食/辅食",
+      "nutrition": "营养标签",
+      "ingredients": ["食材1 用量", "食材2 用量"],
+      "steps": ["步骤1", "步骤2"]
+    }
+  ]
+}`;
+
+  const userPrompt = `今天的成人菜谱：
+
+${adult.map((r, i) => `【菜 ${i + 1}】${r.name}（${categoryLabel(r.category)}）
+食材：${r.ingredients.slice(0, 6).join("、")}
+`).join("\n")}
+
+请选择其中最适合改造给宝宝的 2 道菜（优先选清淡、食材软烂的），生成宝宝版。`;
+
+  const result = streamText({
+    model: deepseek.chatModel("deepseek-chat"),
+    system: systemPrompt,
+    messages: [{ role: "user", content: userPrompt }],
+  });
+
+  // 把成人原菜数据和日期塞进响应头，前端合并
+  const meta = {
+    date,
+    adult: adult.map((r) => ({
+      name: r.name,
+      category: categoryLabel(r.category),
+      ingredients: r.ingredients,
+      steps: r.steps,
+      sourceUrl: r.sourceUrl,
+      difficulty: r.difficulty,
+    })),
+    babyBaseNames: babyBase.map((r) => r.name),
+  };
+
+  const response = result.toTextStreamResponse();
+  response.headers.set("X-Menu-Meta", encodeURIComponent(JSON.stringify(meta)));
+  return response;
+}
+
+function categoryLabel(cat: string): string {
+  const map: Record<string, string> = {
+    meat: "荤菜",
+    vegetable: "素菜",
+    soup: "汤",
+    staple: "主食",
+    breakfast: "早餐",
+    aquatic: "水产",
+  };
+  return map[cat] || cat;
 }
