@@ -1,9 +1,13 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import { MealCard, Meal } from "./MealCard";
 import { CookingAnimation } from "./CookingAnimation";
+import { ShareImage } from "./ShareImage";
+import { saveMenu, type MenuRecord } from "@/lib/menu/storage";
+import { toPng } from "html-to-image";
 
 interface AdultMeta {
   name: string;
@@ -47,6 +51,8 @@ export function MenuBoard() {
   const [ai, setAi] = useState<AIResponse | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [sharing, setSharing] = useState(false);
+  const shareRef = useRef<HTMLDivElement>(null);
 
   async function generate() {
     setLoading(true);
@@ -112,6 +118,80 @@ export function MenuBoard() {
 
   const hasMenu = meta && ai;
 
+  // 构建当前菜谱的 Record（供自动保存和分享用）
+  const currentRecord: MenuRecord | null = hasMenu
+    ? {
+        date: new Date().toISOString().slice(0, 10),
+        dateLabel: meta!.date,
+        adult: adultMeals.map((m) => ({
+          name: m.name,
+          category: m.category,
+          ingredients: m.ingredients,
+          steps: m.steps,
+          sourceUrl: m.sourceUrl,
+          difficulty: m.difficulty,
+          nutrition: m.nutrition,
+        })),
+        baby: babyMeals.map((m) => ({
+          name: m.name,
+          basedOn: m.basedOn,
+          category: m.category,
+          nutrition: m.nutrition,
+          ingredients: m.ingredients,
+          steps: m.steps,
+        })),
+        savedAt: Date.now(),
+      }
+    : null;
+
+  // 生成完成后自动保存到 localStorage
+  useEffect(() => {
+    if (currentRecord) {
+      saveMenu(currentRecord);
+    }
+    // 仅在 hasMenu 变化时保存一次
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [hasMenu]);
+
+  async function shareAsImage() {
+    if (!shareRef.current || sharing) return;
+    setSharing(true);
+    try {
+      const dataUrl = await toPng(shareRef.current, {
+        pixelRatio: 2,
+        cacheBust: true,
+        backgroundColor: "#F4F0E6",
+      });
+
+      // 手机：尝试用 Web Share API 分享 blob
+      const blob = await (await fetch(dataUrl)).blob();
+      const file = new File([blob], `菜谱-${currentRecord?.date}.png`, {
+        type: "image/png",
+      });
+
+      if (
+        typeof navigator !== "undefined" &&
+        navigator.canShare &&
+        navigator.canShare({ files: [file] })
+      ) {
+        await navigator.share({
+          files: [file],
+          title: "陈绚妮家的今日菜谱",
+        });
+      } else {
+        // 降级：直接下载
+        const a = document.createElement("a");
+        a.href = dataUrl;
+        a.download = `菜谱-${currentRecord?.date}.png`;
+        a.click();
+      }
+    } catch {
+      // 用户取消分享或失败，静默
+    } finally {
+      setSharing(false);
+    }
+  }
+
   return (
     <div className="min-w-0">
       {/* Generate button */}
@@ -130,7 +210,25 @@ export function MenuBoard() {
             "生成今日菜谱"
           )}
         </button>
+
+        {hasMenu && (
+          <button
+            onClick={shareAsImage}
+            disabled={sharing}
+            className="w-full border-2 border-accent bg-accent/5 px-6 py-3.5 text-sm font-bold uppercase tracking-widest text-accent transition-all hover:bg-accent/10 active:scale-[0.98] disabled:opacity-50 sm:w-auto sm:px-8 sm:py-4"
+          >
+            {sharing ? "生成图片中..." : "分享为图片"}
+          </button>
+        )}
+
         {meta && <span className="text-xs text-muted sm:text-sm">{meta.date}</span>}
+
+        <Link
+          href="/menu/history"
+          className="ml-auto text-xs text-muted underline underline-offset-4 transition-colors hover:text-accent sm:text-sm"
+        >
+          查看历史 →
+        </Link>
       </div>
 
       {/* Loading animation */}
@@ -209,6 +307,22 @@ export function MenuBoard() {
             ，宝宝菜谱由 AI 基于成人菜改造（不加盐、软烂、无刺激调料）
           </p>
         </motion.div>
+      )}
+
+      {/* 离屏分享图渲染区（不可见但参与布局以便导出） */}
+      {currentRecord && (
+        <div
+          aria-hidden
+          style={{
+            position: "fixed",
+            left: -99999,
+            top: 0,
+            pointerEvents: "none",
+            opacity: 0,
+          }}
+        >
+          <ShareImage ref={shareRef} record={currentRecord} />
+        </div>
       )}
     </div>
   );
