@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { MealCard, Meal } from "./MealCard";
+import { CookingAnimation } from "./CookingAnimation";
 
 interface AdultMeta {
   name: string;
@@ -132,19 +133,8 @@ export function MenuBoard() {
         {meta && <span className="text-xs text-muted sm:text-sm">{meta.date}</span>}
       </div>
 
-      {/* Loading skeleton */}
-      {loading && !hasMenu && (
-        <div className="grid gap-8 md:grid-cols-2">
-          {[0, 1].map((i) => (
-            <div key={i} className="space-y-4">
-              <div className="h-6 w-32 animate-pulse bg-foreground/10" />
-              {[0, 1, 2].map((j) => (
-                <div key={j} className="h-48 animate-pulse border-2 border-foreground/20 bg-card/50" />
-              ))}
-            </div>
-          ))}
-        </div>
-      )}
+      {/* Loading animation */}
+      {loading && !hasMenu && <CookingAnimation />}
 
       {/* Error */}
       {error && (
