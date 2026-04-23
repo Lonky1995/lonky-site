@@ -167,7 +167,7 @@ export function MenuBoard() {
           >
             {/* Adult */}
             <div>
-              <div className="sticky top-16 z-10 -mx-6 mb-4 flex items-center gap-2 border-b border-border/40 bg-background/85 px-6 py-3 backdrop-blur md:static md:mx-0 md:border-0 md:bg-transparent md:px-0 md:py-0 md:backdrop-blur-none">
+              <div className="sticky top-16 z-10 mb-4 flex items-center gap-2 border-b border-border/40 bg-background/85 py-3 backdrop-blur md:static md:border-0 md:bg-transparent md:py-0 md:backdrop-blur-none">
                 <span className="border-2 border-foreground px-2.5 py-1 text-xs font-bold uppercase tracking-widest">
                   大人
                 </span>
@@ -182,7 +182,7 @@ export function MenuBoard() {
 
             {/* Baby */}
             <div>
-              <div className="sticky top-16 z-10 -mx-6 mb-4 flex items-center gap-2 border-b border-border/40 bg-background/85 px-6 py-3 backdrop-blur md:static md:mx-0 md:border-0 md:bg-transparent md:px-0 md:py-0 md:backdrop-blur-none">
+              <div className="sticky top-16 z-10 mb-4 flex items-center gap-2 border-b border-border/40 bg-background/85 py-3 backdrop-blur md:static md:border-0 md:bg-transparent md:py-0 md:backdrop-blur-none">
                 <span className="border-2 border-accent bg-accent/5 px-2.5 py-1 text-xs font-bold uppercase tracking-widest text-accent">
                   宝宝
                 </span>
