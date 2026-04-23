@@ -112,16 +112,16 @@ export function MenuBoard() {
   const hasMenu = meta && ai;
 
   return (
-    <div>
+    <div className="min-w-0">
       {/* Generate button */}
-      <div className="mb-12 flex items-center gap-4">
+      <div className="mb-8 flex flex-col gap-3 sm:mb-12 sm:flex-row sm:items-center sm:gap-4">
         <button
           onClick={generate}
           disabled={loading}
-          className="group relative border-2 border-foreground bg-card px-8 py-4 text-sm font-bold uppercase tracking-widest transition-all hover:border-accent hover:bg-accent/5 active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed"
+          className="group relative w-full border-2 border-foreground bg-card px-6 py-3.5 text-sm font-bold uppercase tracking-widest transition-all hover:border-accent hover:bg-accent/5 active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed sm:w-auto sm:px-8 sm:py-4"
         >
           {loading ? (
-            <span className="flex items-center gap-2">
+            <span className="flex items-center justify-center gap-2">
               <span className="inline-block h-3 w-3 animate-spin rounded-full border-2 border-accent border-t-transparent" />
               正在生成...
             </span>
@@ -129,7 +129,7 @@ export function MenuBoard() {
             "生成今日菜谱"
           )}
         </button>
-        {meta && <span className="text-sm text-muted">{meta.date}</span>}
+        {meta && <span className="text-xs text-muted sm:text-sm">{meta.date}</span>}
       </div>
 
       {/* Loading skeleton */}
@@ -163,15 +163,15 @@ export function MenuBoard() {
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            className="grid gap-8 md:grid-cols-2"
+            className="grid gap-10 md:grid-cols-2 md:gap-8"
           >
             {/* Adult */}
             <div>
-              <div className="mb-4 flex items-center gap-3">
-                <span className="border-2 border-foreground px-3 py-1 text-xs font-bold uppercase tracking-widest">
+              <div className="sticky top-16 z-10 -mx-6 mb-4 flex items-center gap-2 border-b border-border/40 bg-background/85 px-6 py-3 backdrop-blur md:static md:mx-0 md:border-0 md:bg-transparent md:px-0 md:py-0 md:backdrop-blur-none">
+                <span className="border-2 border-foreground px-2.5 py-1 text-xs font-bold uppercase tracking-widest">
                   大人
                 </span>
-                <span className="text-xs text-muted">4 人份 · 菜谱来自 HowToCook</span>
+                <span className="text-xs text-muted">4 人份 · HowToCook</span>
               </div>
               <div className="space-y-4">
                 {adultMeals.map((meal, i) => (
@@ -182,8 +182,8 @@ export function MenuBoard() {
 
             {/* Baby */}
             <div>
-              <div className="mb-4 flex items-center gap-3">
-                <span className="border-2 border-accent bg-accent/5 px-3 py-1 text-xs font-bold uppercase tracking-widest text-accent">
+              <div className="sticky top-16 z-10 -mx-6 mb-4 flex items-center gap-2 border-b border-border/40 bg-background/85 px-6 py-3 backdrop-blur md:static md:mx-0 md:border-0 md:bg-transparent md:px-0 md:py-0 md:backdrop-blur-none">
+                <span className="border-2 border-accent bg-accent/5 px-2.5 py-1 text-xs font-bold uppercase tracking-widest text-accent">
                   宝宝
                 </span>
                 <span className="text-xs text-muted">1 岁半 · 2 人份 · AI 改造</span>
