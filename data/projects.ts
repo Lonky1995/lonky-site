@@ -30,6 +30,22 @@ export type Project = {
 
 export const projects: Project[] = [
   {
+    id: "family-menu",
+    title: {
+      zh: "家庭菜谱",
+      en: "Family Menu",
+    },
+    description: {
+      zh: "为老婆做的每日菜谱生成器。AI 从 266 道家常菜中随机搭配大人菜谱，再为 1 岁半宝宝改造出软烂无盐版本。支持一键分享为菜谱图片、本地保存历史。",
+      en: "A daily menu generator I built for my wife. AI picks adult meals from 266 home recipes, then adapts baby-safe versions for our 1.5-year-old twins. One-click share as recipe image, saves history locally.",
+    },
+    category: "AI",
+    techStack: ["Next.js", "DeepSeek", "HowToCook", "html-to-image"],
+    link: "/menu",
+    featured: true,
+    status: "live",
+  },
+  {
     id: "podcast-notes",
     title: {
       zh: "播客笔记工具",
