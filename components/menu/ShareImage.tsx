@@ -89,7 +89,7 @@ export const ShareImage = forwardRef<HTMLDivElement, { record: MenuRecord }>(
         </div>
 
         {/* 大人菜谱 */}
-        <Section title="大人" subtitle="4 人份">
+        <Section title="大人" subtitle={`${record.adults ?? 4} 人份`}>
           {record.adult.map((m, i) => (
             <Dish
               key={i}
@@ -101,17 +101,23 @@ export const ShareImage = forwardRef<HTMLDivElement, { record: MenuRecord }>(
         </Section>
 
         {/* 宝宝菜谱 */}
-        <Section title="宝宝" subtitle="1 岁半 · 2 人份" accent>
-          {record.baby.map((m, i) => (
-            <Dish
-              key={i}
-              name={m.name}
-              category={m.category}
-              ingredients={m.ingredients}
-              accent
-            />
-          ))}
-        </Section>
+        {record.baby.length > 0 && (
+          <Section
+            title="宝宝"
+            subtitle={`1 岁半 · ${record.babies ?? 2} 人份`}
+            accent
+          >
+            {record.baby.map((m, i) => (
+              <Dish
+                key={i}
+                name={m.name}
+                category={m.category}
+                ingredients={m.ingredients}
+                accent
+              />
+            ))}
+          </Section>
+        )}
 
         {/* 底部红印章水印 */}
         <div

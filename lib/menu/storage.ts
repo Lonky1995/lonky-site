@@ -9,6 +9,8 @@
 export interface MenuRecord {
   date: string; // 2026-04-24
   dateLabel: string; // 2026年4月24日 星期五
+  adults?: number;
+  babies?: number;
   adult: Array<{
     name: string;
     category: string;

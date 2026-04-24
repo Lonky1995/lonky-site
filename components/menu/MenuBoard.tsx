@@ -20,8 +20,29 @@ interface AdultMeta {
 
 interface MenuMeta {
   date: string;
+  adults: number;
+  babies: number;
   adult: AdultMeta[];
   babyBaseNames: string[];
+}
+
+const SETTINGS_KEY = "menu-family-settings";
+
+function loadSettings(): { adults: number; babies: number } {
+  if (typeof window === "undefined") return { adults: 4, babies: 2 };
+  try {
+    const raw = localStorage.getItem(SETTINGS_KEY);
+    if (raw) {
+      const s = JSON.parse(raw);
+      return {
+        adults: Math.max(1, Math.min(10, s.adults ?? 4)),
+        babies: Math.max(0, Math.min(4, s.babies ?? 2)),
+      };
+    }
+  } catch {
+    // ignore
+  }
+  return { adults: 4, babies: 2 };
 }
 
 interface AIResponse {
@@ -52,7 +73,28 @@ export function MenuBoard() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [sharing, setSharing] = useState(false);
+  const [adults, setAdults] = useState(4);
+  const [babies, setBabies] = useState(2);
   const shareRef = useRef<HTMLDivElement>(null);
+
+  // 首次挂载读取上次设置
+  useEffect(() => {
+    const s = loadSettings();
+    setAdults(s.adults);
+    setBabies(s.babies);
+  }, []);
+
+  // 设置变化时持久化
+  useEffect(() => {
+    try {
+      localStorage.setItem(
+        SETTINGS_KEY,
+        JSON.stringify({ adults, babies }),
+      );
+    } catch {
+      // ignore
+    }
+  }, [adults, babies]);
 
   async function generate() {
     setLoading(true);
@@ -61,7 +103,11 @@ export function MenuBoard() {
     setError(null);
 
     try {
-      const res = await fetch("/api/tools/menu", { method: "POST" });
+      const res = await fetch("/api/tools/menu", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ adults, babies }),
+      });
       if (!res.ok) throw new Error("请求失败");
 
       const metaHeader = res.headers.get("X-Menu-Meta");
@@ -123,6 +169,8 @@ export function MenuBoard() {
     ? {
         date: new Date().toISOString().slice(0, 10),
         dateLabel: meta!.date,
+        adults: meta!.adults,
+        babies: meta!.babies,
         adult: adultMeals.map((m) => ({
           name: m.name,
           category: m.category,
@@ -194,6 +242,31 @@ export function MenuBoard() {
 
   return (
     <div className="min-w-0">
+      {/* 家庭人数设置 */}
+      <div className="mb-5 flex flex-wrap items-center gap-3 sm:gap-5">
+        <Counter
+          label="大人"
+          value={adults}
+          min={1}
+          max={10}
+          onChange={setAdults}
+        />
+        <Counter
+          label="宝宝"
+          value={babies}
+          min={0}
+          max={4}
+          onChange={setBabies}
+          accent
+        />
+        <span className="text-xs text-muted">
+          {adults <= 1
+            ? "1 菜 1 汤 1 主食"
+            : `${Math.ceil(adults / 2)} 荤 ${Math.floor(adults / 2)} 素 1 汤 1 主食`}
+          {babies > 0 && " · 宝宝专属"}
+        </span>
+      </div>
+
       {/* Generate button */}
       <div className="mb-8 flex flex-col gap-3 sm:mb-12 sm:flex-row sm:items-center sm:gap-4">
         <button
@@ -251,7 +324,7 @@ export function MenuBoard() {
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            className="grid gap-10 md:grid-cols-2 md:gap-8"
+            className={`grid gap-10 md:gap-8 ${babyMeals.length > 0 ? "md:grid-cols-2" : "md:grid-cols-1"}`}
           >
             {/* Adult */}
             <div>
@@ -259,7 +332,7 @@ export function MenuBoard() {
                 <span className="border-2 border-foreground px-2.5 py-1 text-xs font-bold uppercase tracking-widest">
                   大人
                 </span>
-                <span className="text-xs text-muted">4 人份 · HowToCook</span>
+                <span className="text-xs text-muted">{meta?.adults ?? adults} 人份 · HowToCook</span>
               </div>
               <div className="space-y-4">
                 {adultMeals.map((meal, i) => (
@@ -269,19 +342,21 @@ export function MenuBoard() {
             </div>
 
             {/* Baby */}
-            <div>
-              <div className="sticky top-16 z-10 mb-4 flex items-center gap-2 border-b border-border/40 bg-background/85 py-3 backdrop-blur md:static md:border-0 md:bg-transparent md:py-0 md:backdrop-blur-none">
-                <span className="border-2 border-accent bg-accent/5 px-2.5 py-1 text-xs font-bold uppercase tracking-widest text-accent">
-                  宝宝
-                </span>
-                <span className="text-xs text-muted">1 岁半 · 2 人份 · AI 改造</span>
+            {babyMeals.length > 0 && (
+              <div>
+                <div className="sticky top-16 z-10 mb-4 flex items-center gap-2 border-b border-border/40 bg-background/85 py-3 backdrop-blur md:static md:border-0 md:bg-transparent md:py-0 md:backdrop-blur-none">
+                  <span className="border-2 border-accent bg-accent/5 px-2.5 py-1 text-xs font-bold uppercase tracking-widest text-accent">
+                    宝宝
+                  </span>
+                  <span className="text-xs text-muted">1 岁半 · {meta?.babies ?? babies} 人份 · AI 改造</span>
+                </div>
+                <div className="space-y-4">
+                  {babyMeals.map((meal, i) => (
+                    <MealCard key={i} meal={meal} index={i} />
+                  ))}
+                </div>
               </div>
-              <div className="space-y-4">
-                {babyMeals.map((meal, i) => (
-                  <MealCard key={i} meal={meal} index={i} />
-                ))}
-              </div>
-            </div>
+            )}
           </motion.div>
         )}
       </AnimatePresence>
@@ -324,6 +399,60 @@ export function MenuBoard() {
           <ShareImage ref={shareRef} record={currentRecord} />
         </div>
       )}
+    </div>
+  );
+}
+
+function Counter({
+  label,
+  value,
+  min,
+  max,
+  onChange,
+  accent,
+}: {
+  label: string;
+  value: number;
+  min: number;
+  max: number;
+  onChange: (v: number) => void;
+  accent?: boolean;
+}) {
+  const canDec = value > min;
+  const canInc = value < max;
+  const borderClass = accent ? "border-accent" : "border-foreground";
+  const textClass = accent ? "text-accent" : "text-foreground";
+
+  return (
+    <div className={`inline-flex items-stretch border-2 ${borderClass}`}>
+      <span
+        className={`flex items-center gap-1.5 border-r-2 ${borderClass} px-3 py-1.5 text-xs font-bold uppercase tracking-widest ${textClass}`}
+      >
+        {label}
+      </span>
+      <button
+        type="button"
+        onClick={() => canDec && onChange(value - 1)}
+        disabled={!canDec}
+        className={`flex h-9 w-9 items-center justify-center border-r-2 ${borderClass} text-base transition-colors hover:bg-accent/5 disabled:opacity-30 disabled:cursor-not-allowed`}
+        aria-label={`减少${label}`}
+      >
+        −
+      </button>
+      <span
+        className={`flex h-9 min-w-[2.25rem] items-center justify-center px-2 text-sm font-bold tabular-nums ${textClass}`}
+      >
+        {value}
+      </span>
+      <button
+        type="button"
+        onClick={() => canInc && onChange(value + 1)}
+        disabled={!canInc}
+        className={`flex h-9 w-9 items-center justify-center border-l-2 ${borderClass} text-base transition-colors hover:bg-accent/5 disabled:opacity-30 disabled:cursor-not-allowed`}
+        aria-label={`增加${label}`}
+      >
+        +
+      </button>
     </div>
   );
 }
