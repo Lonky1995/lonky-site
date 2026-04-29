@@ -312,7 +312,7 @@ body {
 
 .hero-section {
   display: grid;
-  grid-template-columns: 1fr 420px;
+  grid-template-columns: 1fr 2fr;
   min-height: 100dvh;
   border-bottom: 1px solid color-mix(in srgb, var(--color-border) 20%, transparent);
 }
@@ -482,7 +482,7 @@ body {
 
 .git-section {
   padding: 80px 48px;
-  background: var(--color-foreground);
+  background: #1a1a1a;
   border-top: 1px solid color-mix(in srgb, var(--color-border) 20%, transparent);
 }
 .git-header-line {
