@@ -18,7 +18,7 @@ export function AnimatedCard({
       viewport={{ once: true, margin: "-50px" }}
       transition={{ duration: 0.5, delay }}
       whileHover={{ y: -4 }}
-      className={`relative overflow-hidden rounded-xl border-2 border-foreground bg-card p-6 transition-colors hover:bg-card-hover hover:border-accent active:scale-[0.98] ${className}`}
+      className={`relative overflow-hidden rounded-xl border border-border/20 bg-card p-6 transition-colors hover:bg-card-hover hover:border-accent/40 active:scale-[0.98] ${className}`}
     >
       <div className="relative z-10">{children}</div>
     </motion.div>
