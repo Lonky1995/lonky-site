@@ -31,6 +31,23 @@ export type Project = {
 
 export const projects: Project[] = [
   {
+    id: "lonkyclaw",
+    title: {
+      zh: "LonkyClaw",
+      en: "LonkyClaw",
+    },
+    description: {
+      zh: "我的个人 Agent 系统：Trading Agent 自动分析加密市场，生活助理 Agent 处理日常琐事。",
+      en: "My personal agent system: a Trading Agent for crypto market analysis and a Life Assistant Agent for daily tasks.",
+    },
+    category: "AI",
+    techStack: ["TypeScript", "Python", "Claude", "Docker"],
+    github: "https://github.com/Lonky1995/lonkyclaw",
+    featured: true,
+    status: "in-progress",
+    year: "2025",
+  },
+  {
     id: "podcast-notes",
     title: {
       zh: "播客笔记工具",
