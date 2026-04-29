@@ -1,12 +1,12 @@
 @import "tailwindcss";
 
 @theme inline {
-  --color-background: #EDEAE3;
-  --color-foreground: #53565C;
-  --color-muted: #8A8782;
-  --color-card: #F4F1EB;
-  --color-card-hover: #F9F7F3;
-  --color-border: #53565C;
+  --color-background: #F0EDE6;
+  --color-foreground: #1f1f1f;
+  --color-muted: #6b6866;
+  --color-card: #E8E4DC;
+  --color-card-hover: #EDEAD3;
+  --color-border: #1f1f1f;
   --color-accent: #8C736F;
   --color-accent-light: #AAB8AB;
   --font-sans: var(--font-inter);
@@ -583,15 +583,16 @@ body {
 .p-cat {
   font-family: var(--font-mono), monospace;
   font-size: 10px;
-  padding: 3px 8px;
+  font-weight: 600;
+  padding: 4px 10px;
   border-radius: 4px;
-  border: 1px solid currentColor;
-  opacity: 0.7;
+  border: 1.5px solid currentColor;
+  opacity: 1;
 }
 .p-arrow {
   font-size: 16px;
-  color: var(--color-muted);
-  opacity: 0.4;
+  color: var(--color-foreground);
+  opacity: 0.5;
   transition: opacity 0.2s, transform 0.2s;
   text-decoration: none;
 }
