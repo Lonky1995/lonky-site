@@ -558,36 +558,35 @@ body {
 }
 .p-main { min-width: 0; }
 .p-name {
-  font-size: 18px;
-  font-weight: 700;
-  color: #1a1a1a;
-  margin-bottom: 5px;
+  font-family: var(--font-serif), serif;
+  font-size: 20px;
+  font-weight: 400;
+  color: var(--color-foreground);
+  margin-bottom: 4px;
   transition: color 0.2s;
 }
 .p-tagline {
-  font-size: 13px;
-  color: #53565C;
+  font-size: 12px;
+  color: var(--color-foreground);
+  opacity: 0.5;
   line-height: 1.5;
-  margin-bottom: 5px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  margin-bottom: 4px;
 }
 .p-tech {
   font-family: var(--font-mono), monospace;
   font-size: 10px;
-  color: var(--color-muted);
+  color: var(--color-accent);
   opacity: 0.5;
+  letter-spacing: 0.03em;
 }
 .p-right { display: flex; align-items: center; gap: 12px; flex-shrink: 0; }
 .p-cat {
   font-family: var(--font-mono), monospace;
   font-size: 10px;
-  font-weight: 600;
-  padding: 4px 10px;
-  border-radius: 4px;
-  border: 1.5px solid currentColor;
-  opacity: 1;
+  letter-spacing: 0.1em;
+  color: var(--color-accent-light);
+  padding: 0;
+  border: none;
 }
 .p-arrow {
   font-size: 16px;

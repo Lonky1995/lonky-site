@@ -76,7 +76,7 @@ export function BlogPreview({ posts }: { posts: BlogPost[] }) {
         <div className="writing-grid-2col">
           <AnimatePresence initial={false}>
             {posts.slice(1).map((post, i) => {
-              if (!expanded && i >= 1) return null;
+              if (!expanded && i >= 2) return null;
               return (
                 <motion.div
                   key={post.slug}
