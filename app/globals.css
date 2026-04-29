@@ -511,7 +511,7 @@ body {
 .git-year {
   font-family: var(--font-mono), monospace;
   font-size: 11px;
-  color: rgba(237, 234, 227, 0.4);
+  color: rgba(237, 234, 227, 0.75);
 }
 .git-msg {
   font-size: 14px;

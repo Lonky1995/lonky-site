@@ -29,17 +29,17 @@ const entries: Entry[] = [
   {
     hash: "a3f2b1c",
     year: "2025 至今",
-    msg: <span className="flex items-center gap-2"><OkxIcon /> feat: 加入 OKX，负责产品</span>,
+    msg: <span className="flex items-center gap-2"><OkxIcon /> OKX，产品经理</span>,
   },
   {
     hash: "7cd5e69",
     year: "2024 - 2025",
-    msg: <span className="flex items-center gap-2"><Logo src="/images/logos/bingx.jpeg" alt="BingX" /> feat: 加入 BingX，负责产品</span>,
+    msg: <span className="flex items-center gap-2"><Logo src="/images/logos/bingx.jpeg" alt="BingX" /> BingX，产品经理</span>,
   },
   {
     hash: "23e2444",
     year: "2023 - 2024",
-    msg: <span className="flex items-center gap-2"><Logo src="/images/logos/followin.png" alt="Followin" /> feat: 联合创办 Followin，产品负责人</span>,
+    msg: <span className="flex items-center gap-2"><Logo src="/images/logos/followin.png" alt="Followin" /> 联合创办 Followin，产品负责人</span>,
   },
   {
     hash: "89f2836",
@@ -51,14 +51,14 @@ const entries: Entry[] = [
           <Logo src="/images/logos/wechat-listen.jpeg" alt="WeChat Listen" />
           <Logo src="/images/logos/miniprogram.png" alt="Mini Program" />
         </span>
-        feat: 腾讯微信产品经理（微信读书 · 听书 · 小程序）
+        腾讯微信产品经理（微信读书 · 听书 · 小程序）
       </span>
     ),
   },
   {
     hash: "7875369",
     year: "2018",
-    msg: <span className="flex items-center gap-2"><RocketLaunch size={20} weight="duotone" className="text-accent-light flex-shrink-0" /> init: 创办 Token Galaxy</span>,
+    msg: <span className="flex items-center gap-2"><RocketLaunch size={20} weight="duotone" className="text-accent-light flex-shrink-0" /> 创办 Token Galaxy</span>,
   },
 ];
 
