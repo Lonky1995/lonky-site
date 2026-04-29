@@ -93,7 +93,7 @@ export function ContactCTA({ tweetSlot, wechatArticle }: { tweetSlot?: ReactNode
                     navigator.clipboard.writeText(ch.copyValue!);
                     alert(`${t.wechatCopied} ${ch.copyValue}`);
                   }}
-                  className="flex cursor-pointer items-center gap-3 rounded-none border-2 border-foreground bg-card px-5 py-4 text-left text-sm text-muted transition-all hover:-translate-y-0.5 hover:border-accent hover:text-foreground"
+                  className="flex cursor-pointer items-center gap-3 rounded-xl border-2 border-foreground bg-card px-5 py-4 text-left text-sm text-muted transition-all hover:-translate-y-0.5 hover:border-accent hover:text-foreground"
                 >
                   {ch.icon}
                   {ch.label}
@@ -104,7 +104,7 @@ export function ContactCTA({ tweetSlot, wechatArticle }: { tweetSlot?: ReactNode
                   href={ch.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center gap-3 rounded-none border-2 border-foreground bg-card px-5 py-4 text-sm text-muted transition-all hover:-translate-y-0.5 hover:border-accent hover:text-foreground"
+                  className="flex items-center gap-3 rounded-xl border-2 border-foreground bg-card px-5 py-4 text-sm text-muted transition-all hover:-translate-y-0.5 hover:border-accent hover:text-foreground"
                 >
                   {ch.icon}
                   {ch.label}
@@ -113,7 +113,7 @@ export function ContactCTA({ tweetSlot, wechatArticle }: { tweetSlot?: ReactNode
             )}
 
             {/* 公众号 Latest Article */}
-            <div className="rounded-none border-2 border-foreground bg-card p-5">
+            <div className="rounded-xl border-2 border-foreground bg-card p-5">
               <p className="mb-3 text-sm text-muted">
                 {t.officialAccount}
               </p>
@@ -141,7 +141,7 @@ export function ContactCTA({ tweetSlot, wechatArticle }: { tweetSlot?: ReactNode
                     alt={t.officialAccountAlt}
                     width={160}
                     height={160}
-                    className="rounded-none"
+                    className="rounded-xl"
                   />
                 </div>
               )}

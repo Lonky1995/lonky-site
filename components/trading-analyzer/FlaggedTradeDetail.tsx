@@ -220,7 +220,7 @@ export default function FlaggedTradeDetail({ trade, prevTrade, flagType, flagDet
       initial={{ opacity: 0, height: 0 }}
       animate={{ opacity: 1, height: 'auto' }}
       exit={{ opacity: 0, height: 0 }}
-      className="mt-2 overflow-hidden rounded-none border border-border bg-background"
+      className="mt-2 overflow-hidden rounded-xl border border-border bg-background"
     >
       {/* Header */}
       <div className="flex items-center justify-between border-b border-border px-4 py-3">
@@ -277,7 +277,7 @@ export default function FlaggedTradeDetail({ trade, prevTrade, flagType, flagDet
         <p className="text-sm leading-relaxed text-foreground/80">{flagDetail}</p>
 
         {prevTrade && (
-          <div className="mt-2 rounded-none bg-card px-3 py-2 text-xs text-muted">
+          <div className="mt-2 rounded-xl bg-card px-3 py-2 text-xs text-muted">
             <span className="font-medium text-foreground/60">前一笔交易：</span>
             {prevTrade.symbol.replace('/USDT:USDT', '')} {prevTrade.side === 'long' ? '做多' : '做空'}，
             盈亏 <span className={(prevTrade.realized_pnl ?? 0) >= 0 ? 'text-green-400' : 'text-red-400'}>

@@ -286,7 +286,7 @@ export function TetrisGame() {
         <p className="text-sm text-muted">不如先来一局经典俄罗斯方块？</p>
         <button
           onClick={() => setStarted(true)}
-          className="mt-2 rounded-none bg-accent px-8 py-3 text-base font-bold text-background transition-all hover:scale-105 active:scale-95"
+          className="mt-2 rounded-xl bg-accent px-8 py-3 text-base font-bold text-background transition-all hover:scale-105 active:scale-95"
         >
           开始挑战
         </button>
@@ -304,24 +304,24 @@ export function TetrisGame() {
         ref={canvasRef}
         width={COLS * CELL}
         height={ROWS * CELL}
-        className="rounded-none border border-border"
+        className="rounded-xl border border-border"
       />
       {/* Controls */}
       {gameOver ? (
         <button
           onClick={() => handleAction("reset")}
-          className="rounded-none bg-accent px-6 py-2.5 text-sm font-bold text-background transition-all hover:scale-105 active:scale-95"
+          className="rounded-xl bg-accent px-6 py-2.5 text-sm font-bold text-background transition-all hover:scale-105 active:scale-95"
         >
           再来一局
         </button>
       ) : (
         <>
           <div className="flex items-center gap-3">
-            <button onPointerDown={() => handleAction("left")} className="rounded-none border border-border px-3 py-2 text-sm text-muted active:bg-accent/20">←</button>
-            <button onPointerDown={() => handleAction("down")} className="rounded-none border border-border px-3 py-2 text-sm text-muted active:bg-accent/20">↓</button>
-            <button onPointerDown={() => handleAction("up")} className="rounded-none border border-border px-3 py-2 text-sm text-muted active:bg-accent/20">↑</button>
-            <button onPointerDown={() => handleAction("right")} className="rounded-none border border-border px-3 py-2 text-sm text-muted active:bg-accent/20">→</button>
-            <button onPointerDown={() => handleAction("drop")} className="rounded-none border border-border px-4 py-2 text-xs text-muted active:bg-accent/20">落下</button>
+            <button onPointerDown={() => handleAction("left")} className="rounded-xl border border-border px-3 py-2 text-sm text-muted active:bg-accent/20">←</button>
+            <button onPointerDown={() => handleAction("down")} className="rounded-xl border border-border px-3 py-2 text-sm text-muted active:bg-accent/20">↓</button>
+            <button onPointerDown={() => handleAction("up")} className="rounded-xl border border-border px-3 py-2 text-sm text-muted active:bg-accent/20">↑</button>
+            <button onPointerDown={() => handleAction("right")} className="rounded-xl border border-border px-3 py-2 text-sm text-muted active:bg-accent/20">→</button>
+            <button onPointerDown={() => handleAction("drop")} className="rounded-xl border border-border px-4 py-2 text-xs text-muted active:bg-accent/20">落下</button>
           </div>
           <p className="text-[10px] text-muted">← → 移动 · ↑ 旋转 · ↓ 加速 · 空格落下</p>
         </>

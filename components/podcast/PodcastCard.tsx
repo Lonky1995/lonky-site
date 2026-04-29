@@ -37,7 +37,7 @@ export function PodcastCard({
             <img
               src={note.coverImage}
               alt={note.title}
-              className="h-16 w-16 flex-shrink-0 rounded-none object-cover"
+              className="h-16 w-16 flex-shrink-0 rounded-xl object-cover"
             />
           )}
           <div className="min-w-0 flex-1">

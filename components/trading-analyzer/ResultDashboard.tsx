@@ -46,13 +46,13 @@ export default function ResultDashboard({ analysis, trades, onReset }: Props) {
         <div className="flex gap-2">
           <button
             onClick={handleExport}
-            className="rounded-none border border-border px-3 py-1.5 text-xs text-muted transition-colors hover:border-accent hover:text-foreground"
+            className="rounded-xl border border-border px-3 py-1.5 text-xs text-muted transition-colors hover:border-accent hover:text-foreground"
           >
             导出报告
           </button>
           <button
             onClick={onReset}
-            className="rounded-none border border-border px-3 py-1.5 text-xs text-muted transition-colors hover:border-accent hover:text-foreground"
+            className="rounded-xl border border-border px-3 py-1.5 text-xs text-muted transition-colors hover:border-accent hover:text-foreground"
           >
             重新分析
           </button>
@@ -64,24 +64,24 @@ export default function ResultDashboard({ analysis, trades, onReset }: Props) {
 
       {/* Charts row */}
       <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
-        <div className="rounded-none border border-border bg-card p-4">
+        <div className="rounded-xl border border-border bg-card p-4">
           <h3 className="mb-2 text-xs font-semibold text-muted">交易者画像</h3>
           <TraderProfile scores={diagnosis.radarScores} />
         </div>
 
-        <div className="rounded-none border border-border bg-card p-4">
+        <div className="rounded-xl border border-border bg-card p-4">
           <h3 className="mb-2 text-xs font-semibold text-muted">盈亏分布</h3>
           <PnlDistribution data={stats.pnlDistribution} />
         </div>
 
-        <div className="rounded-none border border-border bg-card p-4">
+        <div className="rounded-xl border border-border bg-card p-4">
           <h3 className="mb-2 text-xs font-semibold text-muted">风险倾向</h3>
           <RiskGauge score={diagnosis.riskScore} />
         </div>
       </div>
 
       {/* Heatmap */}
-      <div className="rounded-none border border-border bg-card p-4">
+      <div className="rounded-xl border border-border bg-card p-4">
         <h3 className="mb-3 text-xs font-semibold text-muted">交易频率热力图 (UTC)</h3>
         <TradingHeatmap data={stats.heatmap} />
       </div>

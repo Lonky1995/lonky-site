@@ -75,7 +75,7 @@ export function PodcastCard({
       <h3 className="mb-2 text-xl font-bold">{project.title[locale]}</h3>
 
       {/* Pain points */}
-      <div className="mb-4 rounded-none border border-foreground/20 bg-background/50 p-4">
+      <div className="mb-4 rounded-xl border border-foreground/20 bg-background/50 p-4">
         <p className="mb-2.5 text-sm font-semibold text-foreground">
           {pain.heading}
         </p>
@@ -121,7 +121,7 @@ export function PodcastCard({
       {/* CTA */}
       <Link
         href="/podcast-notes/new"
-        className="inline-flex items-center gap-2 rounded-none bg-accent px-5 py-2.5 text-sm font-medium text-background transition-opacity hover:opacity-90"
+        className="inline-flex items-center gap-2 rounded-xl bg-accent px-5 py-2.5 text-sm font-medium text-background transition-opacity hover:opacity-90"
       >
         {dict.podcast.newNote}
         <svg className="h-4 w-4" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="2">

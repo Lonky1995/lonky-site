@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { cookies } from "next/headers";
 import Script from "next/script";
-import { Geist, Geist_Mono, JetBrains_Mono } from "next/font/google";
+import { Plus_Jakarta_Sans, JetBrains_Mono, Noto_Serif_SC } from "next/font/google";
 import { Navbar } from "@/components/layout/Navbar";
 import { LocaleProvider } from "@/components/locale-provider";
 import { siteConfig } from "@/data/site-config";
@@ -9,14 +9,16 @@ import { defaultLocale, type Locale } from "@/i18n/config";
 import { getDictionary } from "@/i18n";
 import "./globals.css";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const plusJakartaSans = Plus_Jakarta_Sans({
+  variable: "--font-inter",
   subsets: ["latin"],
+  weight: ["400", "500", "600", "700", "800"],
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+const notoSerifSC = Noto_Serif_SC({
+  variable: "--font-noto-serif-sc",
   subsets: ["latin"],
+  weight: ["400", "500", "700"],
 });
 
 const jetbrainsMono = JetBrains_Mono({
@@ -66,7 +68,7 @@ export default async function RootLayout({
         />
       </head>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} ${jetbrainsMono.variable} min-h-[100dvh] bg-background font-sans text-foreground antialiased`}
+        className={`${plusJakartaSans.variable} ${notoSerifSC.variable} ${jetbrainsMono.variable} min-h-[100dvh] bg-background font-sans text-foreground antialiased`}
       >
         <script
           type="application/ld+json"

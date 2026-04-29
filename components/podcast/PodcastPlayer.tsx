@@ -68,7 +68,7 @@ export function PodcastPlayer({ audioUrl }: { audioUrl: string }) {
   const pct = duration > 0 ? (current / duration) * 100 : 0;
 
   return (
-    <div className="sticky top-16 z-10 mb-8 flex items-center gap-3 rounded-none border border-border bg-card/95 backdrop-blur px-4 py-3">
+    <div className="sticky top-16 z-10 mb-8 flex items-center gap-3 rounded-xl border border-border bg-card/95 backdrop-blur px-4 py-3">
       <audio ref={audioRef} src={audioUrl} preload="metadata" />
       <button
         onClick={toggle}

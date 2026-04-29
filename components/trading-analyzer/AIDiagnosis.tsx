@@ -79,7 +79,7 @@ export default function AIDiagnosis({ diagnosis, habits, discipline, trades }: P
   const [expandedIdx, setExpandedIdx] = useState<number | null>(null);
 
   return (
-    <div className="space-y-5 rounded-none border border-border bg-card p-6">
+    <div className="space-y-5 rounded-xl border border-border bg-card p-6">
       <div className="flex items-center justify-between">
         <h3 className="text-sm font-semibold text-muted">AI 综合诊断</h3>
         <span className="rounded-full bg-accent/10 px-3 py-0.5 text-xs font-medium text-accent">
@@ -138,7 +138,7 @@ export default function AIDiagnosis({ diagnosis, habits, discipline, trades }: P
               return (
                 <div key={i}>
                   <div
-                    className={`rounded-none border px-3 py-2 text-xs transition-colors cursor-pointer ${
+                    className={`rounded-xl border px-3 py-2 text-xs transition-colors cursor-pointer ${
                       isExpanded
                         ? 'border-red-500/30 bg-red-500/5'
                         : 'border-red-500/10 bg-red-500/5 hover:border-red-500/30'
@@ -166,7 +166,7 @@ export default function AIDiagnosis({ diagnosis, habits, discipline, trades }: P
                       />
                     )}
                     {isExpanded && !match && (
-                      <div className="mt-2 rounded-none border border-border bg-background px-4 py-3 text-xs text-muted">
+                      <div className="mt-2 rounded-xl border border-border bg-background px-4 py-3 text-xs text-muted">
                         未能匹配到对应交易记录
                       </div>
                     )}
@@ -188,7 +188,7 @@ export default function AIDiagnosis({ diagnosis, habits, discipline, trades }: P
             {diagnosis.tradingRules.map((rule, i) => (
               <div
                 key={i}
-                className="rounded-none border border-accent/20 bg-accent/5 px-3 py-2 text-sm text-foreground/80"
+                className="rounded-xl border border-accent/20 bg-accent/5 px-3 py-2 text-sm text-foreground/80"
               >
                 {rule}
               </div>

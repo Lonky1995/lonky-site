@@ -26,7 +26,7 @@ export default function AnalysisProgress({ progress }: Props) {
       exit={{ opacity: 0, y: -20 }}
       className="mx-auto max-w-md space-y-4"
     >
-      <div className="rounded-none border border-border bg-card p-6 space-y-3">
+      <div className="rounded-xl border border-border bg-card p-6 space-y-3">
         {STEPS.map((step, i) => {
           const isDone = completedKeys.includes(step.key);
           const isActive = !isDone && i <= currentIdx;

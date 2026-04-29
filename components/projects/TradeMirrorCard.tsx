@@ -77,7 +77,7 @@ export function TradeMirrorCard({
       <h3 className="mb-2 text-xl font-bold">{project.title[locale]}</h3>
 
       {/* Pain points */}
-      <div className="mb-4 rounded-none border border-foreground/20 bg-background/50 p-4">
+      <div className="mb-4 rounded-xl border border-foreground/20 bg-background/50 p-4">
         <p className="mb-2.5 text-sm font-semibold text-foreground">
           {pain.heading}
         </p>
@@ -127,7 +127,7 @@ export function TradeMirrorCard({
           href="https://trademirror.lonky.me"
           target="_blank"
           rel="noopener noreferrer"
-          className="inline-flex items-center gap-2 rounded-none bg-accent px-5 py-2.5 text-sm font-medium text-background transition-opacity hover:opacity-90"
+          className="inline-flex items-center gap-2 rounded-xl bg-accent px-5 py-2.5 text-sm font-medium text-background transition-opacity hover:opacity-90"
         >
           {cta[locale]}
           <svg

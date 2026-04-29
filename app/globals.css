@@ -1,16 +1,17 @@
 @import "tailwindcss";
 
 @theme inline {
-  --color-background: #F4F4F0;
-  --color-foreground: #050505;
-  --color-muted: #787774;
-  --color-card: #ffffff;
-  --color-card-hover: #EAEAEA;
-  --color-border: #1A1A1A;
-  --color-accent: #8B7355;
-  --color-accent-light: #A08B6E;
-  --font-sans: var(--font-geist-sans);
-  --font-mono: 'JetBrains Mono', var(--font-geist-mono);
+  --color-background: #EDEAE3;
+  --color-foreground: #53565C;
+  --color-muted: #8A8782;
+  --color-card: #F4F1EB;
+  --color-card-hover: #F9F7F3;
+  --color-border: #53565C;
+  --color-accent: #8C736F;
+  --color-accent-light: #AAB8AB;
+  --font-sans: var(--font-inter);
+  --font-serif: var(--font-noto-serif-sc);
+  --font-mono: 'JetBrains Mono', var(--font-jetbrains-mono);
 }
 
 body {
@@ -25,7 +26,7 @@ body {
   z-index: 0;
   pointer-events: none;
   overflow: hidden;
-  background-image: radial-gradient(circle, #d4d4d0 1px, transparent 1px);
+  background-image: radial-gradient(circle, #D4CFC6 1px, transparent 1px);
   background-size: 36px 36px;
   -webkit-mask-image: radial-gradient(ellipse 80% 70% at 50% 30%, black 20%, transparent 75%);
   mask-image: radial-gradient(ellipse 80% 70% at 50% 30%, black 20%, transparent 75%);
@@ -55,7 +56,7 @@ body {
 }
 
 .card-surface {
-  border-radius: 0;
+  border-radius: 12px;
   box-shadow: none;
   border: 2px solid currentColor;
 }
@@ -79,7 +80,7 @@ body {
   --tweet-bg-color: #ffffff;
   --tweet-border: 1px solid #EAEAEA;
   --tweet-font-color: #050505;
-  --tweet-font-color-secondary: #787774;
+  --tweet-font-color-secondary: #4a4a47;
   --tweet-link-color: #8B7355;
   --tweet-link-color-hover: #A08B6E;
   --tweet-color-blue-secondary: #8B7355;
@@ -90,13 +91,14 @@ body {
   margin: 0 auto;
 }
 
+.prose-custom { font-family: var(--font-serif); }
 .prose-custom h1 { font-size: 2rem; font-weight: 700; margin-top: 2rem; margin-bottom: 1rem; }
 .prose-custom h2 { font-size: 1.5rem; font-weight: 600; margin-top: 1.75rem; margin-bottom: 0.75rem; }
 .prose-custom h3 { font-size: 1.125rem; font-weight: 600; margin-top: 2rem; margin-bottom: 0.75rem; padding-bottom: 0.5rem; border-bottom: 1px solid #EAEAEA; }
-.prose-custom p { margin-bottom: 1rem; line-height: 1.8; color: #787774; }
+.prose-custom p { margin-bottom: 1rem; line-height: 1.8; color: #4a4a47; }
 .prose-custom a { color: #8B7355; text-decoration: underline; text-underline-offset: 2px; }
 .prose-custom a:hover { color: #A08B6E; }
-.prose-custom ul, .prose-custom ol { margin-bottom: 1rem; padding-left: 1.5rem; color: #787774; }
+.prose-custom ul, .prose-custom ol { margin-bottom: 1rem; padding-left: 1.5rem; color: #4a4a47; }
 .prose-custom ol { list-style: none; padding-left: 1.5rem; }
 .prose-custom ol > li { position: relative; padding-left: 0.25rem; }
 .prose-custom ol > li::before { content: "\2022"; position: absolute; left: -1rem; color: #8B7355; font-weight: 700; }
@@ -106,10 +108,10 @@ body {
   border-left: 3px solid #8B7355;
   padding: 0.75rem 1rem;
   margin: 0.75rem 0;
-  color: #787774;
+  color: #4a4a47;
   font-style: italic;
   background: #EAEAEA40;
-  border-radius: 0;
+  border-radius: 8px;
 }
 .prose-custom blockquote p {
   margin-bottom: 0.25rem;
@@ -120,13 +122,13 @@ body {
 .prose-custom code {
   background: #EAEAEA;
   padding: 0.15rem 0.4rem;
-  border-radius: 0;
+  border-radius: 8px;
   font-size: 0.875rem;
 }
 .prose-custom pre {
   background: #ffffff !important;
   border: 2px solid #1A1A1A;
-  border-radius: 0;
+  border-radius: 8px;
   padding: 1rem;
   overflow-x: auto;
   margin: 1.5rem 0;
@@ -136,7 +138,7 @@ body {
   padding: 0;
 }
 .prose-custom img {
-  border-radius: 0;
+  border-radius: 8px;
   margin: 1.5rem 0;
   cursor: zoom-in;
   transition: opacity 0.15s;
@@ -180,7 +182,7 @@ body {
   font-size: 0.95rem;
   padding: 0.75rem 1rem;
   line-height: 1.5;
-  border-radius: 0;
+  border-radius: 8px;
 }
 .discussion-q::before {
   content: "Q ";
@@ -192,8 +194,8 @@ body {
   padding: 1.25rem 1.5rem;
   font-size: 0.9375rem;
   line-height: 1.85;
-  color: #787774;
-  border-radius: 0;
+  color: #4a4a47;
+  border-radius: 8px;
   border: 2px solid #1A1A1A;
 }
 .discussion-a::before {
@@ -247,11 +249,11 @@ body {
   border-left: 3px solid #8B7355;
   padding: 0.75rem 1rem;
   margin: 1rem 0;
-  color: #787774;
+  color: #4a4a47;
   font-style: normal;
   font-size: 0.875rem;
   background: #F4F4F0;
-  border-radius: 0;
+  border-radius: 8px;
   line-height: 1.7;
 }
 .discussion-a blockquote strong {
@@ -264,7 +266,7 @@ body {
 .discussion-a code {
   background: #EAEAEA;
   padding: 0.15rem 0.4rem;
-  border-radius: 0;
+  border-radius: 8px;
   font-size: 0.8rem;
 }
 .discussion-a h3, .discussion-a h4 {
@@ -278,7 +280,7 @@ body {
 .prose-custom details {
   margin: 1.5rem 0;
   border: 2px solid #1A1A1A;
-  border-radius: 0;
+  border-radius: 8px;
   overflow: hidden;
 }
 .prose-custom details summary {
@@ -286,7 +288,7 @@ body {
   padding: 0.75rem 1rem;
   font-size: 0.875rem;
   font-weight: 500;
-  color: #787774;
+  color: #4a4a47;
   background: #F4F4F0;
   user-select: none;
   transition: color 0.2s;
