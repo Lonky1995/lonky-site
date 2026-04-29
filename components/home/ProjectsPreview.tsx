@@ -1,7 +1,7 @@
 "use client";
 
-import Link from "next/link";
 import { motion } from "framer-motion";
+import { useState } from "react";
 import { projects } from "@/data/projects";
 import { useLocale } from "@/components/locale-provider";
 
@@ -14,6 +14,8 @@ const categoryColor: Record<string, string> = {
 export function ProjectsPreview() {
   const { dict } = useLocale();
   const featured = projects.filter((p) => p.featured);
+  const [expanded, setExpanded] = useState(false);
+  const visible = expanded ? featured : featured.slice(0, 3);
 
   return (
     <section className="px-6 py-20 md:px-8 border-t border-border/20">
@@ -30,7 +32,7 @@ export function ProjectsPreview() {
         </motion.div>
 
         <div className="project-list">
-          {featured.map((project, i) => {
+          {visible.map((project, i) => {
             const href = project.link ?? project.github;
             const isExternal = href?.startsWith("http");
             return (
@@ -66,11 +68,14 @@ export function ProjectsPreview() {
           })}
         </div>
 
-        <div className="mt-8">
-          <Link href="/projects" className="text-sm text-muted transition-colors hover:text-foreground font-mono">
-            {dict.projects.viewAll}
-          </Link>
-        </div>
+        {featured.length > 3 && (
+          <div className="mt-6">
+            <button onClick={() => setExpanded((v) => !v)} className="writing-expand-btn">
+              <span style={{ display: "inline-block", transition: "transform 0.4s cubic-bezier(0.16,1,0.3,1)", transform: expanded ? "rotate(180deg)" : "rotate(0deg)" }}>↓</span>
+              {expanded ? "收起" : "展开更多"}
+            </button>
+          </div>
+        )}
       </div>
     </section>
   );

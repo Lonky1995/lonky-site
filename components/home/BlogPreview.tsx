@@ -102,28 +102,14 @@ export function BlogPreview({ posts }: { posts: BlogPost[] }) {
           </AnimatePresence>
         </div>
 
-        <div className="mt-6 flex items-center gap-6">
-          {hasMore && (
-            <button
-              onClick={() => setExpanded((v) => !v)}
-              className="writing-expand-btn"
-            >
-              <span
-                style={{
-                  display: "inline-block",
-                  transition: "transform 0.4s cubic-bezier(0.16,1,0.3,1)",
-                  transform: expanded ? "rotate(180deg)" : "rotate(0deg)",
-                }}
-              >
-                ↓
-              </span>
+        {hasMore && (
+          <div className="mt-6">
+            <button onClick={() => setExpanded((v) => !v)} className="writing-expand-btn">
+              <span style={{ display: "inline-block", transition: "transform 0.4s cubic-bezier(0.16,1,0.3,1)", transform: expanded ? "rotate(180deg)" : "rotate(0deg)" }}>↓</span>
               {expanded ? "收起" : "展开更多"}
             </button>
-          )}
-          <Link href="/blog" className="text-sm text-muted transition-colors hover:text-foreground font-mono">
-            {dict.blog.readAll}
-          </Link>
-        </div>
+          </div>
+        )}
       </div>
     </section>
   );
