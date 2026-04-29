@@ -543,8 +543,8 @@ body {
   grid-template-columns: 48px 1fr auto;
   align-items: center;
   gap: 20px;
-  padding: 20px 0;
-  border-bottom: 1px solid color-mix(in srgb, var(--color-border) 15%, transparent);
+  padding: 24px 0;
+  border-bottom: 1px solid color-mix(in srgb, var(--color-border) 35%, transparent);
   cursor: pointer;
   transition: background 0.15s;
 }
@@ -552,22 +552,23 @@ body {
 .p-index {
   font-family: var(--font-mono), monospace;
   font-size: 11px;
-  color: var(--color-muted);
+  color: #8C736F;
+  font-weight: 700;
   letter-spacing: 0.05em;
 }
 .p-main { min-width: 0; }
 .p-name {
-  font-size: 17px;
-  font-weight: 600;
-  color: var(--color-foreground);
-  margin-bottom: 3px;
+  font-size: 18px;
+  font-weight: 700;
+  color: #1a1a1a;
+  margin-bottom: 5px;
   transition: color 0.2s;
 }
 .p-tagline {
-  font-size: 12px;
-  color: var(--color-muted);
+  font-size: 13px;
+  color: #53565C;
   line-height: 1.5;
-  margin-bottom: 4px;
+  margin-bottom: 5px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -576,7 +577,7 @@ body {
   font-family: var(--font-mono), monospace;
   font-size: 10px;
   color: var(--color-muted);
-  opacity: 0.6;
+  opacity: 0.5;
 }
 .p-right { display: flex; align-items: center; gap: 12px; flex-shrink: 0; }
 .p-cat {
