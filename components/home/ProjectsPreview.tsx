@@ -1,36 +1,78 @@
 "use client";
 
 import Link from "next/link";
+import { motion } from "framer-motion";
 import { projects } from "@/data/projects";
-import { renderProjectCard } from "@/components/projects/renderProjectCard";
-import { Section } from "@/components/ui/Section";
 import { useLocale } from "@/components/locale-provider";
+
+const categoryColor: Record<string, string> = {
+  AI: "var(--color-accent-light)",
+  Crypto: "var(--color-accent)",
+  Tool: "var(--color-muted)",
+};
 
 export function ProjectsPreview() {
   const { dict } = useLocale();
   const featured = projects.filter((p) => p.featured);
 
   return (
-    <Section
-      id="projects"
-      title={dict.projects.homeTitle}
-      subtitle={dict.projects.homeSubtitle}
-    >
-      <div className="grid gap-6 md:grid-cols-[2fr_1fr] items-start">
-        {featured.map((project, i) => (
-          <div key={project.id} className={i === 0 ? "md:row-span-2" : i === 2 ? "md:col-span-full" : ""}>
-            {renderProjectCard(project, i)}
-          </div>
-        ))}
-      </div>
-      <div className="mt-8 text-center">
-        <Link
-          href="/projects"
-          className="text-sm text-muted transition-colors hover:text-foreground"
+    <section className="px-6 py-20 md:px-8 border-t border-border/20">
+      <div className="mx-auto max-w-6xl">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+          className="mb-10"
         >
-          {dict.projects.viewAll}
-        </Link>
+          <div className="section-cmd mb-2">$ ls 作品/</div>
+          <h2 className="section-title-lg">{dict.projects.homeTitle}</h2>
+        </motion.div>
+
+        <div className="project-list">
+          {featured.map((project, i) => (
+            <motion.div
+              key={project.id}
+              className="project-row"
+              initial={{ opacity: 0, x: -16 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.4, delay: i * 0.07, ease: [0.22, 1, 0.36, 1] }}
+            >
+              <span className="p-index">0{i + 1}</span>
+              <div className="p-main">
+                <div className="p-name">{project.title.zh}</div>
+                <div className="p-tagline">{project.description.zh}</div>
+                <div className="p-tech">{project.techStack.join(" · ")}</div>
+              </div>
+              <div className="p-right">
+                <span
+                  className="p-cat"
+                  style={{ color: categoryColor[project.category] ?? "var(--color-muted)" }}
+                >
+                  {project.category}
+                </span>
+                {(project.link || project.github) && (
+                  <a
+                    href={project.link ?? project.github}
+                    target={project.link?.startsWith("http") ? "_blank" : undefined}
+                    rel="noopener noreferrer"
+                    className="p-arrow"
+                  >
+                    ↗
+                  </a>
+                )}
+              </div>
+            </motion.div>
+          ))}
+        </div>
+
+        <div className="mt-8">
+          <Link href="/projects" className="text-sm text-muted transition-colors hover:text-foreground font-mono">
+            {dict.projects.viewAll}
+          </Link>
+        </div>
       </div>
-    </Section>
+    </section>
   );
 }

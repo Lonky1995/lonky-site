@@ -6,10 +6,9 @@ import type { ReactNode } from "react";
 import { RocketLaunch } from "@phosphor-icons/react";
 import { useLocale } from "@/components/locale-provider";
 
-/* ── OKX inline SVG (5-square cross pattern) ── */
 function OkxIcon() {
   return (
-    <svg viewBox="0 0 24 24" width="24" height="24" className="rounded">
+    <svg viewBox="0 0 24 24" width="20" height="20" className="rounded flex-shrink-0">
       <rect width="24" height="24" rx="4" fill="#000" />
       <rect x="3" y="3" width="7" height="7" rx="1.5" fill="#fff" />
       <rect x="14" y="3" width="7" height="7" rx="1.5" fill="#fff" />
@@ -20,128 +19,78 @@ function OkxIcon() {
   );
 }
 
-/* ── Logo image helper ── */
 function Logo({ src, alt }: { src: string; alt: string }) {
-  return (
-    <Image
-      src={src}
-      alt={alt}
-      width={24}
-      height={24}
-      className="rounded"
-    />
-  );
+  return <Image src={src} alt={alt} width={20} height={20} className="rounded flex-shrink-0" />;
 }
 
-/* ── Timeline Data (static structure, text from dict) ── */
-type TimelineEntry = {
-  year: string;
-  icons: ReactNode;
-  title: string;
-  role: string;
-  link?: { href: string };
-};
+type Entry = { hash: string; year: string; msg: ReactNode };
 
-const timelineStructure: TimelineEntry[] = [
+const entries: Entry[] = [
   {
-    year: "2025 - Now",
-    icons: <OkxIcon />,
-    title: "OKX",
-    role: "Product Manager",
+    hash: "a3f2b1c",
+    year: "2025 至今",
+    msg: <span className="flex items-center gap-2"><OkxIcon /> feat: 加入 OKX，负责产品</span>,
   },
   {
+    hash: "7cd5e69",
     year: "2024 - 2025",
-    icons: <Logo src="/images/logos/bingx.jpeg" alt="BingX" />,
-    title: "BingX",
-    role: "Product Manager",
+    msg: <span className="flex items-center gap-2"><Logo src="/images/logos/bingx.jpeg" alt="BingX" /> feat: 加入 BingX，负责产品</span>,
   },
   {
+    hash: "23e2444",
     year: "2023 - 2024",
-    icons: <Logo src="/images/logos/followin.png" alt="Followin" />,
-    title: "Followin",
-    role: "Product Co-founder",
+    msg: <span className="flex items-center gap-2"><Logo src="/images/logos/followin.png" alt="Followin" /> feat: 联合创办 Followin，产品负责人</span>,
   },
   {
+    hash: "89f2836",
     year: "2020 - 2023",
-    icons: (
-      <span className="flex gap-1.5">
-        <Logo src="/images/logos/weread.jpeg" alt="WeRead" />
-        <Logo src="/images/logos/wechat-listen.jpeg" alt="WeChat Listen" />
-        <Logo src="/images/logos/miniprogram.png" alt="Mini Program" />
+    msg: (
+      <span className="flex items-center gap-2">
+        <span className="flex gap-1">
+          <Logo src="/images/logos/weread.jpeg" alt="WeRead" />
+          <Logo src="/images/logos/wechat-listen.jpeg" alt="WeChat Listen" />
+          <Logo src="/images/logos/miniprogram.png" alt="Mini Program" />
+        </span>
+        feat: 腾讯微信产品经理（微信读书 · 听书 · 小程序）
       </span>
     ),
-    title: "Tencent · WeChat",
-    role: "Product Manager",
   },
   {
+    hash: "7875369",
     year: "2018",
-    icons: <RocketLaunch size={24} weight="duotone" className="text-accent-light" />,
-    title: "Token Galaxy",
-    role: "Founder",
-    link: {
-      href: "https://www.youtube.com/results?search_query=token+galaxy+2018",
-    },
+    msg: <span className="flex items-center gap-2"><RocketLaunch size={20} weight="duotone" className="text-accent-light flex-shrink-0" /> init: 创办 Token Galaxy</span>,
   },
 ];
 
-/* ── Component ── */
-
 export function AboutTimeline() {
   const { dict } = useLocale();
-  const { aboutTimeline: t } = dict;
 
   return (
-    <section id="about-me" className="px-6 py-20 md:px-8">
+    <section className="git-section">
       <div className="mx-auto max-w-6xl">
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-          className="mb-16"
+          transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+          className="git-header-line"
         >
-          <h2
-            className="font-bold leading-[0.88] tracking-tight text-foreground uppercase"
-            style={{ fontSize: "clamp(2.8rem, 8vw, 6rem)" }}
-          >
-            {t.title}
-          </h2>
-          <p className="mt-5 text-base text-muted font-light max-w-xl leading-relaxed">{t.subtitle}</p>
+          $ git log --format=&quot;%h · %ar · %s&quot;
         </motion.div>
 
-        <div className="relative ml-4 border-l-2 border-foreground pl-8">
-          {timelineStructure.map((item, i) => (
+        <div className="git-log">
+          {entries.map((entry, i) => (
             <motion.div
-              key={item.year}
-              initial={{ opacity: 0, x: -20 }}
+              key={entry.hash}
+              className="git-entry"
+              initial={{ opacity: 0, x: -16 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.4, delay: i * 0.08 }}
-              className="relative mb-10 last:mb-0"
+              transition={{ duration: 0.4, delay: i * 0.08, ease: [0.22, 1, 0.36, 1] }}
             >
-              {/* Dot */}
-              <div className="absolute -left-[calc(2rem+5px)] top-1.5 h-2.5 w-2.5 rounded-full border-2 border-foreground bg-accent" />
-
-              <span className="text-xs font-medium text-accent">
-                {item.year}
-              </span>
-              <h3 className="mt-1 flex items-center gap-2 text-lg font-semibold text-foreground">
-                <span className="flex-shrink-0">{item.icons}</span>
-                {item.title}
-                <span className="text-sm font-normal text-muted">
-                  {item.role}
-                </span>
-              </h3>
-              {item.link && (
-                <a
-                  href={item.link.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="mt-1.5 inline-block text-sm text-accent transition-colors hover:text-accent-light"
-                >
-                  {t.viewLink}
-                </a>
-              )}
+              <span className="git-hash">{entry.hash}</span>
+              <span className="git-year">{entry.year}</span>
+              <div className="git-msg">{entry.msg}</div>
             </motion.div>
           ))}
         </div>
