@@ -354,13 +354,14 @@ body {
 }
 
 .name-cursor {
-  display: inline-block;
+  display: inline;
   color: var(--color-accent);
   font-family: var(--font-mono), monospace;
   font-style: normal;
-  font-size: 0.7em;
-  vertical-align: middle;
-  margin-left: 4px;
+  font-size: 0.55em;
+  vertical-align: baseline;
+  margin-left: 2px;
+  line-height: 0;
   animation: nameBlink 0.9s step-end infinite;
 }
 @keyframes nameBlink {
