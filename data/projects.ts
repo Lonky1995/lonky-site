@@ -26,6 +26,7 @@ export type Project = {
   featured: boolean;
   status?: "in-progress" | "live";
   latestOutput?: LatestOutput;
+  year?: string;
 };
 
 export const projects: Project[] = [
@@ -44,23 +45,7 @@ export const projects: Project[] = [
     link: "/podcast-notes",
     featured: true,
     status: "live",
-  },
-  {
-    id: "trade-style-analyzer",
-    title: {
-      zh: "TradeMirror",
-      en: "TradeMirror",
-    },
-    description: {
-      zh: "连接交易所，AI 自动复盘你的每一笔交易。从习惯、择时、纪律三维度深度诊断，用数据告诉你为什么赚、为什么亏。",
-      en: "Connect your exchange, AI reviews every trade. Deep diagnosis across habits, timing & discipline — data-driven insights on why you win or lose.",
-    },
-    category: "Crypto",
-    techStack: ["Next.js", "DeepSeek", "CCXT", "SQLite", "Recharts"],
-    link: "https://trademirror.lonky.me",
-    github: "https://github.com/Lonky1995/trademirror",
-    featured: true,
-    status: "live",
+    year: "2025",
   },
   {
     id: "claude-oauth-proxy",
@@ -77,6 +62,7 @@ export const projects: Project[] = [
     github: "https://github.com/Lonky1995/claude-oauth-proxy",
     featured: true,
     status: "live",
+    year: "2025",
   },
   {
     id: "tg-channel-digest",
@@ -93,6 +79,7 @@ export const projects: Project[] = [
     github: "https://github.com/Lonky1995/tg-channel-digest",
     featured: true,
     status: "live",
+    year: "2024",
   },
   {
     id: "family-menu",
@@ -109,6 +96,7 @@ export const projects: Project[] = [
     link: "/menu",
     featured: true,
     status: "live",
+    year: "2025",
   },
 ];
 
