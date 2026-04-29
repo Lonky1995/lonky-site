@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import { cookies } from "next/headers";
 import Script from "next/script";
 import { Plus_Jakarta_Sans, JetBrains_Mono, Noto_Serif_SC } from "next/font/google";
-import { Navbar } from "@/components/layout/Navbar";
 import { LocaleProvider } from "@/components/locale-provider";
 import { siteConfig } from "@/data/site-config";
 import { defaultLocale, type Locale } from "@/i18n/config";
@@ -91,8 +90,7 @@ export default async function RootLayout({
         />
         <LocaleProvider locale={locale} dict={dict}>
           <div className="nebula-bg" aria-hidden="true" />
-          <Navbar />
-          <main className="relative z-10 pt-16">{children}</main>
+          <main className="relative z-10">{children}</main>
         </LocaleProvider>
       </body>
     </html>
