@@ -19,7 +19,7 @@ export function MealCard({ meal, index }: { meal: Meal; index: number }) {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.4, delay: index * 0.08 }}
-      className="overflow-hidden border-2 border-foreground bg-card p-4 sm:p-5"
+      className="overflow-hidden rounded-xl border border-border/20 bg-card p-4 transition-colors hover:border-accent/40 hover:bg-card-hover sm:p-5"
     >
       {/* Header */}
       <div className="mb-3 flex items-start justify-between gap-3">
@@ -30,7 +30,7 @@ export function MealCard({ meal, index }: { meal: Meal; index: number }) {
           {meal.basedOn && (
             <p className="mt-1 text-xs text-muted">改自：{meal.basedOn}</p>
           )}
-          {/* 移动端把分类和星级放在标题下方一行，节省右侧空间 */}
+          {/* 移动端把分类和星级放在标题下方一行 */}
           <div className="mt-1.5 flex items-center gap-2 text-xs sm:hidden">
             <span className="font-medium text-accent">{meal.category}</span>
             {typeof meal.difficulty === "number" && meal.difficulty > 0 && (
@@ -56,7 +56,7 @@ export function MealCard({ meal, index }: { meal: Meal; index: number }) {
       </div>
 
       {/* Ingredients */}
-      <div className="mb-3 border border-border/50 bg-background/50 p-2.5 sm:p-3">
+      <div className="mb-3 rounded-lg bg-background/50 p-2.5 sm:p-3">
         <p className="mb-1.5 text-[11px] font-medium uppercase tracking-wide text-muted sm:text-xs">
           食材
         </p>
@@ -64,7 +64,7 @@ export function MealCard({ meal, index }: { meal: Meal; index: number }) {
           {meal.ingredients.map((ing, i) => (
             <span
               key={i}
-              className="inline-block max-w-full whitespace-normal break-all rounded-lg border border-border px-2 py-0.5 text-[11px] leading-snug text-foreground sm:rounded-full sm:text-xs"
+              className="inline-block max-w-full whitespace-normal break-all rounded-full border border-border/40 px-2 py-0.5 text-[11px] leading-snug text-foreground"
             >
               {ing}
             </span>
@@ -94,7 +94,7 @@ export function MealCard({ meal, index }: { meal: Meal; index: number }) {
 
       {/* Source link */}
       {meal.sourceUrl && (
-        <div className="mt-3 border-t border-border/30 pt-2">
+        <div className="mt-3 border-t border-border/20 pt-2">
           <a
             href={meal.sourceUrl}
             target="_blank"

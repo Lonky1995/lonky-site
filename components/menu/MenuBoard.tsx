@@ -272,11 +272,11 @@ export function MenuBoard() {
         <button
           onClick={generate}
           disabled={loading}
-          className="group relative w-full border-2 border-foreground bg-card px-6 py-3.5 text-sm font-bold uppercase tracking-widest transition-all hover:border-accent hover:bg-accent/5 active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed sm:w-auto sm:px-8 sm:py-4"
+          className="w-full rounded-xl bg-foreground px-6 py-3 text-sm font-medium text-background transition-opacity hover:opacity-80 active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-50 sm:w-auto sm:px-8"
         >
           {loading ? (
             <span className="flex items-center justify-center gap-2">
-              <span className="inline-block h-3 w-3 animate-spin rounded-full border-2 border-accent border-t-transparent" />
+              <span className="inline-block h-3 w-3 animate-spin rounded-full border-2 border-background border-t-transparent" />
               正在生成...
             </span>
           ) : (
@@ -288,7 +288,7 @@ export function MenuBoard() {
           <button
             onClick={shareAsImage}
             disabled={sharing}
-            className="w-full border-2 border-accent bg-accent/5 px-6 py-3.5 text-sm font-bold uppercase tracking-widest text-accent transition-all hover:bg-accent/10 active:scale-[0.98] disabled:opacity-50 sm:w-auto sm:px-8 sm:py-4"
+            className="w-full rounded-xl border border-accent/40 bg-accent/10 px-6 py-3 text-sm font-medium text-accent transition-colors hover:bg-accent/15 active:scale-[0.98] disabled:opacity-50 sm:w-auto sm:px-8"
           >
             {sharing ? "生成图片中..." : "分享为图片"}
           </button>
@@ -312,7 +312,7 @@ export function MenuBoard() {
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          className="border-2 border-foreground bg-card p-6 text-sm text-muted"
+          className="rounded-xl border border-border/30 bg-card p-6 text-sm text-muted"
         >
           {error}
         </motion.div>
@@ -328,8 +328,8 @@ export function MenuBoard() {
           >
             {/* Adult */}
             <div>
-              <div className="sticky top-16 z-10 mb-4 flex items-center gap-2 border-b border-border/40 bg-background/85 py-3 backdrop-blur md:static md:border-0 md:bg-transparent md:py-0 md:backdrop-blur-none">
-                <span className="border-2 border-foreground px-2.5 py-1 text-xs font-bold uppercase tracking-widest">
+              <div className="sticky top-16 z-10 mb-4 flex items-center gap-2 border-b border-border/20 bg-background/85 py-3 backdrop-blur md:static md:border-0 md:bg-transparent md:py-0 md:backdrop-blur-none">
+                <span className="rounded border border-border/40 bg-card px-2.5 py-1 text-xs font-medium uppercase tracking-widest text-foreground">
                   大人
                 </span>
                 <span className="text-xs text-muted">{meta?.adults ?? adults} 人份 · HowToCook</span>
@@ -344,8 +344,8 @@ export function MenuBoard() {
             {/* Baby */}
             {babyMeals.length > 0 && (
               <div>
-                <div className="sticky top-16 z-10 mb-4 flex items-center gap-2 border-b border-border/40 bg-background/85 py-3 backdrop-blur md:static md:border-0 md:bg-transparent md:py-0 md:backdrop-blur-none">
-                  <span className="border-2 border-accent bg-accent/5 px-2.5 py-1 text-xs font-bold uppercase tracking-widest text-accent">
+                <div className="sticky top-16 z-10 mb-4 flex items-center gap-2 border-b border-border/20 bg-background/85 py-3 backdrop-blur md:static md:border-0 md:bg-transparent md:py-0 md:backdrop-blur-none">
+                  <span className="rounded border border-accent/40 bg-accent/10 px-2.5 py-1 text-xs font-medium uppercase tracking-widest text-accent">
                     宝宝
                   </span>
                   <span className="text-xs text-muted">1 岁半 · {meta?.babies ?? babies} 人份 · AI 改造</span>
@@ -366,7 +366,7 @@ export function MenuBoard() {
         <motion.div
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
-          className="border-2 border-dashed border-foreground/20 p-16 text-center"
+          className="rounded-xl border border-dashed border-border/30 p-16 text-center"
         >
           <p className="text-sm text-muted">点击上方按钮，从 266 道家常菜中随机搭配今日菜谱</p>
           <p className="mt-2 text-xs text-muted/60">
@@ -420,13 +420,13 @@ function Counter({
 }) {
   const canDec = value > min;
   const canInc = value < max;
-  const borderClass = accent ? "border-accent" : "border-foreground";
+  const borderClass = accent ? "border-accent/40" : "border-border/40";
   const textClass = accent ? "text-accent" : "text-foreground";
 
   return (
-    <div className={`inline-flex items-stretch border-2 ${borderClass}`}>
+    <div className={`inline-flex items-stretch rounded-lg border ${borderClass} bg-card`}>
       <span
-        className={`flex items-center gap-1.5 border-r-2 ${borderClass} px-3 py-1.5 text-xs font-bold uppercase tracking-widest ${textClass}`}
+        className={`flex items-center gap-1.5 border-r ${borderClass} px-3 py-1.5 text-xs font-medium uppercase tracking-widest ${textClass}`}
       >
         {label}
       </span>
@@ -434,13 +434,13 @@ function Counter({
         type="button"
         onClick={() => canDec && onChange(value - 1)}
         disabled={!canDec}
-        className={`flex h-9 w-9 items-center justify-center border-r-2 ${borderClass} text-base transition-colors hover:bg-accent/5 disabled:opacity-30 disabled:cursor-not-allowed`}
+        className={`flex h-9 w-9 items-center justify-center border-r ${borderClass} text-base transition-colors hover:bg-accent/10 disabled:cursor-not-allowed disabled:opacity-30`}
         aria-label={`减少${label}`}
       >
         −
       </button>
       <span
-        className={`flex h-9 min-w-[2.25rem] items-center justify-center px-2 text-sm font-bold tabular-nums ${textClass}`}
+        className={`flex h-9 min-w-[2.25rem] items-center justify-center px-2 text-sm font-semibold tabular-nums ${textClass}`}
       >
         {value}
       </span>
@@ -448,7 +448,7 @@ function Counter({
         type="button"
         onClick={() => canInc && onChange(value + 1)}
         disabled={!canInc}
-        className={`flex h-9 w-9 items-center justify-center border-l-2 ${borderClass} text-base transition-colors hover:bg-accent/5 disabled:opacity-30 disabled:cursor-not-allowed`}
+        className={`flex h-9 w-9 items-center justify-center border-l ${borderClass} text-base transition-colors hover:bg-accent/10 disabled:cursor-not-allowed disabled:opacity-30`}
         aria-label={`增加${label}`}
       >
         +
