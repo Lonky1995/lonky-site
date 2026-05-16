@@ -1,0 +1,916 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<title>CEG Fundamental Analysis</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,300;0,600;0,700;1,300&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --ink:       oklch(14% 0.01 250);
+  --ink-2:     oklch(30% 0.01 250);
+  --ink-3:     oklch(48% 0.01 250);
+  --ink-4:     oklch(65% 0.01 250);
+  --paper:     oklch(99% 0.004 250);
+  --surface:   oklch(96.5% 0.007 250);
+  --surface-2: oklch(93% 0.01 250);
+  --rule:      oklch(89% 0.01 250);
+  --green:     oklch(40% 0.17 145);
+  --green-lt:  oklch(95% 0.05 145);
+  --green-mid: oklch(55% 0.14 145);
+  --red:       oklch(50% 0.18 25);
+  --red-lt:    oklch(96% 0.04 25);
+  --amber:     oklch(62% 0.15 65);
+  --amber-lt:  oklch(96% 0.05 65);
+  --blue:      oklch(48% 0.16 250);
+  --blue-lt:   oklch(95% 0.05 250);
+}
+
+body { font-family: 'Plus Jakarta Sans', sans-serif; background: oklch(91% 0.01 250); display: flex; justify-content: center; align-items: flex-start; padding: 40px 20px; }
+.card { width: 1200px; background: var(--paper); border: 1px solid var(--rule); box-shadow: 0 2px 20px oklch(0% 0 0 / 0.06); }
+
+.header { display: grid; grid-template-columns: 1fr auto; gap: 24px; padding: 28px 36px 24px; border-bottom: 2px solid var(--ink); align-items: start; }
+.co-row { display: flex; align-items: baseline; gap: 12px; margin-bottom: 6px; }
+.ticker { font-family: 'Fraunces', serif; font-size: 2.8rem; font-weight: 700; color: var(--ink); letter-spacing: -0.02em; line-height: 1; }
+.co-name { font-size: 0.72rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-3); }
+.verdict { display: inline-flex; align-items: center; gap: 8px; padding: 5px 14px 5px 10px; background: var(--green-lt); border: 1px solid var(--green); margin-bottom: 10px; }
+.verdict-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--green); flex-shrink: 0; }
+.verdict-text { font-size: 0.78rem; font-weight: 700; color: var(--green); letter-spacing: 0.03em; }
+.thesis { font-family: 'Fraunces', serif; font-size: 0.95rem; font-style: italic; font-weight: 300; color: var(--ink-2); line-height: 1.6; max-width: 54ch; }
+.header-right { text-align: right; }
+.price { font-family: 'Fraunces', serif; font-size: 2.5rem; font-weight: 700; color: var(--ink); line-height: 1; }
+.price-meta { font-size: 0.72rem; color: var(--ink-3); margin-top: 4px; font-weight: 500; }
+.tags { display: flex; gap: 6px; justify-content: flex-end; margin-top: 8px; flex-wrap: wrap; }
+.tag { padding: 2px 8px; background: var(--surface); border: 1px solid var(--rule); font-size: 0.62rem; font-weight: 700; letter-spacing: 0.07em; text-transform: uppercase; color: var(--ink-3); }
+
+.analysis-row { display: grid; grid-template-columns: repeat(3, 1fr); border-bottom: 1px solid var(--rule); }
+.dim { padding: 18px 22px; border-right: 1px solid var(--rule); position: relative; }
+.dim:nth-child(3) { border-right: none; }
+.dim:nth-child(4) { border-top: 1px solid var(--rule); }
+.dim:nth-child(5) { border-top: 1px solid var(--rule); }
+.dim:nth-child(6) { border-top: 1px solid var(--rule); border-right: none; }
+.dim-label { font-size: 0.63rem; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-4); margin-bottom: 7px; display: flex; align-items: center; gap: 7px; }
+.signal { display: inline-block; padding: 2px 7px; font-size: 0.6rem; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; border-radius: 2px; }
+.signal.pos { background: var(--green-lt); color: var(--green); }
+.signal.neg { background: var(--red-lt); color: var(--red); }
+.signal.warn { background: var(--amber-lt); color: var(--amber); }
+.signal.neu { background: var(--surface); color: var(--ink-3); }
+.dim-headline { font-size: 0.95rem; font-weight: 700; color: var(--ink); line-height: 1.35; margin-bottom: 5px; }
+.dim-detail { font-size: 0.78rem; color: var(--ink-3); line-height: 1.55; }
+.dim-detail b { color: var(--ink-2); font-weight: 600; }
+
+.bull-bear-banner { display: grid; grid-template-columns: 1fr 1fr; border-bottom: 1px solid var(--rule); }
+.bb-half { padding: 20px 28px; display: flex; gap: 18px; align-items: flex-start; }
+.bb-half.bull { border-right: 1px solid var(--rule); background: oklch(98% 0.015 145); }
+.bb-half.bear { background: oklch(98.5% 0.01 25); }
+.bb-icon { font-size: 1.4rem; line-height: 1; flex-shrink: 0; margin-top: 2px; }
+.bb-content { flex: 1; }
+.bb-label { font-size: 0.63rem; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 5px; }
+.bb-half.bull .bb-label { color: var(--green); }
+.bb-half.bear .bb-label { color: var(--red); }
+.bb-headline { font-size: 0.95rem; font-weight: 700; margin-bottom: 6px; line-height: 1.3; }
+.bb-half.bull .bb-headline { color: var(--green); }
+.bb-half.bear .bb-headline { color: var(--red); }
+.bb-points { display: flex; flex-direction: column; gap: 4px; }
+.bb-point { font-size: 0.78rem; color: var(--ink-2); line-height: 1.45; padding-left: 12px; position: relative; }
+.bb-point::before { content: '—'; position: absolute; left: 0; color: var(--ink-4); }
+.bb-point b { font-weight: 600; color: var(--ink); }
+
+.data-row { display: grid; grid-template-columns: 1fr 1px 1fr 1px 1fr; border-bottom: 1px solid var(--rule); }
+.divider-v { background: var(--rule); }
+.section { padding: 24px 28px; }
+.sec-label { font-size: 0.6rem; font-weight: 800; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-4); padding-bottom: 10px; border-bottom: 1px solid var(--rule); margin-bottom: 16px; }
+.kpi-strip { display: flex; gap: 0; margin-bottom: 16px; }
+.kpi { flex: 1; padding-right: 12px; }
+.kpi + .kpi { padding-left: 12px; border-left: 1px solid var(--rule); }
+.kpi-l { font-size: 0.65rem; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; color: var(--ink-4); margin-bottom: 4px; }
+.kpi-v { font-family: 'Fraunces', serif; font-size: 1.8rem; font-weight: 600; color: var(--ink); line-height: 1; letter-spacing: -0.01em; }
+.kpi-d { font-size: 0.74rem; font-weight: 700; color: var(--green); margin-top: 3px; }
+.kpi-d.neg { color: var(--red); }
+.kpi-s { font-size: 0.62rem; color: var(--ink-4); margin-top: 2px; }
+.mlist { display: flex; flex-direction: column; }
+.mrow { display: grid; grid-template-columns: 1fr auto; align-items: baseline; padding: 7px 0; border-bottom: 1px solid var(--rule); gap: 8px; }
+.mrow:last-child { border-bottom: none; }
+.mname { font-size: 0.8rem; color: var(--ink-2); font-weight: 500; }
+.msrc { font-size: 0.62rem; color: var(--ink-4); display: block; }
+.mval { font-family: 'Fraunces', serif; font-size: 1.05rem; font-weight: 600; color: var(--ink); text-align: right; white-space: nowrap; }
+.mval.pos { color: var(--green); }
+.mval.neg { color: var(--red); }
+.mval.warn { color: var(--amber); }
+.chart-ttl { font-size: 0.62rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink-3); margin-bottom: 12px; }
+.bar-chart { display: flex; flex-direction: column; gap: 9px; }
+.bar-row { display: grid; grid-template-columns: 48px 1fr; align-items: center; gap: 8px; }
+.bar-yr { font-size: 0.65rem; font-weight: 600; color: var(--ink-3); text-align: right; }
+.bar-tracks { display: flex; flex-direction: column; gap: 3px; }
+.bar-track { position: relative; height: 9px; background: var(--surface); }
+.bar-fill { position: absolute; top: 0; left: 0; height: 100%; }
+.bar-fill.g { background: var(--green); }
+.bar-fill.o { background: oklch(55% 0.13 145 / 0.65); }
+.bar-fill.n { background: oklch(48% 0.16 200 / 0.55); }
+.bar-legend { display: flex; gap: 12px; margin-top: 9px; flex-wrap: wrap; }
+.leg-item { display: flex; align-items: center; gap: 4px; font-size: 0.6rem; color: var(--ink-3); }
+.leg-dot { width: 8px; height: 8px; flex-shrink: 0; }
+.rating-bar { display: flex; height: 20px; gap: 2px; margin: 10px 0 8px; }
+.rseg { display: flex; align-items: center; justify-content: center; font-size: 0.62rem; font-weight: 700; color: white; letter-spacing: 0.02em; }
+.rseg.buy { background: var(--green); }
+.rseg.hold { background: oklch(62% 0.08 250); }
+.rseg.sell { background: var(--red); }
+.rlabels { display: flex; gap: 12px; flex-wrap: wrap; }
+.rlabel { display: flex; align-items: center; gap: 4px; font-size: 0.63rem; color: var(--ink-3); }
+.tp-section { margin-top: 18px; }
+.tp-track { position: relative; height: 5px; background: var(--surface-2); margin: 20px 0 6px; }
+.tp-range { position: absolute; top: 0; height: 100%; background: var(--green-lt); }
+.tp-median { position: absolute; top: -6px; width: 3px; height: 17px; background: var(--green); transform: translateX(-50%); }
+.tp-current { position: absolute; top: -6px; width: 3px; height: 17px; background: var(--ink); transform: translateX(-50%); }
+.tp-ends { display: flex; justify-content: space-between; font-size: 0.6rem; color: var(--ink-4); }
+.tp-legend { display: flex; gap: 14px; margin-top: 6px; font-size: 0.62rem; }
+
+/* INSTITUTIONAL & ANALYST FLOW */
+.flow-row { display: grid; grid-template-columns: 1fr 1px 1fr; border-bottom: 1px solid var(--rule); background: oklch(97.5% 0.005 250); }
+.flow-section { padding: 22px 28px; }
+.flow-label { font-size: 0.6rem; font-weight: 800; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-4); padding-bottom: 8px; border-bottom: 1px solid var(--rule); margin-bottom: 14px; display: flex; justify-content: space-between; }
+.flow-label .period { color: var(--ink-3); letter-spacing: 0.06em; }
+.flow-kpis { display: flex; gap: 10px; margin-bottom: 14px; }
+.flow-kpi { flex: 1; padding: 10px 12px; background: var(--paper); border: 1px solid var(--rule); }
+.flow-kpi-l { font-size: 0.6rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink-4); margin-bottom: 3px; }
+.flow-kpi-v { font-family: 'Fraunces', serif; font-size: 1.15rem; font-weight: 600; color: var(--ink); line-height: 1.1; }
+.flow-kpi-c { font-size: 0.7rem; font-weight: 700; margin-top: 2px; }
+.flow-kpi-c.pos { color: var(--green); }
+.flow-kpi-c.neg { color: var(--red); }
+.flow-list { display: flex; flex-direction: column; gap: 0; }
+.flow-item { display: flex; justify-content: space-between; align-items: center; padding: 6px 0; border-bottom: 1px dashed var(--rule); }
+.flow-item:last-child { border-bottom: none; }
+.flow-item-l { font-size: 0.76rem; color: var(--ink-2); }
+.flow-item-l .src { font-size: 0.6rem; color: var(--ink-4); margin-left: 4px; }
+.flow-item-r { font-size: 0.78rem; font-weight: 700; font-family: 'Fraunces', serif; }
+.flow-item-r.pos { color: var(--green); }
+.flow-item-r.neg { color: var(--red); }
+.flow-sub { font-size: 0.6rem; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-4); margin: 14px 0 6px; }
+.flow-warn { font-size: 0.65rem; color: var(--amber); font-style: italic; margin-top: 8px; padding: 6px 10px; background: var(--amber-lt); border-left: 2px solid var(--amber); }
+.rating-mini-bar { display: flex; height: 18px; gap: 1px; margin: 8px 0 6px; }
+.rmb-seg { font-size: 0.6rem; color: white; display: flex; align-items: center; justify-content: center; font-weight: 700; }
+.rmb-sb { background: oklch(35% 0.18 145); }
+.rmb-b { background: var(--green); }
+.rmb-h { background: oklch(62% 0.08 250); }
+.rmb-s { background: var(--red); }
+.rmb-ss { background: oklch(40% 0.2 25); }
+.rmb-labels { display: flex; gap: 8px; font-size: 0.58rem; color: var(--ink-3); flex-wrap: wrap; }
+.flow-big { display: flex; align-items: baseline; gap: 12px; }
+.flow-big-v { font-family: 'Fraunces', serif; font-size: 2.2rem; font-weight: 700; color: var(--green); line-height: 1; }
+.flow-big-d { font-size: 0.75rem; font-weight: 700; color: var(--green); }
+.flow-big-l { font-size: 0.65rem; color: var(--ink-3); }
+
+.bottom { display: grid; grid-template-columns: 1fr 1px 380px; border-bottom: 1px solid var(--rule); }
+.summary-list { display: flex; flex-direction: column; gap: 0; }
+.sum-item { display: flex; align-items: flex-start; gap: 10px; padding: 9px 0; border-bottom: 1px solid var(--rule); }
+.sum-item:last-child { border-bottom: none; }
+.sum-icon { width: 18px; height: 18px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.6rem; flex-shrink: 0; margin-top: 1px; }
+.sum-icon.pos { background: var(--green-lt); color: var(--green); font-weight: 800; }
+.sum-icon.warn { background: var(--amber-lt); color: var(--amber); font-weight: 800; }
+.sum-icon.neg { background: var(--red-lt); color: var(--red); font-weight: 800; }
+.sum-text { font-size: 0.82rem; color: var(--ink-2); line-height: 1.5; }
+.sum-text b { color: var(--ink); font-weight: 700; }
+.spark-panel { padding: 24px 28px; }
+
+/* NARRATIVE */
+.narrative { padding: 24px 36px; background: oklch(98% 0.005 250); border-bottom: 1px solid var(--rule); }
+.narr-headline { font-family: 'Fraunces', serif; font-size: 1.4rem; font-weight: 700; color: var(--ink); line-height: 1.35; letter-spacing: -0.01em; margin-bottom: 16px; }
+.narr-chain { display: flex; flex-direction: column; gap: 8px; margin-bottom: 16px; }
+.narr-step { display: grid; grid-template-columns: 22px 1fr; gap: 10px; align-items: baseline; font-size: 0.85rem; color: var(--ink-2); line-height: 1.55; }
+.narr-step-num { font-family: 'Fraunces', serif; font-size: 0.78rem; font-weight: 700; color: var(--green); width: 22px; height: 22px; border-radius: 50%; background: var(--green-lt); display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.narr-step b { color: var(--ink); font-weight: 600; }
+.narr-step .src { font-size: 0.62rem; color: var(--ink-4); margin-left: 4px; }
+.narr-conflict { padding: 12px 16px; background: var(--paper); border-left: 4px solid var(--ink); margin-bottom: 14px; }
+.narr-conflict-l { font-size: 0.6rem; font-weight: 800; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-4); margin-bottom: 5px; }
+.narr-conflict-t { font-family: 'Fraunces', serif; font-style: italic; font-size: 0.92rem; color: var(--ink-2); line-height: 1.5; }
+.narr-conflict-t b { font-style: normal; color: var(--ink); font-weight: 600; }
+.narr-question { font-size: 0.82rem; color: var(--ink-2); padding: 10px 14px; background: var(--green-lt); border: 1px solid var(--green); }
+.narr-question b { color: var(--green); font-weight: 700; }
+
+/* NARRATIVE VALIDATION (8-K timeline) */
+.validate { padding: 22px 36px; background: var(--paper); border-bottom: 1px solid var(--rule); }
+.validate-head { display: flex; justify-content: space-between; align-items: baseline; padding-bottom: 10px; border-bottom: 1px solid var(--rule); margin-bottom: 14px; }
+.validate-title { font-size: 0.65rem; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-3); }
+.validate-stats { display: flex; gap: 12px; font-size: 0.72rem; }
+.vs-pos { color: var(--green); font-weight: 700; }
+.vs-neu { color: var(--ink-4); font-weight: 700; }
+.vs-neg { color: var(--red); font-weight: 700; }
+.timeline { display: flex; flex-direction: column; gap: 8px; margin-bottom: 12px; }
+.tl-item { display: grid; grid-template-columns: 78px 1fr; gap: 14px; padding: 10px 14px; border-left: 3px solid; background: oklch(98% 0.005 250); }
+.tl-item.pos { border-left-color: var(--green); background: oklch(97% 0.025 145); }
+.tl-item.neg { border-left-color: var(--red); background: oklch(97% 0.025 25); }
+.tl-item.neu { border-left-color: var(--ink-4); }
+.tl-date { font-family: 'Fraunces', serif; font-size: 0.82rem; font-weight: 600; color: var(--ink-2); }
+.tl-content { display: flex; flex-direction: column; gap: 3px; }
+.tl-row { display: flex; align-items: baseline; gap: 8px; }
+.tl-icon { font-size: 0.85rem; }
+.tl-headline { font-size: 0.82rem; font-weight: 700; color: var(--ink); line-height: 1.35; }
+.tl-detail { font-size: 0.72rem; color: var(--ink-3); line-height: 1.5; }
+.tl-meta { display: flex; gap: 8px; align-items: center; margin-top: 2px; }
+.tl-tag { font-size: 0.58rem; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; padding: 1px 6px; background: var(--surface); border: 1px solid var(--rule); color: var(--ink-3); }
+.tl-link { font-size: 0.6rem; color: var(--blue); text-decoration: none; }
+.tl-link:hover { text-decoration: underline; }
+.tl-fold { font-size: 0.7rem; color: var(--ink-4); padding: 8px 14px; background: var(--surface); border-left: 3px solid var(--rule); font-style: italic; }
+.validate-concl { padding: 12px 16px; background: var(--green-lt); border: 1px solid var(--green); margin-top: 14px; }
+.validate-concl-l { font-size: 0.6rem; font-weight: 800; letter-spacing: 0.12em; text-transform: uppercase; color: var(--green); margin-bottom: 4px; }
+.validate-concl-t { font-size: 0.82rem; color: var(--ink-2); line-height: 1.5; font-family: 'Fraunces', serif; }
+.validate-concl-t b { color: var(--ink); font-weight: 600; }
+
+/* CAPITAL SUPPLY */
+.supply { padding: 22px 36px; background: oklch(98% 0.008 25); border-bottom: 1px solid var(--rule); }
+.supply-head { display: flex; justify-content: space-between; align-items: baseline; padding-bottom: 10px; border-bottom: 1px solid var(--rule); margin-bottom: 14px; }
+.supply-title { font-size: 0.65rem; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-3); }
+.supply-stats { display: flex; gap: 14px; font-size: 0.72rem; }
+.supply-stat-l { color: var(--ink-4); font-weight: 600; margin-right: 4px; }
+.supply-stat-v { font-family: 'Fraunces', serif; font-weight: 700; color: var(--red); }
+.supply-events { display: flex; flex-direction: column; gap: 6px; margin: 16px 0; }
+.supply-event { display: grid; grid-template-columns: 92px 1fr; gap: 12px; padding: 8px 12px; border-left: 3px solid var(--ink-4); background: var(--paper); }
+.supply-event.warn { border-left-color: var(--red); }
+.supply-event.pos { border-left-color: var(--green); }
+.supply-event-d { font-family: 'Fraunces', serif; font-size: 0.78rem; font-weight: 600; color: var(--ink-2); }
+.supply-event-h { font-size: 0.78rem; color: var(--ink); font-weight: 700; line-height: 1.4; }
+.supply-event-t { font-size: 0.7rem; color: var(--ink-3); line-height: 1.5; margin-top: 2px; }
+.supply-event-l { font-size: 0.58rem; color: var(--blue); text-decoration: none; }
+.supply-concl { padding: 12px 16px; background: var(--red-lt); border: 1px solid var(--red); margin-top: 14px; }
+.supply-concl-l { font-size: 0.6rem; font-weight: 800; letter-spacing: 0.12em; text-transform: uppercase; color: var(--red); margin-bottom: 4px; }
+.supply-concl-t { font-size: 0.82rem; color: var(--ink-2); line-height: 1.5; font-family: 'Fraunces', serif; }
+.supply-concl-t b { color: var(--ink); font-weight: 600; }
+
+.footer { display: flex; justify-content: space-between; align-items: center; padding: 12px 36px; background: var(--surface); border-top: 1px solid var(--rule); }
+.footer-src { font-size: 0.6rem; color: var(--ink-4); }
+.footer-brand { font-family: 'Fraunces', serif; font-size: 0.78rem; font-weight: 600; color: var(--ink-3); }
+</style>
+</head>
+<body>
+<div class="card">
+
+<!-- HEADER -->
+<div class="header">
+  <div>
+    <div class="co-row">
+      <span class="ticker">CEG</span>
+      <span class="co-name">Constellation Energy · Utilities / Renewable</span>
+    </div>
+    <div class="verdict">
+      <span class="verdict-dot"></span>
+      <span class="verdict-text">AI 数据中心电力故事 · 机构共识形成中 · 估值压力测试</span>
+    </div>
+    <p class="thesis">机构覆盖从 12 月前 18 家增至 21 家、看多比例 72%→81%，2025 Q3→Q4 13F 增持 841 家 / 新建仓 331 家——机构共识正在形成；核心矛盾在于 FY2025 利润率结构（OpM 12% / 净利率 9%）能否撑得起 P/E 35.9x 的定价。</p>
+  </div>
+  <div class="header-right">
+    <div class="price">$267.20</div>
+    <div class="price-meta">市值 $83.4B · Q1 FY2026 财报</div>
+    <div class="tags">
+      <span class="tag">Utilities</span>
+      <span class="tag">数据截至 2026-05-16</span>
+    </div>
+  </div>
+</div>
+
+<!-- NARRATIVE -->
+<div class="narrative">
+  <div class="narr-headline">AI 数据中心抢着买核电，美国最大的核电运营商成了卖方市场。</div>
+
+  <div class="narr-chain">
+    <div class="narr-step">
+      <span class="narr-step-num">1</span>
+      <span><b>AI 算力 = 海量耗电</b>：训练 + 推理需求推动数据中心电力需求未来 5 年预计 <b>+160%</b>，单个超大型数据中心 1GW 起步（一个核反应堆的量级）<span class="src">行业研究</span></span>
+    </div>
+    <div class="narr-step">
+      <span class="narr-step-num">2</span>
+      <span><b>风光储装不来这么大基荷</b>：太阳能/风能间歇性，AI 数据中心需要 <b>7×24 稳定供电</b>，唯一能匹配的清洁基荷电源 = 核电<span class="src">能源结构约束</span></span>
+    </div>
+    <div class="narr-step">
+      <span class="narr-step-num">3</span>
+      <span><b>CEG 是美国最大核电运营商</b>：21 座核反应堆，占美国清洁电力的 <b>~10%</b>，关键资产含三里岛 Unit 1、Calvert Cliffs、Limerick<span class="src">CEG 10-K</span></span>
+    </div>
+    <div class="narr-step">
+      <span class="narr-step-num">4</span>
+      <span><b>已签 AI 巨头长期 PPA</b>：2024 微软三里岛 <b>20 年 PPA</b>（重启 835MW，价格据报 ~$110/MWh，远高于市价）；Meta / Amazon / Google 都在排队签 nuclear PPA<span class="src">公开新闻</span></span>
+    </div>
+    <div class="narr-step">
+      <span class="narr-step-num">5</span>
+      <span><b>市场对核电的估值逻辑被重置</b>：从「公用事业股」<b>PE 18x</b> → 「AI 基建股」<b>PE 36x</b>。同行 AEP/DUK 仍在 18x，CEG 已经定价"AI 重置"<span class="src">FMP ratios-ttm</span></span>
+    </div>
+  </div>
+
+  <div class="narr-conflict">
+    <div class="narr-conflict-l">⚔️ 核心矛盾</div>
+    <div class="narr-conflict-t">
+      <b>多头（长期）</b>：机构共识快速形成（13F +173 家 / 看多 72%→81%），目标价 $392 隐含 +47% 上行。<br>
+      <b>空头（短期）</b>：<b>2026-06-30 lock-up 解禁 6.9% 流通股（~$5.7B 抛压）</b> + 估值同行溢价 +94%。<br>
+      <b>关键变量</b>：6 月解禁后能否被 AI PPA 新订单吸收 + 长期利润率能否从 12% 推到 20%+ 以匹配估值。
+    </div>
+  </div>
+
+  <div class="narr-question">
+    🎯 <b>正确的提问</b>：「PPA 签约速度能不能持续 4-6 个季度领先估值？」—— 而不是"现在估值贵不贵"。
+  </div>
+</div>
+
+<!-- NARRATIVE VALIDATION -->
+<div class="validate">
+  <div class="validate-head">
+    <div class="validate-title">🔭 叙事验证 · 公司动态（近 365 天 8-K | SEC EDGAR）</div>
+    <div class="validate-stats">
+      <span class="vs-pos">✅ 强化 4 件</span>
+      <span class="vs-neu">⚠️ 中性 16 件</span>
+      <span class="vs-neg">❌ 削弱 0 件</span>
+    </div>
+  </div>
+
+  <div class="timeline">
+
+    <div class="tl-item pos">
+      <div class="tl-date">2026-01-07</div>
+      <div class="tl-content">
+        <div class="tl-row">
+          <span class="tl-icon">✅</span>
+          <span class="tl-headline">Calpine 收购完成（$47B 并购交割）</span>
+        </div>
+        <div class="tl-detail">大幅扩充天然气 + 地热发电组合，为数据中心客户提供更完整的"清洁基荷+灵活峰值"产品矩阵。叙事核心证据。</div>
+        <div class="tl-meta">
+          <span class="tl-tag">Item 1.01 / 2.01</span>
+          <span class="tl-tag">合并</span>
+          <a class="tl-link" href="https://www.sec.gov/Archives/edgar/data/1868275/000110465926001780/tm2532248d1_8k.htm" target="_blank">原文 ↗</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="tl-item pos">
+      <div class="tl-date">2025-12-17</div>
+      <div class="tl-content">
+        <div class="tl-row">
+          <span class="tl-icon">✅</span>
+          <span class="tl-headline">PJM 2027-28 容量拍卖 全部电厂清算</span>
+        </div>
+        <div class="tl-detail">所有 RTO/MAAC 电厂在 PJM 容量拍卖中全部 clear，核电单元获 ANPP（核电促进价格）溢价 — 直接证明核电稀缺性定价。</div>
+        <div class="tl-meta">
+          <span class="tl-tag">Item 8.01</span>
+          <span class="tl-tag">容量拍卖</span>
+          <a class="tl-link" href="https://www.sec.gov/Archives/edgar/data/1868275/000186827525000112/ceg-20251217.htm" target="_blank">原文 ↗</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="tl-item pos">
+      <div class="tl-date">2025-11-18</div>
+      <div class="tl-content">
+        <div class="tl-row">
+          <span class="tl-icon">✅</span>
+          <span class="tl-headline">与美国能源部（DOE）签 Loan Guarantee Agreement</span>
+        </div>
+        <div class="tl-detail">DOE 贷款担保 — 政府背书核电基建融资，是"AI 时代核电复兴"叙事的政策层证据。</div>
+        <div class="tl-meta">
+          <span class="tl-tag">Item 1.01 / 2.03</span>
+          <span class="tl-tag">政府融资</span>
+          <a class="tl-link" href="https://www.sec.gov/Archives/edgar/data/1868275/000186827525000099/ceg-20251117.htm" target="_blank">原文 ↗</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="tl-item pos">
+      <div class="tl-date">2025-07-22</div>
+      <div class="tl-content">
+        <div class="tl-row">
+          <span class="tl-icon">✅</span>
+          <span class="tl-headline">PJM 2026-27 容量拍卖 全部电厂清算</span>
+        </div>
+        <div class="tl-detail">连续两个 planning year 容量收入锁定，核电稀缺性获市场二次确认。</div>
+        <div class="tl-meta">
+          <span class="tl-tag">Item 8.01</span>
+          <span class="tl-tag">容量拍卖</span>
+          <a class="tl-link" href="https://www.sec.gov/Archives/edgar/data/1868275/000186827525000060/ceg-20250722.htm" target="_blank">原文 ↗</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="tl-fold">+ 16 条中性披露：4 次季度财报 + 6 次 Calpine 收购融资执行细节 + 4 次高管/董事变动（收购后整合）+ 股东投票 + 2026 Outlook 电话会议</div>
+
+  </div>
+
+  <div class="validate-concl">
+    <div class="validate-concl-l">叙事验证结论</div>
+    <div class="validate-concl-t">
+      过去 12 月，CEG 关键 8-K 全部围绕<b>「扩产能（Calpine 收购）+ 锁收入（PJM 容量拍卖 ×2）+ 拿融资（DOE 贷款担保）」</b>三条主线，<b>无任何削弱叙事的事件</b>。叙事获实质性进展支持，但下一步需观察 Calpine 整合执行 + 新 AI PPA 签约速度。
+    </div>
+  </div>
+</div>
+
+<!-- CAPITAL SUPPLY (新增维度：股本供需) -->
+<div class="supply">
+  <div class="supply-head">
+    <div class="supply-title">💰 股本供需 · 解禁与抛压（近 730 天 SEC | 8-K + Form 144 + S-3）</div>
+    <div class="supply-stats">
+      <span><span class="supply-stat-l">未来 12 月解禁占流通股</span><span class="supply-stat-v">6.9%</span></span>
+      <span><span class="supply-stat-l">Form 144</span><span class="supply-stat-v">1 份</span></span>
+      <span><span class="supply-stat-l">S-3 注册</span><span class="supply-stat-v">2 份</span></span>
+    </div>
+  </div>
+
+  <!-- 关键解禁双卡片 -->
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:14px 0">
+    <div style="padding:14px 18px;background:var(--red-lt);border:1px solid var(--red)">
+      <div style="font-size:0.6rem;font-weight:800;letter-spacing:0.1em;text-transform:uppercase;color:var(--red);margin-bottom:4px">🔴 短期解禁（46 天后）</div>
+      <div style="font-family:'Fraunces',serif;font-size:1.45rem;font-weight:700;color:var(--red);line-height:1">2026-06-30</div>
+      <div style="font-size:0.75rem;color:var(--ink-2);margin-top:6px"><b>6.9%</b> 流通股 · 约 22M 股 · 现价市值 <b>~$5.7B</b></div>
+    </div>
+    <div style="padding:14px 18px;background:oklch(96% 0.025 25 / 0.5);border:1px solid oklch(70% 0.12 25)">
+      <div style="font-size:0.6rem;font-weight:800;letter-spacing:0.1em;text-transform:uppercase;color:oklch(55% 0.16 25);margin-bottom:4px">🟠 长期解禁（14 月后）</div>
+      <div style="font-family:'Fraunces',serif;font-size:1.45rem;font-weight:700;color:oklch(55% 0.16 25);line-height:1">2027-06-30</div>
+      <div style="font-size:0.75rem;color:var(--ink-2);margin-top:6px"><b>6.9%</b> 流通股 · 约 22M 股 · 现价市值 <b>~$5.7B</b></div>
+    </div>
+  </div>
+
+  <!-- 详细事件清单 -->
+  <div class="flow-sub" style="margin-top:14px">🔒 关键 Lock-up 条款（Calpine 收购对价股）</div>
+  <div class="supply-events">
+    <div class="supply-event warn">
+      <div class="supply-event-d">2026-01-07</div>
+      <div>
+        <div class="supply-event-h">Calpine 收购完成 — 13.8% 流通股增发对价，含 lock-up 分两阶段解禁</div>
+        <div class="supply-event-t">
+          根据 Registration Rights Agreement，给原 Calpine 股东（RRA Parties）的 CEG 对价股受 lock-up 约束：
+          <b>一半（约 6.9% 流通股）2026-06-30 解禁</b>，
+          剩余一半 2027-06-30 解禁。
+          按现价 $267 估算，每次解禁市值 ~$5.7B（约 22M 股）。
+        </div>
+        <a class="supply-event-l" href="https://www.sec.gov/Archives/edgar/data/1868275/000110465926001780/tm2532248d1_8k.htm" target="_blank">8-K 原文 ↗</a>
+      </div>
+    </div>
+
+    <div class="supply-event">
+      <div class="supply-event-d">2026-02-18</div>
+      <div>
+        <div class="supply-event-h">S-3ASR 注册（即时生效）— 为 RRA Parties 提供转售通道</div>
+        <div class="supply-event-t">
+          自动生效注册声明，预先打通 Calpine 原股东 lock-up 到期后的合规卖出路径。
+        </div>
+        <a class="supply-event-l" href="https://www.sec.gov/Archives/edgar/data/1868275/000110465926017083/tm266214-1_s3asr.htm" target="_blank">S-3ASR 原文 ↗</a>
+      </div>
+    </div>
+
+    <div class="supply-event">
+      <div class="supply-event-d">2025-02-20</div>
+      <div>
+        <div class="supply-event-h">Form 144 — 单一大股东计划卖出通告</div>
+        <div class="supply-event-t">仅 1 份，规模未公开。属于常规 10b5-1 安排，但需关注是否后续追加。</div>
+        <a class="supply-event-l" href="https://www.sec.gov/Archives/edgar/data/1868275/000195004725001082/xsl144X01/primary_doc.xml" target="_blank">Form 144 原文 ↗</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="supply-concl">
+    <div class="supply-concl-l">⚠️ 供需端结论</div>
+    <div class="supply-concl-t">
+      <b>未来 6 周内（2026-06-30）约 6.9% 流通股解禁，对应 ~$5.7B 卖盘潜在压力</b>。Calpine 原大股东（PE 基金为主，含 ECP）成本极低（并购对价 vs 当前价），实际抛售意愿大。
+      <b>这是叙事卡片其他部分完全没体现的短期风险——基本面再好，46 天后的供给冲击需要单独定价</b>。
+      关键观察：进入 6 月后注意 Form 144 申报频率，单日大额 Form 144 = 抛售已启动信号。
+    </div>
+  </div>
+</div>
+
+<!-- 6 DIMENSIONS -->
+<div class="analysis-row">
+
+  <div class="dim">
+    <div class="dim-label">收入质量 <span class="signal pos">平稳↑</span></div>
+    <div class="dim-headline">温和加速，AI 电力需求确认</div>
+    <div class="dim-detail">
+      FY2025 收入 <b>$25.5B ↑+8.3%</b>，FY2023→2024→2025 增速 0% / -5% / +8%，重回正增长。Q1 FY2026 单季 <b>$6.1B</b>，QoQ +10%，AI 数据中心 PPA 订单是主驱动。
+    </div>
+  </div>
+
+  <div class="dim">
+    <div class="dim-label">利润结构 <span class="signal warn">分化</span></div>
+    <div class="dim-headline">毛利率剧烈波动，营业利润率向上</div>
+    <div class="dim-detail">
+      毛利率 <b>13.3% → 25.4% → 75.8%</b> 跨度极大（与电力价格 hedging 入账方式有关）。营业利润率 <b>6.5% → 18.5% → 12.1%</b>，FY2025 回吐部分但仍高于历史。
+    </div>
+  </div>
+
+  <div class="dim">
+    <div class="dim-label">现金流质量 <span class="signal warn">修复中</span></div>
+    <div class="dim-headline">FY2025 FCF 转正，但转化率仅 56%</div>
+    <div class="dim-detail">
+      FCF <b>FY2023 -$7.7B → FY2024 -$5.0B → FY2025 +$1.3B</b>，刚转正。FCF/净利润 <b>56%</b>，资本支出高（核电运营 + 新数据中心），盈利质量仍受 CapEx 压制。
+    </div>
+  </div>
+
+  <div class="dim">
+    <div class="dim-label">资本效率 <span class="signal warn">略贵</span></div>
+    <div class="dim-headline">P/E 35.9x，定价已含 AI 故事溢价</div>
+    <div class="dim-detail">
+      TTM 毛利率 <b>84.5%</b>（电力业务特性），净利率 <b>10.6%</b>。P/E <b>35.9x</b>、P/S <b>3.4x</b>，债务/权益 <b>0.67</b>。同行 AEP 18.6x / DUK 18.3x，CEG 估值溢价显著。
+    </div>
+  </div>
+
+  <div class="dim">
+    <div class="dim-label">季度趋势 <span class="signal pos">向好↑</span></div>
+    <div class="dim-headline">Q1 FY2026 营业利润率反弹</div>
+    <div class="dim-detail">
+      Q4'25 OpM <b>2.7%</b>（低点）→ Q1'26 <b>9.8%</b>（反弹），毛利率从异常高的 287.5%（hedging 入账）回归 40.8%。Q1 显示利润正常化。
+    </div>
+  </div>
+
+  <div class="dim">
+    <div class="dim-label">前瞻信号 <span class="signal pos">强烈看多</span></div>
+    <div class="dim-headline">分析师共识 Buy，目标价 +47%</div>
+    <div class="dim-detail">
+      20 家 <b>买入 15 / 持有 5 / 卖出 0</b>，共识 Buy。目标价中位 <b>$392</b>（vs 现价 $267.2，<b>+46.7%</b> 上行空间），高位 $460 隐含双倍空间。
+    </div>
+  </div>
+
+</div>
+
+<!-- BULL / BEAR -->
+<div class="bull-bear-banner">
+  <div class="bb-half bull">
+    <div class="bb-icon">📈</div>
+    <div class="bb-content">
+      <div class="bb-label">Bull Case</div>
+      <div class="bb-headline">机构共识快速形成 + 目标价 47% 上行空间</div>
+      <div class="bb-points">
+        <div class="bb-point">2025 Q3→Q4 13F <b>新建仓 331 家、增持 841 家</b>，机构数 +173 家；看多评级 12 月内从 72% 升至 <b>81%</b></div>
+        <div class="bb-point">分析师中位目标价 <b>$392</b>（现价 $267.2，上行 +46.7%），最高 $460；20 家覆盖中 <b>买入 15 / 持有 5 / 卖出 0</b></div>
+      </div>
+    </div>
+  </div>
+  <div class="bb-half bear">
+    <div class="bb-icon">📉</div>
+    <div class="bb-content">
+      <div class="bb-label">Bear Case</div>
+      <div class="bb-headline">6 周后 6.9% 流通股解禁 + 估值同行大幅溢价</div>
+      <div class="bb-points">
+        <div class="bb-point"><b>2026-06-30 lock-up 解禁 22M 股（流通股 6.9%，~$5.7B 市值）</b>，Calpine 原大股东（含 ECP 等 PE 基金）成本极低，实际抛售概率高 — 短期最大风险</div>
+        <div class="bb-point">P/E <b>35.9x</b> vs 同行 AEP 18.6x / DUK 18.3x，溢价依赖 AI 故事兑现；FCF/净利 <b>56%</b> 才刚回正，CapEx 高位</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- DATA ROW -->
+<div class="data-row">
+
+  <div class="section">
+    <div class="sec-label">核心财务数据</div>
+    <div class="kpi-strip">
+      <div class="kpi">
+        <div class="kpi-l">收入</div>
+        <div class="kpi-v">$25.5B</div>
+        <div class="kpi-d">↑ +8.3% YoY</div>
+        <div class="kpi-s">FY2025 vs FY2024</div>
+      </div>
+      <div class="kpi">
+        <div class="kpi-l">净利润</div>
+        <div class="kpi-v">$2.3B</div>
+        <div class="kpi-d neg">↓ -38.1% YoY</div>
+        <div class="kpi-s">FY2025 年报</div>
+      </div>
+      <div class="kpi">
+        <div class="kpi-l">自由现金流</div>
+        <div class="kpi-v">$1.3B</div>
+        <div class="kpi-d">FCF/净利 56%</div>
+        <div class="kpi-s">首次转正</div>
+      </div>
+    </div>
+    <div class="mlist">
+      <div class="mrow">
+        <div><div class="mname">毛利润 YoY</div><span class="msrc">FY2025 vs FY2024 年报</span></div>
+        <div class="mval pos">$19.4B ↑+223%</div>
+      </div>
+      <div class="mrow">
+        <div><div class="mname">经营现金流</div><span class="msrc">FY2025 年报</span></div>
+        <div class="mval">$4.2B</div>
+      </div>
+      <div class="mrow">
+        <div><div class="mname">毛利率 / 净利率 TTM</div><span class="msrc">FMP ratios-ttm 滚动12月</span></div>
+        <div class="mval pos">84.5% · 10.6%</div>
+      </div>
+      <div class="mrow">
+        <div><div class="mname">P/E · P/S · 债务/权益</div><span class="msrc">TTM</span></div>
+        <div class="mval warn">35.9x · 3.4x · 0.67</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider-v"></div>
+
+  <div class="section">
+    <div class="sec-label">利润率趋势</div>
+    <div class="chart-ttl">FY2023–2025 · 毛利率 / 营业 / 净利率</div>
+    <div class="bar-chart">
+      <div class="bar-row">
+        <div class="bar-yr">FY2025</div>
+        <div class="bar-tracks">
+          <div class="bar-track"><div class="bar-fill g" style="width:89.2%"></div></div>
+          <div class="bar-track"><div class="bar-fill o" style="width:14.2%"></div></div>
+          <div class="bar-track"><div class="bar-fill n" style="width:10.7%"></div></div>
+        </div>
+      </div>
+      <div class="bar-row">
+        <div class="bar-yr">FY2024</div>
+        <div class="bar-tracks">
+          <div class="bar-track"><div class="bar-fill g" style="width:29.9%"></div></div>
+          <div class="bar-track"><div class="bar-fill o" style="width:21.8%"></div></div>
+          <div class="bar-track"><div class="bar-fill n" style="width:18.7%"></div></div>
+        </div>
+      </div>
+      <div class="bar-row">
+        <div class="bar-yr">FY2023</div>
+        <div class="bar-tracks">
+          <div class="bar-track"><div class="bar-fill g" style="width:15.6%"></div></div>
+          <div class="bar-track"><div class="bar-fill o" style="width:7.6%"></div></div>
+          <div class="bar-track"><div class="bar-fill n" style="width:7.6%"></div></div>
+        </div>
+      </div>
+    </div>
+    <div class="bar-legend">
+      <div class="leg-item"><div class="leg-dot" style="background:oklch(40% 0.17 145)"></div>毛利率 75.8/25.4/13.3%</div>
+      <div class="leg-item"><div class="leg-dot" style="background:oklch(55% 0.13 145 / 0.65)"></div>营业 12.1/18.5/6.5%</div>
+      <div class="leg-item"><div class="leg-dot" style="background:oklch(48% 0.16 200 / 0.55)"></div>净利 9.1/15.9/6.5%</div>
+    </div>
+
+    <div style="margin-top:20px">
+      <div class="chart-ttl">季度营业利润率 · Q2'25 → Q1'26</div>
+      <svg viewBox="0 0 300 72" width="100%" height="72" style="overflow:visible;margin-top:4px">
+        <line x1="0" y1="60" x2="300" y2="60" stroke="var(--rule)" stroke-width="1"/>
+        <line x1="0" y1="36" x2="300" y2="36" stroke="var(--rule)" stroke-width="0.8" stroke-dasharray="3,3"/>
+        <line x1="0" y1="12" x2="300" y2="12" stroke="var(--rule)" stroke-width="0.8" stroke-dasharray="3,3"/>
+        <text x="0" y="63" font-size="7" fill="var(--ink-4)" font-family="Plus Jakarta Sans">0%</text>
+        <text x="0" y="39" font-size="7" fill="var(--ink-4)" font-family="Plus Jakarta Sans">12%</text>
+        <text x="0" y="15" font-size="7" fill="var(--ink-4)" font-family="Plus Jakarta Sans">24%</text>
+        <path d="M 40 28 L 120 17 L 200 55 L 280 40 L 280 60 L 40 60 Z" fill="oklch(55% 0.13 145 / 0.08)"/>
+        <path d="M 40 28 L 120 17 L 200 55 L 280 40" fill="none" stroke="oklch(55% 0.13 145)" stroke-width="1.5"/>
+        <circle cx="40" cy="28" r="3.5" fill="oklch(55% 0.13 145)"/>
+        <circle cx="120" cy="17" r="3.5" fill="var(--green)"/>
+        <circle cx="200" cy="55" r="3.5" fill="var(--red)"/>
+        <circle cx="280" cy="40" r="3.5" fill="oklch(55% 0.13 145)"/>
+        <text x="40" y="22" font-size="7.5" text-anchor="middle" fill="oklch(55% 0.13 145)" font-weight="700">15.6%</text>
+        <text x="120" y="11" font-size="7.5" text-anchor="middle" fill="var(--green)" font-weight="700">21.4%</text>
+        <text x="200" y="65" font-size="7.5" text-anchor="middle" fill="var(--red)" font-weight="700">2.7%</text>
+        <text x="280" y="34" font-size="7.5" text-anchor="middle" fill="oklch(55% 0.13 145)" font-weight="700">9.8%</text>
+        <text x="40" y="71" font-size="6.5" text-anchor="middle" fill="var(--ink-4)">Q2'25</text>
+        <text x="120" y="71" font-size="6.5" text-anchor="middle" fill="var(--ink-4)">Q3'25</text>
+        <text x="200" y="71" font-size="6.5" text-anchor="middle" fill="var(--ink-4)">Q4'25</text>
+        <text x="280" y="71" font-size="6.5" text-anchor="middle" fill="var(--ink-4)">Q1'26</text>
+      </svg>
+    </div>
+  </div>
+
+  <div class="divider-v"></div>
+
+  <div class="section">
+    <div class="sec-label">分析师评级</div>
+    <div class="chart-ttl">20 家覆盖 · 共识 Buy</div>
+    <div class="rating-bar">
+      <div class="rseg buy" style="flex:15">15 买入</div>
+      <div class="rseg hold" style="flex:5">5 持</div>
+    </div>
+    <div class="rlabels">
+      <div class="rlabel">强买 0</div>
+      <div class="rlabel">买入 <b>15</b></div>
+      <div class="rlabel">持有 5</div>
+      <div class="rlabel">卖出 0</div>
+    </div>
+
+    <div class="tp-section">
+      <div class="chart-ttl">目标价区间</div>
+      <div class="tp-track">
+        <div class="tp-range" style="left:29.2%;width:62.5%"></div>
+        <div class="tp-current" style="left:11.3%"></div>
+        <div class="tp-median" style="left:63.3%"></div>
+      </div>
+      <div class="tp-ends">
+        <span>$240</span>
+        <span>$480</span>
+      </div>
+      <div class="tp-legend">
+        <div class="rlabel"><span style="width:8px;height:8px;background:var(--ink);display:inline-block"></span> 现价 $267.2</div>
+        <div class="rlabel"><span style="width:8px;height:8px;background:var(--green);display:inline-block"></span> 中位 $392 (+47%)</div>
+      </div>
+    </div>
+
+    <div class="tp-section">
+      <div class="chart-ttl">同行估值（P/E TTM）</div>
+      <div class="mrow" style="padding:5px 0;font-size:0.7rem">
+        <div class="mname">CEG <b>35.9x</b></div>
+        <div class="mval warn" style="font-size:0.85rem">溢价 +94%</div>
+      </div>
+      <div class="mrow" style="padding:5px 0;font-size:0.7rem;border:none">
+        <div class="mname">AEP 18.6x / DUK 18.3x</div>
+        <div class="msrc" style="text-align:right">同行均值 18.5x</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- INSTITUTIONAL & ANALYST FLOW (新增) -->
+<div class="flow-row">
+
+  <div class="flow-section">
+    <div class="flow-label">
+      <span>🏦 13F 机构持仓动向</span>
+      <span class="period">2025 Q3 → Q4（13f.info / SEC）</span>
+    </div>
+
+    <div class="flow-kpis">
+      <div class="flow-kpi">
+        <div class="flow-kpi-l">总机构数</div>
+        <div class="flow-kpi-v">2,005</div>
+        <div class="flow-kpi-c pos">+173 家</div>
+      </div>
+      <div class="flow-kpi">
+        <div class="flow-kpi-l">总持仓市值</div>
+        <div class="flow-kpi-v">$76.4B</div>
+        <div class="flow-kpi-c neg">-$0.7B</div>
+      </div>
+      <div class="flow-kpi">
+        <div class="flow-kpi-l">动向分布</div>
+        <div class="flow-kpi-v" style="font-size:0.92rem;line-height:1.35">
+          <span style="color:var(--green)">新仓 331</span> · <span style="color:var(--green)">增 841</span><br>
+          <span style="color:var(--red)">减 576</span> · <span style="color:var(--red)">清仓 158</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="flow-sub">🟢 新建仓 Top 3（按市值）</div>
+    <div class="flow-list">
+      <div class="flow-item">
+        <div class="flow-item-l">NORGES BANK<span class="src">挪威主权基金</span></div>
+        <div class="flow-item-r pos">+4.14M ($1.46B)</div>
+      </div>
+      <div class="flow-item">
+        <div class="flow-item-l">PointState Capital LP</div>
+        <div class="flow-item-r pos">+0.83M ($292M)</div>
+      </div>
+      <div class="flow-item">
+        <div class="flow-item-l">Rubric Capital Management</div>
+        <div class="flow-item-r pos">+0.67M ($237M)</div>
+      </div>
+    </div>
+
+    <div class="flow-sub">📈 增持 / 📉 减持 Top 3</div>
+    <div class="flow-list">
+      <div class="flow-item">
+        <div class="flow-item-l">BANK OF AMERICA<span class="src">大幅加仓</span></div>
+        <div class="flow-item-r pos">+2.82M (+7856%)</div>
+      </div>
+      <div class="flow-item">
+        <div class="flow-item-l">Capital World Investors</div>
+        <div class="flow-item-r pos">+1.43M (+155%)</div>
+      </div>
+      <div class="flow-item">
+        <div class="flow-item-l">Capital International Investors<span class="src">同集团反向</span></div>
+        <div class="flow-item-r neg">-9.30M (-36%)</div>
+      </div>
+      <div class="flow-item">
+        <div class="flow-item-l">JPMORGAN CHASE</div>
+        <div class="flow-item-r neg">-1.38M (-42%)</div>
+      </div>
+    </div>
+
+    <div class="flow-warn">⚠️ Top 清仓显示 BlackRock 22.56M 股，实为 Q4 申报主体 CIK 变更（非真实清仓）</div>
+  </div>
+
+  <div class="divider-v"></div>
+
+  <div class="flow-section">
+    <div class="flow-label">
+      <span>📊 分析师评级历史趋势</span>
+      <span class="period">近 12 月（FMP grades-historical）</span>
+    </div>
+
+    <div class="flow-big">
+      <div class="flow-big-v">81%</div>
+      <div>
+        <div class="flow-big-d">↑ +9pp vs 12 月前</div>
+        <div class="flow-big-l">当前看多比例 (强买+买入)</div>
+      </div>
+    </div>
+
+    <div style="margin-top:14px">
+      <div class="chart-ttl">当前 21 家分布</div>
+      <div class="rating-mini-bar">
+        <div class="rmb-seg rmb-sb" style="flex:6">6</div>
+        <div class="rmb-seg rmb-b" style="flex:11">11</div>
+        <div class="rmb-seg rmb-h" style="flex:3">3</div>
+        <div class="rmb-seg rmb-s" style="flex:1">1</div>
+      </div>
+      <div class="rmb-labels">
+        <span>● 强买 6</span>
+        <span>● 买入 11</span>
+        <span>● 持有 3</span>
+        <span>● 卖出 1（首次）</span>
+      </div>
+    </div>
+
+    <div class="flow-sub">月度演进</div>
+    <div class="flow-list">
+      <div class="flow-item">
+        <div class="flow-item-l">2026-05<span class="src">当前</span></div>
+        <div class="flow-item-r pos">21 家 / 81%</div>
+      </div>
+      <div class="flow-item">
+        <div class="flow-item-l">2026-02<span class="src">3 个月前</span></div>
+        <div class="flow-item-r">19 家 / 74%</div>
+      </div>
+      <div class="flow-item">
+        <div class="flow-item-l">2025-11<span class="src">6 个月前</span></div>
+        <div class="flow-item-r">16 家 / 75%</div>
+      </div>
+      <div class="flow-item">
+        <div class="flow-item-l">2025-06<span class="src">12 个月前</span></div>
+        <div class="flow-item-r">18 家 / 72%</div>
+      </div>
+    </div>
+
+    <div class="flow-sub">🔑 关键观察</div>
+    <div class="flow-item" style="border:none;display:block;padding:6px 0">
+      <div style="font-size:0.72rem;line-height:1.5;color:var(--ink-2)">
+        <b style="color:var(--ink)">共识在收敛但不极端</b>：12 月内覆盖机构 +3 家，看多比例稳步上涨；但 2026/04 出现首家 Sell（21 家→1 家），说明有少数派分歧——这通常是健康的共识形态（vs 100% 看多的群体偏见）。
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- BOTTOM -->
+<div class="bottom">
+  <div class="section">
+    <div class="sec-label">关键判断总结</div>
+    <div class="summary-list">
+      <div class="sum-item">
+        <div class="sum-icon pos">✓</div>
+        <div class="sum-text"><b>机构资金共识形成</b>：2025 Q3→Q4 新增 173 家机构覆盖，新建仓 331 家、增持 841 家，是核心多头依据。</div>
+      </div>
+      <div class="sum-item">
+        <div class="sum-icon pos">✓</div>
+        <div class="sum-text"><b>分析师持续上调</b>：12 月内 18→21 家覆盖，看多 72%→81%，目标价中位 $392 隐含 +47% 上行。</div>
+      </div>
+      <div class="sum-item">
+        <div class="sum-icon warn">!</div>
+        <div class="sum-text"><b>估值溢价显著</b>：P/E 35.9x 是同行 AEP/DUK 的 ~2 倍，依赖 AI 数据中心叙事兑现，否则估值压力会传导至股价。</div>
+      </div>
+      <div class="sum-item">
+        <div class="sum-icon warn">!</div>
+        <div class="sum-text"><b>FCF 才刚转正</b>：FY2025 +$1.3B（FCF/净利 56%），现金质量弱于估值要求，CapEx 高位是结构性压力。</div>
+      </div>
+      <div class="sum-item">
+        <div class="sum-icon pos">✓</div>
+        <div class="sum-text"><b>Q1'26 利润率修复</b>：营业利润率 Q4'25 2.7% → Q1'26 9.8%，证明 Q4 是 hedging 入账造成的低点，非趋势恶化。</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider-v"></div>
+
+  <div class="spark-panel">
+    <div class="sec-label">收入规模</div>
+    <svg viewBox="0 0 320 140" width="100%" height="140" style="overflow:visible">
+      <text x="0" y="14" font-size="7" fill="var(--ink-4)" font-family="Plus Jakarta Sans">$30B</text>
+      <text x="0" y="55" font-size="7" fill="var(--ink-4)" font-family="Plus Jakarta Sans">$20B</text>
+      <text x="0" y="96" font-size="7" fill="var(--ink-4)" font-family="Plus Jakarta Sans">$10B</text>
+      <text x="0" y="137" font-size="7" fill="var(--ink-4)" font-family="Plus Jakarta Sans">$0</text>
+      <line x1="22" y1="10" x2="22" y2="130" stroke="var(--rule)"/>
+      <line x1="22" y1="130" x2="320" y2="130" stroke="var(--rule)"/>
+      <rect x="50" y="30.4" width="60" height="99.6" fill="var(--green)" fill-opacity="0.45"/>
+      <text x="80" y="22" font-size="9" font-weight="700" text-anchor="middle" fill="var(--ink-2)" font-family="Fraunces">$24.9B</text>
+      <rect x="135" y="35.6" width="60" height="94.4" fill="var(--green)" fill-opacity="0.65"/>
+      <text x="165" y="27" font-size="9" font-weight="700" text-anchor="middle" fill="var(--ink-2)" font-family="Fraunces">$23.6B</text>
+      <rect x="140" y="60" width="50" height="13" fill="oklch(96% 0.04 25)" rx="2" stroke="var(--red)"/>
+      <text x="165" y="69" font-size="7" font-weight="700" text-anchor="middle" fill="var(--red)">-5.2%</text>
+      <rect x="220" y="28" width="60" height="102" fill="var(--green)" fill-opacity="1"/>
+      <text x="250" y="20" font-size="9" font-weight="700" text-anchor="middle" fill="var(--ink-2)" font-family="Fraunces">$25.5B</text>
+      <rect x="225" y="60" width="50" height="13" fill="var(--green-lt)" rx="2" stroke="var(--green)"/>
+      <text x="250" y="69" font-size="7" font-weight="700" text-anchor="middle" fill="var(--green)">+8.3%</text>
+      <text x="80" y="138" font-size="6.5" text-anchor="middle" fill="var(--ink-4)">FY2023</text>
+      <text x="165" y="138" font-size="6.5" text-anchor="middle" fill="var(--ink-4)">FY2024</text>
+      <text x="250" y="138" font-size="6.5" text-anchor="middle" fill="var(--ink-4)">FY2025</text>
+    </svg>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<div class="footer">
+  <div class="footer-src">数据来源：FMP（profile / income-statement / ratios-ttm / grades-historical）+ 13f.info（SEC 13F filings）· 数据日期 2026-05-16</div>
+  <div class="footer-brand">lonkyclaw · 基本面分析</div>
+</div>
+
+</div>
+<script>
+(function () {
+  if (window.parent === window) return;
+  function report() {
+    var h = document.querySelector('.card').getBoundingClientRect().height + 80;
+    window.parent.postMessage({ type: 'ceg-card-height', height: Math.ceil(h) }, '*');
+  }
+  window.addEventListener('load', function () { setTimeout(report, 200); });
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(function () { setTimeout(report, 50); });
+  new ResizeObserver(report).observe(document.querySelector('.card'));
+})();
+</script>
+</body>
+</html>
