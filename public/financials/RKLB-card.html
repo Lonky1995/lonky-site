@@ -1,0 +1,1048 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8" />
+<title>RKLB · Rocket Lab — 基本面分析 · lonkyclaw</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<style>
+:root {
+  --ink:       oklch(14% 0.01 250);
+  --ink-2:     oklch(30% 0.01 250);
+  --ink-3:     oklch(48% 0.01 250);
+  --ink-4:     oklch(65% 0.01 250);
+  --paper:     oklch(99% 0.004 250);
+  --surface:   oklch(96.5% 0.007 250);
+  --surface-2: oklch(93% 0.01 250);
+  --rule:      oklch(89% 0.01 250);
+  --green:     oklch(40% 0.17 145);
+  --green-lt:  oklch(95% 0.05 145);
+  --green-mid: oklch(55% 0.14 145);
+  --red:       oklch(50% 0.18 25);
+  --red-lt:    oklch(96% 0.04 25);
+  --amber:     oklch(62% 0.15 65);
+  --amber-lt:  oklch(96% 0.05 65);
+  --blue:      oklch(48% 0.16 250);
+  --blue-lt:   oklch(95% 0.05 250);
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { background: oklch(95% 0.005 250); font-family: 'Plus Jakarta Sans', system-ui, sans-serif; color: var(--ink); }
+body { padding: 32px; display: flex; justify-content: center; }
+.card {
+  width: 1200px;
+  background: var(--paper);
+  border-radius: 4px;
+  border: 1px solid var(--rule);
+  overflow: hidden;
+  box-shadow: 0 1px 2px oklch(0% 0 0 / 0.04), 0 8px 24px oklch(0% 0 0 / 0.06);
+}
+
+/* ============ HEADER ============ */
+.head {
+  display: grid;
+  grid-template-columns: 280px 1fr 240px;
+  gap: 32px;
+  padding: 32px 36px 24px;
+  border-bottom: 1px solid var(--rule);
+}
+.h-left .ticker {
+  font-family: 'Fraunces', serif;
+  font-size: 2.8rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1;
+}
+.h-left .name { font-size: 0.92rem; color: var(--ink-2); margin-top: 6px; font-weight: 500; }
+.h-left .sub  { font-size: 0.75rem; color: var(--ink-4); margin-top: 2px; text-transform: uppercase; letter-spacing: 0.06em; }
+.h-mid { padding-top: 4px; }
+.verdict {
+  display: inline-block;
+  background: var(--green-lt);
+  color: var(--green);
+  padding: 6px 14px;
+  border-radius: 999px;
+  font-size: 0.74rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  margin-bottom: 10px;
+}
+.verdict.amber { background: var(--amber-lt); color: oklch(38% 0.13 65); }
+.thesis {
+  font-family: 'Fraunces', serif;
+  font-style: italic;
+  font-size: 1.02rem;
+  line-height: 1.45;
+  color: var(--ink-2);
+}
+.h-right { text-align: right; }
+.h-right .price {
+  font-family: 'Fraunces', serif;
+  font-size: 2.5rem;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  line-height: 1;
+}
+.h-right .mcap { font-size: 0.84rem; color: var(--ink-2); margin-top: 4px; }
+.h-right .stamp { font-size: 0.72rem; color: var(--ink-4); margin-top: 6px; }
+.h-right .tag {
+  display: inline-block;
+  margin-top: 8px;
+  font-size: 0.7rem;
+  background: var(--surface-2);
+  color: var(--ink-2);
+  padding: 3px 8px;
+  border-radius: 3px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+/* ============ NARRATIVE ============ */
+.narrative {
+  background: oklch(98% 0.005 250);
+  padding: 28px 36px;
+  border-bottom: 1px solid var(--rule);
+}
+.narrative .label {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--ink-3);
+  font-weight: 600;
+  margin-bottom: 12px;
+}
+.narrative .oneliner {
+  font-family: 'Fraunces', serif;
+  font-size: 1.42rem;
+  font-weight: 600;
+  line-height: 1.35;
+  color: var(--ink);
+  margin-bottom: 22px;
+  letter-spacing: -0.01em;
+}
+.chain {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px 32px;
+  margin-bottom: 20px;
+}
+.chain .step {
+  display: flex;
+  gap: 12px;
+  font-size: 0.85rem;
+  color: var(--ink-2);
+  padding: 6px 0;
+  align-items: baseline;
+}
+.chain .num {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: var(--ink);
+  color: var(--paper);
+  font-size: 0.7rem;
+  font-weight: 700;
+  flex-shrink: 0;
+  font-family: 'Fraunces', serif;
+}
+.chain .step b { color: var(--ink); font-weight: 600; }
+.conflict {
+  background: var(--paper);
+  border-left: 4px solid var(--ink);
+  padding: 14px 18px;
+  font-style: italic;
+  font-family: 'Fraunces', serif;
+  font-size: 0.95rem;
+  line-height: 1.5;
+  color: var(--ink-2);
+  margin-bottom: 14px;
+}
+.question {
+  font-size: 0.86rem;
+  color: var(--ink-2);
+  padding-top: 4px;
+}
+.question b { color: var(--ink); }
+
+/* ============ TIMELINE 8-K ============ */
+.section-block {
+  padding: 28px 36px;
+  border-bottom: 1px solid var(--rule);
+}
+.sb-title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+.sb-title h3 {
+  font-family: 'Fraunces', serif;
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+.sb-stat {
+  font-size: 0.78rem;
+  color: var(--ink-3);
+}
+.sb-stat .pos { color: var(--green); font-weight: 600; }
+.sb-stat .neg { color: var(--red); font-weight: 600; }
+.sb-stat .neu { color: var(--ink-3); font-weight: 600; }
+.timeline { margin: 14px 0 8px; }
+.tl-item {
+  border-left: 3px solid var(--ink-4);
+  padding: 8px 14px 8px 16px;
+  margin-bottom: 6px;
+  background: var(--surface);
+  font-size: 0.84rem;
+  color: var(--ink-2);
+  display: grid;
+  grid-template-columns: 92px 1fr 100px;
+  gap: 12px;
+  align-items: center;
+}
+.tl-item.pos { border-left-color: var(--green); }
+.tl-item.neg { border-left-color: var(--red); }
+.tl-item.warn { border-left-color: var(--amber); }
+.tl-date { font-size: 0.75rem; color: var(--ink-3); font-family: 'Fraunces', serif; font-weight: 500; }
+.tl-text { line-height: 1.4; }
+.tl-text b { color: var(--ink); }
+.tl-text .emoji { margin-right: 6px; }
+.tl-tag {
+  font-size: 0.66rem;
+  background: var(--paper);
+  padding: 2px 7px;
+  border-radius: 3px;
+  color: var(--ink-3);
+  text-align: center;
+  font-weight: 500;
+  border: 1px solid var(--rule);
+}
+.tl-conclude {
+  margin-top: 14px;
+  padding: 12px 16px;
+  background: var(--amber-lt);
+  border-left: 4px solid var(--amber);
+  font-size: 0.86rem;
+  color: var(--ink-2);
+  line-height: 1.5;
+}
+.tl-conclude b { color: var(--ink); }
+
+/* ============ SUPPLY ============ */
+.supply-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 16px;
+  margin-top: 14px;
+}
+.supply-kpi {
+  background: var(--surface);
+  padding: 14px 16px;
+  border-radius: 4px;
+  text-align: center;
+}
+.supply-kpi .v {
+  font-family: 'Fraunces', serif;
+  font-size: 1.6rem;
+  font-weight: 600;
+  color: var(--red);
+}
+.supply-kpi.amber .v { color: var(--amber); }
+.supply-kpi .l {
+  font-size: 0.72rem;
+  color: var(--ink-3);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-top: 6px;
+}
+.supply-events {
+  margin-top: 16px;
+  font-size: 0.84rem;
+  color: var(--ink-2);
+}
+.supply-events .ev {
+  padding: 8px 12px;
+  background: var(--surface);
+  border-left: 3px solid var(--red);
+  margin-bottom: 4px;
+  line-height: 1.5;
+}
+.supply-events .ev.warn { border-left-color: var(--amber); }
+.supply-events .ev b { color: var(--ink); }
+.supply-conclude {
+  margin-top: 14px;
+  padding: 12px 16px;
+  background: var(--red-lt);
+  border-left: 4px solid var(--red);
+  font-size: 0.86rem;
+  color: var(--ink-2);
+  line-height: 1.5;
+}
+.supply-conclude b { color: var(--red); }
+
+/* ============ DIMENSIONS GRID ============ */
+.dims {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  border-bottom: 1px solid var(--rule);
+}
+.dim {
+  padding: 22px 24px;
+  border-right: 1px solid var(--rule);
+  border-bottom: 1px solid var(--rule);
+}
+.dim:nth-child(4n) { border-right: none; }
+.dim:nth-last-child(-n+4) { border-bottom: none; }
+.dim:nth-last-child(-n+3):nth-last-child(-n+3) { /* nothing */ }
+.dim-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+.dim-label {
+  font-size: 0.66rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--ink-3);
+  font-weight: 600;
+}
+.badge {
+  font-size: 0.62rem;
+  padding: 2px 7px;
+  border-radius: 999px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+.badge.pos { background: var(--green-lt); color: var(--green); }
+.badge.neg { background: var(--red-lt); color: var(--red); }
+.badge.warn { background: var(--amber-lt); color: oklch(38% 0.13 65); }
+.badge.neu { background: var(--surface-2); color: var(--ink-2); }
+.dim-title {
+  font-size: 0.95rem;
+  font-weight: 600;
+  line-height: 1.35;
+  color: var(--ink);
+  margin-bottom: 8px;
+}
+.dim-detail {
+  font-size: 0.78rem;
+  color: var(--ink-2);
+  line-height: 1.55;
+}
+.dim-detail b { color: var(--ink); font-weight: 600; }
+
+/* ============ BULL / BEAR ============ */
+.cases {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  border-bottom: 1px solid var(--rule);
+}
+.case {
+  padding: 24px 28px;
+}
+.case.bull { background: var(--green-lt); border-right: 1px solid var(--rule); }
+.case.bear { background: var(--red-lt); }
+.case h4 {
+  font-family: 'Fraunces', serif;
+  font-size: 0.92rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: 14px;
+}
+.case.bull h4 { color: var(--green); }
+.case.bear h4 { color: var(--red); }
+.case-item {
+  margin-bottom: 12px;
+  padding-left: 18px;
+  position: relative;
+  font-size: 0.86rem;
+  line-height: 1.55;
+  color: var(--ink-2);
+}
+.case-item::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 9px;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}
+.case.bull .case-item::before { background: var(--green); }
+.case.bear .case-item::before { background: var(--red); }
+.case-item b { color: var(--ink); font-weight: 600; }
+
+/* ============ DATA ROW ============ */
+.datarow {
+  display: grid;
+  grid-template-columns: 320px 1fr 280px;
+  border-bottom: 1px solid var(--rule);
+}
+.dr-col {
+  padding: 26px 28px;
+  border-right: 1px solid var(--rule);
+}
+.dr-col:last-child { border-right: none; }
+.dr-col h5 {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--ink-3);
+  font-weight: 600;
+  margin-bottom: 14px;
+}
+.kpi-big {
+  margin-bottom: 18px;
+}
+.kpi-big .v {
+  font-family: 'Fraunces', serif;
+  font-size: 1.6rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  line-height: 1.1;
+}
+.kpi-big .delta { font-size: 0.84rem; margin-top: 2px; font-weight: 500; }
+.kpi-big .delta.pos { color: var(--green); }
+.kpi-big .delta.neg { color: var(--red); }
+.kpi-big .l { font-size: 0.72rem; color: var(--ink-3); text-transform: uppercase; letter-spacing: 0.05em; margin-top: 4px; }
+.kpi-list { font-size: 0.78rem; color: var(--ink-2); border-top: 1px solid var(--rule); padding-top: 12px; }
+.kpi-list .row {
+  display: flex;
+  justify-content: space-between;
+  padding: 5px 0;
+  line-height: 1.4;
+}
+.kpi-list .row .l { color: var(--ink-3); }
+.kpi-list .row .v { font-weight: 600; color: var(--ink); }
+.kpi-list .row .src { font-size: 0.65rem; color: var(--ink-4); margin-top: 2px; }
+
+/* Margin bars */
+.margin-bars { margin-bottom: 18px; }
+.margin-row {
+  display: grid;
+  grid-template-columns: 60px 1fr;
+  gap: 10px;
+  margin-bottom: 8px;
+  align-items: center;
+}
+.margin-row .yr { font-size: 0.72rem; color: var(--ink-3); font-family: 'Fraunces', serif; font-weight: 500; }
+.margin-tracks { display: flex; flex-direction: column; gap: 3px; }
+.track {
+  display: grid;
+  grid-template-columns: 90px 1fr 50px;
+  gap: 8px;
+  align-items: center;
+  font-size: 0.7rem;
+}
+.track .name { color: var(--ink-3); text-transform: uppercase; letter-spacing: 0.04em; font-size: 0.62rem; }
+.track .bar { height: 7px; background: var(--surface-2); border-radius: 1px; position: relative; overflow: hidden; }
+.track .fill { position: absolute; left: 0; top: 0; height: 100%; }
+.track .fill.gm { background: var(--green); }
+.track .fill.om { background: oklch(55% 0.14 145 / 0.6); }
+.track .fill.nm { background: oklch(48% 0.16 250 / 0.5); }
+.track .v { font-size: 0.7rem; font-weight: 600; text-align: right; }
+.track .v.neg { color: var(--red); }
+.track .v.pos { color: var(--ink); }
+
+/* Quarterly chart */
+.qchart { margin-top: 6px; }
+.qchart h6 { font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--ink-3); margin-bottom: 8px; font-weight: 600; }
+
+/* Right col */
+.analyst-bar {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 18px;
+}
+.ab-row {
+  display: grid;
+  grid-template-columns: 70px 1fr 28px;
+  gap: 8px;
+  align-items: center;
+  font-size: 0.74rem;
+}
+.ab-row .l { color: var(--ink-2); }
+.ab-row .bar { height: 8px; background: var(--surface-2); border-radius: 1px; overflow: hidden; }
+.ab-row .fill { height: 100%; }
+.ab-row .v { font-size: 0.72rem; font-weight: 600; text-align: right; }
+.ab-row .fill.sb { background: var(--green); }
+.ab-row .fill.b  { background: var(--green-mid); }
+.ab-row .fill.h  { background: var(--amber); }
+.ab-row .fill.s  { background: oklch(60% 0.16 25); }
+.ab-row .fill.ss { background: var(--red); }
+.target-track {
+  margin-top: 14px;
+  padding-top: 14px;
+  border-top: 1px solid var(--rule);
+}
+.target-track h6 { font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--ink-3); margin-bottom: 10px; font-weight: 600; }
+.tt-rail { height: 6px; background: var(--surface-2); border-radius: 999px; position: relative; margin: 16px 6px; }
+.tt-fill { position: absolute; top: 0; left: 28%; right: 30%; height: 100%; background: var(--blue); border-radius: 999px; }
+.tt-now { position: absolute; top: -7px; width: 2px; height: 20px; background: var(--ink); }
+.tt-labels { display: flex; justify-content: space-between; font-size: 0.7rem; color: var(--ink-3); margin-top: 4px; }
+.tt-labels b { color: var(--ink); }
+
+/* ============ INSTITUTIONS / ANALYSTS ============ */
+.iarow {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  background: var(--surface);
+  border-bottom: 1px solid var(--rule);
+}
+.ia-col {
+  padding: 22px 28px;
+  border-right: 1px solid var(--rule);
+}
+.ia-col:last-child { border-right: none; }
+.ia-col h5 {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--ink-3);
+  font-weight: 600;
+  margin-bottom: 14px;
+}
+.ia-big { display: flex; align-items: baseline; gap: 12px; margin-bottom: 16px; }
+.ia-big .v {
+  font-family: 'Fraunces', serif;
+  font-size: 2rem;
+  font-weight: 600;
+  color: var(--green);
+}
+.ia-big .arrow { font-size: 0.9rem; color: var(--green); font-weight: 600; }
+.ia-big .l { font-size: 0.72rem; color: var(--ink-3); }
+.rating-bar { display: flex; gap: 2px; height: 22px; margin-bottom: 8px; }
+.rating-seg {
+  height: 100%;
+  position: relative;
+  font-size: 0.6rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-weight: 700;
+}
+.rating-seg.sb { background: var(--green); }
+.rating-seg.b  { background: var(--green-mid); }
+.rating-seg.h  { background: var(--amber); }
+.rating-seg.s  { background: oklch(60% 0.16 25); }
+.rating-seg.ss { background: var(--red); }
+.rating-leg { display: flex; justify-content: space-between; font-size: 0.65rem; color: var(--ink-3); padding: 0 4px; }
+
+/* ============ BOTTOM ROW ============ */
+.bottom {
+  display: grid;
+  grid-template-columns: 1fr 360px;
+  border-bottom: 1px solid var(--rule);
+}
+.bot-l { padding: 24px 28px; border-right: 1px solid var(--rule); }
+.bot-l h5 {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--ink-3);
+  font-weight: 600;
+  margin-bottom: 16px;
+}
+.cl-row {
+  display: grid;
+  grid-template-columns: 28px 1fr;
+  gap: 12px;
+  margin-bottom: 12px;
+  align-items: start;
+}
+.cl-icon {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.8rem;
+  color: white;
+  font-weight: 700;
+  margin-top: 1px;
+}
+.cl-icon.pos { background: var(--green); }
+.cl-icon.warn { background: var(--amber); }
+.cl-icon.neg { background: var(--red); }
+.cl-text { font-size: 0.85rem; color: var(--ink-2); line-height: 1.5; }
+.cl-text b { color: var(--ink); font-weight: 600; }
+.bot-r { padding: 24px 24px; }
+.bot-r h5 {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--ink-3);
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+/* ============ FOOTER ============ */
+.foot {
+  background: oklch(20% 0.01 250);
+  color: oklch(75% 0.01 250);
+  padding: 16px 36px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.72rem;
+}
+.foot .brand { font-family: 'Fraunces', serif; font-weight: 500; }
+
+</style>
+</head>
+<body>
+
+<div class="card">
+
+  <!-- ============ HEADER ============ -->
+  <div class="head">
+    <div class="h-left">
+      <div class="ticker">RKLB</div>
+      <div class="name">Rocket Lab Corporation</div>
+      <div class="sub">Industrials · Aerospace &amp; Defense · NASDAQ</div>
+    </div>
+    <div class="h-mid">
+      <div class="verdict amber">小火箭+卫星平台 · 三连收购重构 · 估值跑在收入前面</div>
+      <div class="thesis">"Vertical Stack 平台化"叙事推估值到天上 — Neutron 火箭测试受挫 + $10 亿 ATM 持续稀释 + 内部人 65 份 Form 144 抛压，决胜变量是 Neutron 能否在 2026 H2 首飞。</div>
+    </div>
+    <div class="h-right">
+      <div class="price">$124.77</div>
+      <div class="mcap">市值 $72.2B</div>
+      <div class="stamp">数据截止 2026-05-17</div>
+      <div class="tag">Space Economy</div>
+    </div>
+  </div>
+
+  <!-- ============ NARRATIVE ============ -->
+  <div class="narrative">
+    <div class="label">核心叙事 · Narrative</div>
+    <div class="oneliner">小火箭 + 卫星 + 激光通信全栈打包卖给五角大楼，Rocket Lab 想做"端到端的太空平台公司"</div>
+    <div class="chain">
+      <div class="step"><span class="num">1</span><div>美国国防部 <b>Proliferated Warfighter Space Architecture</b> 计划要 SDA Tracking Layer 数百颗卫星，2025-12-17 已发包 18 颗给 RKLB <small>[8-K Item 7.01 · 2025-12-19]</small></div></div>
+      <div class="step"><span class="num">2</span><div>Electron 小火箭+ Photon 卫星总线已成熟，<b>FY2025 收入 $602M · YoY +38%</b> <small>[FY2025 年报]</small></div></div>
+      <div class="step"><span class="num">3</span><div>2025-08 完成收购 <b>GEOST</b>（光学有效载荷 $125M+ 305 万股）<small>[8-K Item 7.01 · 2025-08-12]</small></div></div>
+      <div class="step"><span class="num">4</span><div>2026-04 完成收购 <b>Mynaric AG</b>（德国激光通信终端）— 补齐"运载+平台+载荷+通信"全栈 <small>[8-K Item 7.01 · 2026-04-14]</small></div></div>
+      <div class="step"><span class="num">5</span><div>Neutron 中型可回收火箭 = 估值乘数变量，但 <b>2026-01-21 燃料罐压力测试爆裂</b>，发射时间压力陡增 <small>[8-K Item 7.01 · 2026-01-22]</small></div></div>
+      <div class="step"><span class="num">6</span><div>P/S <b>106x</b>（年报数据），市场已按 SpaceX-lite 的估值锚定 — 现金消耗 FCF -$322M 靠 ATM 增发筹资</div></div>
+    </div>
+    <div class="conflict">
+      多头逻辑："Vertical Stack" 一站式国防/商业卫星平台，SDA Tranche 3 是 Lockheed/Northrop 之外的第三极；空头逻辑：净利率 -33%、Neutron 跳票风险、$10 亿 ATM 持续稀释。<b>关键变量是 Neutron 首飞窗口</b>——如果 2026 H2 推迟到 2027，估值乘数会承压。
+    </div>
+    <div class="question">🎯 <b>正确的提问：</b>Neutron 第二级测试能否在 2026 Q3 完成，以及 GEOST/Mynaric 的协同收入能否在 2026 财年贡献 $80M+（验证"平台化溢价"是否成立）。</div>
+  </div>
+
+  <!-- ============ NARRATIVE VALIDATION (8-K) ============ -->
+  <div class="section-block">
+    <div class="sb-title">
+      <h3>🔭 叙事验证 · 公司动态（近 365 天 8-K | SEC EDGAR）</h3>
+      <div class="sb-stat">
+        <span class="pos">✅ 强化 5 件</span> · <span class="neu">⚠️ 中性 9 件</span> · <span class="neg">❌ 削弱 1 件</span>
+      </div>
+    </div>
+    <div class="timeline">
+      <div class="tl-item neg">
+        <div class="tl-date">2026-01-22</div>
+        <div class="tl-text"><span class="emoji">❌</span><b>Neutron Stage 1 燃料罐压力测试爆裂</b>，团队复盘影响发射时间表 — 中型可回收火箭节奏受挫</div>
+        <div class="tl-tag">7.01/8.01</div>
+      </div>
+      <div class="tl-item pos">
+        <div class="tl-date">2026-04-14</div>
+        <div class="tl-text"><span class="emoji">✅</span>完成 <b>Mynaric AG 收购</b>（德国激光通信），发行 2,277,002 股 — 补齐全栈"激光通信"环节</div>
+        <div class="tl-tag">3.02/7.01</div>
+      </div>
+      <div class="tl-item pos">
+        <div class="tl-date">2025-12-19</div>
+        <div class="tl-text"><span class="emoji">✅</span><b>SDA Tracking Layer Tranche 3 中标 18 颗卫星</b> — 美国国防部 PWSA 关键合同，Lockheed/Northrop 之外的第三极</div>
+        <div class="tl-tag">7.01/8.01</div>
+      </div>
+      <div class="tl-item pos">
+        <div class="tl-date">2025-09-25</div>
+        <div class="tl-text"><span class="emoji">✅</span>签署 <b>Mynaric 收购协议</b>（OC III/COF II 为卖方）— 启动激光通信平台并购</div>
+        <div class="tl-tag">3.02/8.01</div>
+      </div>
+      <div class="tl-item pos">
+        <div class="tl-date">2025-08-12</div>
+        <div class="tl-text"><span class="emoji">✅</span>完成 <b>GEOST 收购</b>：$125M 现金 + 3,057,588 股 — 光学有效载荷能力入袋</div>
+        <div class="tl-tag">7.01/8.01</div>
+      </div>
+      <div class="tl-item pos">
+        <div class="tl-date">2025-05-27</div>
+        <div class="tl-text"><span class="emoji">✅</span>签署 <b>GEOST/LightRidge 股权收购协议</b> + 启动控股公司重组架构（Rocket Lab Corp 替代 Rocket Lab USA）</div>
+        <div class="tl-tag">1.01/3.02</div>
+      </div>
+      <div class="tl-conclude">
+        <b>过去 12 月叙事走向：</b>5 起战略性收购完成（GEOST/Mynaric）+ SDA Tranche 3 DoD 合同入袋 → "Vertical Stack 平台化"叙事获实际进展验证；但 Neutron 燃料罐测试失败削弱执行预期，叙事完整性取决于 2026 H2 首飞能否兑现。
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ SUPPLY ============ -->
+  <div class="section-block">
+    <div class="sb-title">
+      <h3>💰 股本供需 · 解禁与抛压（近 730 天 SEC | 8-K + Form 144 + 424B5）</h3>
+      <div class="sb-stat">
+        <span class="neg">高抛压</span> · 内部人 Form 144 <b>65 份</b> · ATM 额度 $1B 已售 $749.4M
+      </div>
+    </div>
+    <div class="supply-grid">
+      <div class="supply-kpi">
+        <div class="v">$10 亿</div>
+        <div class="l">ATM Equity Distribution 总额度</div>
+      </div>
+      <div class="supply-kpi amber">
+        <div class="v">$749.4M</div>
+        <div class="l">已售出（@$71.31/股 假设价）</div>
+      </div>
+      <div class="supply-kpi">
+        <div class="v">65 份</div>
+        <div class="l">内部人 Form 144（近 24 月）</div>
+      </div>
+    </div>
+    <div class="supply-events">
+      <div class="ev"><b>2026-03-17 · 424B5 prospectus supplement</b> — ATM 通过 sales agents 持续卖股，截至 prospectus 日已发 $749.4M / $1B 额度，剩余 $250.6M（约 350 万股 @$71.31）可继续稀释</div>
+      <div class="ev"><b>2025-08-12 · 收购 GEOST 发行 3,057,588 股</b> — 私募配售（4(a)(2) 豁免），收购对价的股票部分</div>
+      <div class="ev"><b>2026-04-14 · 收购 Mynaric 发行 2,277,002 股</b> — 同样 4(a)(2) 私募豁免，后续 2026-05-08 提交 prospectus supplement 注册转售（卖方退出窗口已开）</div>
+      <div class="ev warn"><b>Form 144 频率异常</b>：2025-09 至 2026-05 共 65 份 — 大量内部人 / 早期投资者计划性抛售，单月最高 8 份（2025-12）</div>
+    </div>
+    <div class="supply-conclude">
+      <b>未来 6-12 月供给端偏空：</b>ATM 剩余 ~$250M 持续按市价稀释 + 收购对价股 2026-05 起进入可转售期 + 内部人 Form 144 节奏未停。基本面再好，<b>每个上涨日都伴随增量供给</b>，估值上行需要 Neutron 首飞 + DoD 大单等"叙事爆点"才能突破抛压。
+    </div>
+  </div>
+
+  <!-- ============ DIMENSIONS GRID (4x2) ============ -->
+  <div class="dims">
+    <div class="dim">
+      <div class="dim-head">
+        <span class="dim-label">收入质量</span>
+        <span class="badge pos">↑加速</span>
+      </div>
+      <div class="dim-title">收入 YoY +38%，且增速持续</div>
+      <div class="dim-detail">FY2025 <b>$602M</b>（FY2024 $436M / FY2023 $245M），3 年 CAGR <b>+56%</b>。Q1 2026 单季 <b>$200M</b>，环比 Q4 2025 <b>+11%</b>。<small>[FY2025 年报]</small></div>
+    </div>
+    <div class="dim">
+      <div class="dim-head">
+        <span class="dim-label">利润结构</span>
+        <span class="badge warn">毛利改善但仍亏</span>
+      </div>
+      <div class="dim-title">毛利率 27%→34% 大幅改善，但仍重投入</div>
+      <div class="dim-detail">FY2025 毛利率 <b>34.4%</b>（FY2024 26.6%），营业利润率 <b>-38%</b>（去年 -43.5%）。Q1 2026 毛利率 <b>38.2%</b>，趋势好转但 Neutron 研发支出维持高位。<small>[FMP income-statement annual/quarterly]</small></div>
+    </div>
+    <div class="dim">
+      <div class="dim-head">
+        <span class="dim-label">现金流质量</span>
+        <span class="badge neg">↓恶化</span>
+      </div>
+      <div class="dim-title">FCF -$322M，靠 ATM 增发补血</div>
+      <div class="dim-detail">FY2025 经营现金流 <b>-$166M</b>，自由现金流 <b>-$322M</b>（FY2024 -$116M）— 资本开支同比翻倍。FCF/净利润 162% 表示亏损被现金流消耗加剧。<small>[FMP cash-flow-statement annual]</small></div>
+    </div>
+    <div class="dim">
+      <div class="dim-head">
+        <span class="dim-label">资本效率</span>
+        <span class="badge warn">高估值</span>
+      </div>
+      <div class="dim-title">P/S 106x，按 SpaceX-lite 锚定估值</div>
+      <div class="dim-detail">市值 <b>$72.2B</b> / 收入 $602M = P/S <b>106x</b>（年报）/ TTM <b>106.3x</b>。P/E 因净亏损为负。债务/权益 <b>0.06</b>（极低），资本结构靠股权稀释维持。<small>[FMP ratios-ttm]</small></div>
+    </div>
+    <div class="dim">
+      <div class="dim-head">
+        <span class="dim-label">季度趋势</span>
+        <span class="badge pos">毛利率持续扩</span>
+      </div>
+      <div class="dim-title">4 个季度毛利率持续扩张</div>
+      <div class="dim-detail">Q2 2025 32.1% → Q3 37.0% → Q4 38.0% → Q1 2026 <b>38.2%</b>。营业利润率从 -41% 缩窄到 <b>-27.9%</b> — 规模化效应释放，但仍未到盈亏平衡点。<small>[FMP income-statement quarterly]</small></div>
+    </div>
+    <div class="dim">
+      <div class="dim-head">
+        <span class="dim-label">前瞻信号</span>
+        <span class="badge pos">买入占比 68%</span>
+      </div>
+      <div class="dim-title">19 家分析师，13 家买入，0 卖出</div>
+      <div class="dim-detail">强买 0 / 买入 <b>13</b> / 持有 5 / 卖出 1。共识 Buy，看多比例 <b>68.4%</b>。目标价中位 <b>$99</b>（现价 $124.77，<span style="color:var(--red)">↓-20.6%</span>）— 共识认为现价已超出基本面合理区间。<small>[FMP analyst]</small></div>
+    </div>
+    <div class="dim">
+      <div class="dim-head">
+        <span class="dim-label">股本供需</span>
+        <span class="badge neg">高抛压</span>
+      </div>
+      <div class="dim-title">ATM $250M 余量 + 内部人 65 份 Form 144</div>
+      <div class="dim-detail">ATM 通道剩余 ~<b>$250.6M</b>（350 万股 @$71.31 假设价）可继续稀释；近 24 月内部人 Form 144 <b>65 份</b>；收购对价股 5,334,590 股已进入注册转售流程。<small>[424B5 · Form 144 · 8-K]</small></div>
+    </div>
+    <div class="dim">
+      <div class="dim-head">
+        <span class="dim-label">叙事兑现</span>
+        <span class="badge warn">收购完成 · Neutron 跳票</span>
+      </div>
+      <div class="dim-title">平台化收购全部完成，火箭仍未首飞</div>
+      <div class="dim-detail">GEOST（2025-08）+ Mynaric（2026-04）+ SDA Tranche 3 入袋 — 平台化叙事进展实在；但 <b>Neutron 2026-01 燃料罐爆裂</b>，原计划 2026 H2 首飞窗口承压。叙事完整性仍待 Neutron 兑现。<small>[8-K Item 7.01/8.01]</small></div>
+    </div>
+  </div>
+
+  <!-- ============ BULL / BEAR ============ -->
+  <div class="cases">
+    <div class="case bull">
+      <h4>🟢 Bull Case</h4>
+      <div class="case-item"><b>Vertical Stack 平台化已成型</b>：Electron 火箭 + Photon 总线 + GEOST 光学载荷 + Mynaric 激光通信 — 美国唯一私营全栈太空公司，SDA Tranche 3 拿单 18 颗证明 DoD 信任，远期 PWSA 全计划数百颗卫星可参与。</div>
+      <div class="case-item"><b>规模化效应初现</b>：FY2025 毛利率从 27% 跳到 <b>34.4%</b>，最新季度 38.2%。收入 <b>YoY +38%</b> 且 Q1 2026 单季 $200M（年化 $800M+），运营杠杆改善路径清晰。</div>
+    </div>
+    <div class="case bear">
+      <h4>🔴 Bear Case</h4>
+      <div class="case-item"><b>$10 亿 ATM 持续稀释 + 内部人 65 份 Form 144</b>：剩余 $250M 额度按市价稀释 + 收购对价股 533 万股转售注册 + 内部人计划性抛售 — 每个上涨日都被供给压制，目标价中位 $99 <span style="color:var(--red)">已低于现价 21%</span>。</div>
+      <div class="case-item"><b>Neutron 跳票风险</b>：2026-01 燃料罐压力测试爆裂，复盘影响 2026 H2 首飞计划；如果推迟到 2027，"中型可回收火箭"估值乘数（市场按 SpaceX-lite 给 P/S 106x）将面临系统性下修。</div>
+    </div>
+  </div>
+
+  <!-- ============ DATA ROW ============ -->
+  <div class="datarow">
+    <!-- LEFT -->
+    <div class="dr-col">
+      <h5>核心财务 KPI</h5>
+      <div class="kpi-big">
+        <div class="v">$602M</div>
+        <div class="delta pos">↑ +38.0% YoY</div>
+        <div class="l">收入 FY2025 [FY2025 年报]</div>
+      </div>
+      <div class="kpi-big">
+        <div class="v" style="color:var(--red)">-$198M</div>
+        <div class="delta neg">↑ 亏损扩 +4.2% YoY</div>
+        <div class="l">净利润 FY2025 [FY2025 年报]</div>
+      </div>
+      <div class="kpi-big">
+        <div class="v" style="color:var(--red)">-$322M</div>
+        <div class="delta neg">↓ 自由现金流恶化 2.8x</div>
+        <div class="l">自由现金流 FY2025 [FMP cash-flow]</div>
+      </div>
+      <div class="kpi-list">
+        <div class="row"><span class="l">毛利率 TTM</span><span class="v">36.6%</span></div>
+        <div class="row"><span class="l">净利率 TTM</span><span class="v" style="color:var(--red)">-26.9%</span></div>
+        <div class="row"><span class="l">P/S</span><span class="v">106.3x</span></div>
+        <div class="row"><span class="l">P/E</span><span class="v" style="color:var(--red)">N/A (亏损)</span></div>
+        <div class="row"><span class="l">债务/权益</span><span class="v">0.06</span></div>
+      </div>
+    </div>
+
+    <!-- MIDDLE -->
+    <div class="dr-col">
+      <h5>利润率趋势（3 年）</h5>
+      <div class="margin-bars">
+        <div class="margin-row">
+          <span class="yr">FY2023</span>
+          <div class="margin-tracks">
+            <div class="track"><span class="name">毛利率</span><div class="bar"><div class="fill gm" style="width:38%"></div></div><span class="v pos">21.0%</span></div>
+            <div class="track"><span class="name">营业</span><div class="bar"></div><span class="v neg">-72.7%</span></div>
+            <div class="track"><span class="name">净利率</span><div class="bar"></div><span class="v neg">-74.6%</span></div>
+          </div>
+        </div>
+        <div class="margin-row">
+          <span class="yr">FY2024</span>
+          <div class="margin-tracks">
+            <div class="track"><span class="name">毛利率</span><div class="bar"><div class="fill gm" style="width:48%"></div></div><span class="v pos">26.6%</span></div>
+            <div class="track"><span class="name">营业</span><div class="bar"></div><span class="v neg">-43.5%</span></div>
+            <div class="track"><span class="name">净利率</span><div class="bar"></div><span class="v neg">-43.6%</span></div>
+          </div>
+        </div>
+        <div class="margin-row">
+          <span class="yr">FY2025</span>
+          <div class="margin-tracks">
+            <div class="track"><span class="name">毛利率</span><div class="bar"><div class="fill gm" style="width:63%"></div></div><span class="v pos">34.4%</span></div>
+            <div class="track"><span class="name">营业</span><div class="bar"></div><span class="v neg">-38.0%</span></div>
+            <div class="track"><span class="name">净利率</span><div class="bar"></div><span class="v neg">-32.9%</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="qchart">
+        <h6>季度营业利润率（最近 4 季度）— 亏损持续缩窄</h6>
+        <svg viewBox="0 0 300 90" width="100%" height="90">
+          <defs>
+            <linearGradient id="gradArea" x1="0" x2="0" y1="0" y2="1">
+              <stop offset="0%" stop-color="oklch(40% 0.17 145)" stop-opacity="0.18"/>
+              <stop offset="100%" stop-color="oklch(40% 0.17 145)" stop-opacity="0"/>
+            </linearGradient>
+          </defs>
+          <!-- baseline 0% -->
+          <line x1="20" y1="20" x2="290" y2="20" stroke="oklch(89% 0.01 250)" stroke-dasharray="2,3" />
+          <text x="294" y="22" font-size="7" fill="oklch(48% 0.01 250)">0%</text>
+          <!-- area: Q2 -41.3, Q3 -38.0, Q4 -28.4, Q1 -27.9 → 范围 -45..0, baseline 顶 y=20, 底 y=80 → 60px 表示 45% -->
+          <path d="M 30 75 L 110 70 L 190 58 L 270 58 L 270 90 L 30 90 Z" fill="url(#gradArea)" />
+          <path d="M 30 75 L 110 70 L 190 58 L 270 58" fill="none" stroke="oklch(40% 0.17 145)" stroke-width="1.6" />
+          <!-- dots -->
+          <circle cx="30"  cy="75" r="3.2" fill="oklch(62% 0.15 65)" />
+          <circle cx="110" cy="70" r="3.2" fill="oklch(62% 0.15 65)" />
+          <circle cx="190" cy="58" r="3.2" fill="oklch(55% 0.14 145)" />
+          <circle cx="270" cy="58" r="3.2" fill="oklch(40% 0.17 145)" />
+          <!-- labels -->
+          <text x="30"  y="86" font-size="7.5" text-anchor="middle" fill="oklch(48% 0.01 250)">Q2'25</text>
+          <text x="110" y="86" font-size="7.5" text-anchor="middle" fill="oklch(48% 0.01 250)">Q3'25</text>
+          <text x="190" y="86" font-size="7.5" text-anchor="middle" fill="oklch(48% 0.01 250)">Q4'25</text>
+          <text x="270" y="86" font-size="7.5" text-anchor="middle" fill="oklch(48% 0.01 250)">Q1'26</text>
+          <!-- values -->
+          <text x="30"  y="71" font-size="7.5" text-anchor="middle" fill="oklch(62% 0.15 65)" font-weight="600">-41.3%</text>
+          <text x="110" y="66" font-size="7.5" text-anchor="middle" fill="oklch(62% 0.15 65)" font-weight="600">-38.0%</text>
+          <text x="190" y="54" font-size="7.5" text-anchor="middle" fill="oklch(55% 0.14 145)" font-weight="600">-28.4%</text>
+          <text x="270" y="54" font-size="7.5" text-anchor="middle" fill="oklch(40% 0.17 145)" font-weight="600">-27.9%</text>
+        </svg>
+      </div>
+    </div>
+
+    <!-- RIGHT -->
+    <div class="dr-col">
+      <h5>分析师评级（19 家）</h5>
+      <div class="analyst-bar">
+        <div class="ab-row"><span class="l">强买</span><div class="bar"></div><span class="v">0</span></div>
+        <div class="ab-row"><span class="l">买入</span><div class="bar"><div class="fill b" style="width:68%"></div></div><span class="v">13</span></div>
+        <div class="ab-row"><span class="l">持有</span><div class="bar"><div class="fill h" style="width:26%"></div></div><span class="v">5</span></div>
+        <div class="ab-row"><span class="l">卖出</span><div class="bar"><div class="fill s" style="width:5%"></div></div><span class="v">1</span></div>
+        <div class="ab-row"><span class="l">强卖</span><div class="bar"></div><span class="v">0</span></div>
+      </div>
+      <div style="font-size:0.78rem;color:var(--ink-2);padding:8px 0 0;border-top:1px solid var(--rule);">共识：<b style="color:var(--green)">Buy</b> · 看多 68% · 持平比例 26%</div>
+
+      <div class="target-track">
+        <h6>目标价区间（现价 $124.77 · 中位 $99）</h6>
+        <div class="tt-rail">
+          <div class="tt-fill"></div>
+          <div class="tt-now" style="left:99%; background:var(--red)"></div>
+        </div>
+        <div class="tt-labels">
+          <span><b>$69</b></span>
+          <span style="color:var(--blue)">$99 中位</span>
+          <span><b>$120</b></span>
+        </div>
+        <div style="font-size:0.74rem;color:var(--red);margin-top:8px;font-weight:500;">⚠️ 现价 <b>$124.77</b> 已超目标价高位 ($120)，共识隐含 <b>-20.6%</b> 回调空间</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ INSTITUTIONS / ANALYSTS ============ -->
+  <div class="iarow">
+    <div class="ia-col">
+      <h5>评级动态（分析师覆盖度）</h5>
+      <div class="ia-big">
+        <span class="v">68%</span>
+        <span class="arrow" style="color:var(--amber)">→ 看多比例平稳</span>
+      </div>
+      <div style="font-size:0.78rem;color:var(--ink-2);margin-bottom:10px;line-height:1.5;">19 家覆盖（Buy 13 + Hold 5 + Sell 1）— 标准的高成长股共识结构，但目标价中位 <b>$99</b> 已低于现价 21%，共识在<b>"基本面被认可、估值被警惕"</b>之间拉锯。</div>
+      <div class="rating-bar">
+        <div class="rating-seg b"  style="flex: 13;">B 13</div>
+        <div class="rating-seg h"  style="flex: 5;">H 5</div>
+        <div class="rating-seg s"  style="flex: 1;">S 1</div>
+      </div>
+      <div class="rating-leg"><span>强买</span><span>买入</span><span>持有</span><span>卖出</span><span>强卖</span></div>
+    </div>
+    <div class="ia-col">
+      <h5>同行对比（Aerospace &amp; Defense 同业）</h5>
+      <div style="font-size:0.8rem;color:var(--ink-2);line-height:1.6;">
+        <div style="display:grid;grid-template-columns:1fr 60px 60px 70px;gap:6px;font-size:0.72rem;color:var(--ink-3);text-transform:uppercase;letter-spacing:0.04em;padding:4px 0;border-bottom:1px solid var(--rule);">
+          <span>公司</span><span>P/S</span><span>毛利</span><span>营业</span>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 60px 60px 70px;gap:6px;padding:6px 0;border-bottom:1px solid var(--rule);background:var(--green-lt);">
+          <b>RKLB (本卡)</b><b style="color:var(--red)">106.3x</b><b>36.6%</b><b style="color:var(--red)">-38%</b>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 60px 60px 70px;gap:6px;padding:5px 0;color:var(--ink-3);">
+          <span>HEI · HEICO</span><span>8.7x</span><span>40.2%</span><span style="color:var(--green)">22.8%</span>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 60px 60px 70px;gap:6px;padding:5px 0;color:var(--ink-3);">
+          <span>FIX · Comfort Systems</span><span>6.9x</span><span>25.1%</span><span style="color:var(--green)">15.7%</span>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 60px 60px 70px;gap:6px;padding:5px 0;color:var(--ink-3);">
+          <span>ESLT · Elbit Systems</span><span>4.5x</span><span>24.4%</span><span style="color:var(--green)">8.5%</span>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 60px 60px 70px;gap:6px;padding:5px 0;color:var(--ink-3);">
+          <span>EME · EMCOR</span><span>2.3x</span><span>19.5%</span><span style="color:var(--green)">9.9%</span>
+        </div>
+        <div style="font-size:0.74rem;color:var(--red);margin-top:8px;font-weight:500;">RKLB P/S = 行业中位的 <b>20-50 倍</b>，估值已完全脱离传统 A&amp;D 同业框架，必须按"SpaceX-lite 平台股"重新定价</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ BOTTOM ROW ============ -->
+  <div class="bottom">
+    <div class="bot-l">
+      <h5>🎯 关键判断 · 总结</h5>
+      <div class="cl-row">
+        <div class="cl-icon pos">✓</div>
+        <div class="cl-text"><b>叙事进展坚实</b> — GEOST + Mynaric + SDA Tranche 3 三连兑现，"Vertical Stack"平台叙事不是空话，过去 12 月有 5 起强化叙事的 8-K。</div>
+      </div>
+      <div class="cl-row">
+        <div class="cl-icon pos">✓</div>
+        <div class="cl-text"><b>规模化效应显现</b> — 毛利率 4 个季度连升（32%→38.2%），收入 YoY +38% 仍在加速，运营杠杆路径清晰。</div>
+      </div>
+      <div class="cl-row">
+        <div class="cl-icon warn">!</div>
+        <div class="cl-text"><b>估值脱离同业框架</b> — P/S 106x 是行业中位的 20-50 倍，市场已按 SpaceX-lite 锚定；分析师共识目标价 $99 < 现价 $124.77，隐含 -21% 回调。</div>
+      </div>
+      <div class="cl-row">
+        <div class="cl-icon warn">!</div>
+        <div class="cl-text"><b>Neutron 跳票风险</b> — 2026-01 燃料罐爆裂事件后，2026 H2 首飞窗口承压；估值乘数高度依赖 Neutron 兑现节奏。</div>
+      </div>
+      <div class="cl-row">
+        <div class="cl-icon neg">✕</div>
+        <div class="cl-text"><b>供给端压制显著</b> — ATM 剩余 $250M 持续稀释 + 5.3M 收购对价股注册转售 + 内部人 65 份 Form 144。基本面利好需要"突破抛压门槛"才能体现在股价。</div>
+      </div>
+      <div class="cl-row">
+        <div class="cl-icon neg">✕</div>
+        <div class="cl-text"><b>现金消耗加剧</b> — FY2025 FCF -$322M（同比恶化 2.8x），盈亏平衡点仍远。债务/权益 0.06 极低意味着未来融资靠股权稀释，而非借债。</div>
+      </div>
+    </div>
+    <div class="bot-r">
+      <h5>📊 收入规模（FY 年报）</h5>
+      <svg viewBox="0 0 320 160" width="100%" height="160">
+        <!-- Y 轴刻度 -->
+        <line x1="40" y1="20" x2="40" y2="140" stroke="oklch(89% 0.01 250)" />
+        <line x1="40" y1="140" x2="310" y2="140" stroke="oklch(89% 0.01 250)" />
+        <text x="36" y="24"  font-size="8" text-anchor="end" fill="oklch(48% 0.01 250)">$600M</text>
+        <text x="36" y="64"  font-size="8" text-anchor="end" fill="oklch(48% 0.01 250)">$400M</text>
+        <text x="36" y="104" font-size="8" text-anchor="end" fill="oklch(48% 0.01 250)">$200M</text>
+        <text x="36" y="144" font-size="8" text-anchor="end" fill="oklch(48% 0.01 250)">$0</text>
+        <!-- bars: 245/436/602 → scale 600 = 120px range (20..140) -->
+        <rect x="65"  y="91" width="60" height="49"  fill="oklch(40% 0.17 145)" opacity="0.45" />
+        <rect x="145" y="53" width="60" height="87"  fill="oklch(40% 0.17 145)" opacity="0.65" />
+        <rect x="225" y="20" width="60" height="120" fill="oklch(40% 0.17 145)" opacity="1" />
+        <!-- value labels -->
+        <text x="95"  y="86" font-size="9" text-anchor="middle" fill="oklch(14% 0.01 250)" font-weight="600">$245M</text>
+        <text x="175" y="48" font-size="9" text-anchor="middle" fill="oklch(14% 0.01 250)" font-weight="600">$436M</text>
+        <text x="255" y="15" font-size="9" text-anchor="middle" fill="oklch(14% 0.01 250)" font-weight="600">$602M</text>
+        <!-- growth badges inside bars -->
+        <rect x="153" y="64" width="44" height="13" rx="2" fill="oklch(99% 0.004 250)" opacity="0.9" />
+        <text x="175" y="73" font-size="8.5" text-anchor="middle" fill="oklch(40% 0.17 145)" font-weight="700">+78%</text>
+        <rect x="233" y="32" width="44" height="13" rx="2" fill="oklch(99% 0.004 250)" opacity="0.9" />
+        <text x="255" y="41" font-size="8.5" text-anchor="middle" fill="oklch(40% 0.17 145)" font-weight="700">+38%</text>
+        <!-- X labels -->
+        <text x="95"  y="153" font-size="8.5" text-anchor="middle" fill="oklch(48% 0.01 250)" font-weight="500">FY2023</text>
+        <text x="175" y="153" font-size="8.5" text-anchor="middle" fill="oklch(48% 0.01 250)" font-weight="500">FY2024</text>
+        <text x="255" y="153" font-size="8.5" text-anchor="middle" fill="oklch(48% 0.01 250)" font-weight="500">FY2025</text>
+      </svg>
+      <div style="font-size:0.74rem;color:var(--ink-3);margin-top:10px;line-height:1.5;">3 年收入复合增长率 <b style="color:var(--green)">+56%</b> CAGR，但 2025 增速从 2024 的 +78% 回落到 +38% — 高基数效应初现。</div>
+    </div>
+  </div>
+
+  <!-- ============ FOOTER ============ -->
+  <div class="foot">
+    <div>
+      数据来源：FMP（income-statement / cash-flow / ratios-ttm / analyst / peers）· SEC EDGAR（8-K / Form 144 / 424B5）· 截止 2026-05-17
+    </div>
+    <div class="brand">lonkyclaw · 基本面分析</div>
+  </div>
+
+</div>
+<script>
+(function () {
+  if (window.parent === window) return;
+  function report() {
+    var h = document.querySelector('.card').getBoundingClientRect().height + 80;
+    window.parent.postMessage({ type: 'rklb-card-height', height: Math.ceil(h) }, '*');
+  }
+  window.addEventListener('load', function () { setTimeout(report, 200); });
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(function () { setTimeout(report, 50); });
+  new ResizeObserver(report).observe(document.querySelector('.card'));
+})();
+</script>
+</body>
+</html>
