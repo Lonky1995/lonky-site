@@ -13,6 +13,7 @@ type BlogPost = {
   coverImage?: string;
   platform?: string;
   duration?: number;
+  externalUrl?: string;
 };
 
 function formatDuration(seconds?: number): string {
@@ -30,12 +31,20 @@ export function BlogCard({
   post: BlogPost;
   index?: number;
 }) {
-  const href = post.type === "podcast"
-    ? `/podcast-notes/${post.slug}`
-    : `/blog/${post.slug}`;
+  const isExternal = !!post.externalUrl;
+  const href = isExternal
+    ? post.externalUrl!
+    : post.type === "podcast"
+      ? `/podcast-notes/${post.slug}`
+      : `/blog/${post.slug}`;
 
   return (
-    <Link href={href}>
+    <Link
+      href={href}
+      {...(isExternal
+        ? { target: "_blank", rel: "noopener" }
+        : {})}
+    >
       <AnimatedCard delay={index * 0.05}>
         <div className="flex items-start gap-4">
           {post.coverImage && (

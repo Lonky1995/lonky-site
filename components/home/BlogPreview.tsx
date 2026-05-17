@@ -12,10 +12,16 @@ type BlogPost = {
   date: string;
   category: string;
   type?: string;
+  externalUrl?: string;
 };
 
 function getPostHref(post: BlogPost) {
+  if (post.externalUrl) return post.externalUrl;
   return post.type === "podcast" ? `/podcast-notes/${post.slug}` : `/blog/${post.slug}`;
+}
+
+function getLinkProps(post: BlogPost) {
+  return post.externalUrl ? { target: "_blank", rel: "noopener" as const } : {};
 }
 
 export function BlogPreview({ posts }: { posts: BlogPost[] }) {
@@ -58,7 +64,7 @@ export function BlogPreview({ posts }: { posts: BlogPost[] }) {
             transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
             className="mb-4"
           >
-            <Link href={getPostHref(posts[0])}>
+            <Link href={getPostHref(posts[0])} {...getLinkProps(posts[0])}>
               <div className="writing-featured-card">
                 <div className="wc-meta">
                   <span className="wc-cat">{posts[0].category}</span>
@@ -85,7 +91,7 @@ export function BlogPreview({ posts }: { posts: BlogPost[] }) {
                   exit={{ opacity: 0, y: -10 }}
                   transition={{ duration: 0.4, delay: i * 0.06, ease: [0.22, 1, 0.36, 1] }}
                 >
-                  <Link href={getPostHref(post)}>
+                  <Link href={getPostHref(post)} {...getLinkProps(post)}>
                     <div className="writing-card">
                       <div className="wc-meta">
                         <span className="wc-cat">{post.category}</span>

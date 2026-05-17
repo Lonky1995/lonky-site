@@ -4,15 +4,16 @@ import { ProjectsPreview } from "@/components/home/ProjectsPreview";
 import { BlogPreview } from "@/components/home/BlogPreview";
 
 // Try to import blog posts + podcast notes from velite, fallback to empty
-let blogPosts: { slug: string; title: string; description: string; date: string; category: string; type: string }[] = [];
+let blogPosts: { slug: string; title: string; description: string; date: string; category: string; type: string; externalUrl?: string }[] = [];
 try {
   const { posts, podcastNotes } = await import("@/.velite");
 
   const blogItems = (posts || [])
     .filter((p: { published: boolean }) => p.published)
-    .map((p: { slug: string; title: string; description: string; date: string; category: string }) => ({
+    .map((p: { slug: string; title: string; description: string; date: string; category: string; externalUrl?: string }) => ({
       slug: p.slug, title: p.title, description: p.description || "",
       date: p.date, category: p.category || "Uncategorized", type: "blog",
+      externalUrl: p.externalUrl,
     }));
 
   const podcastItems = (podcastNotes || [])

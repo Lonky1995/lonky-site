@@ -17,6 +17,7 @@ type ListItem = {
   coverImage?: string;
   platform?: string;
   duration?: number;
+  externalUrl?: string;
 };
 
 export default function BlogPage() {
@@ -38,6 +39,7 @@ export default function BlogPage() {
               date: string;
               category: string;
               coverImage?: string;
+              externalUrl?: string;
             }) => ({
               slug: p.slug,
               title: p.title,
@@ -46,6 +48,7 @@ export default function BlogPage() {
               category: p.category || "Uncategorized",
               type: "blog" as const,
               coverImage: p.coverImage,
+              externalUrl: p.externalUrl,
             })
           );
 

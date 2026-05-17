@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { notFound } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 import { BackLink } from "./back-link";
 import { ImageZoom } from "@/components/ui/ImageZoom";
 import { siteConfig } from "@/data/site-config";
@@ -22,6 +22,7 @@ type Post = {
   tags: string[];
   body: string;
   published: boolean;
+  externalUrl?: string;
 };
 
 export async function generateStaticParams() {
@@ -69,6 +70,7 @@ export default async function BlogPostPage({
   const post = posts.find((p: Post) => p.slug === slug);
 
   if (!post) notFound();
+  if (post.externalUrl) redirect(post.externalUrl);
 
   const date = new Date(post.date).toLocaleDateString("en-US", {
     year: "numeric",

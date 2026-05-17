@@ -23,11 +23,12 @@ export default defineConfig({
           tags: s.array(s.string()).optional().default([]),
           published: s.boolean().optional().default(true),
           coverImage: s.string().optional(),
+          externalUrl: s.string().optional(),
           body: s.markdown(),
         })
         .transform((data) => ({
           ...data,
-          permalink: `/blog/${data.slug}`,
+          permalink: data.externalUrl ?? `/blog/${data.slug}`,
         })),
     },
     podcastNotes: {
