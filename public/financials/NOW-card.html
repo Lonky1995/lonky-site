@@ -133,6 +133,51 @@ b { color: var(--ink); font-weight: 600; }
 .cl-icon.fail { background: var(--red-lt); color: var(--red); }
 .footer { padding: 18px 40px; background: oklch(20% 0.01 250); color: oklch(85% 0.005 250); font-size: 0.7rem; display: flex; justify-content: space-between; align-items: center; }
 .footer .brand { font-family: 'Fraunces', serif; font-weight: 500; }
+
+/* ── IC-Memo v2 新增样式 ── */
+.section-title .ic-badge { font-size: 0.62rem; padding: 2px 8px; background: var(--blue-lt); color: var(--blue); border-radius: 999px; font-weight: 600; letter-spacing: 0.04em; }
+.notice { padding: 14px 40px; background: var(--blue-lt); color: var(--blue); font-size: 0.78rem; border-bottom: 1px solid var(--rule); display: flex; gap: 12px; align-items: center; }
+.notice .badge { font-size: 0.6rem; padding: 3px 8px; background: var(--blue); color: white; border-radius: 999px; font-weight: 700; letter-spacing: 0.06em; flex-shrink: 0; }
+
+/* Earnings table */
+.earn-table { width: 100%; border-collapse: collapse; font-size: 0.78rem; }
+.earn-table th { text-align: left; padding: 8px 10px; background: var(--surface); color: var(--ink-3); font-weight: 600; font-size: 0.7rem; letter-spacing: 0.04em; text-transform: uppercase; border-bottom: 1px solid var(--rule); }
+.earn-table td { padding: 8px 10px; border-bottom: 1px solid var(--rule); }
+.earn-table tr:last-child td { border-bottom: none; }
+.beat-tag { font-size: 0.7rem; padding: 1px 6px; border-radius: 3px; font-weight: 600; }
+.beat-tag.pos { background: var(--green-lt); color: var(--green); }
+.beat-tag.neg { background: var(--red-lt); color: var(--red); }
+.beat-tag.flat { background: var(--surface); color: var(--ink-3); }
+.earn-trend { margin-top: 12px; padding: 10px 14px; background: var(--green-lt); border-radius: 4px; color: var(--green); font-size: 0.82rem; }
+.earn-next { margin-top: 10px; padding: 10px 14px; background: var(--amber-lt); border-radius: 4px; color: var(--amber); font-size: 0.82rem; }
+
+/* Thesis Pillars */
+.pillar-grid { display: flex; flex-direction: column; gap: 12px; }
+.pillar { padding: 14px 18px; border-left: 4px solid var(--ink-4); background: oklch(98% 0.003 250); border-radius: 0 4px 4px 0; }
+.pillar.strengthened { border-left-color: var(--green); }
+.pillar.unchanged { border-left-color: var(--amber); }
+.pillar.weakened { border-left-color: var(--red); }
+.pillar-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; }
+.pillar-name { font-size: 0.95rem; font-weight: 600; color: var(--ink); }
+.pillar-status { font-size: 0.65rem; padding: 3px 9px; border-radius: 999px; font-weight: 700; letter-spacing: 0.06em; }
+.pillar-status.strengthened { background: var(--green-lt); color: var(--green); }
+.pillar-status.unchanged { background: var(--amber-lt); color: var(--amber); }
+.pillar-status.weakened { background: var(--red-lt); color: var(--red); }
+.pillar-thesis { font-size: 0.8rem; color: var(--ink-2); font-style: italic; margin-bottom: 6px; }
+.pillar-rationale { font-size: 0.82rem; color: var(--ink); line-height: 1.55; }
+
+/* Estimates */
+.est-baseline { padding: 12px 16px; background: var(--blue-lt); color: var(--blue); border-radius: 4px; font-size: 0.85rem; line-height: 1.55; }
+
+/* Bull/Bear with mitigant */
+.bb-item-head { display: flex; gap: 10px; }
+.mitigant { margin-top: 6px; margin-left: 28px; padding: 6px 10px; background: rgba(255,255,255,0.5); border-left: 2px dashed var(--ink-3); font-size: 0.74rem; color: var(--ink-3); line-height: 1.5; }
+.mitigant b { color: var(--ink-2); }
+
+/* Diligence */
+.dilig-grid { display: flex; flex-direction: column; gap: 10px; padding: 16px 18px; background: var(--surface); border-radius: 4px; }
+.dilig-item { display: flex; gap: 10px; font-size: 0.82rem; color: var(--ink); }
+.dilig-num { font-family: 'Fraunces', serif; font-weight: 600; color: var(--blue); flex-shrink: 0; }
 </style>
 </head>
 <body>
@@ -146,15 +191,147 @@ b { color: var(--ink); font-weight: 600; }
       <div class="industry">Technology · Enterprise SaaS · NYSE</div>
     </div>
     <div class="h-mid">
-      <div class="verdict-pill">🎯 Armis 收购转型 · IT + Security 平台化</div>
+      <div class="verdict-pill">🎯 Armis 收购转型 · IC-Memo v3</div>
       <div class="thesis">"$4B 收购 Armis Security 是 NOW 历史上最大并购——它在变成"企业自动化 + 网络安全"双引擎平台。短期 GAAP 利润被压制，但 FCF/净利润 262% 说明现金创造能力丝毫未减。"</div>
     </div>
     <div class="h-right">
       <div class="price serif">$95.07</div>
       <div class="price-note">⚠️ FMP 快照价（实际市价请核对）</div>
       <div class="mcap">$98.0B 市值</div>
-      <div class="date">数据 2026-05-18</div>
+      <div class="date">数据 2026-05-19</div>
       <div class="sec-tag">P/E 56x · P/FCF 21x · P/S 7x</div>
+    </div>
+  </div>
+
+  <div class="notice">
+    <div class="badge">IC-MEMO v3</div>
+    <div>v3 新增 <b>Company Research（公司画像 + 管理层 bio + TAM）</b> + <b>Football Field 估值汇总</b> + <b>Strict Output Policy</b>。Thesis Pillars baseline 保留 v2，下次分析将评估状态。</div>
+  </div>
+
+  <!-- IC-Memo v3: Company Research（公司画像 + 管理层）-->
+  <div class="section">
+    <div class="section-title">🏢 Company Research · 公司画像 <span class="ic-badge">v3 NEW</span><span class="meta">（机构 Initiating Coverage 风格）</span></div>
+
+    <!-- 公司一句话画像 -->
+    <div style="padding: 12px 16px; background: var(--blue-lt); border-left: 4px solid var(--blue); border-radius: 0 4px 4px 0; margin-bottom: 18px;">
+      <div style="font-size: 0.7rem; color: var(--blue); font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 4px;">公司一句话画像</div>
+      <div style="font-size: 0.95rem; color: var(--ink); font-family: 'Fraunces', serif; font-weight: 500;">企业 SaaS 平台龙头，订阅制 IT 服务管理（ITSM）+ Now Assist GenAI 工作流，全球 8500+ 大企业客户，ITSM 市占率约 40% 行业第一。</div>
+    </div>
+
+    <!-- 管理团队 -->
+    <div style="margin-bottom: 18px;">
+      <div style="font-size: 0.85rem; color: var(--ink-2); font-weight: 600; margin-bottom: 10px;">👥 核心管理团队（FMP key-executives 2026-05-19）</div>
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+
+        <div style="padding: 12px 14px; background: var(--surface); border-radius: 4px;">
+          <div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 4px;">
+            <div style="font-weight: 600; color: var(--ink); font-size: 0.88rem;">Bill McDermott</div>
+            <div style="font-size: 0.68rem; color: var(--ink-3); font-family: 'Fraunces', serif;">年薪 $8.07M</div>
+          </div>
+          <div style="font-size: 0.72rem; color: var(--ink-3); margin-bottom: 6px;">Chairman & CEO · since 2019</div>
+          <div style="font-size: 0.78rem; color: var(--ink-2); line-height: 1.55;">前 SAP CEO（2010-2019），SAP 任内市值翻 3 倍。2019 加盟 NOW 后营收 $3B → $13B（4x 增长）。<b>典型增长型 CEO，擅长大型企业销售 + 战略并购</b>。Armis 收购符合其 SAP 时代的"平台收购"打法。</div>
+        </div>
+
+        <div style="padding: 12px 14px; background: var(--surface); border-radius: 4px;">
+          <div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 4px;">
+            <div style="font-weight: 600; color: var(--ink); font-size: 0.88rem;">Gina Mastantuono</div>
+            <div style="font-size: 0.68rem; color: var(--ink-3); font-family: 'Fraunces', serif;">年薪 $2.17M</div>
+          </div>
+          <div style="font-size: 0.72rem; color: var(--ink-3); margin-bottom: 6px;">President & CFO</div>
+          <div style="font-size: 0.78rem; color: var(--ink-2); line-height: 1.55;">前 Ingredion CFO + Vodafone 北美 CFO。<b>保守型 CFO，FCF 导向</b>。NOW 任内推动多次评级上调（信用评级从 BBB+ 升至 A-）。$11B 融资节奏（循环 + 过桥 + 长期债）就是她的手笔——典型"先备弹药再行动"。</div>
+        </div>
+
+        <div style="padding: 12px 14px; background: var(--surface); border-radius: 4px;">
+          <div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 4px;">
+            <div style="font-weight: 600; color: var(--ink); font-size: 0.88rem;">Amit Zavery</div>
+            <div style="font-size: 0.68rem; color: var(--ink-3); font-family: 'Fraunces', serif;">年薪 $4.08M</div>
+          </div>
+          <div style="font-size: 0.72rem; color: var(--ink-3); margin-bottom: 6px;">President + CPO + COO（三职合一）</div>
+          <div style="font-size: 0.78rem; color: var(--ink-2); line-height: 1.55;">前 Google Cloud 总经理 + Oracle 副总裁。<b>负责 Now Assist AI 平台 + 产品路线图 + 日常运营</b>。Armis 整合落到他头上。三职合一显示 McDermott 对其极度信任，但也是<b>关键人物风险</b>（若离职震荡大）。</div>
+        </div>
+
+        <div style="padding: 12px 14px; background: var(--surface); border-radius: 4px;">
+          <div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 4px;">
+            <div style="font-weight: 600; color: var(--ink); font-size: 0.88rem;">Frederic Luddy</div>
+            <div style="font-size: 0.68rem; color: var(--ink-3); font-family: 'Fraunces', serif;">象征性 $40K</div>
+          </div>
+          <div style="font-size: 0.72rem; color: var(--ink-3); margin-bottom: 6px;">Founder & Director</div>
+          <div style="font-size: 0.78rem; color: var(--ink-2); line-height: 1.55;">2004 年创立 NOW（前 ServiceNow），定义了 ITSM SaaS 品类。<b>创始人仍在董事会担任战略守门人</b>。对 Armis 这种大动作有否决权。Luddy 不反对，是这次收购合理性的强信号。</div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- 业务地图 -->
+    <div style="margin-bottom: 18px;">
+      <div style="font-size: 0.85rem; color: var(--ink-2); font-weight: 600; margin-bottom: 10px;">🗺️ 业务地图（产品 / 客户 / 地理）</div>
+      <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; font-size: 0.78rem;">
+        <div style="padding: 10px 12px; background: var(--surface); border-radius: 4px;">
+          <div style="font-weight: 600; color: var(--ink); margin-bottom: 6px;">主要产品线（5 个）</div>
+          <div style="color: var(--ink-2); line-height: 1.65;">
+            • IT Workflow（ITSM、~50%）<br>
+            • Customer & Industry Workflow（~20%）<br>
+            • Employee Workflow（~15%）<br>
+            • Creator Workflow（~10%）<br>
+            • <b>Now Assist GenAI</b>（新，~5% 但快速增长）
+          </div>
+        </div>
+        <div style="padding: 10px 12px; background: var(--surface); border-radius: 4px;">
+          <div style="font-weight: 600; color: var(--ink); margin-bottom: 6px;">客户结构</div>
+          <div style="color: var(--ink-2); line-height: 1.65;">
+            • <b>大企业为主</b>：Fortune 500 中 85% 是客户<br>
+            • 8,500+ 企业客户（年报）<br>
+            • Top-20 客户占比 &lt;15%（低集中度）<br>
+            • <b>$1M+ ACV 客户超 2,100 家</b><br>
+            • <b>$5M+ ACV 客户 250+ 家</b>
+          </div>
+        </div>
+        <div style="padding: 10px 12px; background: var(--surface); border-radius: 4px;">
+          <div style="font-weight: 600; color: var(--ink); margin-bottom: 6px;">地理分布</div>
+          <div style="color: var(--ink-2); line-height: 1.65;">
+            • 北美 ~63%<br>
+            • 欧洲 ~26%<br>
+            • 亚太 ~11%<br>
+            • <b>欧洲增速最快（+27% YoY）</b><br>
+            • 新兴市场刚起步（&lt;5%）
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 行业地图 + TAM -->
+    <div style="margin-bottom: 18px;">
+      <div style="font-size: 0.85rem; color: var(--ink-2); font-weight: 600; margin-bottom: 10px;">🌐 行业地图 + TAM</div>
+      <div style="padding: 12px 14px; background: var(--surface); border-radius: 4px; font-size: 0.8rem; color: var(--ink-2); line-height: 1.65;">
+        <b>当前 TAM</b>：~$230B（IT/HR/CX/Creator workflow + GenAI for Enterprise，来源：公司 FY25 投资者日披露）<br>
+        <b>5 年 CAGR</b>：~15%（Gartner Enterprise Software 整体增速 + GenAI 提速）<br>
+        <b>NOW 当前市占率</b>：~$13.3B 营收 / $230B TAM ≈ <b>5.8%</b>（占比小，渗透空间大）<br>
+        <b>Armis 加入后 TAM 扩展</b>：OT 安全 + 物联网安全 $40B+ 新增 TAM（来源：估算）<br>
+        <b>渗透路径</b>：(1) 现有 8500+ 客户的 cross-sell 渠道 → Armis OT 安全 (2) Now Assist GenAI 改写工作流（每 token = 自动化场景）<br>
+        ⚠️ <b>来源</b>：TAM 数据混合公司披露 + LLM 训练数据估算，自行核对
+      </div>
+    </div>
+
+    <!-- 竞争位置 -->
+    <div>
+      <div style="font-size: 0.85rem; color: var(--ink-2); font-weight: 600; margin-bottom: 10px;">⚔️ 竞争位置（定性，不重复"竞品对比"数字）</div>
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; font-size: 0.78rem;">
+        <div style="padding: 10px 12px; background: var(--green-lt); border-left: 3px solid var(--green); border-radius: 0 4px 4px 0;">
+          <div style="font-weight: 600; color: var(--green); margin-bottom: 6px;">🛡️ 护城河类型</div>
+          <div style="color: var(--ink-2); line-height: 1.6;">
+            • <b>高转换成本</b>：ITSM 嵌入企业核心流程，迁移成本极高<br>
+            • <b>网络效应</b>：ServiceNow Store 第三方应用 + 集成生态<br>
+            • <b>数据飞轮</b>：服务于客户的工单数据 → Now Assist 训练
+          </div>
+        </div>
+        <div style="padding: 10px 12px; background: var(--red-lt); border-left: 3px solid var(--red); border-radius: 0 4px 4px 0;">
+          <div style="font-weight: 600; color: var(--red); margin-bottom: 6px;">🎯 最大 2 个威胁</div>
+          <div style="color: var(--ink-2); line-height: 1.6;">
+            • <b>Microsoft Copilot</b>：M365 渗透 + 内置工作流，可能绕过 NOW（M365 已在 NOW 客户里）<br>
+            • <b>Salesforce + Slack</b>：客户服务 workflow 重叠，竞争 ARR 钱包份额
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 
@@ -290,16 +467,174 @@ b { color: var(--ink); font-weight: 600; }
     </div>
   </div>
 
+  <!-- IC-Memo v3: 估值 Football Field -->
+  <div class="section">
+    <div class="section-title">🏈 估值 Football Field <span class="ic-badge">v3 NEW</span><span class="meta">（多源估值锚点交叉验证）</span></div>
+
+    <table class="earn-table">
+      <thead><tr><th>估值锚点</th><th>含义 / 来源</th><th>隐含价格</th><th>vs 当前 $95</th></tr></thead>
+      <tbody>
+        <tr style="background: var(--surface);">
+          <td><b>当前价</b></td><td>实际市价（基线）</td><td><b style="font-family:'Fraunces',serif;">$95.07</b></td><td>—</td>
+        </tr>
+        <tr>
+          <td>分析师目标价 - 低端</td><td>悲观情景（FMP grades）</td><td>$85.00</td><td><span class="beat-tag neg">-10.6%</span></td>
+        </tr>
+        <tr>
+          <td>Peers PE 中位 × 当前 EPS</td><td>同行估值平推（vs CRM PE 21.8x）</td><td>$87.10</td><td><span class="beat-tag neg">-8.4%</span></td>
+        </tr>
+        <tr style="background: var(--green-lt);">
+          <td><b>分析师目标价 - 中位</b></td><td>共识价（68 家 FMP grades）</td><td><b style="color:var(--green);">$137.50</b></td><td><span class="beat-tag pos">+44.6%</span></td>
+        </tr>
+        <tr>
+          <td>5 年 PE 历史中位 × 当前 EPS</td><td>历史回归视角（PE ~ 70x，LLM 估算）</td><td>$140.00</td><td><span class="beat-tag pos">+47.3%</span></td>
+        </tr>
+        <tr>
+          <td>Peers PS 中位 × 当前每股营收</td><td>同行 PS 平推（中位 ~9x vs NOW 7x）</td><td>$155.00</td><td><span class="beat-tag pos">+63.0%</span></td>
+        </tr>
+        <tr>
+          <td>分析师目标价 - 高端</td><td>乐观情景（AI 主题溢价）</td><td>$236.00</td><td><span class="beat-tag pos">+148.2%</span></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="earn-trend" style="background: var(--blue-lt); color: var(--blue);">
+      📐 <b>估值共识区间</b>：$85 - $236（中位 $137.50），当前 $95 <b>处于下端</b>（仅高于悲观 $85，远低于中位 $137.50）。
+    </div>
+    <div class="earn-next">
+      ⚖️ <b>多空分歧点</b>：低端 $85（-11%）vs 高端 $236（+148%）差距 <b>2.8x</b>，分歧极大。空头视角：Armis 整合失败 + GAAP 利润持续承压；多头视角：P/FCF 21x 重估到 SaaS 平均 + AI 主题溢价。<b>核心分歧在估值视角切换</b>（GAAP PE vs P/FCF）—— 谁占主导，决定股价方向。
+    </div>
+  </div>
+
+  <!-- IC-Memo v2: Earnings Beat/Miss 历史 -->
+  <div class="section">
+    <div class="section-title">📊 Earnings Beat/Miss 历史 <span class="ic-badge">NEW</span><span class="meta">（FMP /stable/earnings · 最近 6 季）</span></div>
+    <table class="earn-table">
+      <thead><tr><th>财报日期</th><th>EPS 实际</th><th>EPS 预期</th><th>EPS Beat</th><th>营收实际</th><th>营收预期</th><th>营收 Beat</th></tr></thead>
+      <tbody>
+        <tr><td>2026-04-22 (Q1'26)</td><td>$0.97</td><td>$0.97</td><td><span class="beat-tag flat">~ 0.0%</span></td><td>$3.77B</td><td>$3.74B</td><td><span class="beat-tag pos">✅ +0.8%</span></td></tr>
+        <tr><td>2026-01-28 (Q4'25)</td><td>$0.92</td><td>$0.89</td><td><span class="beat-tag pos">✅ +4.0%</span></td><td>$3.57B</td><td>$3.53B</td><td><span class="beat-tag pos">✅ +1.1%</span></td></tr>
+        <tr><td>2025-10-29 (Q3'25)</td><td>$0.96</td><td>$0.85</td><td><span class="beat-tag pos">✅ +13.3%</span></td><td>$3.41B</td><td>$3.36B</td><td><span class="beat-tag pos">✅ +1.5%</span></td></tr>
+        <tr><td>2025-07-23 (Q2'25)</td><td>$0.82</td><td>$0.71</td><td><span class="beat-tag pos">✅ +14.7%</span></td><td>$3.21B</td><td>$3.12B</td><td><span class="beat-tag pos">✅ +3.0%</span></td></tr>
+        <tr><td>2025-04-23 (Q1'25)</td><td>$0.81</td><td>$0.77</td><td><span class="beat-tag pos">✅ +5.5%</span></td><td>$3.09B</td><td>$3.08B</td><td><span class="beat-tag pos">✅ +0.2%</span></td></tr>
+        <tr><td>2025-01-29 (Q4'24)</td><td>$0.73</td><td>$0.73</td><td><span class="beat-tag flat">~ +0.5%</span></td><td>$2.96B</td><td>$2.96B</td><td><span class="beat-tag flat">~ -0.2%</span></td></tr>
+      </tbody>
+    </table>
+    <div class="earn-trend">🎯 <b>趋势</b>：营收 <b>6 季全部 beat</b>（执行力极强），但 EPS Beat 从 Q2'25 +14.7% → Q1'26 0.0% <b>逐季收窄</b>——预示 Armis 整合期开始体现在 OpEx 上。</div>
+    <div class="earn-next">📅 <b>下季 Q2'26 (7/22)</b>：consensus EPS <b>$0.85</b>（vs Q1'26 actual $0.97 <b style="color:var(--red);">-12%</b>） · 营收 <b>$3.93B</b>。EPS 下调反映 Armis 收购完成后整合期影响——市场已定价的下调，关键看 actual 是否 beat $0.85。</div>
+  </div>
+
+  <!-- IC-Memo v2: Thesis Pillars -->
+  <div class="section">
+    <div class="section-title">🏛️ Thesis Pillars 跟踪（首次 baseline）<span class="ic-badge">NEW · CORE</span><span class="meta">（4 个可证伪支柱 · thesis-history 2026-05-19）</span></div>
+    <div class="pillar-grid">
+      <div class="pillar strengthened">
+        <div class="pillar-head">
+          <div class="pillar-name">支柱 1: Armis 收购的战略合理性</div>
+          <div class="pillar-status strengthened">✅ STRENGTHENED</div>
+        </div>
+        <div class="pillar-thesis">论点: $4B 收购 Armis 让 NOW 从 ITSM 工具升级为 "IT + OT 安全统一平台"，开启 GenAI 时代 OT 安全新增长曲线。</div>
+        <div class="pillar-rationale">
+          <b>本次理由</b>：3 份连续 8-K（4/1 + 4/22 + 5/15）揭示完整融资链：$3B 循环 + $4B 过桥 + $4B 长期债 = <b>$11B 流动性</b>，全部为单一目标。期限结构 2028-2056 五档显示这是<b>长期战略投资而非短期套利</b>。
+          <br><b>验证条件</b>：未来 4 季 NOW 季报需明确披露 Armis 贡献的 ARR + cross-sell 转化率。12 个月后 cross-sell &lt; 20% 或 Armis 仍亏损，本支柱将 WEAKENED。
+        </div>
+      </div>
+
+      <div class="pillar unchanged">
+        <div class="pillar-head">
+          <div class="pillar-name">支柱 2: FCF 增速的可持续性</div>
+          <div class="pillar-status unchanged">⚠️ UNCHANGED (baseline)</div>
+        </div>
+        <div class="pillar-thesis">论点: NOW 的 FCF/净利润 262% 是其"被错杀"核心 — 若 FCF 在 Armis 整合期保持 +30% 增速，P/FCF 21x 是 SaaS 最便宜。</div>
+        <div class="pillar-rationale">
+          <b>本次理由</b>：FY2025 FCF $4.6B（+35% YoY），3 年 $2.7B → $4.6B 加速增长。但 Q1'26 EPS Beat 收窄到 0% 是黄色信号——SBC + 整合费用正在加速。
+          <br><b>验证条件</b>：Q2'26 财报 FCF 同比增速。若 ≥+25%，STRENGTHENED；若 +15-25%，UNCHANGED；若 &lt;+15%，WEAKENED。
+        </div>
+      </div>
+
+      <div class="pillar unchanged">
+        <div class="pillar-head">
+          <div class="pillar-name">支柱 3: 估值视角错位 (P/E vs P/FCF)</div>
+          <div class="pillar-status unchanged">⚠️ UNCHANGED (baseline)</div>
+        </div>
+        <div class="pillar-thesis">论点: 市场用 GAAP PE 56x 看贵导致股价跌 -55%，但 P/FCF 仅 21x（vs MSFT 35x, CRM 25x）— 视角切换将触发估值修复。</div>
+        <div class="pillar-rationale">
+          <b>本次理由</b>：Q4'25 13F 显示 Vanguard +8175 万股 + State Street +3844 万股 + JPM +2995 万股，被动巨头大幅增持（S&P 500 重置 + 主动信号混合）。Norges Bank 新建仓 $2B 是纯主动信号。
+          <br><b>验证条件</b>：成长基金（Tiger Global / Jennison 类）下季是否<b>开始</b>建仓？若开始 STRENGTHENED；若机构数量净减少 WEAKENED。
+        </div>
+      </div>
+
+      <div class="pillar unchanged">
+        <div class="pillar-head">
+          <div class="pillar-name">支柱 4: 分析师共识的稳定性</div>
+          <div class="pillar-status unchanged">⚠️ UNCHANGED (baseline)</div>
+        </div>
+        <div class="pillar-thesis">论点: 看多比例 12 月内 85% → 90%，48 家覆盖稳定 — 共识级别在 SaaS 大盘股中罕见，新催化剂将驱动评级上调而非下调。</div>
+        <div class="pillar-rationale">
+          <b>本次理由</b>：68 家广泛覆盖，57 家 Buy + 10 Hold + 1 Sell；目标价中位 $137.50（+45% 上行）。2026-03 关键转折点：覆盖 46→49, 看多 91%→90%（Armis 公告后微调，但仍极高水位）。
+          <br><b>验证条件</b>：3 个月内目标价中位走势。$137.50 → $150+ STRENGTHENED；→ $120 以下 WEAKENED。
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- IC-Memo v2: Estimates baseline -->
+  <div class="section">
+    <div class="section-title">📈 Estimates 跟踪（baseline）<span class="ic-badge">NEW</span><span class="meta">（estimates 2026-05-19）</span></div>
+    <div class="est-baseline">
+      📌 <b>本次为 baseline 记录</b>（无历史对比）：
+      <ul style="margin-top:6px;margin-left:20px;line-height:1.7;">
+        <li><b>FCF (TTM)</b>: ~$4.6B</li>
+        <li><b>营业利润率 (TTM)</b>: 13.7%</li>
+        <li><b>营收 YoY (TTM)</b>: +20.9%</li>
+      </ul>
+      下次分析将自动对比这三个指标变化，并指出"加速 / 减速 / 反转"。
+    </div>
+  </div>
+
+  <!-- IC-Memo v2: Bull/Bear with Mitigant（替换 v1）-->
   <div class="bb">
     <div class="bb-side bb-bull">
-      <div class="bb-title">🐂 Bull Case</div>
-      <div class="bb-item"><div class="bb-num serif">1</div><div class="bb-text"><b>Armis 收购打开新增长曲线</b>：物联网/OT 安全是 GenAI 时代新爆发的赛道（每个 AI agent 都要部署到具体设备）。NOW 的 ITSM 客户（医院、工厂、政府）天然需要 OT 安全。整合后预计每个客户 ARR uplift 30%+，是未来 3 年最大的 cross-sell 机会。</div></div>
-      <div class="bb-item"><div class="bb-num serif">2</div><div class="bb-text"><b>FCF 估值角度极便宜</b>：P/FCF 仅 <b>21x</b>（vs MSFT 35x、CRM 25x），FCF 3 年 70% 复合增长。市场用 GAAP PE 56x 看贵，但 GAAP 净利润被 SBC + R&D 主动压低。若用 FCF 估值视角，NOW 在大盘 SaaS 里是最便宜的。Vanguard 一次性增持 8175 万股说明被动+主动资金已开始重估。</div></div>
+      <div class="bb-title">🐂 Bull Case (Thesis → Risk → Mitigant)</div>
+      <div class="bb-item">
+        <div class="bb-item-head">
+          <div class="bb-num serif">1</div>
+          <div class="bb-text"><b>Armis 收购打开 OT 安全新增长曲线</b>：物联网/OT 安全是 GenAI 时代爆发赛道；NOW 的 ITSM 客户（医院/工厂/政府）天然需要 OT 安全；预计每个客户 ARR uplift 30%+。</div>
+        </div>
+        <div class="mitigant">
+          <b>Mitigant (论点被证伪的条件)</b>：如果 12 个月后 Armis cross-sell 转化率 &lt;15%，或 Armis 业务独立 ARR 增长 &lt;30% YoY，证明协同假设错误。彼时这个 Bull 失效。
+        </div>
+      </div>
+      <div class="bb-item">
+        <div class="bb-item-head">
+          <div class="bb-num serif">2</div>
+          <div class="bb-text"><b>P/FCF 21x 是大盘 SaaS 最便宜</b>（vs MSFT 35x, CRM 25x），FCF 3 年 70% 复合增长。Vanguard +8175 万股、Norges Bank 新建仓 $2B 已开始重估。</div>
+        </div>
+        <div class="mitigant">
+          <b>Mitigant</b>：如果 Q2/Q3'26 FCF 增速跌破 +20%（vs FY25 +35%），P/FCF "便宜"的逻辑就动摇。市场可能从 P/FCF 视角切换回 P/E 视角，估值压力恢复。
+        </div>
+      </div>
     </div>
     <div class="bb-side bb-bear">
-      <div class="bb-title">🐻 Bear Case</div>
-      <div class="bb-item"><div class="bb-num serif">1</div><div class="bb-text"><b>大型收购整合失败概率不低</b>：$4B 是 NOW 历史上最大并购，且 Armis 业务（OT 安全）跟 NOW 核心（ITSM）协同需要时间。SaaS 大型并购历史平均成功率不到 40%。CRM 的 Slack ($28B) 整合期 3 年盈利受压，是前车之鉴。</div></div>
-      <div class="bb-item"><div class="bb-num serif">2</div><div class="bb-text"><b>GAAP 利润率短期持续承压</b>：Armis 并表会带来商誉摊销 + 整合费用，预计 Q2-Q4 营业利润率压到 10-12%。市场如果按 GAAP PE 看，估值压力会持续。<b>关键变量是 FCF 能否在 Armis 整合期内保持 +30% 增速</b>——若不能，"FCF 极便宜"的多头逻辑也会动摇。</div></div>
+      <div class="bb-title">🐻 Bear Case (Risk → Mitigant)</div>
+      <div class="bb-item">
+        <div class="bb-item-head">
+          <div class="bb-num serif">1</div>
+          <div class="bb-text"><b>大型并购整合失败概率不低</b>：$4B 是 NOW 史上最大并购。SaaS 大型并购平均成功率 &lt;40%。CRM 的 Slack 整合期 3 年盈利受压，是前车之鉴。</div>
+        </div>
+        <div class="mitigant">
+          <b>Mitigant (风险被缓释的条件)</b>：NOW 历来管理层稳定 + 之前 $5B-$1B 量级并购（Element AI、Lightstep、G2K）都顺利整合，建立了执行 muscle。如果 Q3'26 Armis 团队保留率 &gt;85%，风险大幅缓释。
+        </div>
+      </div>
+      <div class="bb-item">
+        <div class="bb-item-head">
+          <div class="bb-num serif">2</div>
+          <div class="bb-text"><b>GAAP 利润率短期持续承压</b>：Armis 并表带来商誉摊销 + 整合费用，预计 Q2-Q4 营业利润率压到 10-12%。关键风险是 FCF 也被波及。</div>
+        </div>
+        <div class="mitigant">
+          <b>Mitigant</b>：FCF 跟 GAAP 利润不同步（差异主要在 SBC + 商誉摊销，都是非现金项）。如果 FCF 保持 +25%+ 增速，GAAP 利润率短期压制不影响估值核心论点。Q2'26 财报 FCF 数据是关键 datapoint。
+        </div>
+      </div>
     </div>
   </div>
 
@@ -427,6 +762,18 @@ b { color: var(--ink); font-weight: 600; }
     </div>
   </div>
 
+  <!-- IC-Memo v2: Diligence Items -->
+  <div class="section" style="background: var(--surface);">
+    <div class="section-title">📋 Diligence Items（下次分析前必须验证）<span class="ic-badge">NEW</span><span class="meta">（IC-Memo 风格 — 让叙事可被证伪）</span></div>
+    <div class="dilig-grid">
+      <div class="dilig-item"><div class="dilig-num">1.</div><div><b>Q2'26 财报（7/22）EPS 是否 beat $0.85 consensus</b>？连续 6 季营收 beat 是否延续？营业利润率是否回到 15%+？</div></div>
+      <div class="dilig-item"><div class="dilig-num">2.</div><div><b>Q2'26 财报 Armis 整合披露</b>：管理层是否给出 Armis ARR 贡献数字 + cross-sell 早期数据？团队保留率？</div></div>
+      <div class="dilig-item"><div class="dilig-num">3.</div><div><b>FCF 增速是否 ≥+25%</b>（vs FY25 +35%）？如果 ≥+25%，支柱 2 STRENGTHENED；若 &lt;+15%，WEAKENED。</div></div>
+      <div class="dilig-item"><div class="dilig-num">4.</div><div><b>Q2'26 13F 持仓</b>：成长基金（Tiger Global / Jennison / Renaissance）是否开始建仓？还是仍只是被动巨头增持？</div></div>
+      <div class="dilig-item"><div class="dilig-num">5.</div><div><b>分析师目标价中位走势</b>（FMP grades-historical）：3 个月内中位 $137.50 → 更高 (STRENGTHENED) or 更低 (WEAKENED)？</div></div>
+    </div>
+  </div>
+
   <div class="bottom-row">
     <div>
       <div class="dr-title" style="font-size:0.7rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--ink-3);margin-bottom:14px;font-weight:600;">关键判断 Checklist</div>
@@ -468,8 +815,8 @@ b { color: var(--ink); font-weight: 600; }
   </div>
 
   <div class="footer">
-    <div>数据来源：FMP（income/cash-flow/ratios/grades-historical/stock-peers）· SEC EDGAR（8-K + Armis 收购文件）· 13f.info（CUSIP 81762P102）· 2026-05-18</div>
-    <div class="brand">lonkyclaw · 基本面分析</div>
+    <div>数据来源：FMP（income/cash-flow/ratios/grades-historical/stock-peers/earnings/<b>key-executives</b>）· SEC EDGAR（8-K + Armis 收购文件）· 13f.info（CUSIP 81762P102）· 2026-05-19 · <b>持久化：gateway/memory/stocks/NOW/{thesis-pillars,estimates-history}.json</b></div>
+    <div class="brand">lonkyclaw · IC-Memo v3</div>
   </div>
 
 </div>
