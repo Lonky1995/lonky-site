@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 
 // 服务端代理 FMP 批量报价，key 不暴露给客户端
+// 新版 FMP key（2025-08 后）只支持 /stable/*，旧 /api/v3/* 会 403
 // FMP_API_KEY 未配置时返回 503，前端优雅降级显示 "—"
 export async function GET(req: NextRequest) {
   const apiKey = process.env.FMP_API_KEY;
@@ -15,12 +16,24 @@ export async function GET(req: NextRequest) {
   }
 
   try {
+    // stable batch-quote：一次拉多标的；apikey 走 query（FMP 官方写法）
     const res = await fetch(
-      `https://financialmodelingprep.com/api/v3/quote/${symbols}?apikey=${apiKey}`,
+      `https://financialmodelingprep.com/stable/batch-quote?symbols=${encodeURIComponent(symbols)}&apikey=${apiKey}`,
       { next: { revalidate: 60 } } // 缓存 60s，防 FMP 限频
     );
     if (!res.ok) {
-      return NextResponse.json({ error: `FMP ${res.status}` }, { status: 502 });
+      // 透传一点 FMP 信息方便排障（不带 key）
+      let detail = '';
+      try {
+        const body = await res.json();
+        detail = body?.['Error Message'] || body?.error || '';
+      } catch {
+        /* ignore */
+      }
+      return NextResponse.json(
+        { error: `FMP ${res.status}`, detail: detail || undefined },
+        { status: 502 }
+      );
     }
     const data: unknown = await res.json();
     if (!Array.isArray(data)) {
@@ -30,9 +43,10 @@ export async function GET(req: NextRequest) {
     const quotes = data.map((q: Record<string, unknown>) => ({
       symbol: q.symbol,
       price: q.price,
-      changesPercentage: q.changesPercentage,
-      marketCap: q.marketCap,
-      pe: q.pe,
+      // v3: changesPercentage · stable: changePercentage
+      changesPercentage: q.changePercentage ?? q.changesPercentage ?? 0,
+      marketCap: q.marketCap ?? null,
+      pe: q.pe ?? null,
     }));
     return NextResponse.json({ quotes, fetchedAt: new Date().toISOString() });
   } catch {
