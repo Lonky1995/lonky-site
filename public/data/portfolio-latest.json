@@ -1,0 +1,84 @@
+{
+  "generatedAt": "2026-07-12T12:30:00Z",
+  "positions": [
+    {
+      "id": "pos_mock_btc",
+      "symbol": "BTC",
+      "direction": "long",
+      "size": "0.5",
+      "entryTime": 1776300000000,
+      "entryPrice": "94200",
+      "logic": "美元流动性拐点 + ETF 持续净流入，宏观转向宽松预期，看 Q3 突破前高。",
+      "plan": "目标 $120k 分批止盈；回踩 $98k 加仓；预期持有到 Q3 末。",
+      "validate": "ETF 周净流入维持正值；DXY 持续走弱跌破 102；链上长期持有者不减仓。",
+      "invalidate": "ETF 连续净流出超 1 周；跌破 $92k 关键支撑；美联储转鹰。",
+      "stopLoss": "91500",
+      "conviction": 4,
+      "lastReview": "上周：净流入放缓但仍正，判断持有。"
+    },
+    {
+      "id": "pos_mock_nvda",
+      "symbol": "NVDA",
+      "direction": "long",
+      "size": "30 股",
+      "entryTime": 1772668800000,
+      "entryPrice": "168.40",
+      "logic": "数据中心资本开支还没见顶，主权 AI 需求接棒，等 Q3 财报验证 guidance。",
+      "plan": "财报前不动；若 guidance 超预期加到 50 股；目标 $220。",
+      "validate": "Q3 数据中心营收环比 +10% 以上；下季 guidance 上修。",
+      "invalidate": "guidance 下修或持平；大客户资本开支指引转弱。",
+      "stopLoss": "158",
+      "conviction": 5,
+      "lastReview": "上周：等财报，无操作。"
+    },
+    {
+      "id": "pos_mock_sol",
+      "symbol": "SOL",
+      "direction": "long",
+      "size": "40",
+      "entryTime": 1777248000000,
+      "entryPrice": "205",
+      "logic": "ETF 预期博弈 + 链上活跃度回升，短线仓位，不是核心。",
+      "plan": "博 ETF 消息面；$185 止损；消息落地即了结。",
+      "validate": "ETF 申请有实质进展；DEX 交易量创新高。",
+      "invalidate": "ETF 被推迟或拒绝；跌破 $185。",
+      "stopLoss": "185",
+      "conviction": 2,
+      "lastReview": "上周：新开仓，等消息。"
+    },
+    {
+      "id": "pos_mock_tsla",
+      "symbol": "TSLA",
+      "direction": "short",
+      "size": "10 股",
+      "entryTime": 1776600000000,
+      "entryPrice": "412",
+      "logic": "交付数据走弱 + 估值过高，作为组合多头的对冲。",
+      "plan": "目标 $350 回补；反弹到 $430 加空；对冲性质，不重仓。",
+      "validate": "交付数据继续走弱；毛利率下滑。",
+      "invalidate": "交付超预期反弹；突破 $430 上方。",
+      "stopLoss": "435",
+      "conviction": 3,
+      "lastReview": "上周：交付数据待公布，持有。"
+    }
+  ],
+  "watchlist": [
+    { "type": "event", "symbol": "BTC", "text": "周三美联储利率决议 + 周五 CPI，关注对流动性预期的边际影响。" },
+    { "type": "event", "symbol": "NVDA", "text": "周四盘后 Q3 财报，你的想法核心就压在这次 guidance 上。" },
+    { "type": "validate", "symbol": "BTC", "text": "你的假设是「ETF 持续净流入」——本周净流入连续 3 天转负，假设开始松动，留意。" },
+    { "type": "risk", "symbol": "TSLA", "text": "空头仓位遇财报周，隐含波动率抬升，注意逼空风险。" },
+    { "type": "todo", "symbol": "SOL", "text": "你 2 周前说要「研究 SOL ETF 申请进度」——还没结论，本周捞回提醒你。" }
+  ],
+  "equityCurve": [
+    { "t": "W1", "v": 100 },
+    { "t": "W2", "v": 101.2 },
+    { "t": "W3", "v": 100.5 },
+    { "t": "W4", "v": 102.8 },
+    { "t": "W5", "v": 104.1 },
+    { "t": "W6", "v": 103.3 },
+    { "t": "W7", "v": 105.6 },
+    { "t": "W8", "v": 107.2 },
+    { "t": "W9", "v": 106.4 },
+    { "t": "W10", "v": 108.4 }
+  ]
+}
