@@ -18,6 +18,10 @@ import {
   keyMilestones,
   earningsCalendar,
   wordingLadder,
+  falsification,
+  hiddenAssumptions,
+  bearCase,
+  riskScenarios,
   QUOTE_SYMBOLS,
   LAST_UPDATED,
   PRICE_IN_LABELS,
@@ -353,6 +357,10 @@ export default function CpoDashboard() {
       <SectionHead index="08" title="观测点 & 节点" sub="现在在曲线哪一段 · 看什么验证" />
 
       {/* 技术采用曲线 */}
+      <p className="mb-4 text-[13px] leading-relaxed text-muted">
+        时间维度的证伪：HBM / CoWoS / 400G 光模块都走过「发布兴奋 → 死亡谷回调 → 首笔收入 → 主升浪」。
+        <span className="font-bold text-foreground"> 若股价没经过死亡谷就一路涨，那是纯情绪、不是真需求</span>——反而是危险信号。
+      </p>
       <div className="grid grid-cols-1 md:grid-cols-5">
         {adoptionCurve.map((a, i) => (
           <div
@@ -434,6 +442,101 @@ export default function CpoDashboard() {
             </div>
           ))}
         </div>
+      </div>
+
+      {/* ── 09 叙事怎样会崩 ── */}
+      <SectionHead index="09" title="叙事怎样会崩" sub="证伪逻辑 · 先想会怎么错，再想能赚多少" />
+
+      {/* 证伪信号表 */}
+      <h3 className="mb-3 font-mono text-xs uppercase tracking-widest text-muted">
+        证伪信号 · 每个看涨支柱，配一个「看到什么就说明我错了」
+      </h3>
+      <div className="overflow-x-auto border-2 border-border">
+        <table className="w-full min-w-[720px] text-left text-sm">
+          <thead>
+            <tr className="border-b-2 border-border bg-card font-mono text-[11px] uppercase tracking-wider text-muted">
+              <th className="w-[22%] px-4 py-2.5">多头论点</th>
+              <th className="px-4 py-2.5">证伪信号（触发即 thesis 破裂）</th>
+              <th className="px-4 py-2.5">具体盯什么</th>
+            </tr>
+          </thead>
+          <tbody>
+            {falsification.map((f, i) => (
+              <tr key={f.bull} className={i > 0 ? "border-t border-border/30" : ""}>
+                <td className="px-4 py-3 align-top text-[13px] font-bold">{f.bull}</td>
+                <td className="px-4 py-3 align-top text-[13px] leading-snug" style={{ color: RED }}>
+                  {f.signal}
+                </td>
+                <td className="px-4 py-3 align-top text-[13px] leading-snug text-foreground/70">{f.watch}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+
+      {/* 隐藏假设 */}
+      <h3 className="mb-3 mt-8 font-mono text-xs uppercase tracking-widest text-muted">
+        隐藏假设 · 一旦错就全盘皆错的前提
+      </h3>
+      <div className="space-y-4">
+        {hiddenAssumptions.map((h, i) => (
+          <div key={i} className="grid grid-cols-1 gap-2 border-2 border-border p-5 md:grid-cols-[280px_1fr] md:gap-6">
+            <div className="text-base font-bold leading-snug">
+              <span className="font-mono text-xs text-muted">假设 {i + 1} · </span>
+              {h.assumption}
+            </div>
+            <div className="text-[14px] leading-relaxed text-foreground/80">{h.risk}</div>
+          </div>
+        ))}
+      </div>
+
+      {/* 熊方叙事（红队） */}
+      <div className="mt-8 border-2 border-border" style={{ borderColor: RED }}>
+        <div className="border-b-2 px-4 py-3 font-bold text-background" style={{ background: RED, borderColor: RED }}>
+          🐻 {bearCase.title}
+        </div>
+        <ul className="divide-y divide-border/30">
+          {bearCase.points.map((p, i) => (
+            <li key={i} className="flex gap-3 px-4 py-3 text-[14px] leading-relaxed text-foreground/85">
+              <span className="shrink-0 font-mono text-sm font-bold" style={{ color: RED }}>
+                {String(i + 1).padStart(2, "0")}
+              </span>
+              {p}
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      {/* 风险场景 */}
+      <h3 className="mb-3 mt-8 font-mono text-xs uppercase tracking-widest text-muted">五个风险场景 · 概率 / 触发 / 冲击 / 对冲</h3>
+      <div className="border-2 border-border">
+        {riskScenarios.map((r, i) => (
+          <div key={r.name} className={`px-4 py-4 ${i > 0 ? "border-t border-border/30" : ""} ${r.baseline ? "bg-accent/10" : ""}`}>
+            <div className="flex flex-wrap items-center gap-3">
+              <span className="text-sm font-bold">{r.name}</span>
+              <div className="flex items-center gap-2">
+                <div className="h-2.5 w-32 border border-border bg-card">
+                  <div className="h-full" style={{ width: `${r.prob}%`, background: r.baseline ? GREEN : "var(--color-accent)" }} />
+                </div>
+                <span className="font-mono text-xs font-bold">{r.prob}%</span>
+              </div>
+            </div>
+            <div className="mt-2 grid grid-cols-1 gap-2 md:grid-cols-3 md:gap-4">
+              <div className="text-[13px] leading-snug text-foreground/70">
+                <span className="font-mono text-[10px] uppercase text-muted">触发 · </span>
+                {r.trigger}
+              </div>
+              <div className="text-[13px] leading-snug text-foreground/70">
+                <span className="font-mono text-[10px] uppercase text-muted">冲击 · </span>
+                {r.impact}
+              </div>
+              <div className="text-[13px] leading-snug text-foreground/70">
+                <span className="font-mono text-[10px] uppercase text-muted">对冲 · </span>
+                {r.hedge}
+              </div>
+            </div>
+          </div>
+        ))}
       </div>
 
       {/* ── 页脚 ── */}

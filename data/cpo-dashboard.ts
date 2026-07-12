@@ -378,5 +378,95 @@ export const earningsCalendar = [
 
 export const wordingLadder = ["developing", "customer sampling", "production ramp", "supply-limited"];
 
+// ── 09 叙事怎样会崩（证伪逻辑）──────────────────────
+
+// 9.1 证伪信号表：每个多头支柱配一个「看到什么就说明我错了」
+export const falsification = [
+  {
+    bull: "CPO 是必经之路",
+    signal: "LPO/NPO 在 3.2T 仍够用，CPO 被推迟到 2029+",
+    watch: "MRVL/AVGO CPO guidance 反复推迟；CSP 继续追加 LPO 订单",
+  },
+  {
+    bull: "InP 是卡脖子咽喉",
+    signal: "华为/中兴 InP 良率突破 6 英寸，或云厂商自研光引擎",
+    watch: "中国厂商 InP 6 英寸良率公告；MSFT/Google 自研 CPO 声明",
+  },
+  {
+    bull: "COHR 供不应求",
+    signal: "毛利率连续 2 季 <30%，或大幅扩产但价格不涨",
+    watch: "COHR 季报毛利率方向；供过于求时管理层从 supply-limited 改口",
+  },
+  {
+    bull: "AI 需求真实",
+    signal: "MSFT/Google/AMZN Capex YoY 首次转负",
+    watch: "四大 CSP 季度 capex 指引；从『加速』改口『优化效率』",
+  },
+];
+
+// 9.2 隐藏假设：最容易被忽略、一旦错就全盘皆错的前提
+export const hiddenAssumptions = [
+  {
+    assumption: "「CPO 出货 5 万台/年」这个赢家门槛成立",
+    risk: "5-10 万台是业界共识区间，本质是卖方预期。若实际只出 3 万台，InP 转 20% 过剩，COHR 逻辑反转（见供需悲观情景）。",
+  },
+  {
+    assumption: "InP 定价权能长期维持",
+    risk: "芯片是规模经济——需求越大成本越低，垄断利润会被竞争和技术进步侵蚀。这是 CPO 叙事 vs 中国基建叙事的关键差异：上游超额利润窗口比想象的短。",
+  },
+];
+
+// 9.3 熊方叙事：把唱空 CPO 的逻辑集中讲一遍（红队）
+export const bearCase = {
+  title: "如果我是空头，我会这样说",
+  points: [
+    "CPO ASP 是传统可插拔的 8-10x——成本这么高，CSP 没有足够动力大规模切换，除非功耗真的逼到墙角",
+    "良率低、测试从 1-2 步暴增到 5 步——量产爬坡会比 timeline 慢得多，『2028 放量』大概率跳票",
+    "不可热插拔是硬伤：光引擎故障要换整机柜，CSP 对停机零容忍，这会天然限制渗透率",
+    "LPO/NPO 是更务实的过渡，能吃掉 1.6T 甚至 3.2T 的大部分份额，把 CPO 的窗口一再往后推",
+    "InP 双雄的高估值已经把最乐观的 CPO 预期定价进去（LITE 39x P/S），一旦兑现不及预期，杀估值比杀业绩更快",
+  ],
+};
+
+// 9.4 风险场景（概率 + 触发 + 冲击 + 对冲）
+export const riskScenarios = [
+  {
+    name: "E · 一切顺利（基准）",
+    prob: 25,
+    trigger: "COHR 首次 CPO 收入 2027Q4 兑现",
+    impact: "COHR 2028 翻倍至 $700+；LITE 回归合理估值；主升浪启动",
+    hedge: "按叙事推进即可，享受估值重构",
+    baseline: true,
+  },
+  {
+    name: "A · CPO 商业化推迟",
+    prob: 30,
+    trigger: "MRVL Teralynx 推迟至 2028H2 之后",
+    impact: "COHR 主升浪推迟 12 个月，可能回到 $200",
+    hedge: "LITE 空头同步获利（都跌，LITE 跌更狠）",
+  },
+  {
+    name: "C · 云厂商自研 CPO",
+    prob: 20,
+    trigger: "MSFT/Google/Amazon 宣布自研光引擎",
+    impact: "LITE 反弹（仍需 InP 芯片）+ COHR 短期回调（客户集中度下降）",
+    hedge: "切断 LITE 空头 + 观察 GFS 是否被选为代工",
+  },
+  {
+    name: "B · 中国 InP 突破",
+    prob: 15,
+    trigger: "华为/中兴 InP 良率突破 6 英寸",
+    impact: "COHR 定价权受损，估值逻辑重估",
+    hedge: "仓位上限严守 20%，不加杠杆",
+  },
+  {
+    name: "D · AI Capex 见顶",
+    prob: 10,
+    trigger: "MSFT/Google/AMZN Capex YoY 首次转负",
+    impact: "整条产业链回调 30-50%",
+    hedge: "反直觉——这是死亡谷加深，是加满仓位的最好时机",
+  },
+];
+
 // 行情表需要拉的美股代码（台股/日股纯叙事不拉价）
 export const QUOTE_SYMBOLS = roleCards.filter((c) => c.hasQuote).map((c) => c.ticker);
