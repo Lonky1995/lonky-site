@@ -96,7 +96,7 @@ export default function AddPositionModal({ open, onClose, onSuccess }: Props) {
       }
     }
     if (!passcode.trim()) {
-      setError("请填写提交口令");
+      setError("请填写密码");
       return;
     }
 
@@ -297,11 +297,11 @@ export default function AddPositionModal({ open, onClose, onSuccess }: Props) {
 
           {/* 口令 */}
           <div className="border-t-2 border-border pt-4">
-            <label className={labelCls}>提交口令 *</label>
+            <label className={labelCls}>密码 *</label>
             <input
               type="password"
               className={`${inputCls} mt-1.5`}
-              placeholder="录入口令"
+              placeholder="录入密码"
               value={passcode}
               onChange={(e) => setPasscode(e.target.value)}
             />

@@ -1,12 +1,9 @@
 import { NextRequest, NextResponse } from "next/server";
 
-// 仓位录入转发：网页表单 → 本路由（服务端持密钥）→ VPS gateway 写入 API
-// 密钥只在服务端，浏览器永远看不到。gateway 地址 + 密钥来自环境变量。
+// 仓位录入转发：网页表单 → 本路由 → VPS gateway 写入 API
+// 个人项目从简：浏览器填的密码直接作为 gateway 密钥，本路由透传校验。
 
 const GATEWAY_URL = process.env.PORTFOLIO_GATEWAY_URL || "http://154.219.115.80:18800";
-const WRITE_KEY = process.env.PORTFOLIO_WRITE_KEY || "";
-// 页面提交口令：浏览器填写，随请求发来，服务端比对。与下游 gateway 密钥分离。
-const FORM_PASSCODE = process.env.PORTFOLIO_FORM_PASSCODE || "";
 
 type Body = {
   passcode?: string;
@@ -24,10 +21,6 @@ type Body = {
 };
 
 export async function POST(req: NextRequest) {
-  if (!WRITE_KEY || !FORM_PASSCODE) {
-    return NextResponse.json({ error: "录入未启用：服务端未配置密钥/口令" }, { status: 503 });
-  }
-
   let body: Body;
   try {
     body = (await req.json()) as Body;
@@ -35,9 +28,10 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "无效的请求体" }, { status: 400 });
   }
 
-  // 口令校验（防止任意人写入）
-  if (typeof body.passcode !== "string" || body.passcode !== FORM_PASSCODE) {
-    return NextResponse.json({ error: "口令错误" }, { status: 401 });
+  // 密码即密钥：浏览器填写，透传给 gateway 校验
+  const password = typeof body.passcode === "string" ? body.passcode.trim() : "";
+  if (!password) {
+    return NextResponse.json({ error: "请填写密码" }, { status: 401 });
   }
 
   // 必填校验（前端也校验，这里兜底）
@@ -61,7 +55,7 @@ export async function POST(req: NextRequest) {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        "x-portfolio-key": WRITE_KEY,
+        "x-portfolio-key": password,
       },
       body: JSON.stringify(forward),
       signal: AbortSignal.timeout(15000),
