@@ -14,6 +14,7 @@ import {
 } from "recharts";
 import type { PortfolioData, Position, WatchItem } from "@/data/portfolio";
 import { quoteKind } from "@/data/portfolio";
+import AddPositionModal from "./AddPositionModal";
 
 type Quote = { symbol: string; price: number; changesPercentage: number };
 
@@ -55,6 +56,14 @@ export default function PortfolioDashboard() {
   const pieRef = useRef<HTMLDivElement>(null);
   const [eqW, setEqW] = useState(0);
   const [pieW, setPieW] = useState(0);
+  const [addOpen, setAddOpen] = useState(false);
+
+  const loadData = () => {
+    fetch(`/data/portfolio-latest.json?t=${Date.now()}`)
+      .then((r) => (r.ok ? r.json() : Promise.reject()))
+      .then((d: PortfolioData) => setData(d))
+      .catch(() => setData({ generatedAt: "", positions: [], watchlist: [], equityCurve: [] }));
+  };
 
   useEffect(() => {
     const measure = () => {
@@ -70,10 +79,7 @@ export default function PortfolioDashboard() {
   }, [data]);
 
   useEffect(() => {
-    fetch("/data/portfolio-latest.json")
-      .then((r) => (r.ok ? r.json() : Promise.reject()))
-      .then((d: PortfolioData) => setData(d))
-      .catch(() => setData({ generatedAt: "", positions: [], watchlist: [], equityCurve: [] }));
+    loadData();
   }, []);
 
   useEffect(() => {
@@ -135,11 +141,19 @@ export default function PortfolioDashboard() {
           <span>Portfolio · {data?.generatedAt ? data.generatedAt.slice(0, 10) : "—"}</span>
         </div>
         <div className="mt-8 font-mono text-xs uppercase tracking-widest text-accent">组合追踪器</div>
-        <h1 className="mt-3 font-extrabold uppercase leading-[0.9] tracking-tight" style={{ fontSize: "clamp(2.4rem, 6vw, 4.4rem)" }}>
-          Portfolio
-          <br />
-          <span className="text-accent">追踪看板</span>
-        </h1>
+        <div className="mt-3 flex items-start justify-between gap-4">
+          <h1 className="font-extrabold uppercase leading-[0.9] tracking-tight" style={{ fontSize: "clamp(2.4rem, 6vw, 4.4rem)" }}>
+            Portfolio
+            <br />
+            <span className="text-accent">追踪看板</span>
+          </h1>
+          <button
+            onClick={() => setAddOpen(true)}
+            className="mt-2 shrink-0 border-2 border-accent bg-accent/10 px-4 py-2 font-mono text-xs uppercase tracking-widest text-accent transition-colors hover:bg-accent/25"
+          >
+            + 记录持仓
+          </button>
+        </div>
         <div className="mt-6 flex items-center gap-2 font-mono text-xs text-muted">
           <span
             className="inline-block h-2 w-2"
@@ -303,6 +317,15 @@ export default function PortfolioDashboard() {
           <div className="p-4 text-sm text-muted">暂无关注清单，每周日晚 coach 会生成。</div>
         )}
       </div>
+
+      <AddPositionModal
+        open={addOpen}
+        onClose={() => setAddOpen(false)}
+        onSuccess={() => {
+          // 网站 JSON 经 GitHub→Vercel 部署有延迟，稍等后重拉
+          setTimeout(loadData, 3000);
+        }}
+      />
     </main>
   );
 }
