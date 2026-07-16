@@ -1,6 +1,18 @@
 {
-  "generatedAt": "2026-07-16T15:04:11.825Z",
+  "generatedAt": "2026-07-16T15:04:54.728Z",
   "positions": [
+    {
+      "id": "pos_1784214294726_kftece",
+      "symbol": "DIAGTEST",
+      "direction": "long",
+      "size": "1",
+      "entryTime": 1784214294726,
+      "logic": "诊断",
+      "validate": "x",
+      "invalidate": "x",
+      "conviction": 3,
+      "status": "active"
+    },
     {
       "id": "pos_1784214251823_69mp4t",
       "symbol": "$VELO",
