@@ -1,6 +1,22 @@
 {
-  "generatedAt": "2026-07-16T15:00:00.286Z",
-  "positions": [],
+  "generatedAt": "2026-07-16T15:04:11.825Z",
+  "positions": [
+    {
+      "id": "pos_1784214251823_69mp4t",
+      "symbol": "$VELO",
+      "direction": "long",
+      "size": "6000U",
+      "entryTime": 1781578800000,
+      "entryPrice": "25",
+      "logic": "1. 破产重组业务重新开始，3D 打印技术强\n2. 美国国防科技股\n3. spacex 的供应链",
+      "plan": "当时买的时候没有想到",
+      "validate": "有新订单",
+      "invalidate": "没有新订单，收入减少",
+      "stopLoss": "0",
+      "conviction": 1,
+      "status": "active"
+    }
+  ],
   "watchlist": [],
   "equityCurve": []
 }
