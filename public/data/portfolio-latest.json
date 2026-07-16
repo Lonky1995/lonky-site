@@ -1,6 +1,22 @@
 {
-  "generatedAt": "2026-07-16T14:59:13.492Z",
-  "positions": [],
+  "generatedAt": "2026-07-16T14:59:23.109Z",
+  "positions": [
+    {
+      "id": "pos_1784213963107_14l5a1",
+      "symbol": "TESTBTC",
+      "direction": "long",
+      "size": "0.1",
+      "entryTime": 1784213963107,
+      "entryPrice": "95000",
+      "logic": "端到端测试仓，稍后删除",
+      "plan": "测试",
+      "validate": "测试通过",
+      "invalidate": "测试失败",
+      "stopLoss": "90000",
+      "conviction": 3,
+      "status": "active"
+    }
+  ],
   "watchlist": [],
   "equityCurve": []
 }
