@@ -15,6 +15,7 @@ import {
 import type { PortfolioData, Position, WatchItem } from "@/data/portfolio";
 import { quoteKind } from "@/data/portfolio";
 import AddPositionModal from "./AddPositionModal";
+import BriefsPanel from "./BriefsPanel";
 
 type Quote = { symbol: string; price: number; changesPercentage: number };
 
@@ -89,6 +90,7 @@ export default function PortfolioDashboard() {
   const [eqW, setEqW] = useState(0);
   const [pieW, setPieW] = useState(0);
   const [addOpen, setAddOpen] = useState(false);
+  const [tab, setTab] = useState<"positions" | "briefs">("positions");
 
   const loadData = () => {
     fetch(`/data/portfolio-latest.json?t=${Date.now()}`)
@@ -235,6 +237,32 @@ export default function PortfolioDashboard() {
         </div>
       </header>
 
+      {/* ── Tab 切换 ── */}
+      <div className="mt-8 flex gap-2 border-b-2 border-border">
+        {([
+          { key: "positions", label: "持仓" },
+          { key: "briefs", label: "动态简报" },
+        ] as const).map((t) => (
+          <button
+            key={t.key}
+            onClick={() => setTab(t.key)}
+            className={`-mb-0.5 border-b-2 px-4 py-2 font-mono text-xs uppercase tracking-widest transition-colors ${
+              tab === t.key ? "border-accent text-accent" : "border-transparent text-muted hover:text-foreground"
+            }`}
+          >
+            {t.label}
+          </button>
+        ))}
+      </div>
+
+      {tab === "briefs" && (
+        <div className="mt-8">
+          <BriefsPanel />
+        </div>
+      )}
+
+      {tab === "positions" && (
+        <>
       {/* ── 概览 ── */}
       <div className="mt-10 grid grid-cols-2 border-2 border-border md:grid-cols-4">
         {[
@@ -436,6 +464,8 @@ export default function PortfolioDashboard() {
           <div className="p-4 text-sm text-muted">暂无关注清单，每周日晚 coach 会生成。</div>
         )}
       </div>
+        </>
+      )}
 
       <AddPositionModal
         open={addOpen}
