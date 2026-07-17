@@ -1,11 +1,11 @@
 {
-  "generatedAt": "2026-07-17T05:00:44.497Z",
+  "generatedAt": "2026-07-17T05:17:03.522Z",
   "positions": [
     {
       "id": "pos_1784214251823_69mp4t",
       "symbol": "VELO",
       "direction": "long",
-      "size": "6000U",
+      "size": "240",
       "entryTime": 1781578800000,
       "entryPrice": "25",
       "logic": "1. 破产重组业务重新开始，3D 打印技术强\n2. 美国国防科技股\n3. spacex 的供应链",
@@ -14,7 +14,8 @@
       "invalidate": "没有新订单，收入减少",
       "stopLoss": "0",
       "conviction": 1,
-      "status": "active"
+      "status": "active",
+      "companyName": "Velo3D, Inc."
     }
   ],
   "watchlist": [],
