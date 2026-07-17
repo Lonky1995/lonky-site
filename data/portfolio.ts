@@ -3,6 +3,7 @@ export type PositionDirection = "long" | "short";
 export type Position = {
   id: string;
   symbol: string;
+  companyName?: string;
   direction: PositionDirection;
   size: string;
   entryTime: number;

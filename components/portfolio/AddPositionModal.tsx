@@ -13,6 +13,7 @@ type Props = {
 
 type FormState = {
   symbol: string;
+  companyName: string;
   direction: "long" | "short";
   size: string;
   entryDate: string; // datetime-local 值
@@ -27,6 +28,7 @@ type FormState = {
 
 const EMPTY: FormState = {
   symbol: "",
+  companyName: "",
   direction: "long",
   size: "",
   entryDate: "",
@@ -56,6 +58,35 @@ export default function AddPositionModal({ open, onClose, onSuccess }: Props) {
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [done, setDone] = useState(false);
+  const [validating, setValidating] = useState(false);
+  const [validateMsg, setValidateMsg] = useState<{ ok: boolean; text: string } | null>(null);
+
+  // 代码失焦时校验存在性 + 取公司全称
+  const validateSymbol = async () => {
+    const sym = form.symbol.trim().replace(/^\$/, "").toUpperCase();
+    if (!sym) {
+      setValidateMsg(null);
+      return;
+    }
+    setValidating(true);
+    setValidateMsg(null);
+    try {
+      const res = await fetch(`/api/portfolio/validate?symbol=${encodeURIComponent(sym)}`);
+      const data = (await res.json()) as { ok: boolean; symbol?: string; name?: string; error?: string };
+      if (data.ok && data.name) {
+        // 回填标准化代码 + 公司全称
+        setForm((f) => ({ ...f, symbol: data.symbol || sym, companyName: data.name || "" }));
+        setValidateMsg({ ok: true, text: `✓ ${data.symbol} · ${data.name}` });
+      } else {
+        setForm((f) => ({ ...f, companyName: "" }));
+        setValidateMsg({ ok: false, text: `⚠ ${data.error || "未找到该代码"}（仍可提交）` });
+      }
+    } catch {
+      setValidateMsg({ ok: false, text: "校验失败（仍可提交）" });
+    } finally {
+      setValidating(false);
+    }
+  };
 
   // 打开时重置 + 默认开仓时间为当前，口令记住上次输入
   useEffect(() => {
@@ -65,6 +96,7 @@ export default function AddPositionModal({ open, onClose, onSuccess }: Props) {
       setForm({ ...EMPTY, entryDate: nowLocalInput() });
       setError(null);
       setDone(false);
+      setValidateMsg(null);
       setPasscode(sessionStorage.getItem("pf_passcode") || "");
     });
   }, [open]);
@@ -110,7 +142,8 @@ export default function AddPositionModal({ open, onClose, onSuccess }: Props) {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           passcode: passcode.trim(),
-          symbol: form.symbol.trim().toUpperCase(),
+          symbol: form.symbol.trim().replace(/^\$/, "").toUpperCase(),
+          companyName: form.companyName.trim() || undefined,
           direction: form.direction,
           size: form.size.trim(),
           entryTime,
@@ -163,13 +196,19 @@ export default function AddPositionModal({ open, onClose, onSuccess }: Props) {
           {/* 标的 + 方向 */}
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label className={labelCls}>标的 *</label>
+              <label className={labelCls}>标的 *{validating && <span className="ml-2 normal-case text-muted">校验中…</span>}</label>
               <input
                 className={`${inputCls} mt-1.5 uppercase`}
-                placeholder="BTC / NVDA"
+                placeholder="VELO / NVDA / BTC"
                 value={form.symbol}
                 onChange={(e) => set("symbol", e.target.value)}
+                onBlur={validateSymbol}
               />
+              {validateMsg && (
+                <div className={`mt-1 font-mono text-[11px] ${validateMsg.ok ? "text-emerald-500" : "text-amber-500"}`}>
+                  {validateMsg.text}
+                </div>
+              )}
             </div>
             <div>
               <label className={labelCls}>方向 *</label>
@@ -196,10 +235,10 @@ export default function AddPositionModal({ open, onClose, onSuccess }: Props) {
           {/* 仓位大小 + 入场价 */}
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label className={labelCls}>仓位大小 *</label>
+              <label className={labelCls}>数量（股/币）*</label>
               <input
                 className={`${inputCls} mt-1.5`}
-                placeholder="0.5 / 30 股 / 20%"
+                placeholder="240 / 0.5 / 30"
                 value={form.size}
                 onChange={(e) => set("size", e.target.value)}
               />
