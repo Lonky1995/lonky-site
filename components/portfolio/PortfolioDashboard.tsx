@@ -16,6 +16,7 @@ import type { PortfolioData, Position, WatchItem } from "@/data/portfolio";
 import { quoteKind } from "@/data/portfolio";
 import AddPositionModal from "./AddPositionModal";
 import BriefsPanel from "./BriefsPanel";
+import JournalPanel from "./JournalPanel";
 
 type Quote = { symbol: string; price: number; changesPercentage: number };
 
@@ -90,7 +91,7 @@ export default function PortfolioDashboard() {
   const [eqW, setEqW] = useState(0);
   const [pieW, setPieW] = useState(0);
   const [addOpen, setAddOpen] = useState(false);
-  const [tab, setTab] = useState<"positions" | "briefs">("positions");
+  const [tab, setTab] = useState<"positions" | "briefs" | "journal">("positions");
 
   const loadData = () => {
     fetch(`/data/portfolio-latest.json?t=${Date.now()}`)
@@ -242,6 +243,7 @@ export default function PortfolioDashboard() {
         {([
           { key: "positions", label: "持仓" },
           { key: "briefs", label: "动态简报" },
+          { key: "journal", label: "追踪日记" },
         ] as const).map((t) => (
           <button
             key={t.key}
@@ -258,6 +260,12 @@ export default function PortfolioDashboard() {
       {tab === "briefs" && (
         <div className="mt-8">
           <BriefsPanel />
+        </div>
+      )}
+
+      {tab === "journal" && (
+        <div className="mt-8">
+          <JournalPanel />
         </div>
       )}
 
