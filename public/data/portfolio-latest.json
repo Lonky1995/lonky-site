@@ -1,6 +1,22 @@
 {
-  "generatedAt": "2026-07-17T05:22:09.274Z",
+  "generatedAt": "2026-07-17T05:26:56.517Z",
   "positions": [
+    {
+      "id": "pos_1784266016509_6374qc",
+      "symbol": "ORCL",
+      "companyName": "Oracle Corporation",
+      "direction": "long",
+      "size": "21",
+      "entryTime": 1781673780000,
+      "entryPrice": "187",
+      "logic": "1.数据中心，和 openai 绑定深\n2.当时跌到了水平位置，想着抄底",
+      "plan": "不说了，抄底抄到半山腰",
+      "validate": "收入、capaex指引",
+      "invalidate": "懵逼了，错的一塌糊涂",
+      "stopLoss": "110",
+      "conviction": 3,
+      "status": "active"
+    },
     {
       "id": "pos_1784214251823_69mp4t",
       "symbol": "VELO",
