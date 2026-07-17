@@ -47,6 +47,38 @@ function pnlPct(p: Position, price: number | null): number | null {
   return p.direction === "long" ? raw : -raw;
 }
 
+// 数量（股/币数）
+function qtyOf(p: Position): number | null {
+  return num(p.size);
+}
+// 持仓成本 = 数量 × 入场价
+function costOf(p: Position): number | null {
+  const q = qtyOf(p);
+  const entry = num(p.entryPrice);
+  if (q === null || entry === null) return null;
+  return q * entry;
+}
+// 市值 = 数量 × 现价
+function marketValueOf(p: Position, price: number | null): number | null {
+  const q = qtyOf(p);
+  if (q === null || price === null) return null;
+  return q * price;
+}
+// 盈亏额（美元）= (现价 - 入场价) × 数量，做空取反
+function pnlAbs(p: Position, price: number | null): number | null {
+  const q = qtyOf(p);
+  const entry = num(p.entryPrice);
+  if (q === null || entry === null || price === null) return null;
+  const raw = (price - entry) * q;
+  return p.direction === "long" ? raw : -raw;
+}
+function fmtUsd(v: number | null): string {
+  if (v === null) return "—";
+  const sign = v < 0 ? "-" : "";
+  const abs = Math.abs(v);
+  return `${sign}$${abs.toLocaleString(undefined, { maximumFractionDigits: 0 })}`;
+}
+
 export default function PortfolioDashboard() {
   const [data, setData] = useState<PortfolioData | null>(null);
   const [quotes, setQuotes] = useState<Record<string, Quote>>({});
@@ -112,6 +144,45 @@ export default function PortfolioDashboard() {
   const longCount = positions.filter((p) => p.direction === "long").length;
   const shortCount = positions.filter((p) => p.direction === "short").length;
 
+  // 组合汇总：总成本 / 估算市值 / 浮动盈亏 / 盈亏比例
+  const summary = useMemo(() => {
+    let totalCost = 0;
+    let totalValue = 0;
+    let hasCost = false;
+    let hasValue = false;
+    for (const p of positions) {
+      const c = costOf(p);
+      const v = marketValueOf(p, priceOf(p.symbol));
+      if (c !== null) {
+        totalCost += c;
+        hasCost = true;
+      }
+      if (v !== null) {
+        totalValue += v;
+        hasValue = true;
+      }
+    }
+    const pnl = hasCost && hasValue ? totalValue - totalCost : null;
+    const pnlPctVal = pnl !== null && totalCost > 0 ? (pnl / totalCost) * 100 : null;
+    return {
+      totalCost: hasCost ? totalCost : null,
+      totalValue: hasValue ? totalValue : null,
+      pnl,
+      pnlPct: pnlPctVal,
+    };
+  }, [positions, quotes]);
+
+  // 单仓市值（用于占比）
+  const mvBySymbol = useMemo(() => {
+    const m: Record<string, number> = {};
+    for (const p of positions) {
+      const v = marketValueOf(p, priceOf(p.symbol));
+      if (v !== null) m[p.id] = v;
+    }
+    return m;
+  }, [positions, quotes]);
+  const totalMv = Object.values(mvBySymbol).reduce((a, b) => a + b, 0);
+
   const watchBySymbol = useMemo(() => {
     const m: Record<string, WatchItem[]> = {};
     for (const w of data?.watchlist ?? []) {
@@ -126,10 +197,11 @@ export default function PortfolioDashboard() {
 
   const pieData = useMemo(() => {
     return positions.map((p) => {
-      const size = num(p.size) ?? 1;
-      return { name: p.symbol, value: size };
+      // 优先用市值占比；拿不到行情时退回数量，保证饼图仍有分片
+      const mv = mvBySymbol[p.id];
+      return { name: p.symbol, value: mv ?? num(p.size) ?? 1 };
     });
-  }, [positions]);
+  }, [positions, mvBySymbol]);
 
   return (
     <main className="relative z-10 mx-auto max-w-6xl px-6 pb-24 pt-10 md:px-8">
@@ -175,6 +247,30 @@ export default function PortfolioDashboard() {
             <div className="font-mono text-[11px] uppercase tracking-widest text-muted">{s.label}</div>
             <div
               className="mt-2 font-mono text-3xl font-bold tracking-tight"
+              style={{ color: typeof s.accent === "number" ? (s.accent >= 0 ? "#0f6e56" : "#993556") : undefined }}
+            >
+              {s.value}
+            </div>
+          </div>
+        ))}
+      </div>
+
+      {/* ── 组合汇总（总成本 / 市值 / 浮盈 / 盈亏%）── */}
+      <div className="mt-4 grid grid-cols-2 border-2 border-border md:grid-cols-4">
+        {[
+          { label: "总成本", value: fmtUsd(summary.totalCost) },
+          { label: "估算市值", value: fmtUsd(summary.totalValue) },
+          { label: "浮动盈亏", value: fmtUsd(summary.pnl), accent: summary.pnl },
+          {
+            label: "盈亏比例",
+            value: summary.pnlPct === null ? "—" : `${summary.pnlPct >= 0 ? "+" : ""}${summary.pnlPct.toFixed(1)}%`,
+            accent: summary.pnlPct,
+          },
+        ].map((s, i) => (
+          <div key={s.label} className={`p-5 ${i > 0 ? "border-t-2 border-border md:border-t-0 md:border-l-2" : ""} ${i >= 2 ? "border-t-2 md:border-t-0" : ""}`}>
+            <div className="font-mono text-[11px] uppercase tracking-widest text-muted">{s.label}</div>
+            <div
+              className="mt-2 font-mono text-2xl font-bold tracking-tight"
               style={{ color: typeof s.accent === "number" ? (s.accent >= 0 ? "#0f6e56" : "#993556") : undefined }}
             >
               {s.value}
@@ -231,6 +327,9 @@ export default function PortfolioDashboard() {
         {positions.map((p) => {
           const price = priceOf(p.symbol);
           const pnl = pnlPct(p, price);
+          const mv = mvBySymbol[p.id] ?? null;
+          const pnlUsd = pnlAbs(p, price);
+          const weight = mv !== null && totalMv > 0 ? (mv / totalMv) * 100 : null;
           const isOpen = expanded[p.id];
           const flags = watchBySymbol[p.symbol.toUpperCase()]?.map((w) => w.type) ?? [];
           const uniqFlags = Array.from(new Set(flags));
@@ -242,14 +341,19 @@ export default function PortfolioDashboard() {
                 aria-expanded={isOpen}
               >
                 <div className="flex items-center justify-between gap-3">
-                  <div className="flex items-center gap-2">
+                  <div className="flex min-w-0 items-center gap-2">
                     <span className="font-mono text-lg font-bold">{p.symbol}</span>
+                    {p.companyName && (
+                      <span className="truncate text-xs text-muted" title={p.companyName}>
+                        {p.companyName}
+                      </span>
+                    )}
                     <span
-                      className={`border px-2 py-0.5 font-mono text-[11px] ${p.direction === "long" ? "border-emerald-500/40 text-emerald-600" : "border-pink-500/40 text-pink-600"}`}
+                      className={`shrink-0 border px-2 py-0.5 font-mono text-[11px] ${p.direction === "long" ? "border-emerald-500/40 text-emerald-600" : "border-pink-500/40 text-pink-600"}`}
                     >
                       {p.direction === "long" ? "做多" : "做空"}
                     </span>
-                    <span className="font-mono text-xs text-muted">{p.size}</span>
+                    <span className="shrink-0 font-mono text-xs text-muted">{p.size}</span>
                   </div>
                   <div className="flex items-center gap-3 font-mono text-xs">
                     <span className="text-muted">
@@ -259,6 +363,21 @@ export default function PortfolioDashboard() {
                       {pnl === null ? "—" : `${pnl >= 0 ? "+" : ""}${pnl.toFixed(1)}%`}
                     </span>
                   </div>
+                </div>
+                {/* 市值 / 盈亏额 / 占比 */}
+                <div className="flex items-center gap-x-4 gap-y-1 font-mono text-[11px] text-muted">
+                  <span>
+                    市值 <span className="text-foreground/80">{fmtUsd(mv)}</span>
+                  </span>
+                  <span>
+                    盈亏{" "}
+                    <span style={{ color: pnlUsd === null ? undefined : pnlUsd >= 0 ? "#0f6e56" : "#993556" }}>
+                      {fmtUsd(pnlUsd)}
+                    </span>
+                  </span>
+                  <span>
+                    占比 <span className="text-foreground/80">{weight === null ? "—" : `${weight.toFixed(0)}%`}</span>
+                  </span>
                 </div>
                 <div className="flex items-center justify-between gap-3">
                   <div className="truncate text-sm text-foreground/70">
