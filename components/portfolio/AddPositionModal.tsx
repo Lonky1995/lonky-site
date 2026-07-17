@@ -55,6 +55,7 @@ export default function AddPositionModal({ open, onClose, onSuccess }: Props) {
   const [passcode, setPasscode] = useState("");
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [done, setDone] = useState(false);
 
   // 打开时重置 + 默认开仓时间为当前，口令记住上次输入
   useEffect(() => {
@@ -63,6 +64,7 @@ export default function AddPositionModal({ open, onClose, onSuccess }: Props) {
     queueMicrotask(() => {
       setForm({ ...EMPTY, entryDate: nowLocalInput() });
       setError(null);
+      setDone(false);
       setPasscode(sessionStorage.getItem("pf_passcode") || "");
     });
   }, [open]);
@@ -129,8 +131,8 @@ export default function AddPositionModal({ open, onClose, onSuccess }: Props) {
       }
       sessionStorage.setItem("pf_passcode", passcode.trim());
       setSubmitting(false);
+      setDone(true);
       onSuccess();
-      onClose();
     } catch (e) {
       setError(e instanceof Error ? e.message : "网络错误");
       setSubmitting(false);
@@ -139,15 +141,15 @@ export default function AddPositionModal({ open, onClose, onSuccess }: Props) {
 
   return (
     <div
-      className="fixed inset-0 z-50 flex items-start justify-center overflow-y-auto bg-black/70 p-4 md:p-8"
+      className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 p-4 md:p-8"
       onClick={onClose}
     >
       <div
-        className="relative my-4 w-full max-w-2xl border-2 border-border bg-background"
+        className="relative flex max-h-[calc(100dvh-2rem)] w-full max-w-2xl flex-col border-2 border-border bg-background"
         onClick={(e) => e.stopPropagation()}
       >
-        {/* 标题栏 */}
-        <div className="flex items-center justify-between border-b-2 border-border px-5 py-4">
+        {/* 标题栏（固定） */}
+        <div className="flex shrink-0 items-center justify-between border-b-2 border-border px-5 py-4">
           <span className="font-mono text-xs uppercase tracking-widest text-accent">记录持仓 · 交易计划</span>
           <button
             onClick={onClose}
@@ -157,7 +159,7 @@ export default function AddPositionModal({ open, onClose, onSuccess }: Props) {
           </button>
         </div>
 
-        <div className="space-y-5 px-5 py-6">
+        <div className="flex-1 space-y-5 overflow-y-auto px-5 py-6">
           {/* 标的 + 方向 */}
           <div className="grid grid-cols-2 gap-4">
             <div>
@@ -312,24 +314,40 @@ export default function AddPositionModal({ open, onClose, onSuccess }: Props) {
               {error}
             </div>
           )}
+          {done && (
+            <div className="border-2 border-emerald-500/50 bg-emerald-500/10 px-3 py-2.5 font-mono text-xs text-emerald-400">
+              ✅ 已记录！仓位已写入。网站数据经部署刷新，约 1-3 分钟后在看板显示。
+            </div>
+          )}
         </div>
 
-        {/* 底部操作 */}
-        <div className="flex justify-end gap-3 border-t-2 border-border px-5 py-4">
-          <button
-            onClick={onClose}
-            disabled={submitting}
-            className="border-2 border-border px-5 py-2 font-mono text-xs uppercase tracking-widest text-muted hover:text-accent disabled:opacity-50"
-          >
-            取消
-          </button>
-          <button
-            onClick={submit}
-            disabled={submitting}
-            className="border-2 border-accent bg-accent/20 px-5 py-2 font-mono text-xs uppercase tracking-widest text-accent hover:bg-accent/30 disabled:opacity-50"
-          >
-            {submitting ? "提交中…" : "记录持仓"}
-          </button>
+        {/* 底部操作（固定，永远可见） */}
+        <div className="flex shrink-0 justify-end gap-3 border-t-2 border-border bg-background px-5 py-4">
+          {done ? (
+            <button
+              onClick={onClose}
+              className="border-2 border-accent bg-accent/20 px-5 py-2 font-mono text-xs uppercase tracking-widest text-accent hover:bg-accent/30"
+            >
+              完成
+            </button>
+          ) : (
+            <>
+              <button
+                onClick={onClose}
+                disabled={submitting}
+                className="border-2 border-border px-5 py-2 font-mono text-xs uppercase tracking-widest text-muted hover:text-accent disabled:opacity-50"
+              >
+                取消
+              </button>
+              <button
+                onClick={submit}
+                disabled={submitting}
+                className="border-2 border-accent bg-accent/20 px-5 py-2 font-mono text-xs uppercase tracking-widest text-accent hover:bg-accent/30 disabled:opacity-50"
+              >
+                {submitting ? "提交中…" : "记录持仓"}
+              </button>
+            </>
+          )}
         </div>
       </div>
     </div>
