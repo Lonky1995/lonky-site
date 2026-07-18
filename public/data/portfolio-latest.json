@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-07-18T05:07:50.007Z",
+  "generatedAt": "2026-07-18T06:55:39.231Z",
   "positions": [
     {
       "id": "pos_1784266016509_6374qc",
@@ -35,5 +35,6 @@
     }
   ],
   "watchlist": [],
-  "equityCurve": []
+  "equityCurve": [],
+  "cash": 0
 }
