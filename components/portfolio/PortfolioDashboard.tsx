@@ -92,7 +92,7 @@ export default function PortfolioDashboard() {
   const [eqW, setEqW] = useState(0);
   const [pieW, setPieW] = useState(0);
   const [addOpen, setAddOpen] = useState(false);
-  const [tab, setTab] = useState<"positions" | "briefs" | "journal" | "calendar">("positions");
+  const [journalFor, setJournalFor] = useState<Record<string, boolean>>({});
 
   const loadData = () => {
     fetch(`/data/portfolio-latest.json?t=${Date.now()}`)
@@ -239,46 +239,6 @@ export default function PortfolioDashboard() {
         </div>
       </header>
 
-      {/* ── Tab 切换 ── */}
-      <div className="mt-8 flex gap-2 border-b-2 border-border">
-        {([
-          { key: "positions", label: "持仓" },
-          { key: "briefs", label: "动态简报" },
-          { key: "journal", label: "追踪日记" },
-          { key: "calendar", label: "重点日历" },
-        ] as const).map((t) => (
-          <button
-            key={t.key}
-            onClick={() => setTab(t.key)}
-            className={`-mb-0.5 border-b-2 px-4 py-2 font-mono text-xs uppercase tracking-widest transition-colors ${
-              tab === t.key ? "border-accent text-accent" : "border-transparent text-muted hover:text-foreground"
-            }`}
-          >
-            {t.label}
-          </button>
-        ))}
-      </div>
-
-      {tab === "briefs" && (
-        <div className="mt-8">
-          <BriefsPanel />
-        </div>
-      )}
-
-      {tab === "journal" && (
-        <div className="mt-8">
-          <JournalPanel />
-        </div>
-      )}
-
-      {tab === "calendar" && (
-        <div className="mt-8">
-          <CalendarPanel />
-        </div>
-      )}
-
-      {tab === "positions" && (
-        <>
       {/* ── 概览 ── */}
       <div className="mt-10 grid grid-cols-2 border-2 border-border md:grid-cols-4">
         {[
@@ -455,6 +415,21 @@ export default function PortfolioDashboard() {
                       <div className="border-t border-border pt-3 font-mono text-xs text-muted">↺ {p.lastReview}</div>
                     )}
                   </div>
+
+                  {/* ── 该标的的追踪日记 ── */}
+                  <div className="mt-4 border-t-2 border-border pt-4">
+                    <button
+                      onClick={() => setJournalFor((s) => ({ ...s, [p.id]: !s[p.id] }))}
+                      className="font-mono text-xs uppercase tracking-widest text-accent hover:opacity-70"
+                    >
+                      {journalFor[p.id] ? "▾" : "▸"} 追踪日记 · {p.symbol}
+                    </button>
+                    {journalFor[p.id] && (
+                      <div className="mt-4">
+                        <JournalPanel lockedSymbol={p.symbol} />
+                      </div>
+                    )}
+                  </div>
                 </div>
               )}
             </div>
@@ -480,8 +455,18 @@ export default function PortfolioDashboard() {
           <div className="p-4 text-sm text-muted">暂无关注清单，每周日晚 coach 会生成。</div>
         )}
       </div>
-        </>
-      )}
+
+      {/* ── 动态简报 ── */}
+      <div className="mt-12 font-mono text-xs uppercase tracking-widest text-accent">动态简报</div>
+      <div className="mt-4">
+        <BriefsPanel />
+      </div>
+
+      {/* ── 重点日历 ── */}
+      <div className="mt-12 font-mono text-xs uppercase tracking-widest text-accent">重点日历</div>
+      <div className="mt-4">
+        <CalendarPanel />
+      </div>
 
       <AddPositionModal
         open={addOpen}

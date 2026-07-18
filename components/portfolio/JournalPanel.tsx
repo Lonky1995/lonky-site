@@ -26,7 +26,8 @@ function fmtTime(ts: number): string {
   return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())} ${pad(d.getHours())}:${pad(d.getMinutes())}`;
 }
 
-export default function JournalPanel() {
+export default function JournalPanel({ lockedSymbol }: { lockedSymbol?: string } = {}) {
+  const locked = (lockedSymbol ?? "").trim().toUpperCase();
   const [entries, setEntries] = useState<Entry[]>([]);
   const [loading, setLoading] = useState(true);
   const [symbol, setSymbol] = useState("");
@@ -37,7 +38,10 @@ export default function JournalPanel() {
   const [error, setError] = useState<string | null>(null);
 
   const load = () => {
-    fetch("/api/portfolio/journal/list")
+    const url = locked
+      ? `/api/portfolio/journal/list?symbol=${encodeURIComponent(locked)}`
+      : "/api/portfolio/journal/list";
+    fetch(url)
       .then((r) => r.json())
       .then((d: { entries?: Entry[] }) => setEntries(d.entries ?? []))
       .catch(() => setEntries([]))
@@ -47,7 +51,8 @@ export default function JournalPanel() {
   useEffect(() => {
     queueMicrotask(() => setPasscode(sessionStorage.getItem("pf_passcode") || ""));
     load();
-  }, []);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [locked]);
 
   const submit = async () => {
     setError(null);
@@ -66,7 +71,7 @@ export default function JournalPanel() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           passcode: passcode.trim(),
-          symbol: symbol.trim().replace(/^\$/, "").toUpperCase() || "GENERAL",
+          symbol: locked || symbol.trim().replace(/^\$/, "").toUpperCase() || "GENERAL",
           mood,
           content: content.trim(),
         }),
@@ -95,13 +100,15 @@ export default function JournalPanel() {
       <div className="border-2 border-border p-5">
         <div className="mb-4 font-mono text-xs uppercase tracking-widest text-accent">写一条追踪</div>
         <div className="space-y-4">
-          <div className="grid grid-cols-2 gap-4">
-            <input
-              className={`${inputCls} uppercase`}
-              placeholder="标的（留空=大盘/整体）"
-              value={symbol}
-              onChange={(e) => setSymbol(e.target.value)}
-            />
+          <div className={`grid gap-4 ${locked ? "grid-cols-1" : "grid-cols-2"}`}>
+            {!locked && (
+              <input
+                className={`${inputCls} uppercase`}
+                placeholder="标的（留空=大盘/整体）"
+                value={symbol}
+                onChange={(e) => setSymbol(e.target.value)}
+              />
+            )}
             <div className="flex flex-wrap gap-1.5">
               {MOODS.map((m) => (
                 <button
