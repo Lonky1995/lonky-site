@@ -13,12 +13,34 @@ type TickerBlock = {
   sections: { title: string; body: string }[];
 };
 
+type CalEvent = {
+  date: string; // YYYY-MM-DD
+  mdRaw: string; // 原始 M/D 表达
+  symbol: string;
+  text: string; // 事件描述
+};
+
 type BriefData = {
   date: string;
   tickers: TickerBlock[];
   portfolioInsight: string; // 组合层面洞察原文
+  events: CalEvent[]; // 从"下一步观察点"提取的日历事件
   raw: string;
 };
+
+// 把 "7/29" 结合简报年份补全为 YYYY-MM-DD。跨年处理：若月份 < 简报月份且差距大，视为次年。
+function toFullDate(mmdd: string, briefDate: string): string | null {
+  const m = mmdd.match(/^(\d{1,2})\/(\d{1,2})$/);
+  if (!m) return null;
+  const mon = parseInt(m[1], 10);
+  const day = parseInt(m[2], 10);
+  if (mon < 1 || mon > 12 || day < 1 || day > 31) return null;
+  const briefYear = parseInt(briefDate.slice(0, 4), 10) || new Date().getFullYear();
+  const briefMon = parseInt(briefDate.slice(5, 7), 10) || 1;
+  // 事件月份比简报月份早 >6 个月 → 认为是明年
+  const year = mon < briefMon - 6 ? briefYear + 1 : briefYear;
+  return `${year}-${String(mon).padStart(2, "0")}-${String(day).padStart(2, "0")}`;
+}
 
 async function ghFetch(path: string, token: string) {
   return fetch(`https://api.github.com/repos/${OWNER}/${REPO}/contents/${encodeURI(path)}`, {
@@ -30,6 +52,7 @@ async function ghFetch(path: string, token: string) {
 // 解析 Grok 简报 md → 结构化
 function parseBrief(md: string, date: string): BriefData {
   const tickers: TickerBlock[] = [];
+  const events: CalEvent[] = [];
 
   // 组合层面洞察：从 "### 2. 组合层面洞察" 到下一个 "###"
   const insightMatch = md.match(/###\s*2\.\s*组合层面洞察([\s\S]*?)(?:\n###|\n##|$)/);
@@ -50,9 +73,34 @@ function parseBrief(md: string, date: string): BriefData {
       sections.push({ title: f[1].trim(), body: f[2].trim() });
     }
     tickers.push({ symbol, impact, sections });
+
+    // 从"下一步观察点"提取事件日期（M/D + 描述）
+    const watch = sections.find((s) => s.title.includes("下一步观察点"));
+    if (watch) {
+      // 匹配 "7/29 盘后"、"7/22 财报"、"7/24 派息" 等；日期后跟到分隔符前的短语
+      const evRe = /(\d{1,2}\/\d{1,2})\s*([^，。；、\n)]{0,20})/g;
+      let ev: RegExpExecArray | null;
+      while ((ev = evRe.exec(watch.body)) !== null) {
+        const full = toFullDate(ev[1], date);
+        if (!full) continue;
+        const txt = (ev[2] || "").trim();
+        events.push({ date: full, mdRaw: ev[1], symbol, text: txt || "关注点" });
+      }
+    }
   }
 
-  return { date, tickers, portfolioInsight, raw: md };
+  // 事件去重（同 symbol+date）+ 按日期排序
+  const seen = new Set<string>();
+  const uniqEvents = events
+    .filter((e) => {
+      const k = `${e.symbol}|${e.date}`;
+      if (seen.has(k)) return false;
+      seen.add(k);
+      return true;
+    })
+    .sort((a, b) => a.date.localeCompare(b.date));
+
+  return { date, tickers, portfolioInsight, events: uniqEvents, raw: md };
 }
 
 export async function GET() {
