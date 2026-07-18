@@ -33,6 +33,7 @@ export type PortfolioData = {
   positions: Position[];
   watchlist: WatchItem[];
   equityCurve: EquityPoint[];
+  cash?: number;
 };
 
 export const QUOTE_KIND: Record<string, "stock" | "crypto"> = {

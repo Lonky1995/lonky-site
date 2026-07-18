@@ -15,6 +15,7 @@ import {
 import type { PortfolioData, Position, WatchItem } from "@/data/portfolio";
 import { quoteKind } from "@/data/portfolio";
 import AddPositionModal from "./AddPositionModal";
+import CashModal from "./CashModal";
 import BriefsPanel from "./BriefsPanel";
 import JournalPanel from "./JournalPanel";
 import CalendarPanel from "./CalendarPanel";
@@ -92,6 +93,7 @@ export default function PortfolioDashboard() {
   const [eqW, setEqW] = useState(0);
   const [pieW, setPieW] = useState(0);
   const [addOpen, setAddOpen] = useState(false);
+  const [cashOpen, setCashOpen] = useState(false);
   const [journalFor, setJournalFor] = useState<Record<string, boolean>>({});
 
   const loadData = () => {
@@ -168,13 +170,19 @@ export default function PortfolioDashboard() {
     }
     const pnl = hasCost && hasValue ? totalValue - totalCost : null;
     const pnlPctVal = pnl !== null && totalCost > 0 ? (pnl / totalCost) * 100 : null;
+    const cash = data?.cash ?? 0;
+    // 总资产 = 估算持仓市值 + 现金（无市值时退回成本，仍加现金）
+    const assetBase = hasValue ? totalValue : hasCost ? totalCost : null;
+    const totalAssets = assetBase !== null || cash > 0 ? (assetBase ?? 0) + cash : null;
     return {
       totalCost: hasCost ? totalCost : null,
       totalValue: hasValue ? totalValue : null,
       pnl,
       pnlPct: pnlPctVal,
+      cash,
+      totalAssets,
     };
-  }, [positions, quotes]);
+  }, [positions, quotes, data]);
 
   // 单仓市值（用于占比）
   const mvBySymbol = useMemo(() => {
@@ -253,6 +261,34 @@ export default function PortfolioDashboard() {
               className="mt-2 font-mono text-3xl font-bold tracking-tight"
               style={{ color: typeof s.accent === "number" ? (s.accent >= 0 ? "#0f6e56" : "#993556") : undefined }}
             >
+              {s.value}
+            </div>
+          </div>
+        ))}
+      </div>
+
+      {/* ── 总资产（持仓市值 + 现金）── */}
+      <div className="mt-8 flex items-center justify-between font-mono text-xs uppercase tracking-widest text-accent">
+        <span>资产总览</span>
+        <button
+          onClick={() => setCashOpen(true)}
+          className="border border-accent/50 px-3 py-1 text-[11px] text-accent transition-colors hover:bg-accent/10"
+        >
+          {summary.cash > 0 ? "编辑现金" : "+ 设置现金"}
+        </button>
+      </div>
+      <div className="mt-3 grid grid-cols-2 border-2 border-border md:grid-cols-3">
+        {[
+          { label: "持仓市值", value: fmtUsd(summary.totalValue) },
+          { label: "现金", value: fmtUsd(summary.cash) },
+          { label: "总资产", value: fmtUsd(summary.totalAssets), strong: true },
+        ].map((s, i) => (
+          <div
+            key={s.label}
+            className={`p-5 ${i > 0 ? "border-t-2 border-border md:border-t-0 md:border-l-2" : ""} ${i === 2 ? "col-span-2 md:col-span-1" : ""}`}
+          >
+            <div className="font-mono text-[11px] uppercase tracking-widest text-muted">{s.label}</div>
+            <div className={`mt-2 font-mono font-bold tracking-tight ${s.strong ? "text-3xl text-accent" : "text-2xl"}`}>
               {s.value}
             </div>
           </div>
@@ -473,6 +509,16 @@ export default function PortfolioDashboard() {
         onClose={() => setAddOpen(false)}
         onSuccess={() => {
           // 网站 JSON 经 GitHub→Vercel 部署有延迟，稍等后重拉
+          setTimeout(loadData, 3000);
+        }}
+      />
+
+      <CashModal
+        open={cashOpen}
+        current={data?.cash ?? null}
+        onClose={() => setCashOpen(false)}
+        onSuccess={() => {
+          // 现金写入后经 GitHub→Vercel 部署有延迟，稍等后重拉
           setTimeout(loadData, 3000);
         }}
       />
