@@ -1,82 +1,54 @@
 "use client";
 
-import { motion } from "framer-motion";
 import { useState } from "react";
 import { projects } from "@/data/projects";
 import { useLocale } from "@/components/locale-provider";
 
-const categoryColor: Record<string, string> = {
-  AI: "var(--color-accent-light)",
-  Crypto: "var(--color-accent)",
-  Tool: "var(--color-muted)",
-};
-
 export function ProjectsPreview() {
-  const { dict } = useLocale();
+  const { dict, locale } = useLocale();
   const featured = projects.filter((p) => p.featured);
   const [expanded, setExpanded] = useState(false);
   const visible = expanded ? featured : featured.slice(0, 3);
 
   return (
-    <section className="px-6 py-20 md:px-8 border-t border-border/20">
-      <div className="mx-auto max-w-6xl">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-          className="mb-10"
-        >
-          <div className="section-cmd mb-2">$ ls 作品/</div>
-          <h2 className="section-title-lg">{dict.projects.homeTitle}</h2>
-        </motion.div>
-
-        <div className="project-list">
-          {visible.map((project, i) => {
-            const href = project.link ?? project.github;
-            const isExternal = href?.startsWith("http");
-            return (
-              <motion.a
-                key={project.id}
-                href={href}
-                target={isExternal ? "_blank" : undefined}
-                rel={isExternal ? "noopener noreferrer" : undefined}
-                className="project-row"
-                style={{ textDecoration: "none" }}
-                initial={{ opacity: 0, x: -16 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.4, delay: i * 0.07, ease: [0.22, 1, 0.36, 1] }}
-              >
-                <span className="p-index">0{i + 1}</span>
-                <div className="p-main">
-                  <div className="p-name">{project.title.zh}</div>
-                  <div className="p-tagline">{project.description.zh}</div>
-                  <div className="p-tech">{project.techStack.join(" · ")}</div>
-                </div>
-                <div className="p-right">
-                  <span
-                    className="p-cat"
-                    style={{ color: categoryColor[project.category] ?? "var(--color-muted)" }}
-                  >
-                    {project.category}
-                  </span>
-                  {href && <span className="p-arrow">↗</span>}
-                </div>
-              </motion.a>
-            );
-          })}
-        </div>
-
-        {featured.length > 3 && (
-          <div className="mt-6">
-            <button onClick={() => setExpanded((v) => !v)} className="writing-expand-btn">
-              <span style={{ display: "inline-block", transition: "transform 0.4s cubic-bezier(0.16,1,0.3,1)", transform: expanded ? "rotate(180deg)" : "rotate(0deg)" }}>↓</span>
-              {expanded ? "收起" : "展开更多"}
-            </button>
-          </div>
-        )}
+    <section className="apple-width apple-section" id="projects">
+      <div className="apple-section-head" data-reveal>
+        <p className="apple-eyebrow">{locale === "zh" ? "作品" : "Work"}</p>
+        <h2 className="apple-section-title">{dict.projects.homeTitle}</h2>
+        <p className="apple-muted">{dict.projects.homeSubtitle}</p>
       </div>
+
+      <div className="apple-card-grid">
+        {visible.map((project, i) => {
+          const href = project.link ?? project.github ?? "/projects";
+          const external = href.startsWith("http");
+          return (
+            <a
+              key={project.id}
+              href={href}
+              target={external ? "_blank" : undefined}
+              rel={external ? "noopener noreferrer" : undefined}
+              className="apple-card"
+              data-reveal
+              style={{ ["--delay" as string]: `${i * 100}ms` }}
+            >
+              <span className="apple-card-index">0{i + 1}</span>
+              <h3>{project.title[locale]}</h3>
+              <p>{project.description[locale]}</p>
+              <div className="apple-card-foot">
+                <span>{project.techStack.slice(0, 3).join(" · ")}</span>
+                <span>{project.category}</span>
+              </div>
+            </a>
+          );
+        })}
+      </div>
+
+      {featured.length > 3 && (
+        <button type="button" className="apple-expand-btn" onClick={() => setExpanded((v) => !v)}>
+          {expanded ? (locale === "zh" ? "收起" : "Show less") : locale === "zh" ? "展开更多" : "Show more"}
+        </button>
+      )}
     </section>
   );
 }

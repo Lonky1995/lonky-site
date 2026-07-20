@@ -8,10 +8,5 @@ export const metadata: Metadata = {
 };
 
 export default function PortfolioPage() {
-  return (
-    <>
-      <div className="nebula-bg" />
-      <PortfolioDashboard />
-    </>
-  );
+  return <PortfolioDashboard />;
 }

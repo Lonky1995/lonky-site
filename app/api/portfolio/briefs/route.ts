@@ -104,16 +104,30 @@ function parseBrief(md: string, date: string): BriefData {
 }
 
 export async function GET() {
-  const token = process.env.GITHUB_TOKEN;
+  const token =
+    process.env.GITHUB_TOKEN ||
+    process.env.GITHUB_SITE_TOKEN ||
+    process.env.GH_TOKEN;
   if (!token) {
-    return NextResponse.json({ error: "GITHUB_TOKEN 未配置" }, { status: 500 });
+    return NextResponse.json(
+      { error: "GITHUB_TOKEN 未配置", tickers: [], portfolioInsight: "", date: "" },
+      { status: 200 },
+    );
   }
 
   try {
     // 1. 列目录，找最新日期文件
     const dirRes = await ghFetch(DIR, token);
     if (!dirRes.ok) {
-      return NextResponse.json({ error: `读取简报目录失败 ${dirRes.status}` }, { status: 502 });
+      // 401/403 多为 token 无权读 My-vault，降级为空态避免整页报错
+      const hint =
+        dirRes.status === 401 || dirRes.status === 403
+          ? `GitHub 鉴权失败 ${dirRes.status}（检查 GITHUB_TOKEN 是否有 My-vault 读权限）`
+          : `读取简报目录失败 ${dirRes.status}`;
+      return NextResponse.json(
+        { error: hint, tickers: [], portfolioInsight: "", date: "" },
+        { status: 200 },
+      );
     }
     const files = (await dirRes.json()) as Array<{ name: string; path: string }>;
     const briefs = files

@@ -10,16 +10,14 @@ export function BlogFilter({
   onSelect: (c: string) => void;
 }) {
   return (
-    <div className="mb-8 flex flex-wrap gap-2">
+    <div className="mb-8 flex flex-wrap gap-2" data-reveal>
       {categories.map((cat) => (
         <button
           key={cat}
+          type="button"
           onClick={() => onSelect(cat)}
-          className={`rounded-full px-4 py-1.5 text-sm transition-all ${
-            active === cat
-              ? "bg-accent text-background"
-              : "border border-border text-muted hover:border-accent hover:text-foreground"
-          }`}
+          className={active === cat ? "primary-button" : "secondary-button"}
+          style={{ minHeight: 36, fontSize: "0.85rem", padding: "0 14px" }}
         >
           {cat}
         </button>

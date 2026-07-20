@@ -1,5 +1,5 @@
-import { Section } from "@/components/ui/Section";
 import { MenuBoard } from "@/components/menu/MenuBoard";
+import { PageHeader, PageShell } from "@/components/ui/PageShell";
 
 export const metadata = {
   title: "今日菜谱 | Lonky",
@@ -8,11 +8,15 @@ export const metadata = {
 
 export default function MenuPage() {
   return (
-    <Section
-      title="MENU"
-      subtitle="每天不再纠结吃什么 · AI 为全家设计营养均衡的菜谱"
-    >
-      <MenuBoard />
-    </Section>
+    <PageShell className="pb-24">
+      <PageHeader
+        eyebrow="Menu"
+        title="今日菜谱"
+        subtitle="每天不再纠结吃什么 · AI 为全家设计营养均衡的菜谱"
+      />
+      <div data-reveal>
+        <MenuBoard />
+      </div>
+    </PageShell>
   );
 }

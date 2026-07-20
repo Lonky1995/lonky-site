@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import { PodcastCard } from "@/components/podcast/PodcastCard";
 import { BlogFilter } from "@/components/blog/BlogFilter";
-import { Section } from "@/components/ui/Section";
+import { PageHeader, PageShell } from "@/components/ui/PageShell";
 import { useLocale } from "@/components/locale-provider";
 import Link from "next/link";
 
@@ -32,7 +32,7 @@ export default function PodcastNotesPage() {
           .filter((n: { published: boolean }) => n.published)
           .sort(
             (a: { date: string }, b: { date: string }) =>
-              new Date(b.date).getTime() - new Date(a.date).getTime()
+              new Date(b.date).getTime() - new Date(a.date).getTime(),
           )
           .map(
             (n: {
@@ -50,20 +50,19 @@ export default function PodcastNotesPage() {
               description: n.description || "",
               date: new Date(n.date).toLocaleDateString(
                 locale === "zh" ? "zh-CN" : "en-US",
-                { year: "numeric", month: "short", day: "numeric" }
+                { year: "numeric", month: "short", day: "numeric" },
               ),
               category: n.category || "播客",
               platform: n.platform,
               coverImage: n.coverImage,
               duration: n.duration,
-            })
+            }),
           );
         setNotes(published);
-        const cats = [
+        setCategories([
           "All",
           ...new Set(published.map((n: PodcastNote) => n.category)),
-        ] as string[];
-        setCategories(cats);
+        ] as string[]);
       })
       .catch(() => {});
   }, [locale]);
@@ -72,26 +71,22 @@ export default function PodcastNotesPage() {
     active === "All" ? notes : notes.filter((n) => n.category === active);
 
   return (
-    <Section
-      title={dict.podcast.title}
-      subtitle={dict.podcast.subtitle || undefined}
-    >
-      <div className="mb-6 flex items-center justify-between">
-        <BlogFilter
-          categories={categories}
-          active={active}
-          onSelect={setActive}
-        />
-        <Link
-          href="/podcast-notes/new"
-          className="rounded-xl bg-accent px-4 py-2 text-sm font-medium text-white transition-opacity hover:opacity-90"
-        >
-          + {dict.podcast.newNote}
-        </Link>
-      </div>
+    <PageShell className="pb-24">
+      <PageHeader
+        eyebrow="Podcast"
+        title={dict.podcast.title}
+        subtitle={dict.podcast.subtitle}
+        action={
+          <Link href="/podcast-notes/new" className="primary-button">
+            + {dict.podcast.newNote}
+          </Link>
+        }
+      />
+
+      <BlogFilter categories={categories} active={active} onSelect={setActive} />
 
       {filtered.length === 0 ? (
-        <p className="text-muted">{dict.podcast.noNotes}</p>
+        <p className="apple-muted">{dict.podcast.noNotes}</p>
       ) : (
         <div className="space-y-4">
           {filtered.map((note, i) => (
@@ -99,6 +94,6 @@ export default function PodcastNotesPage() {
           ))}
         </div>
       )}
-    </Section>
+    </PageShell>
   );
 }

@@ -1,12 +1,26 @@
 import type { Metadata } from "next";
 import { cookies } from "next/headers";
 import Script from "next/script";
-import { Plus_Jakarta_Sans, JetBrains_Mono, Noto_Serif_SC } from "next/font/google";
+import {
+  Instrument_Sans,
+  Plus_Jakarta_Sans,
+  JetBrains_Mono,
+  Noto_Serif_SC,
+} from "next/font/google";
 import { LocaleProvider } from "@/components/locale-provider";
+import { Navbar } from "@/components/layout/Navbar";
+import { Footer } from "@/components/layout/Footer";
+import { RevealProvider } from "@/components/reveal-provider";
 import { siteConfig } from "@/data/site-config";
 import { defaultLocale, type Locale } from "@/i18n/config";
 import { getDictionary } from "@/i18n";
 import "./globals.css";
+
+const instrumentSans = Instrument_Sans({
+  variable: "--font-instrument",
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+});
 
 const plusJakartaSans = Plus_Jakarta_Sans({
   variable: "--font-inter",
@@ -67,7 +81,7 @@ export default async function RootLayout({
         />
       </head>
       <body
-        className={`${plusJakartaSans.variable} ${notoSerifSC.variable} ${jetbrainsMono.variable} min-h-[100dvh] bg-background font-sans text-foreground antialiased`}
+        className={`${instrumentSans.variable} ${plusJakartaSans.variable} ${notoSerifSC.variable} ${jetbrainsMono.variable} min-h-[100dvh] bg-background font-sans text-foreground antialiased`}
       >
         <script
           type="application/ld+json"
@@ -89,8 +103,11 @@ export default async function RootLayout({
           }}
         />
         <LocaleProvider locale={locale} dict={dict}>
-          <div className="nebula-bg" aria-hidden="true" />
-          <main className="relative z-10">{children}</main>
+          <RevealProvider>
+            <Navbar />
+            <main className="relative z-10">{children}</main>
+            <Footer />
+          </RevealProvider>
         </LocaleProvider>
       </body>
     </html>

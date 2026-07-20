@@ -1,7 +1,6 @@
 "use client";
 
 import Link from "next/link";
-import { motion, AnimatePresence } from "framer-motion";
 import { useState } from "react";
 import { useLocale } from "@/components/locale-provider";
 
@@ -20,103 +19,84 @@ function getPostHref(post: BlogPost) {
   return post.type === "podcast" ? `/podcast-notes/${post.slug}` : `/blog/${post.slug}`;
 }
 
-function getLinkProps(post: BlogPost) {
-  return post.externalUrl ? { target: "_blank", rel: "noopener" as const } : {};
-}
-
 export function BlogPreview({ posts }: { posts: BlogPost[] }) {
-  const { dict } = useLocale();
+  const { dict, locale } = useLocale();
   const [expanded, setExpanded] = useState(false);
-
-  const visible = expanded ? posts : posts.slice(0, 2);
-  const hasMore = posts.length > 2;
+  const list = expanded ? posts.slice(0, 6) : posts.slice(0, 3);
+  const hasMore = posts.length > 3;
 
   if (posts.length === 0) {
     return (
-      <section className="px-6 py-20 md:px-8 border-t border-border/20">
-        <div className="mx-auto max-w-6xl">
-          <p className="text-muted">{dict.blog.noPosts}</p>
-        </div>
+      <section className="apple-width apple-section">
+        <p className="apple-muted">{dict.blog.noPosts}</p>
       </section>
     );
   }
 
   return (
-    <section className="px-6 py-20 md:px-8 border-t border-border/20">
-      <div className="mx-auto max-w-6xl">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-          className="mb-10"
-        >
-          <div className="section-cmd mb-2">$ cat 想法/</div>
-          <h2 className="section-title-lg">{dict.blog.title}</h2>
-        </motion.div>
-
-        {/* Featured first post */}
-        {posts[0] && (
-          <motion.div
-            initial={{ opacity: 0, y: 16 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-            className="mb-4"
-          >
-            <Link href={getPostHref(posts[0])} {...getLinkProps(posts[0])}>
-              <div className="writing-featured-card">
-                <div className="wc-meta">
-                  <span className="wc-cat">{posts[0].category}</span>
-                  <span className="wc-date">{posts[0].date}</span>
-                </div>
-                <div className="wc-title-featured">{posts[0].title}</div>
-                <div className="wc-desc">{posts[0].description}</div>
-                <span className="wc-arrow">↗</span>
-              </div>
-            </Link>
-          </motion.div>
-        )}
-
-        {/* Grid of remaining posts */}
-        <div className="writing-grid-2col">
-          <AnimatePresence initial={false}>
-            {posts.slice(1).map((post, i) => {
-              if (!expanded && i >= 2) return null;
-              return (
-                <motion.div
-                  key={post.slug}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -10 }}
-                  transition={{ duration: 0.4, delay: i * 0.06, ease: [0.22, 1, 0.36, 1] }}
-                >
-                  <Link href={getPostHref(post)} {...getLinkProps(post)}>
-                    <div className="writing-card">
-                      <div className="wc-meta">
-                        <span className="wc-cat">{post.category}</span>
-                        <span className="wc-date">{post.date}</span>
-                      </div>
-                      <div className="wc-title">{post.title}</div>
-                      <div className="wc-desc">{post.description}</div>
-                      <span className="wc-arrow">↗</span>
-                    </div>
-                  </Link>
-                </motion.div>
-              );
-            })}
-          </AnimatePresence>
-        </div>
-
-        {hasMore && (
-          <div className="mt-6">
-            <button onClick={() => setExpanded((v) => !v)} className="writing-expand-btn">
-              <span style={{ display: "inline-block", transition: "transform 0.4s cubic-bezier(0.16,1,0.3,1)", transform: expanded ? "rotate(180deg)" : "rotate(0deg)" }}>↓</span>
-              {expanded ? "收起" : "展开更多"}
-            </button>
-          </div>
-        )}
+    <section className="apple-width apple-section" id="notes">
+      <div className="apple-section-head" data-reveal>
+        <p className="apple-eyebrow">{locale === "zh" ? "想法" : "Notes"}</p>
+        <h2 className="apple-section-title">{dict.blog.title}</h2>
+        <p className="apple-muted">{dict.blog.subtitle}</p>
       </div>
+
+      <div className="apple-blog-grid">
+        {list.map((post, i) => {
+          const href = getPostHref(post);
+          const style = { ["--delay" as string]: `${i * 80}ms` };
+          const body = (
+            <>
+              <div className="apple-blog-meta">
+                <span>{post.category}</span>
+                <span>{post.date}</span>
+              </div>
+              <h3>{post.title}</h3>
+              <p>{post.description}</p>
+            </>
+          );
+
+          if (post.externalUrl) {
+            return (
+              <a
+                key={post.slug}
+                href={href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="apple-blog-card"
+                data-reveal
+                style={style}
+              >
+                {body}
+              </a>
+            );
+          }
+
+          return (
+            <Link
+              key={post.slug}
+              href={href}
+              className="apple-blog-card"
+              data-reveal
+              style={style}
+            >
+              {body}
+            </Link>
+          );
+        })}
+      </div>
+
+      {hasMore && (
+        <button type="button" className="apple-expand-btn" onClick={() => setExpanded((v) => !v)}>
+          {expanded
+            ? locale === "zh"
+              ? "收起"
+              : "Show less"
+            : locale === "zh"
+              ? "展开更多"
+              : "Show more"}
+        </button>
+      )}
     </section>
   );
 }

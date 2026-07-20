@@ -127,19 +127,14 @@ export default function TradingAnalyzerPage() {
   }, []);
 
   return (
-    <div className="mx-auto max-w-6xl px-6 py-12">
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        className="mb-8 text-center"
-      >
-        <h1 className="mb-2 text-3xl font-bold">
-          <span className="gradient-text">交易风格分析器</span>
-        </h1>
-        <p className="text-sm text-muted">
+    <div className="apple-width pb-24 pt-10">
+      <div className="mb-10 text-center" data-reveal>
+        <p className="apple-eyebrow">Tools</p>
+        <h1 className="apple-section-title">交易风格分析器</h1>
+        <p className="apple-muted" style={{ marginTop: 12 }}>
           连接你的 Binance 合约账户，AI 自动分析你的交易行为
         </p>
-      </motion.div>
+      </div>
 
       <AnimatePresence mode="wait">
         {step === 'input' && (

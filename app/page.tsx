@@ -2,26 +2,60 @@ import { Hero } from "@/components/home/Hero";
 import { AboutTimeline } from "@/components/home/AboutTimeline";
 import { ProjectsPreview } from "@/components/home/ProjectsPreview";
 import { BlogPreview } from "@/components/home/BlogPreview";
+import { ContactCTA } from "@/components/home/ContactCTA";
 
-// Try to import blog posts + podcast notes from velite, fallback to empty
-let blogPosts: { slug: string; title: string; description: string; date: string; category: string; type: string; externalUrl?: string }[] = [];
+let blogPosts: {
+  slug: string;
+  title: string;
+  description: string;
+  date: string;
+  category: string;
+  type: string;
+  externalUrl?: string;
+}[] = [];
+
 try {
   const { posts, podcastNotes } = await import("@/.velite");
 
   const blogItems = (posts || [])
     .filter((p: { published: boolean }) => p.published)
-    .map((p: { slug: string; title: string; description: string; date: string; category: string; externalUrl?: string }) => ({
-      slug: p.slug, title: p.title, description: p.description || "",
-      date: p.date, category: p.category || "Uncategorized", type: "blog",
-      externalUrl: p.externalUrl,
-    }));
+    .map(
+      (p: {
+        slug: string;
+        title: string;
+        description: string;
+        date: string;
+        category: string;
+        externalUrl?: string;
+      }) => ({
+        slug: p.slug,
+        title: p.title,
+        description: p.description || "",
+        date: p.date,
+        category: p.category || "Uncategorized",
+        type: "blog",
+        externalUrl: p.externalUrl,
+      }),
+    );
 
   const podcastItems = (podcastNotes || [])
     .filter((n: { published: boolean }) => n.published)
-    .map((n: { slug: string; title: string; description: string; date: string; category: string }) => ({
-      slug: n.slug, title: n.title, description: n.description || "",
-      date: n.date, category: n.category || "播客笔记", type: "podcast",
-    }));
+    .map(
+      (n: {
+        slug: string;
+        title: string;
+        description: string;
+        date: string;
+        category: string;
+      }) => ({
+        slug: n.slug,
+        title: n.title,
+        description: n.description || "",
+        date: n.date,
+        category: n.category || "播客笔记",
+        type: "podcast",
+      }),
+    );
 
   blogPosts = [...blogItems, ...podcastItems]
     .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
@@ -29,20 +63,23 @@ try {
     .map((p) => ({
       ...p,
       date: new Date(p.date).toLocaleDateString("en-US", {
-        year: "numeric", month: "short", day: "numeric",
+        year: "numeric",
+        month: "short",
+        day: "numeric",
       }),
     }));
 } catch {
-  // Velite not built yet, no posts
+  // Velite not built yet
 }
 
 export default async function Home() {
   return (
-    <>
+    <div className="apple-shell">
       <Hero />
-      <AboutTimeline />
       <ProjectsPreview />
+      <AboutTimeline />
       <BlogPreview posts={blogPosts} />
-    </>
+      <ContactCTA />
+    </div>
   );
 }

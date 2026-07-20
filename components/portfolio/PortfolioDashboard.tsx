@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useMemo, useRef, useState } from "react";
-import Link from "next/link";
 import {
   Area,
   AreaChart,
@@ -22,7 +21,7 @@ import CalendarPanel from "./CalendarPanel";
 
 type Quote = { symbol: string; price: number; changesPercentage: number };
 
-const PIE_COLORS = ["#2a78d6", "#1baf7a", "#eda100", "#e34948", "#4a3aa7", "#e87ba4"];
+const PIE_COLORS = ["#a8b4ff", "#7f90ff", "#5c6bc0", "#94a3b8", "#64748b", "#475569"];
 
 const FLAG_META = {
   event: { label: "本周事件", cls: "border-blue-500/40 text-blue-500" },
@@ -216,50 +215,56 @@ export default function PortfolioDashboard() {
   }, [positions, mvBySymbol]);
 
   return (
-    <main className="relative z-10 mx-auto max-w-6xl px-6 pb-24 pt-10 md:px-8">
-      <header>
-        <div className="flex items-center justify-between border-b-2 border-border pb-3 font-mono text-xs uppercase tracking-widest text-muted">
-          <Link href="/" className="hover:text-accent">
-            ← lonky.me
-          </Link>
-          <span>Portfolio · {data?.generatedAt ? data.generatedAt.slice(0, 10) : "—"}</span>
-        </div>
-        <div className="mt-8 font-mono text-xs uppercase tracking-widest text-accent">组合追踪器</div>
-        <div className="mt-3 flex items-start justify-between gap-4">
-          <h1 className="font-extrabold uppercase leading-[0.9] tracking-tight" style={{ fontSize: "clamp(2.4rem, 6vw, 4.4rem)" }}>
-            Portfolio
-            <br />
-            <span className="text-accent">追踪看板</span>
-          </h1>
-          <button
-            onClick={() => setAddOpen(true)}
-            className="mt-2 shrink-0 border-2 border-accent bg-accent/10 px-4 py-2 font-mono text-xs uppercase tracking-widest text-accent transition-colors hover:bg-accent/25"
-          >
+    <div className="pf-page">
+      <header className="pf-header" data-reveal>
+        <div className="pf-header-row">
+          <div>
+            <p className="apple-eyebrow">组合追踪器</p>
+            <h1>Portfolio.</h1>
+            <div className="pf-status">
+              <span
+                className="pf-status-dot"
+                style={{
+                  background:
+                    quoteState === "live"
+                      ? "var(--gain)"
+                      : quoteState === "off"
+                        ? "var(--loss)"
+                        : "rgba(255,255,255,0.4)",
+                }}
+              />
+              {quoteState === "live"
+                ? "行情实时（FMP + Binance）"
+                : quoteState === "off"
+                  ? "行情未接入，PNL 暂不可用"
+                  : "行情加载中"}
+              <span style={{ opacity: 0.5 }}>
+                · {data?.generatedAt ? data.generatedAt.slice(0, 10) : "—"}
+              </span>
+            </div>
+          </div>
+          <button type="button" onClick={() => setAddOpen(true)} className="primary-button">
             + 记录持仓
           </button>
         </div>
-        <div className="mt-6 flex items-center gap-2 font-mono text-xs text-muted">
-          <span
-            className="inline-block h-2 w-2"
-            style={{ background: quoteState === "live" ? "#1baf7a" : quoteState === "off" ? "#e34948" : "var(--color-muted)" }}
-          />
-          {quoteState === "live" ? "行情实时（FMP + Binance）" : quoteState === "off" ? "行情未接入，PNL 暂不可用" : "行情加载中"}
-        </div>
       </header>
 
-      {/* ── 概览 ── */}
-      <div className="mt-10 grid grid-cols-2 border-2 border-border md:grid-cols-4">
+      {/* ── 概览 KPI ── */}
+      <div className="pf-kpi-grid" data-reveal>
         {[
           { label: "持仓", value: String(positions.length) },
           { label: "多 / 空", value: `${longCount} / ${shortCount}` },
-          { label: "总浮盈", value: totalPnl === null ? "—" : `${totalPnl >= 0 ? "+" : ""}${totalPnl.toFixed(1)}%`, accent: totalPnl },
+          {
+            label: "总浮盈",
+            value: totalPnl === null ? "—" : `${totalPnl >= 0 ? "+" : ""}${totalPnl.toFixed(1)}%`,
+            accent: totalPnl,
+          },
           { label: "本周需关注", value: String(needAttention) },
-        ].map((s, i) => (
-          <div key={s.label} className={`p-5 ${i > 0 ? "border-t-2 border-border md:border-t-0 md:border-l-2" : ""} ${i >= 2 ? "border-t-2 md:border-t-0" : ""}`}>
-            <div className="font-mono text-[11px] uppercase tracking-widest text-muted">{s.label}</div>
+        ].map((s) => (
+          <div key={s.label} className="pf-kpi">
+            <div className="pf-kpi-label">{s.label}</div>
             <div
-              className="mt-2 font-mono text-3xl font-bold tracking-tight"
-              style={{ color: typeof s.accent === "number" ? (s.accent >= 0 ? "#0f6e56" : "#993556") : undefined }}
+              className={`pf-kpi-value ${typeof s.accent === "number" ? (s.accent >= 0 ? "gain" : "loss") : ""}`}
             >
               {s.value}
             </div>
@@ -267,51 +272,48 @@ export default function PortfolioDashboard() {
         ))}
       </div>
 
-      {/* ── 总资产（持仓市值 + 现金）── */}
-      <div className="mt-8 flex items-center justify-between font-mono text-xs uppercase tracking-widest text-accent">
-        <span>资产总览</span>
-        <button
-          onClick={() => setCashOpen(true)}
-          className="border border-accent/50 px-3 py-1 text-[11px] text-accent transition-colors hover:bg-accent/10"
-        >
+      {/* ── 总资产 ── */}
+      <div className="mt-8 flex items-center justify-between" data-reveal>
+        <p className="pf-panel-title" style={{ margin: 0 }}>
+          资产总览
+        </p>
+        <button type="button" onClick={() => setCashOpen(true)} className="secondary-button" style={{ minHeight: 36, fontSize: "0.8rem" }}>
           {summary.cash > 0 ? "编辑现金" : "+ 设置现金"}
         </button>
       </div>
-      <div className="mt-3 grid grid-cols-2 border-2 border-border md:grid-cols-3">
+      <div className="pf-kpi-grid" style={{ gridTemplateColumns: "repeat(3, minmax(0, 1fr))" }} data-reveal>
         {[
           { label: "持仓市值", value: fmtUsd(summary.totalValue) },
           { label: "现金", value: fmtUsd(summary.cash) },
-          { label: "总资产", value: fmtUsd(summary.totalAssets), strong: true },
-        ].map((s, i) => (
-          <div
-            key={s.label}
-            className={`p-5 ${i > 0 ? "border-t-2 border-border md:border-t-0 md:border-l-2" : ""} ${i === 2 ? "col-span-2 md:col-span-1" : ""}`}
-          >
-            <div className="font-mono text-[11px] uppercase tracking-widest text-muted">{s.label}</div>
-            <div className={`mt-2 font-mono font-bold tracking-tight ${s.strong ? "text-3xl text-accent" : "text-2xl"}`}>
-              {s.value}
-            </div>
+          { label: "总资产", value: fmtUsd(summary.totalAssets) },
+        ].map((s) => (
+          <div key={s.label} className="pf-kpi">
+            <div className="pf-kpi-label">{s.label}</div>
+            <div className="pf-kpi-value">{s.value}</div>
           </div>
         ))}
       </div>
 
-      {/* ── 组合汇总（总成本 / 市值 / 浮盈 / 盈亏%）── */}
-      <div className="mt-4 grid grid-cols-2 border-2 border-border md:grid-cols-4">
+      {/* ── 组合汇总 ── */}
+      <div className="pf-kpi-grid mt-4" data-reveal>
         {[
           { label: "总成本", value: fmtUsd(summary.totalCost) },
           { label: "估算市值", value: fmtUsd(summary.totalValue) },
           { label: "浮动盈亏", value: fmtUsd(summary.pnl), accent: summary.pnl },
           {
             label: "盈亏比例",
-            value: summary.pnlPct === null ? "—" : `${summary.pnlPct >= 0 ? "+" : ""}${summary.pnlPct.toFixed(1)}%`,
+            value:
+              summary.pnlPct === null
+                ? "—"
+                : `${summary.pnlPct >= 0 ? "+" : ""}${summary.pnlPct.toFixed(1)}%`,
             accent: summary.pnlPct,
           },
-        ].map((s, i) => (
-          <div key={s.label} className={`p-5 ${i > 0 ? "border-t-2 border-border md:border-t-0 md:border-l-2" : ""} ${i >= 2 ? "border-t-2 md:border-t-0" : ""}`}>
-            <div className="font-mono text-[11px] uppercase tracking-widest text-muted">{s.label}</div>
+        ].map((s) => (
+          <div key={s.label} className="pf-kpi">
+            <div className="pf-kpi-label">{s.label}</div>
             <div
-              className="mt-2 font-mono text-2xl font-bold tracking-tight"
-              style={{ color: typeof s.accent === "number" ? (s.accent >= 0 ? "#0f6e56" : "#993556") : undefined }}
+              className={`pf-kpi-value ${typeof s.accent === "number" ? (s.accent >= 0 ? "gain" : "loss") : ""}`}
+              style={{ fontSize: "1.35rem" }}
             >
               {s.value}
             </div>
@@ -320,40 +322,56 @@ export default function PortfolioDashboard() {
       </div>
 
       {/* ── 净值曲线 + 分布 ── */}
-      <div className="mt-8 grid grid-cols-1 gap-6 lg:grid-cols-3">
-        <div ref={eqRef} className="min-w-0 border-2 border-border p-5 lg:col-span-2">
-          <div className="mb-4 font-mono text-xs uppercase tracking-widest text-muted">资产净值</div>
+      <div className="pf-charts" data-reveal>
+        <div ref={eqRef} className="pf-panel min-w-0">
+          <div className="pf-panel-title">资产净值</div>
           {eqW > 0 && (
-            <AreaChart width={eqW - 40} height={200} data={data?.equityCurve ?? []}>
+            <AreaChart width={eqW - 44} height={200} data={data?.equityCurve ?? []}>
               <defs>
                 <linearGradient id="eqFill" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="0%" stopColor="#1baf7a" stopOpacity={0.25} />
-                  <stop offset="100%" stopColor="#1baf7a" stopOpacity={0} />
+                  <stop offset="0%" stopColor="#a8b4ff" stopOpacity={0.35} />
+                  <stop offset="100%" stopColor="#a8b4ff" stopOpacity={0} />
                 </linearGradient>
               </defs>
-              <XAxis dataKey="t" tick={{ fontSize: 11, fill: "var(--color-muted)" }} axisLine={false} tickLine={false} />
-              <YAxis tick={{ fontSize: 11, fill: "var(--color-muted)" }} axisLine={false} tickLine={false} width={36} domain={["dataMin - 2", "dataMax + 2"]} />
-              <Tooltip contentStyle={{ fontSize: 12, fontFamily: "monospace" }} />
-              <Area type="monotone" dataKey="v" stroke="#1baf7a" strokeWidth={2} fill="url(#eqFill)" />
+              <XAxis dataKey="t" tick={{ fontSize: 11, fill: "rgba(245,247,251,0.45)" }} axisLine={false} tickLine={false} />
+              <YAxis tick={{ fontSize: 11, fill: "rgba(245,247,251,0.45)" }} axisLine={false} tickLine={false} width={36} domain={["dataMin - 2", "dataMax + 2"]} />
+              <Tooltip
+                contentStyle={{
+                  fontSize: 12,
+                  background: "rgba(9,11,17,0.92)",
+                  border: "1px solid rgba(255,255,255,0.12)",
+                  borderRadius: 12,
+                  color: "#f5f7fb",
+                }}
+              />
+              <Area type="monotone" dataKey="v" stroke="#a8b4ff" strokeWidth={2} fill="url(#eqFill)" />
             </AreaChart>
           )}
         </div>
-        <div ref={pieRef} className="min-w-0 border-2 border-border p-5">
-          <div className="mb-4 font-mono text-xs uppercase tracking-widest text-muted">持仓分布</div>
+        <div ref={pieRef} className="pf-panel min-w-0">
+          <div className="pf-panel-title">持仓分布</div>
           {pieW > 0 && (
-            <PieChart width={pieW - 40} height={160}>
+            <PieChart width={pieW - 44} height={160}>
               <Pie data={pieData} dataKey="value" nameKey="name" cx="50%" cy="50%" innerRadius={44} outerRadius={68} paddingAngle={2}>
                 {pieData.map((_, i) => (
                   <Cell key={i} fill={PIE_COLORS[i % PIE_COLORS.length]} />
                 ))}
               </Pie>
-              <Tooltip contentStyle={{ fontSize: 12, fontFamily: "monospace" }} />
+              <Tooltip
+                contentStyle={{
+                  fontSize: 12,
+                  background: "rgba(9,11,17,0.92)",
+                  border: "1px solid rgba(255,255,255,0.12)",
+                  borderRadius: 12,
+                  color: "#f5f7fb",
+                }}
+              />
             </PieChart>
           )}
-          <div className="mt-3 flex flex-wrap gap-x-4 gap-y-1 font-mono text-[11px] text-muted">
+          <div className="mt-3 flex flex-wrap gap-x-4 gap-y-1 text-[11px]" style={{ color: "rgba(245,247,251,0.55)" }}>
             {pieData.map((d, i) => (
               <span key={d.name} className="flex items-center gap-1.5">
-                <span className="inline-block h-2 w-2" style={{ background: PIE_COLORS[i % PIE_COLORS.length] }} />
+                <span className="inline-block h-2 w-2 rounded-full" style={{ background: PIE_COLORS[i % PIE_COLORS.length] }} />
                 {d.name}
               </span>
             ))}
@@ -362,8 +380,8 @@ export default function PortfolioDashboard() {
       </div>
 
       {/* ── 持仓卡片 ── */}
-      <div className="mt-12 font-mono text-xs uppercase tracking-widest text-accent">持仓 · 点击展开</div>
-      <div className="mt-4 space-y-3">
+      <div className="mt-12 pf-panel-title">持仓 · 点击展开</div>
+      <div className="mt-3 space-y-3">
         {positions.map((p) => {
           const price = priceOf(p.symbol);
           const pnl = pnlPct(p, price);
@@ -374,10 +392,10 @@ export default function PortfolioDashboard() {
           const flags = watchBySymbol[p.symbol.toUpperCase()]?.map((w) => w.type) ?? [];
           const uniqFlags = Array.from(new Set(flags));
           return (
-            <div key={p.id} className="border-2 border-border">
+            <div key={p.id} className="pf-panel" style={{ marginTop: 0, padding: 0, overflow: "hidden" }}>
               <button
                 onClick={() => setExpanded((e) => ({ ...e, [p.id]: !e[p.id] }))}
-                className="flex w-full flex-col gap-2 p-4 text-left transition-colors hover:bg-foreground/[0.02]"
+                className="flex w-full flex-col gap-2 p-4 text-left transition-colors hover:bg-white/[0.03]"
                 aria-expanded={isOpen}
               >
                 <div className="flex items-center justify-between gap-3">
@@ -388,45 +406,64 @@ export default function PortfolioDashboard() {
                         {p.companyName}
                       </span>
                     )}
-                    <span
-                      className={`shrink-0 border px-2 py-0.5 font-mono text-[11px] ${p.direction === "long" ? "border-emerald-500/40 text-emerald-600" : "border-pink-500/40 text-pink-600"}`}
-                    >
-                      {p.direction === "long" ? "做多" : "做空"}
+                    <span className="pf-chip">{p.direction === "long" ? "做多" : "做空"}</span>
+                    <span className="shrink-0 text-xs" style={{ color: "rgba(245,247,251,0.5)" }}>
+                      {p.size}
                     </span>
-                    <span className="shrink-0 font-mono text-xs text-muted">{p.size}</span>
                   </div>
-                  <div className="flex items-center gap-3 font-mono text-xs">
-                    <span className="text-muted">
+                  <div className="flex items-center gap-3 text-xs">
+                    <span style={{ color: "rgba(245,247,251,0.5)" }}>
                       {p.entryPrice ?? "—"} → {price !== null ? price.toLocaleString() : "…"}
                     </span>
-                    <span className="min-w-[52px] text-right font-bold" style={{ color: pnl === null ? "var(--color-muted)" : pnl >= 0 ? "#0f6e56" : "#993556" }}>
+                    <span
+                      className="min-w-[52px] text-right font-bold"
+                      style={{
+                        color:
+                          pnl === null
+                            ? "rgba(245,247,251,0.45)"
+                            : pnl >= 0
+                              ? "var(--gain)"
+                              : "var(--loss)",
+                      }}
+                    >
                       {pnl === null ? "—" : `${pnl >= 0 ? "+" : ""}${pnl.toFixed(1)}%`}
                     </span>
                   </div>
                 </div>
-                {/* 市值 / 盈亏额 / 占比 */}
-                <div className="flex items-center gap-x-4 gap-y-1 font-mono text-[11px] text-muted">
+                <div className="flex items-center gap-x-4 gap-y-1 text-[11px]" style={{ color: "rgba(245,247,251,0.5)" }}>
                   <span>
-                    市值 <span className="text-foreground/80">{fmtUsd(mv)}</span>
+                    市值 <span style={{ color: "rgba(245,247,251,0.85)" }}>{fmtUsd(mv)}</span>
                   </span>
                   <span>
                     盈亏{" "}
-                    <span style={{ color: pnlUsd === null ? undefined : pnlUsd >= 0 ? "#0f6e56" : "#993556" }}>
+                    <span
+                      style={{
+                        color:
+                          pnlUsd === null
+                            ? undefined
+                            : pnlUsd >= 0
+                              ? "var(--gain)"
+                              : "var(--loss)",
+                      }}
+                    >
                       {fmtUsd(pnlUsd)}
                     </span>
                   </span>
                   <span>
-                    占比 <span className="text-foreground/80">{weight === null ? "—" : `${weight.toFixed(0)}%`}</span>
+                    占比{" "}
+                    <span style={{ color: "rgba(245,247,251,0.85)" }}>
+                      {weight === null ? "—" : `${weight.toFixed(0)}%`}
+                    </span>
                   </span>
                 </div>
                 <div className="flex items-center justify-between gap-3">
-                  <div className="truncate text-sm text-foreground/70">
-                    <span className="text-muted">想法：</span>
+                  <div className="truncate text-sm" style={{ color: "rgba(245,247,251,0.72)" }}>
+                    <span style={{ color: "rgba(245,247,251,0.45)" }}>想法：</span>
                     {p.logic}
                   </div>
                   <div className="flex flex-shrink-0 gap-1.5">
                     {uniqFlags.map((f) => (
-                      <span key={f} className={`border px-1.5 py-0.5 font-mono text-[10px] ${FLAG_META[f].cls}`}>
+                      <span key={f} className="pf-chip">
                         {FLAG_META[f].label}
                       </span>
                     ))}
@@ -435,28 +472,33 @@ export default function PortfolioDashboard() {
               </button>
 
               {isOpen && (
-                <div className="border-t-2 border-border p-4">
-                  <div className="grid grid-cols-2 gap-4 border-b border-border pb-4 font-mono text-xs md:grid-cols-4">
+                <div className="border-t border-white/10 p-4">
+                  <div className="grid grid-cols-2 gap-4 border-b border-white/10 pb-4 text-xs md:grid-cols-4">
                     <Field label="开仓时间" value={new Date(p.entryTime).toLocaleDateString("zh-CN")} />
                     <Field label="入场价" value={p.entryPrice ?? "—"} />
-                    <Field label="止损位" value={p.stopLoss ?? "—"} valueClass="text-red-500" />
-                    <Field label="信念度" value={"●".repeat(p.conviction) + "○".repeat(5 - p.conviction)} valueClass="text-amber-500 tracking-widest" />
+                    <Field label="止损位" value={p.stopLoss ?? "—"} valueClass="text-[var(--loss)]" />
+                    <Field
+                      label="信念度"
+                      value={"●".repeat(p.conviction) + "○".repeat(5 - p.conviction)}
+                      valueClass="tracking-widest text-white/80"
+                    />
                   </div>
                   <div className="mt-4 space-y-4 text-sm leading-relaxed">
-                    <Block label="开仓逻辑" cls="border-violet-500/40 text-violet-500" text={p.logic} />
-                    {p.plan && <Block label="开仓计划" cls="border-blue-500/40 text-blue-500" text={p.plan} />}
-                    <Block label="✅ 验证信号（对了）" cls="border-emerald-500/40 text-emerald-600" text={p.validate} />
-                    <Block label="❌ 证伪信号（错了）" cls="border-pink-500/40 text-pink-600" text={p.invalidate} />
+                    <Block label="开仓逻辑" text={p.logic} />
+                    {p.plan && <Block label="开仓计划" text={p.plan} />}
+                    <Block label="✅ 验证信号（对了）" text={p.validate} />
+                    <Block label="❌ 证伪信号（错了）" text={p.invalidate} />
                     {p.lastReview && (
-                      <div className="border-t border-border pt-3 font-mono text-xs text-muted">↺ {p.lastReview}</div>
+                      <div className="border-t border-white/10 pt-3 text-xs" style={{ color: "rgba(245,247,251,0.45)" }}>
+                        ↺ {p.lastReview}
+                      </div>
                     )}
                   </div>
 
-                  {/* ── 该标的的追踪日记 ── */}
-                  <div className="mt-4 border-t-2 border-border pt-4">
+                  <div className="mt-4 border-t border-white/10 pt-4">
                     <button
                       onClick={() => setJournalFor((s) => ({ ...s, [p.id]: !s[p.id] }))}
-                      className="font-mono text-xs uppercase tracking-widest text-accent hover:opacity-70"
+                      className="text-xs uppercase tracking-widest text-white/70 hover:text-white"
                     >
                       {journalFor[p.id] ? "▾" : "▸"} 追踪日记 · {p.symbol}
                     </button>
@@ -474,33 +516,36 @@ export default function PortfolioDashboard() {
       </div>
 
       {/* ── 本周关注清单 ── */}
-      <div className="mt-12 font-mono text-xs uppercase tracking-widest text-accent">本周关注清单</div>
-      <div className="mt-4 border-2 border-border">
+      <div className="mt-12 pf-panel-title">本周关注清单</div>
+      <div className="pf-panel mt-3" style={{ padding: 0 }}>
         {(data?.watchlist ?? []).map((w, i) => {
           const m = WATCH_META[w.type];
           return (
-            <div key={i} className={`flex gap-3 p-4 ${i > 0 ? "border-t border-border" : ""}`}>
-              <span className={`h-fit border px-2 py-0.5 font-mono text-[11px] ${m.cls}`}>{m.label}</span>
-              <div className="text-sm leading-relaxed text-foreground/85">
-                <span className="font-mono font-bold">{w.symbol}</span> · {w.text}
+            <div
+              key={i}
+              className={`flex gap-3 p-4 ${i > 0 ? "border-t border-white/10" : ""}`}
+            >
+              <span className="pf-chip">{m.label}</span>
+              <div className="text-sm leading-relaxed" style={{ color: "rgba(245,247,251,0.85)" }}>
+                <span className="font-bold">{w.symbol}</span> · {w.text}
               </div>
             </div>
           );
         })}
         {(data?.watchlist ?? []).length === 0 && (
-          <div className="p-4 text-sm text-muted">暂无关注清单，每周日晚 coach 会生成。</div>
+          <div className="p-4 text-sm" style={{ color: "rgba(245,247,251,0.5)" }}>
+            暂无关注清单，每周日晚 coach 会生成。
+          </div>
         )}
       </div>
 
-      {/* ── 动态简报 ── */}
-      <div className="mt-12 font-mono text-xs uppercase tracking-widest text-accent">动态简报</div>
-      <div className="mt-4">
+      <div className="mt-12 pf-panel-title">动态简报</div>
+      <div className="mt-3">
         <BriefsPanel />
       </div>
 
-      {/* ── 重点日历 ── */}
-      <div className="mt-12 font-mono text-xs uppercase tracking-widest text-accent">重点日历</div>
-      <div className="mt-4">
+      <div className="mt-12 pf-panel-title">重点日历</div>
+      <div className="mt-3">
         <CalendarPanel />
       </div>
 
@@ -522,24 +567,28 @@ export default function PortfolioDashboard() {
           setTimeout(loadData, 3000);
         }}
       />
-    </main>
+    </div>
   );
 }
 
 function Field({ label, value, valueClass = "" }: { label: string; value: string; valueClass?: string }) {
   return (
     <div>
-      <div className="text-[11px] uppercase text-muted">{label}</div>
+      <div className="text-[11px] uppercase" style={{ color: "rgba(245,247,251,0.45)" }}>
+        {label}
+      </div>
       <div className={`mt-1 ${valueClass}`}>{value}</div>
     </div>
   );
 }
 
-function Block({ label, cls, text }: { label: string; cls: string; text: string }) {
+function Block({ label, text }: { label: string; text: string }) {
   return (
     <div>
-      <span className={`inline-block border px-2 py-0.5 font-mono text-[11px] ${cls}`}>{label}</span>
-      <p className="mt-2 text-foreground/85">{text}</p>
+      <span className="pf-chip">{label}</span>
+      <p className="mt-2" style={{ color: "rgba(245,247,251,0.85)" }}>
+        {text}
+      </p>
     </div>
   );
 }

@@ -93,32 +93,32 @@ export default async function BlogPostPage({
   };
 
   return (
-    <article className="mx-auto max-w-3xl px-6 py-20 md:px-8">
+    <article
+      className="apple-width pb-24"
+      style={{ maxWidth: 720, width: "min(720px, calc(100vw - 48px))" }}
+    >
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
-      {/* Header */}
-      <div className="mb-10">
-        <div className="mb-3 flex items-center gap-3">
-          <span className="text-sm font-medium text-accent">
-            {post.category}
-          </span>
-          <span className="text-sm text-muted">{date}</span>
+      <div className="pt-12 mb-10" data-reveal>
+        <div className="apple-blog-meta mb-4">
+          <span>{post.category}</span>
+          <span>{date}</span>
         </div>
-        <h1 className="mb-4 text-3xl font-bold md:text-4xl">
+        <h1 className="apple-section-title" style={{ fontSize: "clamp(2rem, 4vw, 2.75rem)" }}>
           {post.title}
         </h1>
         {post.description && (
-          <p className="text-lg text-muted">{post.description}</p>
+          <p className="apple-muted" style={{ marginTop: 16 }}>
+            {post.description}
+          </p>
         )}
       </div>
 
-      {/* Content */}
-      <ImageZoom html={post.body} className="prose-custom" />
+      <ImageZoom html={post.body} className="prose-custom prose-dark" />
 
-      {/* Back */}
-      <div className="mt-16 border-t border-border pt-8">
+      <div className="mt-16 border-t border-white/10 pt-8">
         <BackLink />
       </div>
     </article>
