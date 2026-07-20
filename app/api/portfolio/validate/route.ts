@@ -3,7 +3,8 @@ import { NextRequest, NextResponse } from "next/server";
 // 标的校验：录入时校验代码是否真实存在，并返回公司/项目全称。
 // 美股走 FMP search-symbol，加密走 Binance ticker 兜底。
 
-const CRYPTO = new Set(["BTC", "ETH", "SOL", "BNB", "XRP", "ADA", "DOGE", "AVAX", "DOT", "LINK", "VELO"]);
+// VELO 是美股 Velo3D，不是加密货币
+const CRYPTO = new Set(["BTC", "ETH", "SOL", "BNB", "XRP", "ADA", "DOGE", "AVAX", "DOT", "LINK"]);
 
 type Result = { ok: boolean; symbol: string; name?: string; kind?: "stock" | "crypto"; error?: string };
 

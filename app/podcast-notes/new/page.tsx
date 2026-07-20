@@ -1,4 +1,5 @@
 import { PodcastCreator } from "@/components/podcast/PodcastCreator";
+import { PageHeader, PageShell } from "@/components/ui/PageShell";
 
 export const metadata = {
   title: "New Podcast Note",
@@ -7,10 +8,11 @@ export const metadata = {
 
 export default function NewPodcastNotePage() {
   return (
-    <div className="min-h-screen px-6 py-20 md:px-8">
-      <div className="mx-auto max-w-3xl">
+    <PageShell className="pb-24" narrow>
+      <PageHeader eyebrow="Podcast" title="新建播客笔记" subtitle="贴链接，自动转录并生成结构化笔记" />
+      <div data-reveal>
         <PodcastCreator />
       </div>
-    </div>
+    </PageShell>
   );
 }

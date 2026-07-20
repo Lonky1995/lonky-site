@@ -15,68 +15,57 @@ export function ProjectCard({
   const output = project.latestOutput;
 
   return (
-    <AnimatedCard delay={index * 0.1}>
-      {/* Category + status badges */}
+    <AnimatedCard delay={index * 0.08}>
       <div className="mb-3 flex items-center gap-2">
-        <span className="text-xs font-medium text-accent">
-          {project.category}
-        </span>
+        <span className="pf-chip">{project.category}</span>
         {project.status === "in-progress" && (
-          <span className="rounded-full bg-yellow-500/10 px-2 py-0.5 text-[10px] font-medium text-yellow-500">
-            {dict.projects.inProgress}
-          </span>
+          <span className="pf-chip">{dict.projects.inProgress}</span>
         )}
       </div>
 
-      <h3 className="mb-2 text-xl font-bold">{project.title[locale]}</h3>
+      <h3 className="mb-2" style={{ margin: "0 0 10px", color: "#fff", fontSize: "1.25rem", fontWeight: 700 }}>
+        {project.title[locale]}
+      </h3>
 
-      <p className="mb-4 text-sm leading-relaxed text-muted">
+      <p className="apple-muted" style={{ fontSize: "0.92rem", marginBottom: 16 }}>
         {project.description[locale]}
       </p>
 
-      {/* Latest output preview */}
       {output && (
-        <div className="mb-4 rounded-xl border border-border/50 bg-background/50 p-4">
-          <div className="mb-3 flex items-center justify-between">
-            <span className="text-xs font-semibold text-accent">
+        <div
+          className="mb-4 rounded-[20px] p-4"
+          style={{
+            border: "1px solid rgba(255,255,255,0.1)",
+            background: "rgba(255,255,255,0.04)",
+          }}
+        >
+          <div className="mb-2 flex items-center justify-between gap-2">
+            <span className="text-xs font-semibold text-white/80">
               {output.title || dict.projects.latestOutput}
             </span>
-            <span className="text-[10px] text-muted">{output.date}</span>
+            <span className="text-[10px] text-white/40">{output.date}</span>
           </div>
-
           {output.summary && (
-            <div className="mb-3 text-[13px] leading-relaxed text-foreground/90">
-              {output.summary.split("\n\n").map((paragraph, i) => (
-                <p key={i} className={i > 0 ? "mt-2" : ""}>
-                  {paragraph}
-                </p>
-              ))}
-            </div>
+            <p className="text-[13px] leading-relaxed text-white/70 line-clamp-4">
+              {output.summary}
+            </p>
           )}
-
           {output.items.length > 0 && (
-            <ul
-              className={`space-y-2 ${output.summary ? "border-t border-border/30 pt-3" : ""}`}
-            >
-              {output.items.map((item) => (
+            <ul className="mt-2 space-y-1.5">
+              {output.items.slice(0, 3).map((item) => (
                 <li key={item.title} className="text-sm">
                   {item.url ? (
                     <a
                       href={item.url}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="font-medium text-foreground transition-colors hover:text-accent"
+                      className="font-medium text-white/90 hover:text-white"
                     >
                       {item.title}
                     </a>
                   ) : (
-                    <span className="font-medium text-foreground">
-                      {item.title}
-                    </span>
+                    <span className="font-medium text-white/90">{item.title}</span>
                   )}
-                  <p className="mt-0.5 text-[11px] leading-snug text-muted">
-                    {item.meta}
-                  </p>
                 </li>
               ))}
             </ul>
@@ -84,15 +73,9 @@ export function ProjectCard({
         </div>
       )}
 
-      {/* Links */}
-      <div className="flex gap-3">
+      <div className="flex flex-wrap gap-3 mt-auto">
         {project.link && (
-          <a
-            href={project.link}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-xs text-muted transition-colors hover:text-foreground"
-          >
+          <a href={project.link} className="text-xs font-semibold text-white/70 hover:text-white">
             {dict.projects.liveDemo}
           </a>
         )}
@@ -101,7 +84,7 @@ export function ProjectCard({
             href={project.github}
             target="_blank"
             rel="noopener noreferrer"
-            className="text-xs text-muted transition-colors hover:text-foreground"
+            className="text-xs font-semibold text-white/70 hover:text-white"
           >
             {dict.projects.source}
           </a>

@@ -1,14 +1,13 @@
 "use client";
 
 import Image from "next/image";
-import { motion } from "framer-motion";
 import type { ReactNode } from "react";
 import { RocketLaunch } from "@phosphor-icons/react";
 import { useLocale } from "@/components/locale-provider";
 
 function OkxIcon() {
   return (
-    <svg viewBox="0 0 24 24" width="20" height="20" className="rounded flex-shrink-0">
+    <svg viewBox="0 0 24 24" width="18" height="18" className="rounded flex-shrink-0">
       <rect width="24" height="24" rx="4" fill="#000" />
       <rect x="3" y="3" width="7" height="7" rx="1.5" fill="#fff" />
       <rect x="14" y="3" width="7" height="7" rx="1.5" fill="#fff" />
@@ -20,30 +19,40 @@ function OkxIcon() {
 }
 
 function Logo({ src, alt }: { src: string; alt: string }) {
-  return <Image src={src} alt={alt} width={20} height={20} className="rounded flex-shrink-0" />;
+  return (
+    <Image src={src} alt={alt} width={18} height={18} className="rounded flex-shrink-0" />
+  );
 }
 
-type Entry = { hash: string; year: string; msg: ReactNode };
+type Entry = { year: string; msg: ReactNode };
 
 const entries: Entry[] = [
   {
-    hash: "a3f2b1c",
-    year: "2025 至今",
-    msg: <span className="flex items-center gap-2"><OkxIcon /> OKX，产品经理</span>,
+    year: "2025",
+    msg: (
+      <span className="flex items-center gap-2">
+        <OkxIcon /> OKX，产品经理
+      </span>
+    ),
   },
   {
-    hash: "7cd5e69",
-    year: "2024 - 2025",
-    msg: <span className="flex items-center gap-2"><Logo src="/images/logos/bingx.jpeg" alt="BingX" /> BingX，产品经理</span>,
+    year: "2024",
+    msg: (
+      <span className="flex items-center gap-2">
+        <Logo src="/images/logos/bingx.jpeg" alt="BingX" /> BingX，产品经理
+      </span>
+    ),
   },
   {
-    hash: "23e2444",
-    year: "2023 - 2024",
-    msg: <span className="flex items-center gap-2"><Logo src="/images/logos/followin.png" alt="Followin" /> 联合创办 Followin，产品负责人</span>,
+    year: "2023",
+    msg: (
+      <span className="flex items-center gap-2">
+        <Logo src="/images/logos/followin.png" alt="Followin" /> 联合创办 Followin
+      </span>
+    ),
   },
   {
-    hash: "89f2836",
-    year: "2020 - 2023",
+    year: "2020–23",
     msg: (
       <span className="flex items-center gap-2">
         <span className="flex gap-1">
@@ -51,49 +60,44 @@ const entries: Entry[] = [
           <Logo src="/images/logos/wechat-listen.jpeg" alt="WeChat Listen" />
           <Logo src="/images/logos/miniprogram.png" alt="Mini Program" />
         </span>
-        腾讯微信产品经理（微信读书 · 听书 · 小程序）
+        腾讯微信产品经理
       </span>
     ),
   },
   {
-    hash: "7875369",
     year: "2018",
-    msg: <span className="flex items-center gap-2"><RocketLaunch size={20} weight="duotone" className="text-accent-light flex-shrink-0" /> 创办 Token Galaxy</span>,
+    msg: (
+      <span className="flex items-center gap-2">
+        <RocketLaunch size={18} weight="duotone" className="flex-shrink-0 opacity-80" />
+        创办 Token Galaxy
+      </span>
+    ),
   },
 ];
 
 export function AboutTimeline() {
-  const { dict } = useLocale();
+  const { dict, locale } = useLocale();
 
   return (
-    <section className="git-section">
-      <div className="mx-auto max-w-6xl">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-          className="git-header-line"
-        >
-          $ git log --format=&quot;%h · %ar · %s&quot;
-        </motion.div>
+    <section className="apple-width apple-section" id="about">
+      <div className="apple-section-head" data-reveal>
+        <p className="apple-eyebrow">{locale === "zh" ? "经历" : "Path"}</p>
+        <h2 className="apple-section-title">{dict.aboutTimeline.title}</h2>
+        <p className="apple-muted">{dict.aboutTimeline.subtitle}</p>
+      </div>
 
-        <div className="git-log">
-          {entries.map((entry, i) => (
-            <motion.div
-              key={entry.hash}
-              className="git-entry"
-              initial={{ opacity: 0, x: -16 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.4, delay: i * 0.08, ease: [0.22, 1, 0.36, 1] }}
-            >
-              <span className="git-hash">{entry.hash}</span>
-              <span className="git-year">{entry.year}</span>
-              <div className="git-msg">{entry.msg}</div>
-            </motion.div>
-          ))}
-        </div>
+      <div className="apple-timeline">
+        {entries.map((e, i) => (
+          <div
+            key={e.year}
+            className="apple-timeline-item"
+            data-reveal
+            style={{ ["--delay" as string]: `${i * 70}ms` }}
+          >
+            <div className="apple-timeline-year">{e.year}</div>
+            <div className="apple-timeline-msg">{e.msg}</div>
+          </div>
+        ))}
       </div>
     </section>
   );

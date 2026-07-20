@@ -1,7 +1,6 @@
 "use client";
 
 import Link from "next/link";
-import { AnimatedCard } from "@/components/ui/AnimatedCard";
 
 type BlogPost = {
   slug: string;
@@ -38,43 +37,49 @@ export function BlogCard({
       ? `/podcast-notes/${post.slug}`
       : `/blog/${post.slug}`;
 
-  return (
-    <Link
-      href={href}
-      {...(isExternal
-        ? { target: "_blank", rel: "noopener" }
-        : {})}
-    >
-      <AnimatedCard delay={index * 0.05}>
-        <div className="flex items-start gap-4">
-          {post.coverImage && (
-            <img
-              src={post.coverImage}
-              alt={post.title}
-              className="h-14 w-14 flex-shrink-0 rounded-xl object-cover"
-            />
-          )}
-          <div className="min-w-0 flex-1">
-            <div className="mb-2 flex items-center gap-3">
-              <span className="text-xs font-medium text-accent">
-                {post.category}
-              </span>
-              <span className="text-xs text-muted">{post.date}</span>
-              {post.duration && (
-                <span className="text-xs text-muted">
-                  {formatDuration(post.duration)}
-                </span>
-              )}
-            </div>
-            <h3 className="mb-2 text-lg font-semibold transition-colors group-hover:text-accent">
-              {post.title}
-            </h3>
-            <p className="text-sm text-muted line-clamp-2">
-              {post.description}
-            </p>
-          </div>
+  const body = (
+    <>
+      <div className="apple-blog-meta">
+        <span>{post.category}</span>
+        <span>{post.date}</span>
+        {post.duration ? <span>{formatDuration(post.duration)}</span> : null}
+      </div>
+      <div className="flex gap-4 items-start">
+        {post.coverImage && (
+          <img
+            src={post.coverImage}
+            alt=""
+            className="h-14 w-14 flex-shrink-0 rounded-xl object-cover opacity-90"
+          />
+        )}
+        <div className="min-w-0 flex-1">
+          <h3>{post.title}</h3>
+          <p>{post.description}</p>
         </div>
-      </AnimatedCard>
+      </div>
+    </>
+  );
+
+  const style = { ["--delay" as string]: `${index * 60}ms` };
+
+  if (isExternal) {
+    return (
+      <a
+        href={href}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="apple-blog-card"
+        data-reveal
+        style={style}
+      >
+        {body}
+      </a>
+    );
+  }
+
+  return (
+    <Link href={href} className="apple-blog-card" data-reveal style={style}>
+      {body}
     </Link>
   );
 }

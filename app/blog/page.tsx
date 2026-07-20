@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import { BlogCard } from "@/components/blog/BlogCard";
 import { BlogFilter } from "@/components/blog/BlogFilter";
-import { Section } from "@/components/ui/Section";
+import { PageHeader, PageShell } from "@/components/ui/PageShell";
 import { useLocale } from "@/components/locale-provider";
 import Link from "next/link";
 
@@ -49,7 +49,7 @@ export default function BlogPage() {
               type: "blog" as const,
               coverImage: p.coverImage,
               externalUrl: p.externalUrl,
-            })
+            }),
           );
 
         const podcastItems: ListItem[] = (mod.podcastNotes || [])
@@ -74,28 +74,21 @@ export default function BlogPage() {
               coverImage: n.coverImage,
               platform: n.platform,
               duration: n.duration,
-            })
+            }),
           );
 
         const all = [...blogItems, ...podcastItems]
-          .sort(
-            (a, b) =>
-              new Date(b.date).getTime() - new Date(a.date).getTime()
-          )
+          .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
           .map((item) => ({
             ...item,
             date: new Date(item.date).toLocaleDateString(
               locale === "zh" ? "zh-CN" : "en-US",
-              { year: "numeric", month: "short", day: "numeric" }
+              { year: "numeric", month: "short", day: "numeric" },
             ),
           }));
 
         setItems(all);
-        const cats = [
-          "All",
-          ...new Set(all.map((item) => item.category)),
-        ] as string[];
-        setCategories(cats);
+        setCategories(["All", ...new Set(all.map((item) => item.category))] as string[]);
       })
       .catch(() => {});
   }, [locale]);
@@ -104,26 +97,22 @@ export default function BlogPage() {
     active === "All" ? items : items.filter((item) => item.category === active);
 
   return (
-    <Section
-      title={dict.blog.title}
-      subtitle={dict.blog.subtitle || undefined}
-    >
-      <div className="mb-6 flex items-center justify-between">
-        <BlogFilter
-          categories={categories}
-          active={active}
-          onSelect={setActive}
-        />
-        <Link
-          href="/podcast-notes/new"
-          className="flex-shrink-0 rounded-xl bg-accent px-4 py-2 text-sm font-medium text-white transition-opacity hover:opacity-90"
-        >
-          + 增加播客笔记
-        </Link>
-      </div>
+    <PageShell className="pb-24">
+      <PageHeader
+        eyebrow="Notes"
+        title={dict.blog.title}
+        subtitle={dict.blog.subtitle}
+        action={
+          <Link href="/podcast-notes/new" className="primary-button">
+            + 播客笔记
+          </Link>
+        }
+      />
+
+      <BlogFilter categories={categories} active={active} onSelect={setActive} />
 
       {filtered.length === 0 ? (
-        <p className="text-muted">{dict.blog.noPostsFiltered}</p>
+        <p className="apple-muted">{dict.blog.noPostsFiltered}</p>
       ) : (
         <div className="space-y-4">
           {filtered.map((item, i) => (
@@ -131,6 +120,6 @@ export default function BlogPage() {
           ))}
         </div>
       )}
-    </Section>
+    </PageShell>
   );
 }

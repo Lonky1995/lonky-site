@@ -9,9 +9,8 @@ export const metadata: Metadata = {
 
 export default function CpoPage() {
   return (
-    <>
-      <div className="nebula-bg" />
+    <div className="apple-width pb-24 pt-6">
       <CpoDashboard />
-    </>
+    </div>
   );
 }

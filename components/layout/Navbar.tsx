@@ -1,127 +1,104 @@
 "use client";
 
 import Link from "next/link";
-import Image from "next/image";
 import { usePathname } from "next/navigation";
-import { motion } from "framer-motion";
 import { useState } from "react";
-import { siteConfig } from "@/data/site-config";
 import { useLocale } from "@/components/locale-provider";
 
-const navKeys = ["home", "projects", "blog"] as const;
+const links = [
+  { href: "/", key: "home" as const },
+  { href: "/projects", key: "projects" as const },
+  { href: "/blog", key: "blog" as const },
+  { href: "/portfolio", key: "portfolio" as const, fallback: "组合" },
+];
 
 export function Navbar() {
   const pathname = usePathname();
   const [mobileOpen, setMobileOpen] = useState(false);
   const { dict, setLocale, locale } = useLocale();
+
   const hideNavbar =
     pathname === "/sign-in" ||
     pathname.startsWith("/sign-in/") ||
     pathname === "/sign-up" ||
     pathname.startsWith("/sign-up/");
 
-  if (hideNavbar) {
-    return null;
-  }
+  if (hideNavbar) return null;
 
-  const links = siteConfig.navLinks.map((link, i) => ({
-    ...link,
-    label: dict.nav[navKeys[i]],
-  }));
+  const labelFor = (key: (typeof links)[number]["key"], fallback?: string) => {
+    if (key === "portfolio") return fallback ?? "组合";
+    return dict.nav[key] ?? fallback ?? key;
+  };
+
+  const isActive = (href: string) =>
+    href === "/" ? pathname === "/" : pathname.startsWith(href);
 
   return (
-    <motion.nav
-      initial={{ y: -20, opacity: 0 }}
-      animate={{ y: 0, opacity: 1 }}
-      transition={{ duration: 0.5 }}
-      className="fixed top-0 z-50 w-full border-b border-foreground bg-background/92 backdrop-blur-md"
-    >
-      <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-6 md:px-8">
-        {/* Logo */}
-        <Link href="/" className="flex shrink-0 items-center">
-          <Image
-            src="/images/logo.jpg"
-            alt={siteConfig.name}
-            width={32}
-            height={32}
-            className="h-8 w-8"
-          />
+    <>
+      <header className="apple-nav">
+        <Link href="/" className="apple-nav-mark">
+          <span className="apple-nav-dot" aria-hidden />
+          lonky
         </Link>
 
-        {/* Desktop nav */}
-        <div className="hidden items-center gap-8 md:flex">
-          {links.map((link) => (
+        <nav className="apple-nav-links" aria-label="Main">
+          {links.map((l) => (
             <Link
-              key={link.href}
-              href={link.href}
-              className={`text-sm transition-colors hover:text-foreground ${
-                pathname === link.href ? "text-foreground" : "text-muted"
-              }`}
+              key={l.href}
+              href={l.href}
+              className={isActive(l.href) ? "is-active" : undefined}
             >
-              {link.label}
-              {pathname === link.href && (
-                <motion.div
-                  layoutId="nav-indicator"
-                  className="mt-0.5 h-0.5 rounded-full bg-accent"
-                />
-              )}
+              {labelFor(l.key, l.fallback)}
             </Link>
           ))}
-          <button
-            onClick={() => setLocale(locale === "zh" ? "en" : "zh")}
-            className="rounded-md border border-border px-2.5 py-1 text-xs text-muted transition-colors hover:border-accent hover:text-foreground"
-          >
-            {dict.common.langSwitch}
-          </button>
-        </div>
+        </nav>
 
-        {/* Mobile toggle */}
-        <div className="flex items-center gap-3 md:hidden">
+        <div className="apple-nav-actions">
           <button
+            type="button"
             onClick={() => setLocale(locale === "zh" ? "en" : "zh")}
-            className="rounded-md border border-border px-2.5 py-1 text-xs text-muted"
+            className="apple-nav-lang"
           >
             {dict.common.langSwitch}
           </button>
+          <Link href="/projects" className="apple-nav-cta">
+            {locale === "zh" ? "作品" : "Work"}
+          </Link>
           <button
-            onClick={() => setMobileOpen(!mobileOpen)}
-            className="flex flex-col gap-1.5"
+            type="button"
+            className="apple-nav-mobile-btn"
             aria-label="Toggle menu"
+            onClick={() => setMobileOpen((v) => !v)}
           >
             <span
-              className={`h-0.5 w-5 bg-foreground transition-transform ${mobileOpen ? "translate-y-2 rotate-45" : ""}`}
+              style={{
+                transform: mobileOpen ? "translateY(6.5px) rotate(45deg)" : undefined,
+              }}
             />
+            <span style={{ opacity: mobileOpen ? 0 : 1 }} />
             <span
-              className={`h-0.5 w-5 bg-foreground transition-opacity ${mobileOpen ? "opacity-0" : ""}`}
-            />
-            <span
-              className={`h-0.5 w-5 bg-foreground transition-transform ${mobileOpen ? "-translate-y-2 -rotate-45" : ""}`}
+              style={{
+                transform: mobileOpen ? "translateY(-6.5px) rotate(-45deg)" : undefined,
+              }}
             />
           </button>
         </div>
-      </div>
+      </header>
 
-      {/* Mobile menu */}
       {mobileOpen && (
-        <motion.div
-          initial={{ opacity: 0, y: -10 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="border-b border-border bg-background px-6 py-4 md:hidden"
-        >
-          {links.map((link) => (
+        <div className="apple-nav-drawer">
+          {links.map((l) => (
             <Link
-              key={link.href}
-              href={link.href}
+              key={l.href}
+              href={l.href}
+              className={isActive(l.href) ? "is-active" : undefined}
               onClick={() => setMobileOpen(false)}
-              className={`block py-2 text-sm ${
-                pathname === link.href ? "text-foreground" : "text-muted"
-              }`}
             >
-              {link.label}
+              {labelFor(l.key, l.fallback)}
             </Link>
           ))}
-        </motion.div>
+        </div>
       )}
-    </motion.nav>
+    </>
   );
 }

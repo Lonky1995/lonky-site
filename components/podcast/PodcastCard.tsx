@@ -1,7 +1,6 @@
 "use client";
 
 import Link from "next/link";
-import { AnimatedCard } from "@/components/ui/AnimatedCard";
 
 type PodcastNote = {
   slug: string;
@@ -29,38 +28,38 @@ export function PodcastCard({
   note: PodcastNote;
   index?: number;
 }) {
+  const platform =
+    note.platform === "xiaoyuzhou"
+      ? "小宇宙"
+      : note.platform === "apple"
+        ? "Apple"
+        : note.category;
+
   return (
-    <Link href={`/podcast-notes/${note.slug}`}>
-      <AnimatedCard delay={index * 0.05}>
-        <div className="flex items-start gap-4">
-          {note.coverImage && (
-            <img
-              src={note.coverImage}
-              alt={note.title}
-              className="h-16 w-16 flex-shrink-0 rounded-xl object-cover"
-            />
-          )}
-          <div className="min-w-0 flex-1">
-            <div className="mb-2 flex items-center gap-3">
-              <span className="text-xs font-medium text-accent">
-                {note.platform === "xiaoyuzhou" ? "小宇宙" : note.platform === "apple" ? "Apple" : note.category}
-              </span>
-              <span className="text-xs text-muted">{note.date}</span>
-              {note.duration && (
-                <span className="text-xs text-muted">
-                  {formatDuration(note.duration)}
-                </span>
-              )}
-            </div>
-            <h3 className="mb-2 text-lg font-semibold transition-colors group-hover:text-accent">
-              {note.title}
-            </h3>
-            <p className="text-sm text-muted line-clamp-2">
-              {note.description}
-            </p>
-          </div>
+    <Link
+      href={`/podcast-notes/${note.slug}`}
+      className="apple-blog-card"
+      data-reveal
+      style={{ ["--delay" as string]: `${index * 60}ms` }}
+    >
+      <div className="apple-blog-meta">
+        <span>{platform}</span>
+        <span>{note.date}</span>
+        {note.duration ? <span>{formatDuration(note.duration)}</span> : null}
+      </div>
+      <div className="flex gap-4 items-start">
+        {note.coverImage && (
+          <img
+            src={note.coverImage}
+            alt=""
+            className="h-14 w-14 flex-shrink-0 rounded-xl object-cover opacity-90"
+          />
+        )}
+        <div className="min-w-0 flex-1">
+          <h3>{note.title}</h3>
+          <p>{note.description}</p>
         </div>
-      </AnimatedCard>
+      </div>
     </Link>
   );
 }

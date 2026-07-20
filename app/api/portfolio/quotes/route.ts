@@ -1,9 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
+import { quoteKind } from "@/data/portfolio";
 
 // 组合追踪器行情：美股走 FMP（服务端代理，key 不暴露），加密走 Binance 公共 API
 // 前端用返回的 price 实时算 PNL
-
-const CRYPTO = new Set(["BTC", "ETH", "SOL", "BNB", "XRP", "ADA", "DOGE", "AVAX", "DOT", "LINK"]);
 
 type Quote = { symbol: string; price: number; changesPercentage: number };
 
@@ -52,18 +51,27 @@ export async function GET(req: NextRequest) {
 
   const symbols = symbolsParam.split(",");
   const apiKey = process.env.FMP_API_KEY;
+  const needsStock = symbols.some((s) => quoteKind(s) === "stock");
 
   const results = await Promise.all(
     symbols.map((sym) => {
-      if (CRYPTO.has(sym)) return fetchCrypto(sym);
+      if (quoteKind(sym) === "crypto") return fetchCrypto(sym);
       if (!apiKey) return Promise.resolve(null);
       return fetchStock(sym, apiKey);
     }),
   );
 
   const quotes = results.filter((q): q is Quote => q !== null);
-  if (quotes.length === 0) {
-    return NextResponse.json({ error: "No quotes available" }, { status: 502 });
-  }
-  return NextResponse.json({ quotes, fetchedAt: new Date().toISOString() });
+  // 降级：无 key / 全失败时仍 200，前端显示「行情未接入」而不是整段红错
+  return NextResponse.json({
+    quotes,
+    fetchedAt: new Date().toISOString(),
+    ...(quotes.length === 0
+      ? {
+          warning: needsStock && !apiKey
+            ? "FMP_API_KEY not configured"
+            : "No quotes available",
+        }
+      : {}),
+  });
 }

@@ -216,31 +216,23 @@ export default async function PodcastNoteDetailPage({
   };
 
   return (
-    <article className="mx-auto max-w-3xl px-6 py-20 md:px-8">
+    <article
+      className="apple-width pb-24"
+      style={{ maxWidth: 720, width: "min(720px, calc(100vw - 48px))" }}
+    >
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
-      {/* Header */}
-      <div className="mb-10">
-        <div className="mb-3 flex flex-wrap items-center gap-3">
-          <span className="text-sm font-medium text-accent">
-            {note.category}
-          </span>
-          <span className="text-sm text-muted">{date}</span>
-          {platformLabel && (
-            <span className="rounded-full border border-border px-2 py-0.5 text-xs text-muted">
-              {platformLabel}
-            </span>
-          )}
-          {note.duration && (
-            <span className="text-sm text-muted">
-              {formatDuration(note.duration)}
-            </span>
-          )}
+      <div className="pt-12 mb-10" data-reveal>
+        <div className="apple-blog-meta mb-4 flex flex-wrap gap-3">
+          <span>{note.category}</span>
+          <span>{date}</span>
+          {platformLabel && <span className="pf-chip">{platformLabel}</span>}
+          {note.duration && <span>{formatDuration(note.duration)}</span>}
         </div>
 
-        <h1 className="mb-4 text-3xl font-bold md:text-4xl">
+        <h1 className="apple-section-title" style={{ fontSize: "clamp(2rem, 4vw, 2.75rem)" }}>
           {note.title}
         </h1>
         {note.sourceUrl && (
@@ -248,7 +240,7 @@ export default async function PodcastNoteDetailPage({
             href={note.sourceUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-block text-sm text-accent hover:underline"
+            className="inline-block mt-4 text-sm font-semibold text-white/80 hover:text-white"
           >
             收听原节目 →
           </a>
@@ -257,10 +249,7 @@ export default async function PodcastNoteDetailPage({
         {note.tags && note.tags.length > 0 && (
           <div className="mt-4 flex flex-wrap gap-2">
             {note.tags.map((tag) => (
-              <span
-                key={tag}
-                className="rounded-full border border-border px-3 py-1 text-xs text-muted"
-              >
+              <span key={tag} className="pf-chip">
                 {tag}
               </span>
             ))}
@@ -296,9 +285,9 @@ export default async function PodcastNoteDetailPage({
 
       {/* Content */}
       {note.audioUrl ? (
-        <TimestampContent html={bodyWithIds} className="prose-custom" />
+        <TimestampContent html={bodyWithIds} className="prose-custom prose-dark" />
       ) : (
-        <ImageZoom html={bodyWithIds} className="prose-custom" />
+        <ImageZoom html={bodyWithIds} className="prose-custom prose-dark" />
       )}
 
       {/* Continue chatting */}
@@ -310,11 +299,10 @@ export default async function PodcastNoteDetailPage({
         slug={slug}
       />
 
-      {/* Back */}
-      <div className="mt-16 border-t border-border pt-8">
+      <div className="mt-16 border-t border-white/10 pt-8">
         <Link
           href="/podcast-notes"
-          className="text-sm text-accent hover:underline"
+          className="text-sm font-semibold text-white/60 hover:text-white"
         >
           ← 返回全部播客笔记
         </Link>
