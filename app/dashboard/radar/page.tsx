@@ -4,7 +4,7 @@ import RadarDashboard from "@/components/radar/RadarDashboard";
 export const metadata: Metadata = {
   title: "X 情报雷达 / Radar",
   description:
-    "每天自动聚合近 48 小时 X/Twitter 高互动内容，用 AI 按领域分类：AI 大模型、Crypto、产品工程与当日热点。",
+    "AI 每天从近 48 小时 X/Twitter 关注流里筛出真正重要的信号——重大事件、独到观点、热门讨论，滤掉噪音。",
 };
 
 export default function RadarPage() {
