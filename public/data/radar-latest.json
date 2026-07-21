@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-07-21T11:49:11.104Z",
+  "generatedAt": "2026-07-21T16:00:18.850Z",
   "windowHours": 48,
   "candidateCount": 250,
   "domains": [
@@ -7,7 +7,7 @@
       "key": "ai",
       "label": "AI / 大模型",
       "isAnchor": true,
-      "summary": "Cursor用Agent团队从手册重建SQLite、Anthropic ARR突破790亿美元、OpenAI模型越狱逃出沙箱、Grok进驻Excel，AI算力争夺与应用落地全面提速。",
+      "summary": "Cursor用Agent团队从手册重建SQLite、Robinhood开放AI代理交易账户、OpenAI模型尝试逃逸沙箱、Anthropic ARR突破$79.5B并将成为AMD客户，AI基础设施与应用层全面提速。",
       "tweets": [
         {
           "author": "Cursor",
@@ -20,14 +20,34 @@
           "postedAt": "2026-07-21 01:26:22"
         },
         {
-          "author": "Jukan",
-          "handle": "jukan05",
-          "text": "Anthropic ARR Update Anthropic’s latest ARR has reached $79.5 billion, and its absolute month-over-month increase is expected to exceed $10 billion by the end of this month. 1. ARR increased by $10 billion from $69 billion at the end of June in roughly three weeks. 2. Since",
-          "url": "https://x.com/jukan05/status/2079405439272317109",
-          "likes": 101,
-          "reposts": 14,
-          "views": 14303,
-          "postedAt": "2026-07-21 11:17:44"
+          "author": "Robinhood",
+          "handle": "robinhoodapp",
+          "text": "Robinhood is now open to AI agents. You can open an agentic account and connect an AI agent to it. From there, you can let it research, trade, and manage a portfolio on your behalf. Here's how to get started. 🧵",
+          "url": "https://x.com/RobinhoodApp/status/2079195918595764300",
+          "likes": 4849,
+          "reposts": 489,
+          "views": 893932,
+          "postedAt": "2026-07-20 21:25:11"
+        },
+        {
+          "author": "Robinhood",
+          "handle": "robinhoodapp",
+          "text": "Let it cook (it's an AI agent)",
+          "url": "https://x.com/RobinhoodApp/status/2079565830312825043",
+          "likes": 1121,
+          "reposts": 108,
+          "views": 103467,
+          "postedAt": "2026-07-21 21:55:05"
+        },
+        {
+          "author": "Grok",
+          "handle": "grok",
+          "text": "Grok for Excel is live. Use Grok 4.5 to build financial models, analyze market data, and generate charts and graphs. Try it now https://t.co/DeIpX4KkvO https://t.co/0KkyRtOf1D",
+          "url": "https://x.com/grok/status/2079233333893185876",
+          "likes": 208,
+          "reposts": 44,
+          "views": 43349,
+          "postedAt": "2026-07-20 23:53:51"
         },
         {
           "author": "Polymarket",
@@ -38,6 +58,16 @@
           "reposts": 14,
           "views": 25424,
           "postedAt": "2026-07-21 06:13:27"
+        },
+        {
+          "author": "Polymarket",
+          "handle": "polymarket",
+          "text": "NEW: OpenAI reveals an internal AI model attempted to bypass security systems by disguising authentication tokens during testing.",
+          "url": "https://x.com/Polymarket/status/2079530829559234942",
+          "likes": 103,
+          "reposts": 7,
+          "views": 26972,
+          "postedAt": "2026-07-21 19:36:00"
         },
         {
           "author": "Polymarket",
@@ -58,36 +88,6 @@
           "reposts": 19,
           "views": 12569,
           "postedAt": "2026-07-21 01:26:25"
-        },
-        {
-          "author": "SemiAnalysis",
-          "handle": "semianalysis_",
-          "text": "ANTHROPIC WILL BE AN AMD CUSTOMER, ACCORDING TO THE PUBLIC GITHUB OF AMD’S SENIOR DIRECTOR OF AI 🚨🚨 We explain the GitHub code and nuances below👇️ 1/4🧵 https://t.co/9ck01Q8IN4",
-          "url": "https://x.com/SemiAnalysis_/status/2078975424709677359",
-          "likes": 149,
-          "reposts": 13,
-          "views": 14976,
-          "postedAt": "2026-07-20 06:49:01"
-        },
-        {
-          "author": "Shay Boloor",
-          "handle": "stocksavvyshay",
-          "text": "$AMD may be adding Anthropic as a customer according to a file in the public GitHub of AMD’s senior director of AI. The file lists Anthropic as a “customer” likely in evaluation and gives it the maximum 30 priority boost points placing it alongside hyperscalers such as $META. https://t.co/il8TeIWHRv",
-          "url": "https://x.com/StockSavvyShay/status/2079002146738180572",
-          "likes": 101,
-          "reposts": 6,
-          "views": 15560,
-          "postedAt": "2026-07-20 08:35:12"
-        },
-        {
-          "author": "Raoul Pal",
-          "handle": "raoulgmi",
-          "text": "It’s the biggest game we’ve ever played. AI is the last technology we'll ever discover, because every wave that follows will come out of it. And whoever owns the frontier doesn't just own an industry… they own the machinery that produces everything else. That's why no https://t.co/FTP0i5KMYx",
-          "url": "https://x.com/RaoulGMI/status/2079308028659294509",
-          "likes": 137,
-          "reposts": 10,
-          "views": 28428,
-          "postedAt": "2026-07-21 04:50:40"
         }
       ]
     },
@@ -95,27 +95,37 @@
       "key": "crypto",
       "label": "Crypto / Web3",
       "isAnchor": true,
-      "summary": "Clarity Act伦理条款达成共识、BTC重回65000美元、Robinhood开放AI代理账户并上线链上业务，加密监管与市场情绪双双回暖。",
+      "summary": "比特币重回$66K、Clarity Act伦理条款达成共识、俄罗斯通过加密货币法案、Strategy增持BTC至84.3万枚，多重利好推动市场情绪回暖。",
       "tweets": [
         {
-          "author": "Robinhood",
-          "handle": "robinhoodapp",
-          "text": "Robinhood is now open to AI agents. You can open an agentic account and connect an AI agent to it. From there, you can let it research, trade, and manage a portfolio on your behalf. Here's how to get started. 🧵",
-          "url": "https://x.com/RobinhoodApp/status/2079195918595764300",
-          "likes": 4849,
-          "reposts": 489,
-          "views": 893932,
-          "postedAt": "2026-07-20 21:25:11"
+          "author": "Watcher.Guru",
+          "handle": "watcherguru",
+          "text": "JUST IN: $66,000 Bitcoin https://t.co/sXVxcjeb5k",
+          "url": "https://x.com/WatcherGuru/status/2079470393761403177",
+          "likes": 4740,
+          "reposts": 452,
+          "views": 276167,
+          "postedAt": "2026-07-21 15:35:51"
         },
         {
-          "author": "Robinhood",
-          "handle": "robinhoodapp",
-          "text": "Hopping onchain, Robinhood Chain to be specific",
-          "url": "https://x.com/RobinhoodApp/status/2079234189358928122",
-          "likes": 1479,
-          "reposts": 166,
-          "views": 80067,
-          "postedAt": "2026-07-20 23:57:15"
+          "author": "Michael Saylor",
+          "handle": "saylor",
+          "text": "Strategy has increased its USD Reserve by $225 million. As of 7/19/2026, we hodl ₿843,775 in our BTC Reserve and $3.2 billion in our USD Reserve. $MSTR $STRC https://t.co/sci7bZHzsy",
+          "url": "https://x.com/saylor/status/2079175086142042387",
+          "likes": 1964,
+          "reposts": 253,
+          "views": 132299,
+          "postedAt": "2026-07-20 20:02:24"
+        },
+        {
+          "author": "Simon Dedic",
+          "handle": "sjdedic",
+          "text": "If you're wondering why the market is green today: The ethics clause on the CLARITY Act appears to be resolved. That single provision, the conflict-of-interest rule around government officials' crypto holdings, is what held this entire bill hostage for months. Democrats pushed https://t.co/TFfMX1xW6e",
+          "url": "https://x.com/sjdedic/status/2079472779615699032",
+          "likes": 592,
+          "reposts": 86,
+          "views": 40319,
+          "postedAt": "2026-07-21 15:45:20"
         },
         {
           "author": "Eleanor Terrett",
@@ -128,14 +138,14 @@
           "postedAt": "2026-07-21 06:34:01"
         },
         {
-          "author": "Ash Crypto",
-          "handle": "ashcrypto",
-          "text": "BREAKING: 🇺🇸 The White House has reportedly agreed on ethics rules for the crypto market structure bill. The final bill text could be released soon. https://t.co/iOPH6O6IYF",
-          "url": "https://x.com/AshCrypto/status/2079461712571273365",
-          "likes": 1355,
-          "reposts": 168,
-          "views": 68024,
-          "postedAt": "2026-07-21 15:01:21"
+          "author": "Watcher.Guru",
+          "handle": "watcherguru",
+          "text": "JUST IN: 🇷🇺 Russia passes bill establishing legal framework for crypto.",
+          "url": "https://x.com/WatcherGuru/status/2079564203346534578",
+          "likes": 1033,
+          "reposts": 151,
+          "views": 91348,
+          "postedAt": "2026-07-21 21:48:37"
         },
         {
           "author": "Bitcoin Magazine",
@@ -158,24 +168,14 @@
           "postedAt": "2026-07-20 01:27:31"
         },
         {
-          "author": "Michael Saylor",
-          "handle": "saylor",
-          "text": "Strategy has increased its USD Reserve by $225 million. As of 7/19/2026, we hodl ₿843,775 in our BTC Reserve and $3.2 billion in our USD Reserve. $MSTR $STRC https://t.co/sci7bZHzsy",
-          "url": "https://x.com/saylor/status/2079175086142042387",
-          "likes": 1964,
-          "reposts": 253,
-          "views": 132299,
-          "postedAt": "2026-07-20 20:02:24"
-        },
-        {
-          "author": "CZ 🔶 BNB",
-          "handle": "cz_binance",
-          "text": "12m crypto followers. 🙏 Crypto is not going away. AI will need to use money. You will need money. 🤷‍♂️ https://t.co/LEWT4ZevLm",
-          "url": "https://x.com/cz_binance/status/2079480381317783564",
-          "likes": 2146,
-          "reposts": 199,
-          "views": 188585,
-          "postedAt": "2026-07-21 16:15:32"
+          "author": "Ash Crypto",
+          "handle": "ashcrypto",
+          "text": "THIS IS MASSIVE FOR CRYPTO Russia has passed the crypto bill allowing cross-border trade which takes effect September 1 if President Putin signs it. https://t.co/Lfm3ipMnsy",
+          "url": "https://x.com/AshCrypto/status/2079542199943913784",
+          "likes": 175,
+          "reposts": 29,
+          "views": 30401,
+          "postedAt": "2026-07-21 20:21:11"
         }
       ]
     },
@@ -183,8 +183,38 @@
       "key": "product-eng",
       "label": "产品 / 工程",
       "isAnchor": true,
-      "summary": "Robinhood开放AI Agent交易账户与链上功能、Binance上线股票API交易、BlackRock主导120亿美元数据中心债务融资，AI基础设施与金融产品融合加速。",
+      "summary": "Robinhood Chain上链、Binance开放股票API交易、Grok for Excel上线、Foxconn拿下SpaceX GB300服务器大单，平台与基础设施层竞争加剧。",
       "tweets": [
+        {
+          "author": "Robinhood",
+          "handle": "robinhoodapp",
+          "text": "Hopping onchain, Robinhood Chain to be specific",
+          "url": "https://x.com/RobinhoodApp/status/2079234189358928122",
+          "likes": 1479,
+          "reposts": 166,
+          "views": 80067,
+          "postedAt": "2026-07-20 23:57:15"
+        },
+        {
+          "author": "Binance",
+          "handle": "binance",
+          "text": "API trading is now live for Binance Stocks! Trade U.S.-listed stocks & ETFs programmatically via our secure, developer-friendly REST API. Integrate seamlessly. Automate positions. Scale your trades. More info 👉 https://t.co/hmv5NikOG6 https://t.co/3gUvR2PfP2",
+          "url": "https://x.com/binance/status/2079147991240434105",
+          "likes": 164,
+          "reposts": 20,
+          "views": 128869,
+          "postedAt": "2026-07-20 18:14:44"
+        },
+        {
+          "author": "Grok",
+          "handle": "grok",
+          "text": "Grok for Excel is live. Use Grok 4.5 to build financial models, analyze market data, and generate charts and graphs. Try it now https://t.co/DeIpX4KkvO https://t.co/0KkyRtOf1D",
+          "url": "https://x.com/grok/status/2079233333893185876",
+          "likes": 208,
+          "reposts": 44,
+          "views": 43349,
+          "postedAt": "2026-07-20 23:53:51"
+        },
         {
           "author": "Lenny Rachitsky",
           "handle": "lennysan",
@@ -194,36 +224,6 @@
           "reposts": 99,
           "views": 101078,
           "postedAt": "2026-07-21 02:45:59"
-        },
-        {
-          "author": "unusual_whales",
-          "handle": "unusual_whales",
-          "text": "BlackRock, $BLK, is leading a debt sale targeting at least $12 billion for its new El Paso data-center project backed by Meta, $META, Platforms, per WSJ",
-          "url": "https://x.com/unusual_whales/status/2079279422729838781",
-          "likes": 167,
-          "reposts": 16,
-          "views": 73279,
-          "postedAt": "2026-07-21 02:57:00"
-        },
-        {
-          "author": "Serenity",
-          "handle": "aleabitoreddit",
-          "text": "$IREN +19.69% after revising ARR target to $4B+ from new AI cloud contracts. Its customer base now includes Microsoft, Nvidia, Perplexity, and Figure. $HUT +10.45% off a 15Y $9.8B AI DC lease $CIFR +16.76% $CLSK +13.7% $WYFI +9.18% $NBIS and $CRWV are taking their time in the https://t.co/7iQlUSIWP2",
-          "url": "https://x.com/aleabitoreddit/status/2079254669793316962",
-          "likes": 240,
-          "reposts": 12,
-          "views": 35824,
-          "postedAt": "2026-07-21 01:18:38"
-        },
-        {
-          "author": "Shay Boloor",
-          "handle": "stocksavvyshay",
-          "text": "$IREN signed $2.8B in new multi-year AI cloud contracts and raised its year-end 2026 ARR target to more than $4B with customers prepaying ~45% of related GPU capex. Its vertically integrated platform is scaling from ~3MW a year ago to 480MW in 2026 with 1.2GW targeted for 2027. https://t.co/9e0Qlk6sXH",
-          "url": "https://x.com/StockSavvyShay/status/2079176598721540569",
-          "likes": 109,
-          "reposts": 14,
-          "views": 15906,
-          "postedAt": "2026-07-20 20:08:25"
         },
         {
           "author": "Shay Boloor",
@@ -246,32 +246,32 @@
           "postedAt": "2026-07-21 10:29:57"
         },
         {
-          "author": "Binance",
-          "handle": "binance",
-          "text": "API trading is now live for Binance Stocks! Trade U.S.-listed stocks & ETFs programmatically via our secure, developer-friendly REST API. Integrate seamlessly. Automate positions. Scale your trades. More info 👉 https://t.co/hmv5NikOG6 https://t.co/3gUvR2PfP2",
-          "url": "https://x.com/binance/status/2079147991240434105",
-          "likes": 164,
-          "reposts": 20,
-          "views": 128869,
-          "postedAt": "2026-07-20 18:14:44"
+          "author": "unusual_whales",
+          "handle": "unusual_whales",
+          "text": "BlackRock, $BLK, is leading a debt sale targeting at least $12 billion for its new El Paso data-center project backed by Meta, $META, Platforms, per WSJ",
+          "url": "https://x.com/unusual_whales/status/2079279422729838781",
+          "likes": 167,
+          "reposts": 16,
+          "views": 73279,
+          "postedAt": "2026-07-21 02:57:00"
         },
         {
-          "author": "Grok",
-          "handle": "grok",
-          "text": "Grok for Excel is live. Use Grok 4.5 to build financial models, analyze market data, and generate charts and graphs. Try it now https://t.co/DeIpX4KkvO https://t.co/0KkyRtOf1D",
-          "url": "https://x.com/grok/status/2079233333893185876",
-          "likes": 208,
-          "reposts": 44,
-          "views": 43349,
-          "postedAt": "2026-07-20 23:53:51"
+          "author": "Serenity",
+          "handle": "aleabitoreddit",
+          "text": "$IREN +19.69% after revising ARR target to $4B+ from new AI cloud contracts. Its customer base now includes Microsoft, Nvidia, Perplexity, and Figure. $HUT +10.45% off a 15Y $9.8B AI DC lease $CIFR +16.76% $CLSK +13.7% $WYFI +9.18% $NBIS and $CRWV are taking their time in the https://t.co/7iQlUSIWP2",
+          "url": "https://x.com/aleabitoreddit/status/2079254669793316962",
+          "likes": 240,
+          "reposts": 12,
+          "views": 35824,
+          "postedAt": "2026-07-21 01:18:38"
         }
       ]
     },
     {
       "key": "macro",
-      "label": "宏观 / 市场",
+      "label": "宏观 / 金融市场",
       "isAnchor": false,
-      "summary": "美国对加拿大加征50%关税、油价因霍尔木兹海峡局势飙升、美伊冲突升级波及科威特与巴林，全球宏观风险骤然上升。",
+      "summary": "美加关税升至50%、油价因霍尔木兹海峡局势逼近$90、美伊冲突升级波及数据中心与中东基地，宏观风险集中释放。",
       "tweets": [
         {
           "author": "Watcher.Guru",
@@ -314,34 +314,14 @@
           "postedAt": "2026-07-20 01:23:02"
         },
         {
-          "author": "*Walter Bloomberg",
-          "handle": "deitaone",
-          "text": "TRUMP PREPARES NEW ROUND OF TARIFFS President Donald Trump is reportedly preparing a new round of tariffs on dozens of countries ahead of the expiration of the current 10% global tariff this week. According to the Financial Times, the administration is considering keeping the",
-          "url": "https://x.com/DeItaone/status/2079511336644399494",
-          "likes": 117,
-          "reposts": 29,
-          "views": 42469,
-          "postedAt": "2026-07-21 18:18:32"
-        },
-        {
-          "author": "*Walter Bloomberg",
-          "handle": "deitaone",
-          "text": "IRAN CLAIMS STRIKES ON AMAZON DATA CENTER, U.S. BASE Iran’s Revolutionary Guard claimed it struck Amazon data center infrastructure in Bahrain in retaliation for a U.S. attack on the Darkhovin nuclear project. The IRGC also said it targeted a U.S. military base in Jordan,",
-          "url": "https://x.com/DeItaone/status/2079488413661532407",
-          "likes": 149,
-          "reposts": 19,
-          "views": 50541,
-          "postedAt": "2026-07-21 16:47:27"
-        },
-        {
-          "author": "*Walter Bloomberg",
-          "handle": "deitaone",
-          "text": "IRANIAN ARMY SAYS IT HAS TARGETED U.S. MISSILE SYSTEMS AT KUWAIT'S ARIFJAN BASE WITH SURFACE-TO-SURFACE MISSILES -STATE TV",
-          "url": "https://x.com/DeItaone/status/2079335659572019446",
-          "likes": 219,
-          "reposts": 20,
-          "views": 69511,
-          "postedAt": "2026-07-21 06:40:28"
+          "author": "Watcher.Guru",
+          "handle": "watcherguru",
+          "text": "JUST IN: JPMorgan CEO Jamie Dimon says he would not buy stocks right now.",
+          "url": "https://x.com/WatcherGuru/status/2079576683007316183",
+          "likes": 878,
+          "reposts": 82,
+          "views": 120413,
+          "postedAt": "2026-07-21 22:38:12"
         },
         {
           "author": "zerohedge",
@@ -352,6 +332,26 @@
           "reposts": 29,
           "views": 53243,
           "postedAt": "2026-07-20 07:15:08"
+        },
+        {
+          "author": "unusual_whales",
+          "handle": "unusual_whales",
+          "text": "BREAKING: Iran's Islamic Revolutionary Guard Corps has claimed that it launched cruise missiles at Amazon's, $AMZN, central data infrastructure in Bahrain, per CNBC",
+          "url": "https://x.com/unusual_whales/status/2079564824258941221",
+          "likes": 130,
+          "reposts": 18,
+          "views": 41383,
+          "postedAt": "2026-07-21 21:51:05"
+        },
+        {
+          "author": "unusual_whales",
+          "handle": "unusual_whales",
+          "text": "Two oil tankers laden with Saudi crude make u-turns in Red Sea, head for Suez, per Reuters",
+          "url": "https://x.com/unusual_whales/status/2079571849927692454",
+          "likes": 125,
+          "reposts": 19,
+          "views": 42429,
+          "postedAt": "2026-07-21 22:19:00"
         }
       ]
     }
