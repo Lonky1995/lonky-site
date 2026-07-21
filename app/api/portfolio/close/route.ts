@@ -5,7 +5,7 @@ import { NextRequest, NextResponse } from "next/server";
 
 const GATEWAY_URL = process.env.PORTFOLIO_GATEWAY_URL || "http://154.219.115.80:18800";
 
-type Body = { passcode?: string; symbol?: string };
+type Body = { passcode?: string; symbol?: string; closeQty?: string; closePrice?: string };
 
 export async function POST(req: NextRequest) {
   let body: Body;
@@ -38,7 +38,12 @@ export async function POST(req: NextRequest) {
         { status: res.status === 401 ? 401 : 502 },
       );
     }
-    return NextResponse.json({ ok: true, symbol: data.symbol });
+    return NextResponse.json({
+      ok: true,
+      symbol: data.symbol,
+      closed: data.closed,      // true=全平；false=部分平仓
+      remaining: data.remaining, // 部分平仓后剩余数量
+    });
   } catch (err) {
     const msg = err instanceof Error ? err.message : "网关不可达";
     return NextResponse.json({ error: `提交失败：${msg}` }, { status: 502 });

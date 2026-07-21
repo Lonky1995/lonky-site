@@ -94,7 +94,7 @@ export default function PortfolioDashboard() {
   const [pieW, setPieW] = useState(0);
   const [addOpen, setAddOpen] = useState(false);
   const [cashOpen, setCashOpen] = useState(false);
-  const [closeFor, setCloseFor] = useState<string | null>(null);
+  const [closeFor, setCloseFor] = useState<Position | null>(null);
   const [journalFor, setJournalFor] = useState<Record<string, boolean>>({});
 
   const loadData = () => {
@@ -505,7 +505,7 @@ export default function PortfolioDashboard() {
                       {journalFor[p.id] ? "▾" : "▸"} 追踪日记 · {p.symbol}
                     </button>
                     <button
-                      onClick={() => setCloseFor(p.symbol)}
+                      onClick={() => setCloseFor(p)}
                       className="border border-[var(--loss)]/40 px-3 py-1.5 text-[11px] uppercase tracking-widest text-[var(--loss)] transition-colors hover:bg-[var(--loss)]/10"
                     >
                       平仓
@@ -578,7 +578,8 @@ export default function PortfolioDashboard() {
 
       <ClosePositionModal
         open={closeFor !== null}
-        symbol={closeFor}
+        symbol={closeFor?.symbol ?? null}
+        size={closeFor?.size ?? null}
         onClose={() => setCloseFor(null)}
         onSuccess={() => {
           // 平仓后经 GitHub→Vercel 部署有延迟，稍等后重拉
