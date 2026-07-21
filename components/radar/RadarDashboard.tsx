@@ -4,44 +4,37 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { motion } from "framer-motion";
 
-// ── 类型（对齐 radar-latest.json schema）──────────
-type TweetCard = {
+// ── 类型（对齐 radar-latest.json v2 schema）──────────
+type SignalCard = {
+  headline: string;
+  why: string;
   author: string;
   handle: string;
-  text: string;
   url: string;
   likes: number;
-  reposts: number;
   views: number;
   postedAt: string;
 };
 
-type Domain = {
-  key: string;
-  label: string;
-  isAnchor: boolean;
-  summary: string;
-  tweets: TweetCard[];
+type BuzzItem = {
+  topic: string;
+  gist: string;
+  url?: string;
 };
 
 type RadarData = {
   generatedAt: string;
   windowHours: number;
   candidateCount: number;
-  domains: Domain[];
+  headlines: SignalCard[];
+  insights: SignalCard[];
+  buzz: BuzzItem[];
 };
 
-// ── 领域配色（锚点各一色，动态领域统一强调色）──────
-const DOMAIN_ACCENT: Record<string, string> = {
-  ai: "#4F6B52", // 绿
-  crypto: "#B8860B", // 金
-  "product-eng": "#3B6EA5", // 蓝
-};
-const DYNAMIC_ACCENT = "#A3392F"; // 动态领域用红
-
-function accentOf(d: Domain): string {
-  return DOMAIN_ACCENT[d.key] ?? DYNAMIC_ACCENT;
-}
+// 三段配色
+const HEADLINE_ACCENT = "#A3392F"; // 头条 红
+const INSIGHT_ACCENT = "#3B6EA5"; // 观点 蓝
+const BUZZ_ACCENT = "#4F6B52"; // 热点 绿
 
 // ── 数字缩写（万/k）──────────────────────────────
 function fmtNum(n: number): string {
@@ -65,64 +58,65 @@ function fmtTime(iso: string): string {
   }
 }
 
-// ── 单条推文卡片 ──────────────────────────────────
-function TweetCardItem({ t }: { t: TweetCard }) {
+// ── 段落标题 ──────────────────────────────────────
+function SectionHead({ index, emoji, title, sub, accent }: { index: string; emoji: string; title: string; sub: string; accent: string }) {
+  return (
+    <div className="mb-6 mt-16 flex items-baseline gap-4 border-t-2 border-border pt-4">
+      <span className="font-mono text-sm" style={{ color: accent }}>
+        {index}
+      </span>
+      <h2 className="text-2xl font-extrabold uppercase tracking-tight md:text-3xl">
+        {emoji} {title}
+      </h2>
+      <span className="hidden font-mono text-xs text-muted md:inline">{sub}</span>
+    </div>
+  );
+}
+
+// ── 信号卡片（头条 / 观点）────────────────────────
+function SignalCardItem({ s, accent }: { s: SignalCard; accent: string }) {
   return (
     <a
-      href={t.url}
+      href={s.url}
       target="_blank"
       rel="noopener noreferrer"
-      className="group flex flex-col border-2 border-border p-4 transition-colors hover:border-accent"
+      className="group flex flex-col border-2 border-border p-5 transition-colors hover:border-accent"
     >
-      <div className="flex items-baseline justify-between gap-3">
-        <div className="min-w-0">
-          <span className="font-bold">{t.author}</span>
-          <span className="ml-1.5 font-mono text-[12px] text-muted">@{t.handle}</span>
-        </div>
-        <div className="shrink-0 font-mono text-[11px] text-muted">
-          ❤{fmtNum(t.likes)} · 🔁{fmtNum(t.reposts)} · 👁{fmtNum(t.views)}
-        </div>
-      </div>
-      <p className="mt-2 flex-1 text-[14px] leading-relaxed text-foreground/85">{t.text}</p>
-      <div className="mt-3 flex items-center justify-between font-mono text-[11px] text-muted">
-        <span>{t.postedAt}</span>
+      {/* headline：大字，一眼看清发生了什么 */}
+      <h3 className="text-lg font-bold leading-snug md:text-xl">{s.headline}</h3>
+      {/* why：为什么重要 / 洞见 */}
+      {s.why && (
+        <p className="mt-2.5 border-l-4 pl-4 text-[14px] leading-relaxed text-foreground/80" style={{ borderColor: accent }}>
+          {s.why}
+        </p>
+      )}
+      {/* 溯源：作者 + 互动 + 时间 */}
+      <div className="mt-4 flex flex-wrap items-center gap-x-3 gap-y-1 font-mono text-[11px] text-muted">
+        <span className="text-foreground/70">@{s.handle}</span>
+        <span>· {s.author}</span>
+        <span className="ml-auto">❤{fmtNum(s.likes)} · 👁{fmtNum(s.views)}</span>
         <span className="text-accent opacity-0 transition-opacity group-hover:opacity-100">在 X 打开 →</span>
       </div>
     </a>
   );
 }
 
-// ── 领域区块 ──────────────────────────────────────
-function DomainSection({ d, index }: { d: Domain; index: number }) {
-  const accent = accentOf(d);
-  return (
-    <section className="mt-16">
-      <div className="mb-6 flex items-baseline gap-4 border-t-2 border-border pt-4">
-        <span className="font-mono text-sm" style={{ color: accent }}>
-          {String(index + 1).padStart(2, "0")}
-        </span>
-        <h2 className="text-2xl font-extrabold uppercase tracking-tight md:text-3xl">{d.label}</h2>
-        {!d.isAnchor && (
-          <span className="rounded-sm px-1.5 py-0.5 font-mono text-[10px] font-bold uppercase text-background" style={{ background: accent }}>
-            今日新增
-          </span>
-        )}
+// ── 热点条目 ──────────────────────────────────────
+function BuzzRow({ b }: { b: BuzzItem }) {
+  const inner = (
+    <div className="flex flex-col border-2 border-border p-4 transition-colors group-hover:border-accent">
+      <div className="font-bold" style={{ color: BUZZ_ACCENT }}>
+        {b.topic}
       </div>
-      {d.summary && (
-        <p className="mb-6 max-w-3xl border-l-4 pl-5 font-serif text-lg leading-relaxed" style={{ borderColor: accent }}>
-          {d.summary}
-        </p>
-      )}
-      {d.tweets.length > 0 ? (
-        <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-          {d.tweets.map((t) => (
-            <TweetCardItem key={t.url} t={t} />
-          ))}
-        </div>
-      ) : (
-        <p className="font-mono text-sm text-muted">今日暂无相关内容</p>
-      )}
-    </section>
+      <p className="mt-1.5 text-[14px] leading-relaxed text-foreground/80">{b.gist}</p>
+    </div>
+  );
+  return b.url ? (
+    <a href={b.url} target="_blank" rel="noopener noreferrer" className="group block">
+      {inner}
+    </a>
+  ) : (
+    <div>{inner}</div>
   );
 }
 
@@ -141,8 +135,10 @@ export default function RadarDashboard() {
       .catch(() => setStatus("error"));
   }, []);
 
+  const isEmpty = data && data.headlines.length === 0 && data.insights.length === 0 && data.buzz.length === 0;
+
   return (
-    <main className="relative z-10 mx-auto max-w-6xl px-6 pb-24 pt-10 md:px-8">
+    <main className="relative z-10 mx-auto max-w-5xl px-6 pb-24 pt-10 md:px-8">
       {/* ── 页头 ── */}
       <header>
         <div className="flex items-center justify-between border-b-2 border-border pb-3 font-mono text-xs uppercase tracking-widest text-muted">
@@ -151,14 +147,14 @@ export default function RadarDashboard() {
           </Link>
           <span>{data ? `更新于 ${fmtTime(data.generatedAt)}` : "X · Radar"}</span>
         </div>
-        <div className="mt-8 font-mono text-xs uppercase tracking-widest text-accent">X / Twitter ▸ 近 48 小时 ▸ AI 分类</div>
+        <div className="mt-8 font-mono text-xs uppercase tracking-widest text-accent">X / Twitter ▸ 近 48 小时 ▸ AI 精选</div>
         <h1 className="mt-3 font-extrabold uppercase leading-[0.9] tracking-tight" style={{ fontSize: "clamp(2.6rem, 7vw, 5.2rem)" }}>
           X 情报
           <br />
           <span className="text-accent">雷达</span>
         </h1>
         <p className="mt-6 max-w-3xl font-serif text-xl leading-relaxed md:text-2xl md:leading-relaxed">
-          每天自动聚合近 48 小时关注列表的高互动内容，用 AI 按领域分类，一屏掌握当日动态。
+          AI 从近 48 小时关注流里筛出真正重要的——重大事件、独到观点、热门讨论。滤掉噪音，只留信号。
         </p>
       </header>
 
@@ -173,12 +169,46 @@ export default function RadarDashboard() {
 
       {status === "loaded" && data && (
         <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4 }}>
-          {data.domains.map((d, i) => (
-            <DomainSection key={d.key} d={d} index={i} />
-          ))}
+          {isEmpty && <p className="mt-16 font-mono text-sm text-muted">今日暂无重大信号。</p>}
+
+          {/* 🔥 今日头条 */}
+          {data.headlines.length > 0 && (
+            <section>
+              <SectionHead index="01" emoji="🔥" title="今日头条" sub="最重要的事 · 按重要性排序" accent={HEADLINE_ACCENT} />
+              <div className="grid grid-cols-1 gap-4">
+                {data.headlines.map((s) => (
+                  <SignalCardItem key={s.url} s={s} accent={HEADLINE_ACCENT} />
+                ))}
+              </div>
+            </section>
+          )}
+
+          {/* 💡 值得一读 */}
+          {data.insights.length > 0 && (
+            <section>
+              <SectionHead index="02" emoji="💡" title="值得一读" sub="独到观点 · 深度分析" accent={INSIGHT_ACCENT} />
+              <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+                {data.insights.map((s) => (
+                  <SignalCardItem key={s.url} s={s} accent={INSIGHT_ACCENT} />
+                ))}
+              </div>
+            </section>
+          )}
+
+          {/* 📊 在讨论什么 */}
+          {data.buzz.length > 0 && (
+            <section>
+              <SectionHead index="03" emoji="📊" title="在讨论什么" sub="热点话题 · 共识与争议" accent={BUZZ_ACCENT} />
+              <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+                {data.buzz.map((b, i) => (
+                  <BuzzRow key={b.url ?? i} b={b} />
+                ))}
+              </div>
+            </section>
+          )}
 
           <footer className="mt-20 border-t-2 border-border pt-4 font-mono text-xs text-muted">
-            从近 {data.windowHours} 小时 {data.candidateCount} 条高互动推文中筛选 · 每日 08:00 自动更新
+            从近 {data.windowHours} 小时 {data.candidateCount} 条关注流推文中精选 · 每日 08:00 自动更新
           </footer>
         </motion.div>
       )}
