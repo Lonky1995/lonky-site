@@ -1,22 +1,6 @@
 {
-  "generatedAt": "2026-07-21T02:55:11.083Z",
+  "generatedAt": "2026-07-21T03:48:24.897Z",
   "positions": [
-    {
-      "id": "pos_1784561138890_rj9ghi",
-      "symbol": "MU",
-      "companyName": "Micron Technology, Inc.",
-      "direction": "short",
-      "size": "10",
-      "entryTime": 1784560920000,
-      "entryPrice": "873",
-      "logic": "1. 主要是技术形态驱动，被均线压制，上方有筹码峰是阻力\n2. 本周大量财报没有资金会突破\n3. 感觉这次谷歌的财报会暴雷，所以提前做空",
-      "plan": "突破 900 止损，跌破的话看 700",
-      "validate": "谷歌财报暴雷，不及预期。",
-      "invalidate": "突破并站稳 900",
-      "stopLoss": "905",
-      "conviction": 3,
-      "status": "active"
-    },
     {
       "id": "pos_1784266016509_6374qc",
       "symbol": "ORCL",
