@@ -15,6 +15,7 @@ import type { PortfolioData, Position, WatchItem } from "@/data/portfolio";
 import { quoteKind } from "@/data/portfolio";
 import AddPositionModal from "./AddPositionModal";
 import CashModal from "./CashModal";
+import ClosePositionModal from "./ClosePositionModal";
 import BriefsPanel from "./BriefsPanel";
 import JournalPanel from "./JournalPanel";
 import CalendarPanel from "./CalendarPanel";
@@ -93,6 +94,7 @@ export default function PortfolioDashboard() {
   const [pieW, setPieW] = useState(0);
   const [addOpen, setAddOpen] = useState(false);
   const [cashOpen, setCashOpen] = useState(false);
+  const [closeFor, setCloseFor] = useState<string | null>(null);
   const [journalFor, setJournalFor] = useState<Record<string, boolean>>({});
 
   const loadData = () => {
@@ -495,12 +497,18 @@ export default function PortfolioDashboard() {
                     )}
                   </div>
 
-                  <div className="mt-4 border-t border-white/10 pt-4">
+                  <div className="mt-4 flex items-center justify-between border-t border-white/10 pt-4">
                     <button
                       onClick={() => setJournalFor((s) => ({ ...s, [p.id]: !s[p.id] }))}
                       className="text-xs uppercase tracking-widest text-white/70 hover:text-white"
                     >
                       {journalFor[p.id] ? "▾" : "▸"} 追踪日记 · {p.symbol}
+                    </button>
+                    <button
+                      onClick={() => setCloseFor(p.symbol)}
+                      className="border border-[var(--loss)]/40 px-3 py-1.5 text-[11px] uppercase tracking-widest text-[var(--loss)] transition-colors hover:bg-[var(--loss)]/10"
+                    >
+                      平仓
                     </button>
                     {journalFor[p.id] && (
                       <div className="mt-4">
@@ -564,6 +572,16 @@ export default function PortfolioDashboard() {
         onClose={() => setCashOpen(false)}
         onSuccess={() => {
           // 现金写入后经 GitHub→Vercel 部署有延迟，稍等后重拉
+          setTimeout(loadData, 3000);
+        }}
+      />
+
+      <ClosePositionModal
+        open={closeFor !== null}
+        symbol={closeFor}
+        onClose={() => setCloseFor(null)}
+        onSuccess={() => {
+          // 平仓后经 GitHub→Vercel 部署有延迟，稍等后重拉
           setTimeout(loadData, 3000);
         }}
       />
