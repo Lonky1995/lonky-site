@@ -3,41 +3,11 @@
   "score": 76,
   "verdict": "积极",
   "factors": [
-    {
-      "key": "trend",
-      "label": "趋势",
-      "score": 91,
-      "raw": 7.3,
-      "note": "在长期均线上方"
-    },
-    {
-      "key": "credit",
-      "label": "信用",
-      "score": 90,
-      "raw": 0.745,
-      "note": "信用偏松"
-    },
-    {
-      "key": "vol",
-      "label": "波动",
-      "score": 50,
-      "raw": 17.05,
-      "note": "波动可控"
-    },
-    {
-      "key": "leadership",
-      "label": "领导力",
-      "score": 90,
-      "raw": 4,
-      "note": "龙头带队"
-    },
-    {
-      "key": "breadth",
-      "label": "广度",
-      "score": 57,
-      "raw": 62.2,
-      "note": "参与度尚可"
-    }
+    { "key": "trend", "label": "趋势", "score": 91, "raw": 7.3, "note": "在长期均线上方" },
+    { "key": "credit", "label": "信用", "score": 90, "raw": 0.745, "note": "信用偏松" },
+    { "key": "vol", "label": "波动", "score": 50, "raw": 17.05, "note": "波动可控" },
+    { "key": "leadership", "label": "领导力", "score": 90, "raw": 4, "note": "龙头带队" },
+    { "key": "breadth", "label": "广度", "score": 57, "raw": 62.2, "note": "参与度尚可" }
   ],
-  "updatedAt": 1784684334009
+  "updatedAt": 1784684334080
 }
