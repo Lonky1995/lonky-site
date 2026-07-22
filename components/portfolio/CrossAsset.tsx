@@ -79,18 +79,44 @@ function Card({ c }: { c: AssetCard }) {
   );
 }
 
+// 更新时间：显示 HH:MM（美东时区，与行情一致）
+function fmtUpdatedAt(ts: number): string {
+  try {
+    return new Date(ts).toLocaleTimeString("zh-CN", {
+      hour: "2-digit",
+      minute: "2-digit",
+      hour12: false,
+      timeZone: "America/New_York",
+    });
+  } catch {
+    return "";
+  }
+}
+
+const REFRESH_MS = 15 * 60 * 1000; // 15 分钟自动刷新
+
 export default function CrossAsset() {
   const [data, setData] = useState<CrossAssetData | null>(null);
   const [state, setState] = useState<"loading" | "ok" | "off">("loading");
 
   useEffect(() => {
-    fetch(`/data/cross-asset.json?t=${Date.now()}`)
-      .then((r) => (r.ok ? r.json() : Promise.reject()))
-      .then((d: CrossAssetData) => {
-        setData(d);
-        setState("ok");
-      })
-      .catch(() => setState("off"));
+    let alive = true;
+    const load = () =>
+      fetch(`/data/cross-asset.json?t=${Date.now()}`)
+        .then((r) => (r.ok ? r.json() : Promise.reject()))
+        .then((d: CrossAssetData) => {
+          if (!alive) return;
+          setData(d);
+          setState("ok");
+        })
+        .catch(() => alive && setState((s) => (s === "loading" ? "off" : s)));
+
+    load();
+    const timer = setInterval(load, REFRESH_MS);
+    return () => {
+      alive = false;
+      clearInterval(timer);
+    };
   }, []);
 
   if (state === "off") return null;
@@ -104,6 +130,7 @@ export default function CrossAsset() {
         {data && (
           <span className="text-xs" style={{ color: "rgba(245,247,251,0.5)" }}>
             {data.date}
+            {data.updatedAt ? ` · 更新于 ${fmtUpdatedAt(data.updatedAt)}` : ""}
           </span>
         )}
       </div>
