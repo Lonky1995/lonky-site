@@ -130,7 +130,7 @@ export default function CrossAsset() {
         {data && (
           <span className="text-xs" style={{ color: "rgba(245,247,251,0.5)" }}>
             {data.date}
-            {data.updatedAt ? ` · 更新于 ${fmtUpdatedAt(data.updatedAt)}` : ""}
+            {data.updatedAt ? ` · 更新于 ${fmtUpdatedAt(data.updatedAt)} ET` : ""}
           </span>
         )}
       </div>
