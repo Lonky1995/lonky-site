@@ -3,20 +3,106 @@
   "score": 76,
   "verdict": "积极",
   "factors": [
-    { "key": "trend", "label": "趋势", "score": 91, "raw": 7.3, "note": "在长期均线上方" },
-    { "key": "credit", "label": "信用", "score": 90, "raw": 0.745, "note": "信用偏松" },
-    { "key": "vol", "label": "波动", "score": 50, "raw": 17.05, "note": "波动可控" },
-    { "key": "leadership", "label": "领导力", "score": 90, "raw": 4, "note": "龙头带队" },
-    { "key": "breadth", "label": "广度", "score": 57, "raw": 62.2, "note": "参与度尚可" }
+    {
+      "key": "trend",
+      "label": "趋势",
+      "score": 91,
+      "raw": 7.3,
+      "note": "在长期均线上方"
+    },
+    {
+      "key": "credit",
+      "label": "信用",
+      "score": 90,
+      "raw": 0.745,
+      "note": "信用偏松"
+    },
+    {
+      "key": "vol",
+      "label": "波动",
+      "score": 50,
+      "raw": 17.05,
+      "note": "波动可控"
+    },
+    {
+      "key": "leadership",
+      "label": "领导力",
+      "score": 90,
+      "raw": 4,
+      "note": "龙头带队"
+    },
+    {
+      "key": "breadth",
+      "label": "广度",
+      "score": 59,
+      "raw": 63.3,
+      "note": "参与度尚可"
+    }
   ],
+  "updatedAt": 1784727013572,
   "history": [
-    { "date": "2026-07-13", "score": 72, "trend": 94, "credit": 90, "vol": 50, "leadership": 66, "breadth": 57 },
-    { "date": "2026-07-14", "score": 76, "trend": 96, "credit": 90, "vol": 61, "leadership": 76, "breadth": 57 },
-    { "date": "2026-07-15", "score": 80, "trend": 97, "credit": 89, "vol": 80, "leadership": 85, "breadth": 57 },
-    { "date": "2026-07-16", "score": 74, "trend": 94, "credit": 89, "vol": 56, "leadership": 74, "breadth": 57 },
-    { "date": "2026-07-17", "score": 70, "trend": 88, "credit": 88, "vol": 28, "leadership": 83, "breadth": 57 },
-    { "date": "2026-07-20", "score": 69, "trend": 87, "credit": 90, "vol": 29, "leadership": 77, "breadth": 57 },
-    { "date": "2026-07-21", "score": 76, "trend": 91, "credit": 90, "vol": 50, "leadership": 90, "breadth": 57 }
-  ],
-  "updatedAt": 1784684334080
+    {
+      "date": "2026-07-13",
+      "score": 72,
+      "trend": 94,
+      "credit": 90,
+      "vol": 50,
+      "leadership": 66,
+      "breadth": 59
+    },
+    {
+      "date": "2026-07-14",
+      "score": 76,
+      "trend": 96,
+      "credit": 90,
+      "vol": 61,
+      "leadership": 76,
+      "breadth": 59
+    },
+    {
+      "date": "2026-07-15",
+      "score": 81,
+      "trend": 97,
+      "credit": 89,
+      "vol": 80,
+      "leadership": 85,
+      "breadth": 59
+    },
+    {
+      "date": "2026-07-16",
+      "score": 75,
+      "trend": 94,
+      "credit": 89,
+      "vol": 56,
+      "leadership": 74,
+      "breadth": 59
+    },
+    {
+      "date": "2026-07-17",
+      "score": 71,
+      "trend": 88,
+      "credit": 88,
+      "vol": 28,
+      "leadership": 83,
+      "breadth": 59
+    },
+    {
+      "date": "2026-07-20",
+      "score": 70,
+      "trend": 87,
+      "credit": 90,
+      "vol": 29,
+      "leadership": 77,
+      "breadth": 59
+    },
+    {
+      "date": "2026-07-21",
+      "score": 76,
+      "trend": 91,
+      "credit": 90,
+      "vol": 50,
+      "leadership": 90,
+      "breadth": 59
+    }
+  ]
 }
