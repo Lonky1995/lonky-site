@@ -253,6 +253,9 @@ export default function PortfolioDashboard() {
         </div>
       </header>
 
+      {/* ── 市场环境（姿态 + 7天走势），放最前：先看市场，再看组合 ── */}
+      <MarketBreadth />
+
       {/* ── 概览 KPI ── */}
       <div className="pf-kpi-grid" data-reveal>
         {[
@@ -297,9 +300,6 @@ export default function PortfolioDashboard() {
           </div>
         ))}
       </div>
-
-      {/* ── 市场环境（广度） ── */}
-      <MarketBreadth />
 
       {/* ── 组合汇总 ── */}
       <div className="pf-kpi-grid mt-4" data-reveal>
