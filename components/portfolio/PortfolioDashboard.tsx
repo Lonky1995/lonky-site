@@ -20,6 +20,7 @@ import BriefsPanel from "./BriefsPanel";
 import JournalPanel from "./JournalPanel";
 import CalendarPanel from "./CalendarPanel";
 import MarketBreadth from "./MarketBreadth";
+import CrossAsset from "./CrossAsset";
 import RiskPanel from "./RiskPanel";
 
 type Quote = { symbol: string; price: number; changesPercentage: number };
@@ -255,6 +256,9 @@ export default function PortfolioDashboard() {
 
       {/* ── 市场环境（姿态 + 7天走势），放最前：先看市场，再看组合 ── */}
       <MarketBreadth />
+
+      {/* ── 跨资产锚点 + 一句话总结 ── */}
+      <CrossAsset />
 
       {/* ── 概览 KPI ── */}
       <div className="pf-kpi-grid" data-reveal>
