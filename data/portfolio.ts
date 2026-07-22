@@ -49,6 +49,24 @@ export type BreadthData = {
   updatedAt: number;
 };
 
+// 市场姿态因子
+export type PostureFactor = {
+  key: string; // trend / breadth / credit / vol / leadership
+  label: string; // 中文标签
+  score: number; // 0-100
+  raw: number; // 原始值（展示用）
+  note: string; // 一句话状态
+};
+
+// 市场姿态（由 gateway posture-snapshot cron 生成，推送到 public/data/posture.json）
+export type PostureData = {
+  date: string;
+  score: number; // 0-100 合成姿态分
+  verdict: string; // 积极 / 选择性 / 谨慎
+  factors: PostureFactor[];
+  updatedAt: number;
+};
+
 export const QUOTE_KIND: Record<string, "stock" | "crypto"> = {
   BTC: "crypto",
   ETH: "crypto",

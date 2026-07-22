@@ -1,20 +1,23 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import type { BreadthData } from "@/data/portfolio";
+import type { PostureData } from "@/data/portfolio";
 
-// 市场广度卡片：读 /data/breadth.json（gateway cron 收盘后推送）。
-// 广度是"市场层"判断（大盘健不健康），与持仓层分开，放在资产总览之后。
+// 市场环境卡片：读 /data/posture.json（gateway cron 收盘后推送）。
+// 顶部一个 0-100 姿态总分（"今天该不该动手"），下面五因子小格。
+// 广度已作为 posture 的一个因子并入，不再单独读 breadth.json。
 
-// 合成分分档 → 一句话判断（结论先行）
-function verdict(score: number): { label: string; tone: "gain" | "loss" | "neutral"; note: string } {
-  if (score >= 75) {
-    return { label: "强势", tone: "gain", note: "广度健康，普涨环境，可积极。" };
-  }
-  if (score >= 55) {
-    return { label: "中性", tone: "neutral", note: "趋势尚在但选择性，追高需谨慎。" };
-  }
-  return { label: "谨慎", tone: "loss", note: "广度走弱，涨势变窄，宜收手。" };
+// 总分分档 → 一句话判断（结论先行）
+function verdictTone(score: number): "gain" | "loss" | "neutral" {
+  if (score >= 70) return "gain";
+  if (score >= 50) return "neutral";
+  return "loss";
+}
+
+function verdictNote(score: number): string {
+  if (score >= 70) return "多数因子健康，可积极。";
+  if (score >= 50) return "有支撑但需选择，追高谨慎。";
+  return "多数因子走弱，宜收手观望。";
 }
 
 function toneColor(tone: "gain" | "loss" | "neutral"): string {
@@ -23,15 +26,22 @@ function toneColor(tone: "gain" | "loss" | "neutral"): string {
   return "rgba(245,247,251,0.85)";
 }
 
+// 单因子分数 → 颜色（60+ 绿 / 40- 红 / 中间中性）
+function factorColor(score: number): string {
+  if (score >= 60) return "var(--gain)";
+  if (score < 40) return "var(--loss)";
+  return "rgba(245,247,251,0.85)";
+}
+
 export default function MarketBreadth() {
-  const [b, setB] = useState<BreadthData | null>(null);
+  const [p, setP] = useState<PostureData | null>(null);
   const [state, setState] = useState<"loading" | "ok" | "off">("loading");
 
   useEffect(() => {
-    fetch(`/data/breadth.json?t=${Date.now()}`)
+    fetch(`/data/posture.json?t=${Date.now()}`)
       .then((r) => (r.ok ? r.json() : Promise.reject()))
-      .then((d: BreadthData) => {
-        setB(d);
+      .then((d: PostureData) => {
+        setP(d);
         setState("ok");
       })
       .catch(() => setState("off"));
@@ -40,7 +50,7 @@ export default function MarketBreadth() {
   // 数据未接入时不占版面
   if (state === "off") return null;
 
-  const v = b ? verdict(b.breadthScore) : null;
+  const tone = p ? verdictTone(p.score) : "neutral";
 
   return (
     <>
@@ -48,9 +58,9 @@ export default function MarketBreadth() {
         <p className="pf-panel-title" style={{ margin: 0 }}>
           市场环境
         </p>
-        {b && (
+        {p && (
           <span className="text-xs" style={{ color: "rgba(245,247,251,0.5)" }}>
-            {b.universe} · {b.date}
+            五因子 · {p.date}
           </span>
         )}
       </div>
@@ -58,67 +68,55 @@ export default function MarketBreadth() {
       <div className="pf-panel mt-3" data-reveal>
         {state === "loading" && (
           <div className="text-sm" style={{ color: "rgba(245,247,251,0.5)" }}>
-            广度数据加载中…
+            市场姿态加载中…
           </div>
         )}
 
-        {b && v && (
+        {p && (
           <>
-            <div
-              className="pf-kpi-grid"
-              style={{ gridTemplateColumns: "repeat(4, minmax(0, 1fr))", marginTop: 0 }}
-            >
-              <div className="pf-kpi">
-                <div className="pf-kpi-label">广度评分</div>
-                <div className="pf-kpi-value" style={{ color: toneColor(v.tone) }}>
-                  {b.breadthScore}
-                </div>
-                <div className="mt-1 text-[11px]" style={{ color: toneColor(v.tone) }}>
-                  {v.label}
-                </div>
-              </div>
-
-              <div className="pf-kpi">
-                <div className="pf-kpi-label">站上 200 日线</div>
-                <div className="pf-kpi-value">{b.pctAbove200.toFixed(1)}%</div>
-                <div className="mt-1 text-[11px]" style={{ color: "rgba(245,247,251,0.45)" }}>
-                  长期趋势
+            {/* 顶部：姿态总分 + 判断 */}
+            <div className="flex items-end justify-between gap-4 pb-4">
+              <div>
+                <div className="pf-kpi-label">市场姿态</div>
+                <div className="mt-1 flex items-baseline gap-3">
+                  <span
+                    className="font-mono font-bold"
+                    style={{ fontSize: "2.6rem", lineHeight: 1, color: toneColor(tone) }}
+                  >
+                    {p.score}
+                  </span>
+                  <span className="font-mono text-sm" style={{ color: toneColor(tone) }}>
+                    {p.verdict}
+                  </span>
                 </div>
               </div>
-
-              <div className="pf-kpi">
-                <div className="pf-kpi-label">站上 50 日线</div>
-                <div className="pf-kpi-value">{b.pctAbove50.toFixed(1)}%</div>
-                <div className="mt-1 text-[11px]" style={{ color: "rgba(245,247,251,0.45)" }}>
-                  短期动能
-                </div>
-              </div>
-
-              <div className="pf-kpi">
-                <div className="pf-kpi-label">涨跌家数</div>
-                <div
-                  className={`pf-kpi-value ${b.adDiff >= 0 ? "gain" : "loss"}`}
-                >
-                  {b.advancers}/{b.decliners}
-                </div>
-                <div
-                  className="mt-1 text-[11px]"
-                  style={{ color: b.adDiff >= 0 ? "var(--gain)" : "var(--loss)" }}
-                >
-                  {b.adDiff >= 0 ? "+" : ""}
-                  {b.adDiff}
-                </div>
+              <div
+                className="max-w-[52%] text-right text-sm leading-relaxed"
+                style={{ color: "rgba(245,247,251,0.6)" }}
+              >
+                {verdictNote(p.score)}
               </div>
             </div>
 
+            {/* 五因子横排 */}
             <div
-              className="mt-4 border-t border-white/10 pt-4 text-sm leading-relaxed"
-              style={{ color: "rgba(245,247,251,0.72)" }}
+              className="grid gap-3 border-t border-white/10 pt-4"
+              style={{ gridTemplateColumns: `repeat(${p.factors.length}, minmax(0, 1fr))` }}
             >
-              <span className="pf-chip" style={{ marginRight: 8 }}>
-                解读
-              </span>
-              {v.note}
+              {p.factors.map((f) => (
+                <div key={f.key}>
+                  <div className="pf-kpi-label">{f.label}</div>
+                  <div
+                    className="mt-1 font-mono text-2xl font-bold"
+                    style={{ color: factorColor(f.score) }}
+                  >
+                    {f.score}
+                  </div>
+                  <div className="mt-1 text-[11px]" style={{ color: "rgba(245,247,251,0.45)" }}>
+                    {f.note}
+                  </div>
+                </div>
+              ))}
             </div>
           </>
         )}
