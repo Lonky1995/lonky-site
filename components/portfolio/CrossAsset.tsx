@@ -20,9 +20,9 @@ function changeColor(pct: number): string {
 
 // 迷你走势 SVG（旧→新），涨绿跌红
 function Sparkline({ data, up }: { data: number[]; up: boolean }) {
-  if (!data || data.length < 2) return <div className="h-8" />;
-  const w = 96;
-  const h = 32;
+  if (!data || data.length < 2) return <div className="h-5" />;
+  const w = 100;
+  const h = 22;
   const min = Math.min(...data);
   const max = Math.max(...data);
   const range = max - min || 1;
@@ -52,18 +52,27 @@ function Sparkline({ data, up }: { data: number[]; up: boolean }) {
 function Card({ c }: { c: AssetCard }) {
   const up = c.changePct >= 0;
   return (
-    <div className="pf-panel" style={{ padding: "0.9rem 1rem" }}>
-      <div className="flex items-baseline justify-between">
-        <span className="font-mono text-sm font-bold" style={{ color: "rgba(245,247,251,0.85)" }}>
+    <div className="pf-panel" style={{ padding: "0.55rem 0.7rem" }}>
+      <div className="mb-0.5 text-[9px] uppercase tracking-wide" style={{ color: "rgba(245,247,251,0.35)" }}>
+        {c.group}
+      </div>
+      <div className="flex items-baseline justify-between gap-1">
+        <span
+          className="truncate font-mono text-[11px] font-bold"
+          style={{ color: "rgba(245,247,251,0.75)" }}
+        >
           {c.label}
         </span>
-        <span className="font-mono text-xs font-bold" style={{ color: changeColor(c.changePct) }}>
+        <span
+          className="shrink-0 font-mono text-[11px] font-bold"
+          style={{ color: changeColor(c.changePct) }}
+        >
           {c.changePct > 0 ? "+" : ""}
           {c.changePct}%
         </span>
       </div>
-      <div className="mt-1 font-mono text-xl font-bold">{fmtPrice(c.price)}</div>
-      <div className="mt-2">
+      <div className="mt-0.5 font-mono text-base font-bold leading-tight">{fmtPrice(c.price)}</div>
+      <div className="mt-1">
         <Sparkline data={c.spark} up={up} />
       </div>
     </div>
@@ -86,17 +95,6 @@ export default function CrossAsset() {
 
   if (state === "off") return null;
 
-  // 按 group 分组保序
-  const groups: { name: string; cards: AssetCard[] }[] = [];
-  for (const c of data?.cards ?? []) {
-    let g = groups.find((x) => x.name === c.group);
-    if (!g) {
-      g = { name: c.group, cards: [] };
-      groups.push(g);
-    }
-    g.cards.push(c);
-  }
-
   return (
     <>
       <div className="mt-8 flex items-center justify-between" data-reveal>
@@ -117,7 +115,7 @@ export default function CrossAsset() {
       )}
 
       {data && (
-        <div className="mt-3 space-y-5" data-reveal>
+        <div className="mt-3 space-y-4" data-reveal>
           {/* 一句话市场总结 */}
           {data.summary && (
             <div
@@ -127,16 +125,12 @@ export default function CrossAsset() {
               {data.summary}
             </div>
           )}
-          {groups.map((g) => (
-            <div key={g.name}>
-              <div className="pf-kpi-label mb-2">{g.name}</div>
-              <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4">
-                {g.cards.map((c) => (
-                  <Card key={c.key} c={c} />
-                ))}
-              </div>
-            </div>
-          ))}
+          {/* 所有卡片连续密排（组名作为卡片内小标签） */}
+          <div className="grid grid-cols-3 gap-2 sm:grid-cols-4 lg:grid-cols-6">
+            {(data.cards ?? []).map((c) => (
+              <Card key={c.key} c={c} />
+            ))}
+          </div>
         </div>
       )}
     </>
