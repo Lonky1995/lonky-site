@@ -1,19 +1,19 @@
 {
   "date": "2026-07-21",
-  "score": 67,
-  "verdict": "选择性",
+  "score": 76,
+  "verdict": "积极",
   "factors": [
     {
       "key": "trend",
       "label": "趋势",
-      "score": 36,
+      "score": 91,
       "raw": 7.3,
       "note": "在长期均线上方"
     },
     {
       "key": "credit",
       "label": "信用",
-      "score": 100,
+      "score": 90,
       "raw": 0.745,
       "note": "信用偏松"
     },
@@ -39,5 +39,5 @@
       "note": "参与度尚可"
     }
   ],
-  "updatedAt": 1784684184080
+  "updatedAt": 1784684334009
 }
