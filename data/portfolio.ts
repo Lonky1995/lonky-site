@@ -36,6 +36,19 @@ export type PortfolioData = {
   cash?: number;
 };
 
+// 市场广度（由 gateway breadth-snapshot cron 生成，推送到 public/data/breadth.json）
+export type BreadthData = {
+  date: string; // 最新交易日 YYYY-MM-DD
+  universe: string; // 'SP100'
+  pctAbove200: number; // 站上 200 日线的成分股比例 0-100
+  pctAbove50: number; // 站上 50 日线的比例
+  advancers: number; // 当日上涨家数
+  decliners: number; // 当日下跌家数
+  adDiff: number; // advancers - decliners
+  breadthScore: number; // 0-100 合成广度分
+  updatedAt: number;
+};
+
 export const QUOTE_KIND: Record<string, "stock" | "crypto"> = {
   BTC: "crypto",
   ETH: "crypto",
