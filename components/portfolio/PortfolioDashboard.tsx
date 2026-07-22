@@ -20,6 +20,7 @@ import BriefsPanel from "./BriefsPanel";
 import JournalPanel from "./JournalPanel";
 import CalendarPanel from "./CalendarPanel";
 import MarketBreadth from "./MarketBreadth";
+import RiskPanel from "./RiskPanel";
 
 type Quote = { symbol: string; price: number; changesPercentage: number };
 
@@ -326,6 +327,9 @@ export default function PortfolioDashboard() {
           </div>
         ))}
       </div>
+
+      {/* ── 风险管理（组合热度 + 开仓助手） ── */}
+      <RiskPanel positions={positions} priceOf={priceOf} totalAssets={summary.totalAssets} />
 
       {/* ── 净值曲线 + 分布 ── */}
       <div className="pf-charts" data-reveal>
