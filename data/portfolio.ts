@@ -79,6 +79,24 @@ export type PostureData = {
   history?: PostureHistoryPoint[]; // 最近7天走势
 };
 
+// 跨资产锚点卡片
+export type AssetCard = {
+  key: string;
+  label: string;
+  group: string;
+  price: number;
+  changePct: number;
+  spark: number[]; // 最近7根收盘（旧→新）
+};
+
+// 跨资产（由 gateway cross-asset cron 生成，推送到 public/data/cross-asset.json）
+export type CrossAssetData = {
+  date: string;
+  summary: string; // 一句话市场总结
+  cards: AssetCard[];
+  updatedAt: number;
+};
+
 export const QUOTE_KIND: Record<string, "stock" | "crypto"> = {
   BTC: "crypto",
   ETH: "crypto",
