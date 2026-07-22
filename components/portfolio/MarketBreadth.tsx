@@ -1,13 +1,12 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import { Area, AreaChart, Tooltip, XAxis, YAxis } from "recharts";
 import type { PostureData } from "@/data/portfolio";
 
 // 市场环境卡片：读 /data/posture.json（gateway cron 收盘后推送）。
-// 顶部一个 0-100 姿态总分（"今天该不该动手"），下面五因子小格。
-// 广度已作为 posture 的一个因子并入，不再单独读 breadth.json。
+// 顶部姿态总分 + 五因子小格 + 最近7天走势曲线（总分/各因子可切换）。
 
-// 总分分档 → 一句话判断（结论先行）
 function verdictTone(score: number): "gain" | "loss" | "neutral" {
   if (score >= 70) return "gain";
   if (score >= 50) return "neutral";
@@ -26,16 +25,30 @@ function toneColor(tone: "gain" | "loss" | "neutral"): string {
   return "rgba(245,247,251,0.85)";
 }
 
-// 单因子分数 → 颜色（60+ 绿 / 40- 红 / 中间中性）
 function factorColor(score: number): string {
   if (score >= 60) return "var(--gain)";
   if (score < 40) return "var(--loss)";
   return "rgba(245,247,251,0.85)";
 }
 
+// 曲线可切换的维度：总分 + 五因子
+const SERIES = [
+  { key: "score", label: "总分" },
+  { key: "trend", label: "趋势" },
+  { key: "credit", label: "信用" },
+  { key: "vol", label: "波动" },
+  { key: "leadership", label: "领导力" },
+  { key: "breadth", label: "广度" },
+] as const;
+
+type SeriesKey = (typeof SERIES)[number]["key"];
+
 export default function MarketBreadth() {
   const [p, setP] = useState<PostureData | null>(null);
   const [state, setState] = useState<"loading" | "ok" | "off">("loading");
+  const [sel, setSel] = useState<SeriesKey>("score");
+  const chartRef = useRef<HTMLDivElement>(null);
+  const [chartW, setChartW] = useState(0);
 
   useEffect(() => {
     fetch(`/data/posture.json?t=${Date.now()}`)
@@ -47,10 +60,26 @@ export default function MarketBreadth() {
       .catch(() => setState("off"));
   }, []);
 
-  // 数据未接入时不占版面
+  useEffect(() => {
+    const measure = () => {
+      if (chartRef.current) setChartW(chartRef.current.clientWidth);
+    };
+    const raf = requestAnimationFrame(measure);
+    window.addEventListener("resize", measure);
+    return () => {
+      cancelAnimationFrame(raf);
+      window.removeEventListener("resize", measure);
+    };
+  }, [p]);
+
   if (state === "off") return null;
 
   const tone = p ? verdictTone(p.score) : "neutral";
+  const history = p?.history ?? [];
+  const chartData = history.map((h) => ({
+    t: h.date.slice(5), // MM-DD
+    v: h[sel],
+  }));
 
   return (
     <>
@@ -118,6 +147,77 @@ export default function MarketBreadth() {
                 </div>
               ))}
             </div>
+
+            {/* 7天走势曲线 */}
+            {chartData.length > 1 && (
+              <div className="mt-5 border-t border-white/10 pt-4">
+                <div className="mb-3 flex flex-wrap items-center gap-2">
+                  <span className="pf-chip" style={{ marginRight: 4 }}>
+                    7 天走势
+                  </span>
+                  {SERIES.map((s) => (
+                    <button
+                      key={s.key}
+                      onClick={() => setSel(s.key)}
+                      className="font-mono text-[11px] uppercase tracking-widest transition-colors"
+                      style={{
+                        color:
+                          sel === s.key ? "var(--accent)" : "rgba(245,247,251,0.4)",
+                        borderBottom:
+                          sel === s.key
+                            ? "1px solid var(--accent)"
+                            : "1px solid transparent",
+                        paddingBottom: 2,
+                      }}
+                    >
+                      {s.label}
+                    </button>
+                  ))}
+                </div>
+                <div ref={chartRef} className="min-w-0">
+                  {chartW > 0 && (
+                    <AreaChart width={chartW} height={140} data={chartData}>
+                      <defs>
+                        <linearGradient id="postureFill" x1="0" y1="0" x2="0" y2="1">
+                          <stop offset="0%" stopColor="#a8b4ff" stopOpacity={0.32} />
+                          <stop offset="100%" stopColor="#a8b4ff" stopOpacity={0} />
+                        </linearGradient>
+                      </defs>
+                      <XAxis
+                        dataKey="t"
+                        tick={{ fontSize: 11, fill: "rgba(245,247,251,0.45)" }}
+                        axisLine={false}
+                        tickLine={false}
+                      />
+                      <YAxis
+                        domain={[0, 100]}
+                        ticks={[0, 50, 100]}
+                        tick={{ fontSize: 11, fill: "rgba(245,247,251,0.45)" }}
+                        axisLine={false}
+                        tickLine={false}
+                        width={28}
+                      />
+                      <Tooltip
+                        contentStyle={{
+                          fontSize: 12,
+                          background: "rgba(9,11,17,0.92)",
+                          border: "1px solid rgba(255,255,255,0.12)",
+                          borderRadius: 12,
+                          color: "#f5f7fb",
+                        }}
+                      />
+                      <Area
+                        type="monotone"
+                        dataKey="v"
+                        stroke="#a8b4ff"
+                        strokeWidth={2}
+                        fill="url(#postureFill)"
+                      />
+                    </AreaChart>
+                  )}
+                </div>
+              </div>
+            )}
           </>
         )}
       </div>

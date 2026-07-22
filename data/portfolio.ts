@@ -58,6 +58,17 @@ export type PostureFactor = {
   note: string; // 一句话状态
 };
 
+// 姿态 7 天走势单点（总分 + 各因子）
+export type PostureHistoryPoint = {
+  date: string;
+  score: number;
+  trend: number;
+  credit: number;
+  vol: number;
+  leadership: number;
+  breadth: number;
+};
+
 // 市场姿态（由 gateway posture-snapshot cron 生成，推送到 public/data/posture.json）
 export type PostureData = {
   date: string;
@@ -65,6 +76,7 @@ export type PostureData = {
   verdict: string; // 积极 / 选择性 / 谨慎
   factors: PostureFactor[];
   updatedAt: number;
+  history?: PostureHistoryPoint[]; // 最近7天走势
 };
 
 export const QUOTE_KIND: Record<string, "stock" | "crypto"> = {
