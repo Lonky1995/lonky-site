@@ -1,5 +1,18 @@
 {
   "generatedAt": "2026-07-21",
-  "events": [],
-  "updatedAt": 1784696164506
+  "events": [
+    {
+      "date": "2026-07-23",
+      "title": "FOMC 利率决议",
+      "impact": "high",
+      "symbol": "大盘"
+    },
+    {
+      "date": "2026-07-25",
+      "title": "ORCL 财报前瞻",
+      "impact": "mid",
+      "symbol": "ORCL"
+    }
+  ],
+  "updatedAt": 1784696193341
 }
