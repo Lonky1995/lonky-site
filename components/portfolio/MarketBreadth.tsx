@@ -32,6 +32,30 @@ function barColor(score: number): string {
   return "var(--loss)";
 }
 
+// 五因子数据口径与解读（hover 提示用）。口径来自 gateway/posture-snapshot 计算逻辑。
+const FACTOR_GUIDE: Record<string, { source: string; how: string }> = {
+  trend: {
+    source: "SPY 相对 200 日均线的偏离幅度",
+    how: "在均线上方 = 长期多头趋势，越高越强",
+  },
+  credit: {
+    source: "HYG / LQD 比值（高收益债 vs 投资级债）的历史百分位",
+    how: "比值越高 = 信用越松、风险偏好越强",
+  },
+  vol: {
+    source: "VIX 恐慌指数的历史百分位（反向）",
+    how: "VIX 越低 = 波动越可控，得分越高",
+  },
+  leadership: {
+    source: "Mag7 龙头篮子相对 SPY 的 20 日超额收益",
+    how: "超额为正 = 龙头带队上涨，市场结构健康",
+  },
+  breadth: {
+    source: "上涨股票占比等市场广度指标",
+    how: "越高 = 参与度越广，涨势不只靠少数龙头",
+  },
+};
+
 export default function MarketBreadth() {
   const [p, setP] = useState<PostureData | null>(null);
   const [state, setState] = useState<"loading" | "ok" | "off">("loading");
@@ -141,38 +165,65 @@ export default function MarketBreadth() {
 
             {/* 五因子：横向进度条平铺 */}
             <div className="grid gap-x-8 gap-y-3 border-t border-white/10 pt-4 sm:grid-cols-2 lg:grid-cols-3">
-              {p.factors.map((f) => (
-                <div key={f.key} className="flex items-center gap-3">
-                  {/* 标签 */}
-                  <span
-                    className="w-12 shrink-0 text-[13px]"
-                    style={{ color: "rgba(245,247,251,0.7)" }}
-                  >
-                    {f.label}
-                  </span>
-                  {/* 进度条 */}
-                  <div
-                    className="h-1.5 flex-1 overflow-hidden rounded-full"
-                    style={{ background: "rgba(255,255,255,0.08)" }}
-                  >
+              {p.factors.map((f) => {
+                const guide = FACTOR_GUIDE[f.key];
+                return (
+                  <div key={f.key} className="group relative flex items-center gap-3">
+                    {/* 标签（带下划虚线，提示可 hover） */}
+                    <span
+                      className="w-12 shrink-0 cursor-help text-[13px] decoration-dotted underline-offset-4 group-hover:underline"
+                      style={{ color: "rgba(245,247,251,0.7)" }}
+                    >
+                      {f.label}
+                    </span>
+                    {/* 进度条 */}
                     <div
-                      className="h-full rounded-full"
-                      style={{
-                        width: `${Math.max(0, Math.min(100, f.score))}%`,
-                        background: barColor(f.score),
-                        transition: "width 0.6s ease",
-                      }}
-                    />
+                      className="h-1.5 flex-1 overflow-hidden rounded-full"
+                      style={{ background: "rgba(255,255,255,0.08)" }}
+                    >
+                      <div
+                        className="h-full rounded-full"
+                        style={{
+                          width: `${Math.max(0, Math.min(100, f.score))}%`,
+                          background: barColor(f.score),
+                          transition: "width 0.6s ease",
+                        }}
+                      />
+                    </div>
+                    {/* 数值 */}
+                    <span
+                      className="w-7 shrink-0 text-right font-mono text-sm font-bold"
+                      style={{ color: barColor(f.score) }}
+                    >
+                      {f.score}
+                    </span>
+
+                    {/* hover 口径提示卡片 */}
+                    {guide && (
+                      <div
+                        className="pointer-events-none absolute left-0 top-full z-20 mt-1.5 w-64 rounded-xl p-3 text-xs leading-relaxed opacity-0 shadow-lg transition-opacity duration-150 group-hover:opacity-100"
+                        style={{
+                          background: "rgba(9,11,17,0.96)",
+                          border: "1px solid rgba(255,255,255,0.12)",
+                          color: "rgba(245,247,251,0.85)",
+                        }}
+                      >
+                        <div className="mb-1 font-bold" style={{ color: "rgba(245,247,251,0.95)" }}>
+                          {f.label} · {f.score}
+                        </div>
+                        <div className="mb-1">
+                          <span style={{ color: "rgba(245,247,251,0.45)" }}>数据口径：</span>
+                          {guide.source}
+                        </div>
+                        <div>
+                          <span style={{ color: "rgba(245,247,251,0.45)" }}>怎么看：</span>
+                          {guide.how}
+                        </div>
+                      </div>
+                    )}
                   </div>
-                  {/* 数值 */}
-                  <span
-                    className="w-7 shrink-0 text-right font-mono text-sm font-bold"
-                    style={{ color: barColor(f.score) }}
-                  >
-                    {f.score}
-                  </span>
-                </div>
-              ))}
+                );
+              })}
             </div>
 
             {/* 因子状态注释（一行小字，对应参考图的"部分"提示） */}
