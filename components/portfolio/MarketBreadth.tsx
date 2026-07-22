@@ -5,7 +5,7 @@ import { Area, AreaChart, Tooltip, XAxis, YAxis } from "recharts";
 import type { PostureData } from "@/data/portfolio";
 
 // 市场环境卡片：读 /data/posture.json（gateway cron 收盘后推送）。
-// 顶部姿态总分 + 五因子小格 + 最近7天走势曲线（总分/各因子可切换）。
+// 顶部姿态总分 + 五因子横向进度条平铺 + 最近7天总分走势曲线。
 
 function verdictTone(score: number): "gain" | "loss" | "neutral" {
   if (score >= 70) return "gain";
@@ -25,28 +25,16 @@ function toneColor(tone: "gain" | "loss" | "neutral"): string {
   return "rgba(245,247,251,0.85)";
 }
 
-function factorColor(score: number): string {
+// 因子分数 → 进度条颜色（≥60 绿 / 40-60 黄 / <40 红）
+function barColor(score: number): string {
   if (score >= 60) return "var(--gain)";
-  if (score < 40) return "var(--loss)";
-  return "rgba(245,247,251,0.85)";
+  if (score >= 40) return "#e5a800";
+  return "var(--loss)";
 }
-
-// 曲线可切换的维度：总分 + 五因子
-const SERIES = [
-  { key: "score", label: "总分" },
-  { key: "trend", label: "趋势" },
-  { key: "credit", label: "信用" },
-  { key: "vol", label: "波动" },
-  { key: "leadership", label: "领导力" },
-  { key: "breadth", label: "广度" },
-] as const;
-
-type SeriesKey = (typeof SERIES)[number]["key"];
 
 export default function MarketBreadth() {
   const [p, setP] = useState<PostureData | null>(null);
   const [state, setState] = useState<"loading" | "ok" | "off">("loading");
-  const [sel, setSel] = useState<SeriesKey>("score");
   const chartRef = useRef<HTMLDivElement>(null);
   const [chartW, setChartW] = useState(0);
 
@@ -78,7 +66,7 @@ export default function MarketBreadth() {
   const history = p?.history ?? [];
   const chartData = history.map((h) => ({
     t: h.date.slice(5), // MM-DD
-    v: h[sel],
+    v: h.score,
   }));
 
   return (
@@ -127,52 +115,59 @@ export default function MarketBreadth() {
               </div>
             </div>
 
-            {/* 五因子横排 */}
-            <div
-              className="grid gap-3 border-t border-white/10 pt-4"
-              style={{ gridTemplateColumns: `repeat(${p.factors.length}, minmax(0, 1fr))` }}
-            >
+            {/* 五因子：横向进度条平铺 */}
+            <div className="grid gap-x-8 gap-y-3 border-t border-white/10 pt-4 sm:grid-cols-2 lg:grid-cols-3">
               {p.factors.map((f) => (
-                <div key={f.key}>
-                  <div className="pf-kpi-label">{f.label}</div>
+                <div key={f.key} className="flex items-center gap-3">
+                  {/* 标签 */}
+                  <span
+                    className="w-12 shrink-0 text-[13px]"
+                    style={{ color: "rgba(245,247,251,0.7)" }}
+                  >
+                    {f.label}
+                  </span>
+                  {/* 进度条 */}
                   <div
-                    className="mt-1 font-mono text-2xl font-bold"
-                    style={{ color: factorColor(f.score) }}
+                    className="h-1.5 flex-1 overflow-hidden rounded-full"
+                    style={{ background: "rgba(255,255,255,0.08)" }}
+                  >
+                    <div
+                      className="h-full rounded-full"
+                      style={{
+                        width: `${Math.max(0, Math.min(100, f.score))}%`,
+                        background: barColor(f.score),
+                        transition: "width 0.6s ease",
+                      }}
+                    />
+                  </div>
+                  {/* 数值 */}
+                  <span
+                    className="w-7 shrink-0 text-right font-mono text-sm font-bold"
+                    style={{ color: barColor(f.score) }}
                   >
                     {f.score}
-                  </div>
-                  <div className="mt-1 text-[11px]" style={{ color: "rgba(245,247,251,0.45)" }}>
-                    {f.note}
-                  </div>
+                  </span>
                 </div>
               ))}
             </div>
 
-            {/* 7天走势曲线 */}
+            {/* 因子状态注释（一行小字，对应参考图的"部分"提示） */}
+            <div
+              className="mt-3 flex flex-wrap gap-x-4 gap-y-1 text-[11px]"
+              style={{ color: "rgba(245,247,251,0.4)" }}
+            >
+              {p.factors.map((f) => (
+                <span key={f.key}>
+                  {f.label} · {f.note}
+                </span>
+              ))}
+            </div>
+
+            {/* 7天总分走势曲线 */}
             {chartData.length > 1 && (
               <div className="mt-5 border-t border-white/10 pt-4">
-                <div className="mb-3 flex flex-wrap items-center gap-2">
-                  <span className="pf-chip" style={{ marginRight: 4 }}>
-                    7 天走势
-                  </span>
-                  {SERIES.map((s) => (
-                    <button
-                      key={s.key}
-                      onClick={() => setSel(s.key)}
-                      className="font-mono text-[11px] uppercase tracking-widest transition-colors"
-                      style={{
-                        color:
-                          sel === s.key ? "var(--accent)" : "rgba(245,247,251,0.4)",
-                        borderBottom:
-                          sel === s.key
-                            ? "1px solid var(--accent)"
-                            : "1px solid transparent",
-                        paddingBottom: 2,
-                      }}
-                    >
-                      {s.label}
-                    </button>
-                  ))}
+                <div className="mb-2">
+                  <span className="pf-chip">7 天姿态走势</span>
                 </div>
                 <div ref={chartRef} className="min-w-0">
                   {chartW > 0 && (
