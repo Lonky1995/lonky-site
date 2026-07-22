@@ -124,16 +124,42 @@ function BuzzRow({ b }: { b: BuzzItem }) {
 export default function RadarDashboard() {
   const [data, setData] = useState<RadarData | null>(null);
   const [status, setStatus] = useState<"loading" | "loaded" | "error">("loading");
+  const [refreshing, setRefreshing] = useState(false);
+  const [refreshMsg, setRefreshMsg] = useState<string | null>(null);
 
-  useEffect(() => {
-    fetch("/data/radar-latest.json")
+  const loadData = () =>
+    fetch(`/data/radar-latest.json?t=${Date.now()}`)
       .then((r) => (r.ok ? r.json() : Promise.reject(new Error("not found"))))
       .then((d: RadarData) => {
         setData(d);
         setStatus("loaded");
       })
       .catch(() => setStatus("error"));
+
+  useEffect(() => {
+    loadData();
   }, []);
+
+  const handleRefresh = async () => {
+    if (refreshing) return;
+    setRefreshing(true);
+    setRefreshMsg(null);
+    try {
+      const res = await fetch("/api/dashboard/radar-refresh", { method: "POST" });
+      const body = await res.json();
+      if (!res.ok) {
+        setRefreshMsg(body?.error || "刷新失败");
+        return;
+      }
+      await loadData();
+      setRefreshMsg("已刷新");
+    } catch {
+      setRefreshMsg("刷新失败，请稍后再试");
+    } finally {
+      setRefreshing(false);
+      setTimeout(() => setRefreshMsg(null), 4000);
+    }
+  };
 
   const isEmpty = data && data.headlines.length === 0 && data.insights.length === 0 && data.buzz.length === 0;
 
@@ -145,7 +171,17 @@ export default function RadarDashboard() {
           <Link href="/" className="hover:text-accent">
             ← lonky.me
           </Link>
-          <span>{data ? `更新于 ${fmtTime(data.generatedAt)}` : "X · Radar"}</span>
+          <div className="flex items-center gap-3">
+            <span>{data ? `更新于 ${fmtTime(data.generatedAt)}` : "X · Radar"}</span>
+            <button
+              onClick={handleRefresh}
+              disabled={refreshing}
+              className="border border-border px-2 py-1 normal-case tracking-normal transition-colors hover:border-accent hover:text-accent disabled:cursor-not-allowed disabled:opacity-50"
+            >
+              {refreshing ? "刷新中…" : "↻ 手动刷新"}
+            </button>
+            {refreshMsg && <span className="text-accent">{refreshMsg}</span>}
+          </div>
         </div>
         <div className="mt-8 font-mono text-xs uppercase tracking-widest text-accent">X / Twitter ▸ 近 48 小时 ▸ AI 精选</div>
         <h1 className="mt-3 font-extrabold uppercase leading-[0.9] tracking-tight" style={{ fontSize: "clamp(2.6rem, 7vw, 5.2rem)" }}>
