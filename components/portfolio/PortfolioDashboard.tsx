@@ -19,6 +19,7 @@ import ClosePositionModal from "./ClosePositionModal";
 import BriefsPanel from "./BriefsPanel";
 import JournalPanel from "./JournalPanel";
 import CalendarPanel from "./CalendarPanel";
+import MarketBreadth from "./MarketBreadth";
 
 type Quote = { symbol: string; price: number; changesPercentage: number };
 
@@ -295,6 +296,9 @@ export default function PortfolioDashboard() {
           </div>
         ))}
       </div>
+
+      {/* ── 市场环境（广度） ── */}
+      <MarketBreadth />
 
       {/* ── 组合汇总 ── */}
       <div className="pf-kpi-grid mt-4" data-reveal>
