@@ -1,7 +1,7 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
-import { Area, AreaChart, Tooltip, XAxis, YAxis } from "recharts";
+import { useEffect, useState } from "react";
+import { Area, AreaChart, ResponsiveContainer, Tooltip, YAxis } from "recharts";
 import type { PostureData } from "@/data/portfolio";
 
 // 市场环境卡片：读 /data/posture.json（gateway cron 收盘后推送）。
@@ -35,8 +35,6 @@ function barColor(score: number): string {
 export default function MarketBreadth() {
   const [p, setP] = useState<PostureData | null>(null);
   const [state, setState] = useState<"loading" | "ok" | "off">("loading");
-  const chartRef = useRef<HTMLDivElement>(null);
-  const [chartW, setChartW] = useState(0);
 
   useEffect(() => {
     fetch(`/data/posture.json?t=${Date.now()}`)
@@ -47,18 +45,6 @@ export default function MarketBreadth() {
       })
       .catch(() => setState("off"));
   }, []);
-
-  useEffect(() => {
-    const measure = () => {
-      if (chartRef.current) setChartW(chartRef.current.clientWidth);
-    };
-    const raf = requestAnimationFrame(measure);
-    window.addEventListener("resize", measure);
-    return () => {
-      cancelAnimationFrame(raf);
-      window.removeEventListener("resize", measure);
-    };
-  }, [p]);
 
   if (state === "off") return null;
 
@@ -91,9 +77,9 @@ export default function MarketBreadth() {
 
         {p && (
           <>
-            {/* 顶部：姿态总分 + 判断 */}
-            <div className="flex items-end justify-between gap-4 pb-4">
-              <div>
+            {/* 顶部：姿态总分 + 判断（左）｜ 7天迷你走势（右） */}
+            <div className="flex items-center justify-between gap-4 pb-4">
+              <div className="shrink-0">
                 <div className="pf-kpi-label">市场姿态</div>
                 <div className="mt-1 flex items-baseline gap-3">
                   <span
@@ -106,13 +92,51 @@ export default function MarketBreadth() {
                     {p.verdict}
                   </span>
                 </div>
+                <div
+                  className="mt-1 text-xs leading-relaxed"
+                  style={{ color: "rgba(245,247,251,0.55)" }}
+                >
+                  {verdictNote(p.score)}
+                </div>
               </div>
-              <div
-                className="max-w-[52%] text-right text-sm leading-relaxed"
-                style={{ color: "rgba(245,247,251,0.6)" }}
-              >
-                {verdictNote(p.score)}
-              </div>
+
+              {/* 7天迷你走势：紧凑，无坐标轴，仅示意趋势 */}
+              {chartData.length > 1 && (
+                <div className="min-w-0 w-full max-w-[280px]">
+                  <div className="mb-1 text-right">
+                    <span className="pf-chip">7 天姿态</span>
+                  </div>
+                  <ResponsiveContainer width="100%" height={48}>
+                    <AreaChart data={chartData} margin={{ top: 4, right: 2, bottom: 0, left: 2 }}>
+                      <defs>
+                        <linearGradient id="postureFill" x1="0" y1="0" x2="0" y2="1">
+                          <stop offset="0%" stopColor="#a8b4ff" stopOpacity={0.32} />
+                          <stop offset="100%" stopColor="#a8b4ff" stopOpacity={0} />
+                        </linearGradient>
+                      </defs>
+                      <YAxis domain={[0, 100]} hide />
+                      <Tooltip
+                        contentStyle={{
+                          fontSize: 12,
+                          background: "rgba(9,11,17,0.92)",
+                          border: "1px solid rgba(255,255,255,0.12)",
+                          borderRadius: 12,
+                          color: "#f5f7fb",
+                        }}
+                        labelFormatter={(t) => `${t}`}
+                      />
+                      <Area
+                        type="monotone"
+                        dataKey="v"
+                        stroke="#a8b4ff"
+                        strokeWidth={2}
+                        fill="url(#postureFill)"
+                        isAnimationActive={false}
+                      />
+                    </AreaChart>
+                  </ResponsiveContainer>
+                </div>
+              )}
             </div>
 
             {/* 五因子：横向进度条平铺 */}
@@ -163,56 +187,6 @@ export default function MarketBreadth() {
               ))}
             </div>
 
-            {/* 7天总分走势曲线 */}
-            {chartData.length > 1 && (
-              <div className="mt-5 border-t border-white/10 pt-4">
-                <div className="mb-2">
-                  <span className="pf-chip">7 天姿态走势</span>
-                </div>
-                <div ref={chartRef} className="min-w-0">
-                  {chartW > 0 && (
-                    <AreaChart width={chartW} height={140} data={chartData}>
-                      <defs>
-                        <linearGradient id="postureFill" x1="0" y1="0" x2="0" y2="1">
-                          <stop offset="0%" stopColor="#a8b4ff" stopOpacity={0.32} />
-                          <stop offset="100%" stopColor="#a8b4ff" stopOpacity={0} />
-                        </linearGradient>
-                      </defs>
-                      <XAxis
-                        dataKey="t"
-                        tick={{ fontSize: 11, fill: "rgba(245,247,251,0.45)" }}
-                        axisLine={false}
-                        tickLine={false}
-                      />
-                      <YAxis
-                        domain={[0, 100]}
-                        ticks={[0, 50, 100]}
-                        tick={{ fontSize: 11, fill: "rgba(245,247,251,0.45)" }}
-                        axisLine={false}
-                        tickLine={false}
-                        width={28}
-                      />
-                      <Tooltip
-                        contentStyle={{
-                          fontSize: 12,
-                          background: "rgba(9,11,17,0.92)",
-                          border: "1px solid rgba(255,255,255,0.12)",
-                          borderRadius: 12,
-                          color: "#f5f7fb",
-                        }}
-                      />
-                      <Area
-                        type="monotone"
-                        dataKey="v"
-                        stroke="#a8b4ff"
-                        strokeWidth={2}
-                        fill="url(#postureFill)"
-                      />
-                    </AreaChart>
-                  )}
-                </div>
-              </div>
-            )}
           </>
         )}
       </div>
