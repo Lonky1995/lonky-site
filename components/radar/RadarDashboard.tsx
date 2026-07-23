@@ -244,7 +244,7 @@ export default function RadarDashboard() {
           )}
 
           <footer className="mt-20 border-t-2 border-border pt-4 font-mono text-xs text-muted">
-            从近 {data.windowHours} 小时 {data.candidateCount} 条关注流推文中精选 · 每日 08:00 自动更新
+            从近 {data.windowHours} 小时 {data.candidateCount} 条关注流推文中精选 · 每 12 小时自动更新（08:00 / 20:00）
           </footer>
         </motion.div>
       )}
