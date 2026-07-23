@@ -98,26 +98,44 @@ const REFRESH_MS = 15 * 60 * 1000; // 15 分钟自动刷新
 export default function CrossAsset() {
   const [data, setData] = useState<CrossAssetData | null>(null);
   const [state, setState] = useState<"loading" | "ok" | "off">("loading");
+  const [refreshing, setRefreshing] = useState(false);
+  const [refreshMsg, setRefreshMsg] = useState<string | null>(null);
+
+  const load = () =>
+    fetch(`/data/cross-asset.json?t=${Date.now()}`)
+      .then((r) => (r.ok ? r.json() : Promise.reject()))
+      .then((d: CrossAssetData) => {
+        setData(d);
+        setState("ok");
+      })
+      .catch(() => setState((s) => (s === "loading" ? "off" : s)));
 
   useEffect(() => {
-    let alive = true;
-    const load = () =>
-      fetch(`/data/cross-asset.json?t=${Date.now()}`)
-        .then((r) => (r.ok ? r.json() : Promise.reject()))
-        .then((d: CrossAssetData) => {
-          if (!alive) return;
-          setData(d);
-          setState("ok");
-        })
-        .catch(() => alive && setState((s) => (s === "loading" ? "off" : s)));
-
     load();
     const timer = setInterval(load, REFRESH_MS);
-    return () => {
-      alive = false;
-      clearInterval(timer);
-    };
+    return () => clearInterval(timer);
   }, []);
+
+  const handleRefresh = async () => {
+    if (refreshing) return;
+    setRefreshing(true);
+    setRefreshMsg(null);
+    try {
+      const res = await fetch("/api/dashboard/cross-asset-refresh", { method: "POST" });
+      const body = await res.json();
+      if (!res.ok) {
+        setRefreshMsg(body?.error || "刷新失败");
+        return;
+      }
+      await load();
+      setRefreshMsg("已刷新");
+    } catch {
+      setRefreshMsg("刷新失败，请稍后再试");
+    } finally {
+      setRefreshing(false);
+      setTimeout(() => setRefreshMsg(null), 4000);
+    }
+  };
 
   if (state === "off") return null;
 
@@ -127,12 +145,23 @@ export default function CrossAsset() {
         <p className="pf-panel-title" style={{ margin: 0 }}>
           跨资产
         </p>
-        {data && (
-          <span className="text-xs" style={{ color: "rgba(245,247,251,0.5)" }}>
-            {data.date}
-            {data.updatedAt ? ` · 更新于 ${fmtUpdatedAt(data.updatedAt)}` : ""}
-          </span>
-        )}
+        <div className="flex items-center gap-2 text-xs" style={{ color: "rgba(245,247,251,0.5)" }}>
+          {data && (
+            <span>
+              {data.date}
+              {data.updatedAt ? ` · 更新于 ${fmtUpdatedAt(data.updatedAt)}` : ""}
+            </span>
+          )}
+          <button
+            onClick={handleRefresh}
+            disabled={refreshing}
+            className="border px-2 py-0.5 transition-colors hover:border-current disabled:cursor-not-allowed disabled:opacity-50"
+            style={{ borderColor: "rgba(245,247,251,0.25)" }}
+          >
+            {refreshing ? "刷新中…" : "↻ 手动刷新"}
+          </button>
+          {refreshMsg && <span style={{ color: "var(--gain)" }}>{refreshMsg}</span>}
+        </div>
       </div>
 
       {state === "loading" && (
