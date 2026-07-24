@@ -1,0 +1,59 @@
+{
+  "date": "2026-07-23",
+  "crowding": 60,
+  "components": [
+    {
+      "key": "asset_mgr",
+      "label": "COT 资管净仓",
+      "value": 48.4,
+      "percentile": 87,
+      "windowPoints": 200,
+      "date": "2026-07-14",
+      "source": "cftc"
+    },
+    {
+      "key": "lev_money",
+      "label": "COT 杠杆基金净仓",
+      "value": -18.8,
+      "percentile": 31.5,
+      "windowPoints": 200,
+      "date": "2026-07-14",
+      "source": "cftc"
+    },
+    {
+      "key": "naaim",
+      "label": "NAAIM 暴露",
+      "value": 84.02,
+      "percentile": 100,
+      "windowPoints": 0,
+      "date": "2026-07-22",
+      "source": "naaim"
+    },
+    {
+      "key": "cta",
+      "label": "CTA 复制动量",
+      "value": 0,
+      "percentile": 21.2,
+      "windowPoints": 706,
+      "date": "2026-07-23",
+      "source": "cta-model"
+    }
+  ],
+  "cta": [
+    {
+      "symbol": "SPY",
+      "weight": 1,
+      "price": 738.18,
+      "ma50": 745.05,
+      "signal": "flat"
+    },
+    {
+      "symbol": "QQQ",
+      "weight": 0.2,
+      "price": 691.96,
+      "ma50": 718.75,
+      "signal": "flat"
+    }
+  ],
+  "updatedAt": 1784857014910
+}
