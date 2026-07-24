@@ -1,13 +1,13 @@
 {
   "date": "2026-07-23",
-  "score": 61,
+  "score": 63,
   "verdict": "选择性",
   "factors": [
     {
       "key": "trend",
       "label": "趋势",
-      "score": 83,
-      "raw": 5.6,
+      "score": 84,
+      "raw": 5.7,
       "note": "在长期均线上方"
     },
     {
@@ -20,35 +20,35 @@
     {
       "key": "vol",
       "label": "波动",
-      "score": 21,
-      "raw": 19.64,
+      "score": 29,
+      "raw": 18.7,
       "note": "波动可控"
     },
     {
       "key": "leadership",
       "label": "领导力",
-      "score": 47,
-      "raw": -0.3,
-      "note": "龙头掉队"
+      "score": 50,
+      "raw": 0,
+      "note": "龙头带队"
     },
     {
       "key": "breadth",
       "label": "广度",
-      "score": 55,
-      "raw": 59.2,
+      "score": 57,
+      "raw": 62.8,
       "note": "参与度尚可"
     }
   ],
-  "updatedAt": 1784821626476,
+  "updatedAt": 1784899823519,
   "history": [
     {
       "date": "2026-07-15",
-      "score": 80,
+      "score": 81,
       "trend": 97,
       "credit": 89,
       "vol": 80,
-      "leadership": 85,
-      "breadth": 55
+      "leadership": 86,
+      "breadth": 57
     },
     {
       "date": "2026-07-16",
@@ -56,53 +56,53 @@
       "trend": 94,
       "credit": 89,
       "vol": 56,
-      "leadership": 74,
-      "breadth": 55
+      "leadership": 73,
+      "breadth": 57
     },
     {
       "date": "2026-07-17",
-      "score": 70,
+      "score": 69,
       "trend": 88,
       "credit": 88,
       "vol": 28,
-      "leadership": 83,
-      "breadth": 55
+      "leadership": 77,
+      "breadth": 57
     },
     {
       "date": "2026-07-20",
-      "score": 69,
+      "score": 70,
       "trend": 87,
       "credit": 90,
       "vol": 29,
-      "leadership": 77,
-      "breadth": 55
+      "leadership": 78,
+      "breadth": 57
     },
     {
       "date": "2026-07-21",
-      "score": 75,
+      "score": 77,
       "trend": 91,
       "credit": 90,
       "vol": 50,
-      "leadership": 90,
-      "breadth": 55
+      "leadership": 96,
+      "breadth": 57
     },
     {
       "date": "2026-07-22",
-      "score": 75,
+      "score": 71,
       "trend": 91,
       "credit": 90,
       "vol": 58,
-      "leadership": 80,
-      "breadth": 55
+      "leadership": 61,
+      "breadth": 57
     },
     {
       "date": "2026-07-23",
-      "score": 61,
-      "trend": 83,
+      "score": 63,
+      "trend": 84,
       "credit": 90,
-      "vol": 21,
-      "leadership": 47,
-      "breadth": 55
+      "vol": 29,
+      "leadership": 50,
+      "breadth": 57
     }
   ]
 }
