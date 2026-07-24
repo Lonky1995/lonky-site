@@ -97,6 +97,34 @@ export type CrossAssetData = {
   updatedAt: number;
 };
 
+// 持仓拥挤度分量（COT净仓 / NAAIM / CTA复制动量）
+export type PositioningComponent = {
+  key: string;
+  label: string;
+  value: number | null;
+  percentile: number | null; // 0-100，多数分量是历史分位数；NAAIM 是固定阈值映射（见 windowPoints）
+  windowPoints: number; // 分位数窗口点数；0 表示该分量用固定阈值映射，非真实分位数
+  date: string;
+  source: "cftc" | "naaim" | "cta-model";
+};
+
+export type CtaEtf = {
+  symbol: string;
+  weight: number;
+  price: number;
+  ma50: number;
+  signal: "long" | "flat";
+};
+
+// 持仓与资金流（由 gateway positioning-weekly / positioning-cta-daily cron 生成，推送到 public/data/positioning.json）
+export type PositioningData = {
+  date: string;
+  crowding: number | null; // 0-100 拥挤度综合分（可用分量分位数简单平均）
+  components: PositioningComponent[];
+  cta: CtaEtf[];
+  updatedAt: number;
+};
+
 export const QUOTE_KIND: Record<string, "stock" | "crypto"> = {
   BTC: "crypto",
   ETH: "crypto",
