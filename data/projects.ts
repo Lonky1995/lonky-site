@@ -31,6 +31,39 @@ export type Project = {
 
 export const projects: Project[] = [
   {
+    id: "xhs-kit",
+    title: {
+      zh: "小红书工具：舆情工具和评论截流",
+      en: "Xiaohongshu Tools: Social Listening & Lead Capture",
+    },
+    description: {
+      zh: "把小红书评论运营与舆情研究串成一套工作台：关键词采集、AI 生成评论、模拟真实操作完成发布、线索截流和研究看板。",
+      en: "An auditable workspace for Xiaohongshu growth and research: keyword capture, AI-assisted comments, browser-native publishing, lead discovery, and insight dashboards.",
+    },
+    category: "AI",
+    techStack: ["Next.js", "Chrome Extension", "DeepSeek", "OpenClaw"],
+    featured: true,
+    status: "in-progress",
+    year: "2026",
+  },
+  {
+    id: "market-monitor",
+    title: {
+      zh: "美股监控台",
+      en: "Market Monitor",
+    },
+    description: {
+      zh: "把市场姿态、跨资产锚点、资金流、持仓与风险管理收进一块屏幕，持续追踪组合变化和关键事件。",
+      en: "A single-screen market cockpit for regime, cross-asset signals, positioning, portfolio changes, risk management, and key events.",
+    },
+    category: "Tool",
+    techStack: ["Next.js", "TypeScript", "Recharts", "FMP"],
+    link: "/portfolio",
+    featured: true,
+    status: "live",
+    year: "2026",
+  },
+  {
     id: "lonkyclaw",
     title: {
       zh: "LonkyClaw",
