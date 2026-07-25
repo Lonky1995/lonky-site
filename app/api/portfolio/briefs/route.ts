@@ -24,7 +24,10 @@ type CalEvent = {
 type BriefData = {
   date: string;
   tickers: TickerBlock[];
+  intro: string;
   portfolioInsight: string; // 组合层面洞察原文
+  omittedNote: string;
+  blindSpot: string;
   events: CalEvent[]; // 从"下一步观察点"提取的日历事件
   raw: string;
 };
@@ -75,12 +78,20 @@ function parseSections(body: string): { title: string; body: string }[] {
     .map((match, index) => {
       const start = (match.index ?? 0) + match[0].length;
       const end = matches[index + 1]?.index ?? body.length;
+      const title = (match[1] ?? match[2] ?? "").trim();
+      let sectionBody = body
+        .slice(start, end)
+        .replace(/\n?---\s*$/, "")
+        .trim();
+
+      // 标的块结尾的「无增量标的」说明不属于“下一步观察点”。
+      if (title.includes("下一步观察点")) {
+        sectionBody = sectionBody.replace(/\n{2,}\([\s\S]*\)\s*$/, "").trim();
+      }
+
       return {
-        title: (match[1] ?? match[2] ?? "").trim(),
-        body: body
-          .slice(start, end)
-          .replace(/\n?---\s*$/, "")
-          .trim(),
+        title,
+        body: sectionBody,
       };
     })
     .filter((section) => section.title && section.body);
@@ -91,9 +102,18 @@ export function parseBrief(md: string, date: string): BriefData {
   const tickers: TickerBlock[] = [];
   const events: CalEvent[] = [];
 
+  const introMatch = md.match(/^>\s*(.+)$/m);
+  const intro = introMatch ? introMatch[1].trim() : "";
+
   // 组合层面洞察：从 "### 2. 组合层面洞察" 到下一个 "###"
   const insightMatch = md.match(/###\s*2\.\s*组合层面洞察([\s\S]*?)(?:\n###|\n##|$)/);
   const portfolioInsight = insightMatch ? insightMatch[1].trim() : "";
+  const omittedMatch = md.match(/\n(\([^]*?\))\n\n###\s*2\.\s*组合层面洞察/);
+  const omittedNote = omittedMatch ? omittedMatch[1].trim() : "";
+  const blindSpotMatch = md.match(
+    /^###\s*3\.\s*\*\*盲区提示\*\*[：:]\s*([^\n]+)/m,
+  );
+  const blindSpot = blindSpotMatch ? blindSpotMatch[1].trim() : "";
 
   // 标的标题兼容 #### [MSFT]、#### $MSFT 和 #### MSFT。
   const blockRe =
@@ -132,7 +152,16 @@ export function parseBrief(md: string, date: string): BriefData {
     })
     .sort((a, b) => a.date.localeCompare(b.date));
 
-  return { date, tickers, portfolioInsight, events: uniqEvents, raw: md };
+  return {
+    date,
+    tickers,
+    intro,
+    portfolioInsight,
+    omittedNote,
+    blindSpot,
+    events: uniqEvents,
+    raw: md,
+  };
 }
 
 export async function GET() {
