@@ -593,7 +593,7 @@ export default function PortfolioDashboard() {
         )}
       </div>
 
-      <div className="mt-12 pf-panel-title">动态简报</div>
+      <div className="mt-12 pf-panel-title">每日关注简报</div>
       <div className="mt-3">
         <BriefsPanel />
       </div>

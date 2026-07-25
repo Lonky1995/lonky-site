@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 
-// 仓位动态简报面板：读 /api/portfolio/briefs（Grok 每日简报），按标的卡片展示。
+// 每日关注简报：读取持仓动态目录中的最新简报，按标的卡片展示。
 
 type Section = { title: string; body: string };
 type TickerBlock = { symbol: string; impact: string; sections: Section[] };
@@ -21,10 +21,21 @@ const IMPACT_CLS: Record<string, string> = {
 };
 
 // 只展示有价值的字段（KB 字段常为空，过滤掉纯占位）
-const SHOW_FIELDS = ["🌐外部背景", "对 thesis 的影响", "价格/定位含义", "下一步观察点"];
+const SHOW_FIELDS = [
+  "关键事实",
+  "上下游 + 竞品",
+  "外部背景",
+  "对 thesis 的影响",
+  "价格/定位含义",
+  "下一步观察点",
+];
 
 function isEmptyField(body: string): boolean {
   return /^（.*不可达.*）$|^（.*无.*）$|^—$/.test(body.trim());
+}
+
+function plainText(markdown: string): string {
+  return markdown.replace(/\*\*/g, "").trim();
 }
 
 export default function BriefsPanel() {
@@ -59,7 +70,7 @@ export default function BriefsPanel() {
     <div className="space-y-6">
       {/* 日期 + 组合洞察 */}
       <div className="flex items-center justify-between font-mono text-xs uppercase tracking-widest text-muted">
-        <span className="text-accent">每日动态简报</span>
+        <span className="text-accent">每日关注简报</span>
         <span>{data?.date || "—"}</span>
       </div>
 
@@ -67,7 +78,7 @@ export default function BriefsPanel() {
         <div className="border-2 border-accent/30 bg-accent/[0.04] p-5">
           <div className="mb-3 font-mono text-xs uppercase tracking-widest text-accent">组合层面洞察</div>
           <div className="whitespace-pre-wrap text-sm leading-relaxed text-foreground/85">
-            {data.portfolioInsight}
+            {plainText(data.portfolioInsight)}
           </div>
         </div>
       )}
@@ -77,7 +88,9 @@ export default function BriefsPanel() {
         {tickers.map((t) => {
           const isOpen = expanded[t.symbol];
           const bg = t.sections.find((s) => s.title.includes("外部背景") && !isEmptyField(s.body));
-          const summary = bg?.body.slice(0, 90) ?? t.sections.find((s) => !isEmptyField(s.body))?.body.slice(0, 90) ?? "";
+          const summarySource =
+            bg?.body ?? t.sections.find((s) => !isEmptyField(s.body))?.body ?? "";
+          const summary = plainText(summarySource).slice(0, 90);
           return (
             <div key={t.symbol} className="border-2 border-border">
               <button
@@ -104,7 +117,9 @@ export default function BriefsPanel() {
                     .map((s) => (
                       <div key={s.title}>
                         <div className="mb-1 font-mono text-[11px] uppercase tracking-widest text-accent">{s.title}</div>
-                        <div className="whitespace-pre-wrap text-sm leading-relaxed text-foreground/85">{s.body}</div>
+                        <div className="whitespace-pre-wrap text-sm leading-relaxed text-foreground/85">
+                          {plainText(s.body)}
+                        </div>
                       </div>
                     ))}
                 </div>

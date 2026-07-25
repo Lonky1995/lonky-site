@@ -1,7 +1,8 @@
 import { NextResponse } from "next/server";
 
-// 仓位动态简报：从 My-vault（private）读 Grok 每天生成的简报 md，解析成结构化数据。
-// 数据路径：trading/持仓动态/持仓动态_YYYY-MM-DD.md
+// 持仓动态简报：从 My-vault（private）读取每日简报并解析成结构化数据。
+// 兼容历史的「持仓动态_YYYY-MM-DD.md」和当前的
+// 「X每日持仓动态简报 | YYYY-MM-DD.md」两种命名。
 
 const OWNER = "Lonky1995";
 const REPO = "My-vault";
@@ -28,6 +29,13 @@ type BriefData = {
   raw: string;
 };
 
+function briefDateFromName(name: string): string | null {
+  const match = name.match(
+    /^(?:持仓动态_|X?每日持仓动态简报\s*[|｜]\s*)(\d{4}-\d{2}-\d{2})\.md$/,
+  );
+  return match?.[1] ?? null;
+}
+
 // 把 "7/29" 结合简报年份补全为 YYYY-MM-DD。跨年处理：若月份 < 简报月份且差距大，视为次年。
 function toFullDate(mmdd: string, briefDate: string): string | null {
   const m = mmdd.match(/^(\d{1,2})\/(\d{1,2})$/);
@@ -49,8 +57,37 @@ async function ghFetch(path: string, token: string) {
   });
 }
 
-// 解析 Grok 简报 md → 结构化
-function parseBrief(md: string, date: string): BriefData {
+function parseSections(body: string): { title: string; body: string }[] {
+  // 兼容：
+  // - **字段名**：内容
+  // **字段名：**
+  // 内容
+  const fieldRe =
+    /^(?:-\s*)?\*\*(?:([^*\n]+?)\*\*\s*[：:]|([^*\n]+?)[：:]\*\*)\s*/gm;
+  const matches = Array.from(body.matchAll(fieldRe)).filter((match) => {
+    const title = (match[1] ?? match[2] ?? "").trim();
+    return /^(?:关键事实|上下游\s*\+\s*竞品|🌐?外部背景|KB\s*关联|来源|对\s*thesis\s*的影响|价格\/定位含义|下一步观察点)/i.test(
+      title,
+    );
+  });
+
+  return matches
+    .map((match, index) => {
+      const start = (match.index ?? 0) + match[0].length;
+      const end = matches[index + 1]?.index ?? body.length;
+      return {
+        title: (match[1] ?? match[2] ?? "").trim(),
+        body: body
+          .slice(start, end)
+          .replace(/\n?---\s*$/, "")
+          .trim(),
+      };
+    })
+    .filter((section) => section.title && section.body);
+}
+
+// 解析每日持仓动态 md → 结构化
+export function parseBrief(md: string, date: string): BriefData {
   const tickers: TickerBlock[] = [];
   const events: CalEvent[] = [];
 
@@ -58,20 +95,15 @@ function parseBrief(md: string, date: string): BriefData {
   const insightMatch = md.match(/###\s*2\.\s*组合层面洞察([\s\S]*?)(?:\n###|\n##|$)/);
   const portfolioInsight = insightMatch ? insightMatch[1].trim() : "";
 
-  // 每个标的块：#### [SYMBOL] | 影响等级：X ... 到下一个 #### 或 ###
-  const blockRe = /####\s*\[([^\]]+)\]\s*\|\s*影响等级：([^\n]+)\n([\s\S]*?)(?=\n####|\n###|$)/g;
+  // 标的标题兼容 #### [MSFT]、#### $MSFT 和 #### MSFT。
+  const blockRe =
+    /^####\s+(?:\[\$?([^\]]+)\]|\$?([A-Za-z0-9.-]+))\s*\|\s*影响等级[：:]\s*([^\n]+)\n([\s\S]*?)(?=^####\s|^###\s|(?![\s\S]))/gm;
   let m: RegExpExecArray | null;
   while ((m = blockRe.exec(md)) !== null) {
-    const symbol = m[1].trim();
-    const impact = m[2].trim();
-    const body = m[3];
-    // 拆子字段：- **字段名**：内容
-    const sections: { title: string; body: string }[] = [];
-    const fieldRe = /-\s*\*\*([^*]+)\*\*：([\s\S]*?)(?=\n-\s*\*\*|$)/g;
-    let f: RegExpExecArray | null;
-    while ((f = fieldRe.exec(body)) !== null) {
-      sections.push({ title: f[1].trim(), body: f[2].trim() });
-    }
+    const symbol = (m[1] ?? m[2]).trim();
+    const impact = m[3].trim();
+    const body = m[4];
+    const sections = parseSections(body);
     tickers.push({ symbol, impact, sections });
 
     // 从"下一步观察点"提取事件日期（M/D + 描述）
@@ -131,14 +163,16 @@ export async function GET() {
     }
     const files = (await dirRes.json()) as Array<{ name: string; path: string }>;
     const briefs = files
-      .filter((f) => /持仓动态_\d{4}-\d{2}-\d{2}\.md$/.test(f.name))
-      .sort((a, b) => b.name.localeCompare(a.name)); // 日期倒序
+      .map((file) => ({ ...file, date: briefDateFromName(file.name) }))
+      .filter(
+        (file): file is typeof file & { date: string } => file.date !== null,
+      )
+      .sort((a, b) => b.date.localeCompare(a.date));
     if (briefs.length === 0) {
       return NextResponse.json({ error: "无简报文件", tickers: [] }, { status: 404 });
     }
     const latest = briefs[0];
-    const dateMatch = latest.name.match(/(\d{4}-\d{2}-\d{2})/);
-    const date = dateMatch ? dateMatch[1] : "";
+    const date = latest.date;
 
     // 2. 读文件内容
     const fileRes = await ghFetch(latest.path, token);
@@ -151,7 +185,7 @@ export async function GET() {
     // 3. 解析
     const parsed = parseBrief(md, date);
     // 可用的近期日期列表（供前端切换）
-    const dates = briefs.slice(0, 14).map((f) => f.name.match(/(\d{4}-\d{2}-\d{2})/)?.[1]).filter(Boolean);
+    const dates = briefs.slice(0, 14).map((file) => file.date);
     return NextResponse.json({ ...parsed, availableDates: dates });
   } catch (err) {
     const msg = err instanceof Error ? err.message : "读取失败";
