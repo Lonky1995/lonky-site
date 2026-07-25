@@ -801,12 +801,12 @@ html.reveal-ready [data-reveal].is-visible {
   margin: 16px auto 0;
   width: var(--page-width);
   padding: 12px 18px;
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.12);
   border-radius: 999px;
-  background: rgba(9, 11, 17, 0.58);
+  background: rgba(9, 11, 17, 0.85);
   backdrop-filter: blur(28px);
   -webkit-backdrop-filter: blur(28px);
-  box-shadow: 0 16px 50px rgba(0, 0, 0, 0.24);
+  box-shadow: 0 16px 50px rgba(0, 0, 0, 0.35);
 }
 
 .apple-nav-mark {
