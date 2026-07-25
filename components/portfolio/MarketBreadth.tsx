@@ -35,8 +35,8 @@ function barColor(score: number): string {
 // 五因子数据口径与解读（hover 提示用）。口径来自 gateway/posture-snapshot 计算逻辑。
 const FACTOR_GUIDE: Record<string, { source: string; how: string }> = {
   trend: {
-    source: "SPY 相对 200 日均线的偏离幅度",
-    how: "在均线上方 = 长期多头趋势，越高越强",
+    source: "SPY 长期结构 40% + 短期动量 60%",
+    how: "短期动量由 5 日收益、20 日收益、相对 20 日均线等权合成",
   },
   credit: {
     source: "HYG / LQD 比值（高收益债 vs 投资级债）的历史百分位",
@@ -171,8 +171,10 @@ export default function MarketBreadth() {
                   <div key={f.key} className="group relative flex items-center gap-3">
                     {/* 标签（带下划虚线，提示可 hover） */}
                     <span
-                      className="w-12 shrink-0 cursor-help text-[13px] decoration-dotted underline-offset-4 group-hover:underline"
+                      aria-describedby={`${f.key}-guide`}
+                      className="w-12 shrink-0 cursor-help text-[13px] decoration-dotted underline-offset-4 focus:outline-none focus-visible:rounded focus-visible:ring-1 focus-visible:ring-white/40 group-hover:underline"
                       style={{ color: "rgba(245,247,251,0.7)" }}
+                      tabIndex={0}
                     >
                       {f.label}
                     </span>
@@ -184,9 +186,11 @@ export default function MarketBreadth() {
                       <div
                         className="h-full rounded-full"
                         style={{
-                          width: `${Math.max(0, Math.min(100, f.score))}%`,
+                          width: "100%",
+                          transform: `scaleX(${Math.max(0, Math.min(100, f.score)) / 100})`,
+                          transformOrigin: "left",
                           background: barColor(f.score),
-                          transition: "width 0.6s ease",
+                          transition: "transform 0.6s ease",
                         }}
                       />
                     </div>
@@ -201,7 +205,8 @@ export default function MarketBreadth() {
                     {/* hover 口径提示卡片 */}
                     {guide && (
                       <div
-                        className="pointer-events-none absolute left-0 top-full z-20 mt-1.5 w-64 rounded-xl p-3 text-xs leading-relaxed opacity-0 shadow-lg transition-opacity duration-150 group-hover:opacity-100"
+                        id={`${f.key}-guide`}
+                        className="pointer-events-none absolute left-0 top-full z-20 mt-1.5 w-64 rounded-xl p-3 text-xs leading-relaxed opacity-0 shadow-lg transition-opacity duration-150 group-focus-within:opacity-100 group-hover:opacity-100"
                         style={{
                           background: "rgba(9,11,17,0.96)",
                           border: "1px solid rgba(255,255,255,0.12)",
@@ -215,9 +220,13 @@ export default function MarketBreadth() {
                           <span style={{ color: "rgba(245,247,251,0.45)" }}>数据口径：</span>
                           {guide.source}
                         </div>
-                        <div>
+                        <div className="mb-1">
                           <span style={{ color: "rgba(245,247,251,0.45)" }}>怎么看：</span>
                           {guide.how}
+                        </div>
+                        <div>
+                          <span style={{ color: "rgba(245,247,251,0.45)" }}>当前：</span>
+                          {f.note}
                         </div>
                       </div>
                     )}
