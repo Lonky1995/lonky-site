@@ -36,6 +36,95 @@ export type PortfolioData = {
   cash?: number;
 };
 
+// 市场广度（由 gateway breadth-snapshot cron 生成，推送到 public/data/breadth.json）
+export type BreadthData = {
+  date: string; // 最新交易日 YYYY-MM-DD
+  universe: string; // 'SP100'
+  pctAbove200: number; // 站上 200 日线的成分股比例 0-100
+  pctAbove50: number; // 站上 50 日线的比例
+  advancers: number; // 当日上涨家数
+  decliners: number; // 当日下跌家数
+  adDiff: number; // advancers - decliners
+  breadthScore: number; // 0-100 合成广度分
+  updatedAt: number;
+};
+
+// 市场姿态因子
+export type PostureFactor = {
+  key: string; // trend / breadth / credit / vol / leadership
+  label: string; // 中文标签
+  score: number; // 0-100
+  raw: number; // 原始值（展示用）
+  note: string; // 一句话状态
+};
+
+// 姿态 7 天走势单点（总分 + 各因子）
+export type PostureHistoryPoint = {
+  date: string;
+  score: number;
+  trend: number;
+  credit: number;
+  vol: number;
+  leadership: number;
+  breadth: number;
+};
+
+// 市场姿态（由 gateway posture-snapshot cron 生成，推送到 public/data/posture.json）
+export type PostureData = {
+  date: string;
+  score: number; // 0-100 合成姿态分
+  verdict: string; // 积极 / 选择性 / 谨慎
+  factors: PostureFactor[];
+  updatedAt: number;
+  history?: PostureHistoryPoint[]; // 最近7天走势
+};
+
+// 跨资产锚点卡片
+export type AssetCard = {
+  key: string;
+  label: string;
+  group: string;
+  price: number;
+  changePct: number;
+  spark: number[]; // 最近7根收盘（旧→新）
+};
+
+// 跨资产（由 gateway cross-asset cron 生成，推送到 public/data/cross-asset.json）
+export type CrossAssetData = {
+  date: string;
+  summary: string; // 一句话市场总结
+  cards: AssetCard[];
+  updatedAt: number;
+};
+
+// 持仓拥挤度分量（COT净仓 / NAAIM / CTA复制动量）
+export type PositioningComponent = {
+  key: string;
+  label: string;
+  value: number | null;
+  percentile: number | null; // 0-100，多数分量是历史分位数；NAAIM 是固定阈值映射（见 windowPoints）
+  windowPoints: number; // 分位数窗口点数；0 表示该分量用固定阈值映射，非真实分位数
+  date: string;
+  source: "cftc" | "naaim" | "cta-model";
+};
+
+export type CtaEtf = {
+  symbol: string;
+  weight: number;
+  price: number;
+  ma50: number;
+  signal: "long" | "flat";
+};
+
+// 持仓与资金流（由 gateway positioning-weekly / positioning-cta-daily cron 生成，推送到 public/data/positioning.json）
+export type PositioningData = {
+  date: string;
+  crowding: number | null; // 0-100 拥挤度综合分（可用分量分位数简单平均）
+  components: PositioningComponent[];
+  cta: CtaEtf[];
+  updatedAt: number;
+};
+
 export const QUOTE_KIND: Record<string, "stock" | "crypto"> = {
   BTC: "crypto",
   ETH: "crypto",

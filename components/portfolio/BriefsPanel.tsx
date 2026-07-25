@@ -2,14 +2,17 @@
 
 import { useEffect, useMemo, useState } from "react";
 
-// 仓位动态简报面板：读 /api/portfolio/briefs（Grok 每日简报），按标的卡片展示。
+// 每日关注简报：读取持仓动态目录中的最新简报，按标的卡片展示。
 
 type Section = { title: string; body: string };
 type TickerBlock = { symbol: string; impact: string; sections: Section[] };
 type BriefData = {
   date: string;
   tickers: TickerBlock[];
+  intro?: string;
   portfolioInsight: string;
+  omittedNote?: string;
+  blindSpot?: string;
   availableDates?: string[];
   error?: string;
 };
@@ -26,7 +29,15 @@ function impactOf(impact: string) {
 }
 
 // 只展示有价值的字段（KB 字段常为空，过滤掉纯占位）
-const SHOW_FIELDS = ["🌐外部背景", "对 thesis 的影响", "价格/定位含义", "下一步观察点"];
+const SHOW_FIELDS = [
+  "关键事实",
+  "上下游 + 竞品",
+  "外部背景",
+  "来源",
+  "对 thesis 的影响",
+  "价格/定位含义",
+  "下一步观察点",
+];
 
 function isEmptyField(body: string): boolean {
   return /^（.*不可达.*）$|^（.*无.*）$|^—$/.test(body.trim());
@@ -36,7 +47,20 @@ function isEmptyField(body: string): boolean {
 function summaryOf(t: TickerBlock): string {
   const bg = t.sections.find((s) => s.title.includes("外部背景") && !isEmptyField(s.body));
   const fallback = t.sections.find((s) => !isEmptyField(s.body));
-  return (bg ?? fallback)?.body.trim() ?? "";
+  return plainText((bg ?? fallback)?.body ?? "");
+}
+
+function plainText(markdown: string): string {
+  return markdown.replace(/\*\*/g, "").trim();
+}
+
+function initialExpanded(tickers: TickerBlock[]): Record<string, boolean> {
+  const initial: Record<string, boolean> = {};
+  for (const ticker of tickers) {
+    if (ticker.impact === "高") initial[ticker.symbol] = true;
+  }
+  if (Object.keys(initial).length === 0 && tickers[0]) initial[tickers[0].symbol] = true;
+  return initial;
 }
 
 export default function BriefsPanel() {
@@ -47,7 +71,10 @@ export default function BriefsPanel() {
   useEffect(() => {
     fetch("/api/portfolio/briefs")
       .then((r) => r.json())
-      .then((d: BriefData) => setData(d))
+      .then((d: BriefData) => {
+        setData(d);
+        setExpanded(initialExpanded(d.tickers ?? []));
+      })
       .catch(() => setData({ date: "", tickers: [], portfolioInsight: "", error: "加载失败" }))
       .finally(() => setLoading(false));
   }, []);
@@ -57,13 +84,6 @@ export default function BriefsPanel() {
     const list = [...(data?.tickers ?? [])];
     list.sort((a, b) => impactOf(a.impact).rank - impactOf(b.impact).rank);
     return list;
-  }, [data]);
-
-  useEffect(() => {
-    if (!data?.tickers?.length) return;
-    const initial: Record<string, boolean> = {};
-    for (const t of data.tickers) if (t.impact === "高") initial[t.symbol] = true;
-    setExpanded(initial);
   }, [data]);
 
   const allOpen = tickers.length > 0 && tickers.every((t) => expanded[t.symbol]);
@@ -91,11 +111,12 @@ export default function BriefsPanel() {
       {/* ── 标题栏：日期 + 一键展开 ── */}
       <div className="flex items-center justify-between">
         <div className="flex items-baseline gap-3">
-          <span className="font-mono text-sm font-bold uppercase tracking-widest text-accent">每日动态简报</span>
+          <span className="font-mono text-sm font-bold uppercase tracking-widest text-accent">每日关注简报</span>
           <span className="font-mono text-xs text-muted">{data?.date || "—"}</span>
         </div>
         {tickers.length > 0 && (
           <button
+            type="button"
             onClick={toggleAll}
             className="font-mono text-[11px] uppercase tracking-widest text-muted transition-colors hover:text-foreground"
           >
@@ -104,77 +125,109 @@ export default function BriefsPanel() {
         )}
       </div>
 
-      {/* ── 组合层面洞察（置顶强化）── */}
-      {data?.portfolioInsight && (
-        <div className="relative overflow-hidden rounded-lg border-2 border-accent/40 bg-gradient-to-br from-accent/[0.08] to-transparent p-5">
-          <div className="mb-3 flex items-center gap-2">
-            <span className="flex h-6 w-6 items-center justify-center rounded-full bg-accent/20 text-sm">◆</span>
-            <span className="font-mono text-xs font-bold uppercase tracking-widest text-accent">组合层面洞察</span>
-          </div>
-          <div className="whitespace-pre-wrap text-[15px] leading-relaxed text-foreground/90">
-            {data.portfolioInsight}
-          </div>
+      {data?.intro && (
+        <div className="border border-border bg-foreground/[0.025] px-4 py-3 text-sm leading-relaxed text-foreground/70">
+          {plainText(data.intro)}
         </div>
       )}
 
-      {/* ── 按标的卡片 ── */}
-      <div className="space-y-2.5">
-        {tickers.map((t) => {
-          const isOpen = expanded[t.symbol];
-          const meta = impactOf(t.impact);
-          const summary = summaryOf(t);
-          const visibleSections = t.sections.filter(
-            (s) => SHOW_FIELDS.some((f) => s.title.includes(f.replace("🌐", ""))) && !isEmptyField(s.body),
-          );
-          return (
-            <div
-              key={t.symbol}
-              className={`overflow-hidden rounded-lg border-2 transition-colors ${
-                isOpen ? "border-accent/30" : "border-border"
-              }`}
-            >
-              <button
-                onClick={() => setExpanded((e) => ({ ...e, [t.symbol]: !e[t.symbol] }))}
-                className="flex w-full items-start gap-3 p-4 text-left transition-colors hover:bg-foreground/[0.02]"
-                aria-expanded={isOpen}
-              >
-                {/* 左侧影响色条 */}
-                <span className={`mt-1.5 h-2 w-2 shrink-0 rounded-full ${meta.dot}`} />
-                <div className="min-w-0 flex-1">
-                  <div className="flex items-center gap-2.5">
-                    <span className="font-mono text-base font-bold">{t.symbol}</span>
-                    <span className={`rounded border px-2 py-0.5 font-mono text-[11px] ${meta.cls}`}>
-                      影响 {t.impact}
-                    </span>
-                    <span className="ml-auto shrink-0 font-mono text-[11px] text-muted">
-                      {isOpen ? "收起 ↑" : "展开 ↓"}
-                    </span>
-                  </div>
-                  {!isOpen && summary && (
-                    <p className="mt-2 line-clamp-2 text-sm leading-relaxed text-foreground/70">{summary}</p>
-                  )}
-                </div>
-              </button>
+      {/* ── 组合层面洞察（置顶强化）── */}
+      {data?.portfolioInsight && (
+        <section
+          aria-labelledby="portfolio-insight-title"
+          className="relative overflow-hidden rounded-lg border-2 border-accent/40 bg-gradient-to-br from-accent/[0.08] to-transparent p-5"
+        >
+          <div className="mb-3 flex items-center gap-2">
+            <span className="flex h-6 w-6 items-center justify-center rounded-full bg-accent/20 text-sm">◆</span>
+            <h3 id="portfolio-insight-title" className="font-mono text-xs font-bold uppercase tracking-widest text-accent">
+              组合层面洞察
+            </h3>
+          </div>
+          <div className="whitespace-pre-wrap text-[15px] leading-relaxed text-foreground/90">
+            {plainText(data.portfolioInsight)}
+          </div>
+        </section>
+      )}
 
-              {isOpen && (
-                <div className="space-y-4 border-t-2 border-border/60 bg-foreground/[0.015] p-4">
-                  {visibleSections.map((s) => (
-                    <div key={s.title} className="border-l-2 border-accent/30 pl-3">
-                      <div className="mb-1 font-mono text-[11px] font-bold uppercase tracking-widest text-accent">
-                        {s.title}
-                      </div>
-                      <div className="whitespace-pre-wrap text-sm leading-relaxed text-foreground/85">{s.body}</div>
+      {/* ── 按标的卡片 ── */}
+      <section aria-labelledby="brief-core-title">
+        <h3 id="brief-core-title" className="mb-3 text-sm font-bold text-foreground">
+          核心增量 · 按影响排序
+        </h3>
+        <div className="space-y-2.5">
+          {tickers.map((t) => {
+            const isOpen = expanded[t.symbol];
+            const meta = impactOf(t.impact);
+            const summary = summaryOf(t);
+            const visibleSections = t.sections.filter(
+              (s) => SHOW_FIELDS.some((f) => s.title.includes(f.replace("🌐", ""))) && !isEmptyField(s.body),
+            );
+            return (
+              <div
+                key={t.symbol}
+                className={`overflow-hidden rounded-lg border-2 transition-colors ${
+                  isOpen ? "border-accent/30" : "border-border"
+                }`}
+              >
+                <button
+                  type="button"
+                  onClick={() => setExpanded((e) => ({ ...e, [t.symbol]: !e[t.symbol] }))}
+                  className="flex w-full items-start gap-3 p-4 text-left transition-colors hover:bg-foreground/[0.02]"
+                  aria-expanded={isOpen}
+                >
+                  {/* 左侧影响色条 */}
+                  <span className={`mt-1.5 h-2 w-2 shrink-0 rounded-full ${meta.dot}`} />
+                  <div className="min-w-0 flex-1">
+                    <div className="flex items-center gap-2.5">
+                      <span className="font-mono text-base font-bold">{t.symbol}</span>
+                      <span className={`rounded border px-2 py-0.5 font-mono text-[11px] ${meta.cls}`}>
+                        影响 {t.impact}
+                      </span>
+                      <span className="ml-auto shrink-0 font-mono text-[11px] text-muted">
+                        {isOpen ? "收起 ↑" : "展开 ↓"}
+                      </span>
                     </div>
-                  ))}
-                  {visibleSections.length === 0 && (
-                    <div className="font-mono text-xs text-muted">本条暂无更多细节。</div>
-                  )}
-                </div>
-              )}
-            </div>
-          );
-        })}
-      </div>
+                    {!isOpen && summary && (
+                      <p className="mt-2 line-clamp-2 text-sm leading-relaxed text-foreground/70">{summary}</p>
+                    )}
+                  </div>
+                </button>
+
+                {isOpen && (
+                  <div className="space-y-4 border-t-2 border-border/60 bg-foreground/[0.015] p-4">
+                    {visibleSections.map((s) => (
+                      <div key={s.title} className="border-l-2 border-accent/30 pl-3">
+                        <div className="mb-1 font-mono text-[11px] font-bold uppercase tracking-widest text-accent">
+                          {s.title}
+                        </div>
+                        <div className="whitespace-pre-wrap text-sm leading-relaxed text-foreground/85">
+                          {plainText(s.body)}
+                        </div>
+                      </div>
+                    ))}
+                    {visibleSections.length === 0 && (
+                      <div className="font-mono text-xs text-muted">本条暂无更多细节。</div>
+                    )}
+                  </div>
+                )}
+              </div>
+            );
+          })}
+        </div>
+      </section>
+
+      {data?.omittedNote && (
+        <p className="text-xs leading-relaxed text-muted">
+          {plainText(data.omittedNote)}
+        </p>
+      )}
+
+      {data?.blindSpot && (
+        <div className="border border-border px-4 py-3 text-sm leading-relaxed text-foreground/75">
+          <span className="font-semibold text-foreground">盲区提示：</span>
+          {plainText(data.blindSpot)}
+        </div>
+      )}
     </div>
   );
 }

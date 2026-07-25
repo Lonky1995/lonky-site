@@ -19,6 +19,10 @@ import ClosePositionModal from "./ClosePositionModal";
 import BriefsPanel from "./BriefsPanel";
 import JournalPanel from "./JournalPanel";
 import CalendarPanel from "./CalendarPanel";
+import MarketBreadth from "./MarketBreadth";
+import CrossAsset from "./CrossAsset";
+import Positioning from "./Positioning";
+import RiskPanel from "./RiskPanel";
 
 type Quote = { symbol: string; price: number; changesPercentage: number };
 
@@ -221,8 +225,8 @@ export default function PortfolioDashboard() {
       <header className="pf-header" data-reveal>
         <div className="pf-header-row">
           <div>
-            <p className="apple-eyebrow">组合追踪器</p>
-            <h1>Portfolio.</h1>
+            <p className="apple-eyebrow">美股监控台</p>
+            <h1>Monitor.</h1>
             <div className="pf-status">
               <span
                 className="pf-status-dot"
@@ -250,6 +254,35 @@ export default function PortfolioDashboard() {
           </button>
         </div>
       </header>
+
+      {/* ══ 区 1 · 市场层 ══ */}
+      <div
+        className="mt-10 flex items-baseline gap-3 border-t border-white/10 pt-6"
+        data-reveal
+      >
+        <span className="font-mono text-sm font-bold tracking-widest text-accent">01</span>
+        <span className="text-lg font-bold tracking-tight text-white">市场</span>
+        <span className="text-xs text-muted">姿态 · 跨资产 · 环境</span>
+      </div>
+
+      {/* ── 市场环境（姿态 + 7天走势），放最前：先看市场，再看组合 ── */}
+      <MarketBreadth />
+
+      {/* ── 跨资产锚点 + 一句话总结 ── */}
+      <CrossAsset />
+
+      {/* ── 持仓与资金流拥挤度（COT净仓 + NAAIM + CTA复制动量）── */}
+      <Positioning />
+
+      {/* ══ 区 2 · 组合层 ══ */}
+      <div
+        className="mt-14 flex items-baseline gap-3 border-t border-white/10 pt-6"
+        data-reveal
+      >
+        <span className="font-mono text-sm font-bold tracking-widest text-accent">02</span>
+        <span className="text-lg font-bold tracking-tight text-white">组合</span>
+        <span className="text-xs text-muted">资产 · 盈亏 · 净值</span>
+      </div>
 
       {/* ── 概览 KPI ── */}
       <div className="pf-kpi-grid" data-reveal>
@@ -323,6 +356,9 @@ export default function PortfolioDashboard() {
         ))}
       </div>
 
+      {/* ── 风险管理（组合热度 + 开仓助手） ── */}
+      <RiskPanel positions={positions} priceOf={priceOf} totalAssets={summary.totalAssets} />
+
       {/* ── 净值曲线 + 分布 ── */}
       <div className="pf-charts" data-reveal>
         <div ref={eqRef} className="pf-panel min-w-0">
@@ -381,8 +417,18 @@ export default function PortfolioDashboard() {
         </div>
       </div>
 
+      {/* ══ 区 3 · 持仓与信息 ══ */}
+      <div
+        className="mt-14 flex items-baseline gap-3 border-t border-white/10 pt-6"
+        data-reveal
+      >
+        <span className="font-mono text-sm font-bold tracking-widest text-accent">03</span>
+        <span className="text-lg font-bold tracking-tight text-white">持仓与信息</span>
+        <span className="text-xs text-muted">明细 · 关注 · 简报 · 日历</span>
+      </div>
+
       {/* ── 持仓卡片 ── */}
-      <div className="mt-12 pf-panel-title">持仓 · 点击展开</div>
+      <div className="pf-panel-title">持仓 · 点击展开</div>
       <div className="mt-3 space-y-3">
         {positions.map((p) => {
           const price = priceOf(p.symbol);
@@ -547,7 +593,7 @@ export default function PortfolioDashboard() {
         )}
       </div>
 
-      <div className="mt-12 pf-panel-title">动态简报</div>
+      <div className="mt-12 pf-panel-title">每日关注简报</div>
       <div className="mt-3">
         <BriefsPanel />
       </div>

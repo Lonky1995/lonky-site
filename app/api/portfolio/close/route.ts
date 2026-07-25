@@ -41,7 +41,7 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({
       ok: true,
       symbol: data.symbol,
-      closed: data.closed,      // true=全平；false=部分平仓
+      closed: data.closed, // true=全平；false=部分平仓
       remaining: data.remaining, // 部分平仓后剩余数量
     });
   } catch (err) {
