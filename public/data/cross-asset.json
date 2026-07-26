@@ -118,8 +118,8 @@
       "key": "btc",
       "label": "BTC",
       "group": "加密",
-      "price": 64418.19,
-      "changePct": 0.17,
+      "price": 64423.9,
+      "changePct": 0.18,
       "spark": [
         64681.78,
         65213.05,
@@ -131,5 +131,5 @@
       ]
     }
   ],
-  "updatedAt": 1785027884853
+  "updatedAt": 1785028065711
 }
