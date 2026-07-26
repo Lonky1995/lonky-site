@@ -1,6 +1,8 @@
 {
+  "schemaVersion": 1,
+  "methodologyVersion": "posture-v3-macro-action",
   "date": "2026-07-24",
-  "score": 66,
+  "score": 61,
   "verdict": "选择性",
   "factors": [
     {
@@ -8,101 +10,109 @@
       "label": "趋势",
       "score": 61,
       "raw": 5.8,
-      "note": "5日 -0.6% · 20日 +0.6% · 距20日线 -1.0%"
+      "note": "5日 -0.6% · 20日 +0.6% · 距20日线 -1.0%",
+      "inputs": {
+        "dev200": 0.05781650856848075,
+        "ret5": -0.005865812805230797,
+        "ret20": 0.006305324799128487,
+        "dev20": -0.009680320256033714,
+        "longScore": 83.90825428424037,
+        "momentumScore": 45.86884311276658
+      }
     },
     {
       "key": "credit",
       "label": "信用",
-      "score": 90,
-      "raw": 0.746,
-      "note": "信用偏松"
+      "score": 65,
+      "raw": 277,
+      "note": "利差低位 · 近期稳定",
+      "inputs": {
+        "source": "ICE BofA US High Yield OAS",
+        "valueBps": 277,
+        "change20Bps": -1,
+        "dataAsOf": "2026-07-23",
+        "zScore": -0.8561
+      }
     },
     {
       "key": "vol",
       "label": "波动",
-      "score": 31,
+      "score": 64,
       "raw": 18.58,
-      "note": "波动可控"
+      "note": "波动可控",
+      "inputs": {
+        "vix": 18.58,
+        "change5Pct": -0.010122535961641033
+      }
     },
     {
       "key": "leadership",
-      "label": "领导力",
-      "score": 77,
-      "raw": 2.7,
-      "note": "龙头带队"
+      "label": "参与结构",
+      "score": 54,
+      "raw": 0.2,
+      "note": "结构中性",
+      "inputs": {
+        "excessReturn20": 0.0022897165231854366,
+        "rspReturn20": 0.008595041322313923,
+        "spyReturn20": 0.006305324799128487
+      }
     },
     {
       "key": "breadth",
       "label": "广度",
       "score": 62,
       "raw": 60.2,
-      "note": "参与度尚可"
+      "note": "参与度尚可",
+      "inputs": {
+        "universe": "SP100",
+        "total": 98,
+        "pctAbove200": 60.2,
+        "pctAbove50": 59.2,
+        "advancers": 75,
+        "decliners": 23,
+        "adDiff": 52,
+        "missing": 0
+      }
+    },
+    {
+      "key": "liquidity",
+      "label": "美元流动性",
+      "score": 55,
+      "raw": 45,
+      "note": "中性 · 稳定 · 结构脆弱",
+      "inputs": {
+        "source": "DollarLiquidity DLI",
+        "percentile5y": 45,
+        "status": "neutral",
+        "momentum": "stable",
+        "confidence": "high",
+        "vulnerability": "elevated",
+        "buffer": 11.92,
+        "dataAsOf": "2026-07-24",
+        "indicators": 12,
+        "totalIndicators": 12
+      }
     }
   ],
-  "updatedAt": 1785028061101,
+  "weights": {
+    "trend": 0.2,
+    "breadth": 0.25,
+    "credit": 0.15,
+    "vol": 0.15,
+    "leadership": 0.15,
+    "liquidity": 0.1
+  },
+  "updatedAt": 1785030394573,
   "history": [
     {
-      "date": "2026-07-16",
-      "score": 70,
-      "trend": 69,
-      "credit": 89,
-      "vol": 56,
-      "leadership": 74,
-      "breadth": 62
-    },
-    {
-      "date": "2026-07-17",
-      "score": 66,
-      "trend": 62,
-      "credit": 88,
-      "vol": 28,
-      "leadership": 83,
-      "breadth": 62
-    },
-    {
-      "date": "2026-07-20",
-      "score": 66,
-      "trend": 62,
-      "credit": 90,
-      "vol": 29,
-      "leadership": 77,
-      "breadth": 62
-    },
-    {
-      "date": "2026-07-21",
-      "score": 72,
-      "trend": 67,
-      "credit": 90,
-      "vol": 50,
-      "leadership": 90,
-      "breadth": 62
-    },
-    {
-      "date": "2026-07-22",
-      "score": 72,
-      "trend": 67,
-      "credit": 90,
-      "vol": 58,
-      "leadership": 80,
-      "breadth": 62
-    },
-    {
-      "date": "2026-07-23",
-      "score": 60,
-      "trend": 59,
-      "credit": 90,
-      "vol": 29,
-      "leadership": 50,
-      "breadth": 62
-    },
-    {
       "date": "2026-07-24",
-      "score": 66,
+      "score": 61,
       "trend": 61,
-      "credit": 90,
-      "vol": 31,
-      "leadership": 77,
-      "breadth": 62
+      "credit": 65,
+      "vol": 64,
+      "leadership": 54,
+      "breadth": 62,
+      "liquidity": 55
     }
   ]
 }
