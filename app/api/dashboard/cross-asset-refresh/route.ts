@@ -5,7 +5,7 @@ import { NextResponse } from "next/server";
 
 const GATEWAY_URL = process.env.LONKYCLAW_GATEWAY_URL; // 例如 http://<VPS_IP>:18800
 const JOBS_RUN_TOKEN = process.env.JOBS_RUN_TOKEN;
-const JOB_NAME = "breadth-snapshot-daily"; // 含完整跨资产总结（LLM研判），同时刷新 breadth/posture
+const JOB_NAME = "cross-asset-manual-review"; // 刷新 breadth/posture/cross-asset，并由 CoachAgent 生成当前研判
 const COOLDOWN_MS = 60_000; // 60 秒内只允许触发一次，防误触/滥用
 
 let lastTriggeredAt = 0;
