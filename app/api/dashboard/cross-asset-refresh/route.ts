@@ -25,7 +25,7 @@ export async function POST() {
   try {
     const res = await fetch(
       `${GATEWAY_URL}/api/jobs/run/${JOB_NAME}?token=${encodeURIComponent(JOBS_RUN_TOKEN)}`,
-      { method: "GET", signal: AbortSignal.timeout(60_000) },
+      { method: "GET", signal: AbortSignal.timeout(180_000) },
     );
     const body = await res.json().catch(() => ({}));
     if (!res.ok) {
