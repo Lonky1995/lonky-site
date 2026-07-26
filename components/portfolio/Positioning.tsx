@@ -85,7 +85,7 @@ function ComponentRow({ c }: { c: PositioningComponent }) {
       <span className="w-24 shrink-0 text-right text-xs" style={{ color: "rgba(245,247,251,0.5)" }}>
         {c.percentile != null ? `${naaimNote ? "阈值" : "3年"} ${c.percentile}%` : "—"}
       </span>
-      <span className="w-20 shrink-0 text-right text-xs" style={{ color: "rgba(245,247,251,0.35)" }}>
+      <span className="hidden w-20 shrink-0 text-right text-xs sm:inline" style={{ color: "rgba(245,247,251,0.35)" }}>
         {fmtDate(c.date)}
       </span>
     </div>
