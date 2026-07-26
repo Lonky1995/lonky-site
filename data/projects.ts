@@ -47,6 +47,23 @@ export const projects: Project[] = [
     year: "2026",
   },
   {
+    id: "x-radar",
+    title: {
+      zh: "X 情报雷达",
+      en: "X Intelligence Radar",
+    },
+    description: {
+      zh: "AI 每天从近 48 小时的 X 关注流里筛选重大事件、独到观点和热门讨论，滤掉噪音，只留下值得关注的信号。",
+      en: "An AI-curated radar that scans the last 48 hours of my X feed for major events, original insights, and emerging discussions—filtering out noise to surface the signals that matter.",
+    },
+    category: "AI",
+    techStack: ["Next.js", "OpenClaw", "Python", "X API"],
+    link: "/dashboard/radar",
+    featured: true,
+    status: "live",
+    year: "2026",
+  },
+  {
     id: "market-monitor",
     title: {
       zh: "美股监控台",
