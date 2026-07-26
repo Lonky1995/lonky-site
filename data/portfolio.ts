@@ -51,7 +51,7 @@ export type BreadthData = {
 
 // 市场姿态因子
 export type PostureFactor = {
-  key: string; // trend / breadth / credit / vol / leadership
+  key: string; // trend / breadth / credit / vol / leadership / liquidity
   label: string; // 中文标签
   score: number; // 0-100
   raw: number; // 原始值（展示用）
@@ -67,13 +67,15 @@ export type PostureHistoryPoint = {
   vol: number;
   leadership: number;
   breadth: number;
+  liquidity: number;
 };
 
 // 市场姿态（由 gateway posture-snapshot cron 生成，推送到 public/data/posture.json）
 export type PostureData = {
+  methodologyVersion?: string;
   date: string;
   score: number; // 0-100 合成姿态分
-  verdict: string; // 积极 / 选择性 / 谨慎
+  verdict: string; // 积极 / 选择性 / 谨慎 / 防守
   factors: PostureFactor[];
   updatedAt: number;
   history?: PostureHistoryPoint[]; // 最近7天走势

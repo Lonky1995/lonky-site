@@ -5,18 +5,19 @@ import { Area, AreaChart, ResponsiveContainer, Tooltip, YAxis } from "recharts";
 import type { PostureData } from "@/data/portfolio";
 
 // 市场环境卡片：读 /data/posture.json（gateway cron 收盘后推送）。
-// 顶部姿态总分 + 五因子横向进度条平铺 + 最近7天总分走势曲线。
+// 顶部姿态总分 + 六因子横向进度条平铺 + 最近7天真实快照走势。
 
 function verdictTone(score: number): "gain" | "loss" | "neutral" {
   if (score >= 70) return "gain";
-  if (score >= 50) return "neutral";
+  if (score >= 40) return "neutral";
   return "loss";
 }
 
 function verdictNote(score: number): string {
   if (score >= 70) return "多数因子健康，可积极。";
-  if (score >= 50) return "有支撑但需选择，追高谨慎。";
-  return "多数因子走弱，宜收手观望。";
+  if (score >= 55) return "有支撑但需选择，追高谨慎。";
+  if (score >= 40) return "支撑与风险交织，控制仓位。";
+  return "多数因子走弱，宜防守观望。";
 }
 
 function toneColor(tone: "gain" | "loss" | "neutral"): string {
@@ -32,27 +33,31 @@ function barColor(score: number): string {
   return "var(--loss)";
 }
 
-// 五因子数据口径与解读（hover 提示用）。口径来自 gateway/posture-snapshot 计算逻辑。
+// 六因子数据口径与解读（hover 提示用）。口径来自 gateway/posture-snapshot 计算逻辑。
 const FACTOR_GUIDE: Record<string, { source: string; how: string }> = {
   trend: {
     source: "SPY 长期结构 40% + 短期动量 60%",
     how: "短期动量由 5 日收益、20 日收益、相对 20 日均线等权合成",
   },
   credit: {
-    source: "HYG / LQD 比值（高收益债 vs 投资级债）的历史百分位",
-    how: "比值越高 = 信用越松、风险偏好越强",
+    source: "美国高收益债 OAS 绝对水平 + 20 日变化",
+    how: "利差越低、且没有快速走阔，信用环境越有利",
   },
   vol: {
-    source: "VIX 恐慌指数的历史百分位（反向）",
-    how: "VIX 越低 = 波动越可控，得分越高",
+    source: "VIX 绝对风险区间 + 5 日变化",
+    how: "同时判断波动所处区间与近期是否快速升温",
   },
   leadership: {
-    source: "Mag7 龙头篮子相对 SPY 的 20 日超额收益",
-    how: "超额为正 = 龙头带队上涨，市场结构健康",
+    source: "标普等权指数 RSP 相对 SPY 的 20 日超额收益",
+    how: "等权跑赢代表上涨扩散；明显落后代表行情集中",
   },
   breadth: {
     source: "上涨股票占比等市场广度指标",
     how: "越高 = 参与度越广，涨势不只靠少数龙头",
+  },
+  liquidity: {
+    source: "DollarLiquidity DLI 五年分位",
+    how: "原始分位越高代表美元流动性越紧，姿态分反向计分",
   },
 };
 
@@ -78,6 +83,8 @@ export default function MarketBreadth() {
     t: h.date.slice(5), // MM-DD
     v: h.score,
   }));
+  const factorCount = ["零", "一", "二", "三", "四", "五", "六"][p?.factors.length ?? 0]
+    ?? String(p?.factors.length ?? 0);
 
   return (
     <>
@@ -87,7 +94,7 @@ export default function MarketBreadth() {
         </p>
         {p && (
           <span className="text-xs" style={{ color: "rgba(245,247,251,0.5)" }}>
-            五因子 · {p.date}
+            {factorCount}因子 · {p.date}
           </span>
         )}
       </div>
@@ -163,7 +170,7 @@ export default function MarketBreadth() {
               )}
             </div>
 
-            {/* 五因子：横向进度条平铺 */}
+            {/* 六因子：两行三列平铺 */}
             <div className="grid gap-x-8 gap-y-3 border-t border-white/10 pt-4 sm:grid-cols-2 lg:grid-cols-3">
               {p.factors.map((f) => {
                 const guide = FACTOR_GUIDE[f.key];
@@ -172,7 +179,7 @@ export default function MarketBreadth() {
                     {/* 标签（带下划虚线，提示可 hover） */}
                     <span
                       aria-describedby={`${f.key}-guide`}
-                      className="w-12 shrink-0 cursor-help text-[13px] decoration-dotted underline-offset-4 focus:outline-none focus-visible:rounded focus-visible:ring-1 focus-visible:ring-white/40 group-hover:underline"
+                      className="w-[5.5rem] shrink-0 cursor-help text-[13px] decoration-dotted underline-offset-4 focus:outline-none focus-visible:rounded focus-visible:ring-1 focus-visible:ring-white/40 group-hover:underline"
                       style={{ color: "rgba(245,247,251,0.7)" }}
                       tabIndex={0}
                     >
