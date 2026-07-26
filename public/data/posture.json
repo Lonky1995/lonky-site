@@ -34,30 +34,30 @@
     {
       "key": "breadth",
       "label": "广度",
-      "score": 64,
-      "raw": 63.1,
+      "score": 62,
+      "raw": 60.2,
       "note": "参与度尚可"
     }
   ],
-  "updatedAt": 1784993645046,
+  "updatedAt": 1785027880315,
   "history": [
     {
       "date": "2026-07-16",
-      "score": 71,
+      "score": 70,
       "trend": 69,
       "credit": 89,
       "vol": 56,
       "leadership": 74,
-      "breadth": 64
+      "breadth": 62
     },
     {
       "date": "2026-07-17",
-      "score": 67,
+      "score": 66,
       "trend": 62,
       "credit": 88,
       "vol": 28,
       "leadership": 83,
-      "breadth": 64
+      "breadth": 62
     },
     {
       "date": "2026-07-20",
@@ -66,16 +66,16 @@
       "credit": 90,
       "vol": 29,
       "leadership": 77,
-      "breadth": 64
+      "breadth": 62
     },
     {
       "date": "2026-07-21",
-      "score": 73,
+      "score": 72,
       "trend": 67,
       "credit": 90,
       "vol": 50,
       "leadership": 90,
-      "breadth": 64
+      "breadth": 62
     },
     {
       "date": "2026-07-22",
@@ -84,7 +84,7 @@
       "credit": 90,
       "vol": 58,
       "leadership": 80,
-      "breadth": 64
+      "breadth": 62
     },
     {
       "date": "2026-07-23",
@@ -93,7 +93,7 @@
       "credit": 90,
       "vol": 29,
       "leadership": 50,
-      "breadth": 64
+      "breadth": 62
     },
     {
       "date": "2026-07-24",
@@ -102,7 +102,7 @@
       "credit": 90,
       "vol": 31,
       "leadership": 77,
-      "breadth": 64
+      "breadth": 62
     }
   ]
 }
