@@ -2,7 +2,7 @@
   "date": "2026-07-26",
   "summary": "⚠️ 研判生成失败，请查看下方跨资产行情。",
   "summaryPhase": "manual",
-  "summaryUpdatedAt": 1785040189414,
+  "summaryUpdatedAt": 1785040590374,
   "cards": [
     {
       "key": "spy",
@@ -120,8 +120,8 @@
       "key": "btc",
       "label": "BTC",
       "group": "加密",
-      "price": 64486.5,
-      "changePct": 0.27,
+      "price": 64487.97,
+      "changePct": 0.28,
       "spark": [
         65213.05,
         66516.18,
@@ -129,9 +129,9 @@
         65051.23,
         64083.32,
         64295.61,
-        64438.94141
+        64489.58
       ]
     }
   ],
-  "updatedAt": 1785040189414
+  "updatedAt": 1785040590374
 }
