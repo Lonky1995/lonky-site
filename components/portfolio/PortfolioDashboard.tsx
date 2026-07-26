@@ -23,6 +23,7 @@ import MarketBreadth from "./MarketBreadth";
 import CrossAsset from "./CrossAsset";
 import Positioning from "./Positioning";
 import RiskPanel from "./RiskPanel";
+import WatchlistPanel from "./WatchlistPanel";
 
 type Quote = { symbol: string; price: number; changesPercentage: number };
 
@@ -294,7 +295,7 @@ export default function PortfolioDashboard() {
             value: totalPnl === null ? "—" : `${totalPnl >= 0 ? "+" : ""}${totalPnl.toFixed(1)}%`,
             accent: totalPnl,
           },
-          { label: "本周需关注", value: String(needAttention) },
+          { label: "本周检查项", value: String(needAttention) },
         ].map((s) => (
           <div key={s.label} className="pf-kpi">
             <div className="pf-kpi-label">{s.label}</div>
@@ -426,6 +427,8 @@ export default function PortfolioDashboard() {
         <span className="text-lg font-bold tracking-tight text-white">持仓与信息</span>
         <span className="text-xs text-muted">明细 · 关注 · 简报 · 日历</span>
       </div>
+
+      <WatchlistPanel />
 
       {/* ── 持仓卡片 ── */}
       <div className="pf-panel-title">持仓 · 点击展开</div>
@@ -569,8 +572,8 @@ export default function PortfolioDashboard() {
         })}
       </div>
 
-      {/* ── 本周关注清单 ── */}
-      <div className="mt-12 pf-panel-title">本周关注清单</div>
+      {/* ── Coach 每周复盘生成的检查项，不等同于用户全局 Watchlist ── */}
+      <div className="mt-12 pf-panel-title">Coach 本周检查项</div>
       <div className="pf-panel mt-3" style={{ padding: 0 }}>
         {(data?.watchlist ?? []).map((w, i) => {
           const m = WATCH_META[w.type];
@@ -588,7 +591,7 @@ export default function PortfolioDashboard() {
         })}
         {(data?.watchlist ?? []).length === 0 && (
           <div className="p-4 text-sm" style={{ color: "rgba(245,247,251,0.5)" }}>
-            暂无关注清单，每周日晚 coach 会生成。
+            暂无检查项，每周日晚 Coach 会根据持仓生成。
           </div>
         )}
       </div>

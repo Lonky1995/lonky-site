@@ -1542,6 +1542,373 @@ html.reveal-ready [data-reveal].is-visible {
   font-size: 0.72rem;
 }
 
+/* Global watchlist: compact operating surface inside Portfolio */
+.pf-watch {
+  margin: 28px 0 32px;
+  border-block: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(255, 255, 255, 0.025);
+}
+
+.pf-watch-heading {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 24px;
+  padding: 24px 0 18px;
+}
+
+.pf-watch-heading h2 {
+  margin: 0;
+  color: #fff;
+  font-size: clamp(1.25rem, 2vw, 1.6rem);
+  font-weight: 700;
+  letter-spacing: -0.025em;
+}
+
+.pf-watch-heading p {
+  margin: 7px 0 0;
+  color: rgba(245, 247, 251, 0.58);
+  font-size: 0.82rem;
+}
+
+.pf-watch-count {
+  min-width: 24px;
+  padding: 2px 7px;
+  border-radius: 999px;
+  background: rgba(168, 180, 255, 0.14);
+  color: #d7dcff;
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-align: center;
+}
+
+.pf-watch-summary {
+  display: flex;
+  gap: 22px;
+  padding: 0 0 18px;
+  color: rgba(245, 247, 251, 0.5);
+  font-size: 0.75rem;
+}
+
+.pf-watch-summary b {
+  margin-right: 3px;
+  color: rgba(245, 247, 251, 0.9);
+  font-size: 0.9rem;
+}
+
+.pf-watch-editor {
+  padding: 18px;
+  border: 1px solid rgba(168, 180, 255, 0.24);
+  border-radius: 16px;
+  background: rgba(168, 180, 255, 0.055);
+}
+
+.pf-watch-editor-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.pf-watch-editor-bar > div {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.pf-watch-editor-bar strong {
+  color: #fff;
+  font-size: 0.9rem;
+}
+
+.pf-watch-editor-bar span,
+.pf-watch-passcode > span,
+.pf-watch-form label > span {
+  color: rgba(245, 247, 251, 0.55);
+  font-size: 0.72rem;
+}
+
+.pf-watch-passcode {
+  display: grid;
+  grid-template-columns: 120px minmax(180px, 320px);
+  align-items: center;
+  gap: 12px;
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.pf-watch input,
+.pf-watch select {
+  min-height: 42px;
+  width: 100%;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 10px;
+  background: rgba(4, 5, 7, 0.7);
+  padding: 9px 11px;
+  color: #f5f7fb;
+  font: inherit;
+  font-size: 0.84rem;
+  outline: none;
+}
+
+.pf-watch input::placeholder {
+  color: rgba(245, 247, 251, 0.34);
+}
+
+.pf-watch input:focus-visible,
+.pf-watch select:focus-visible,
+.pf-watch button:focus-visible {
+  outline: 2px solid #a8b4ff;
+  outline-offset: 2px;
+}
+
+.pf-watch input:disabled {
+  color: rgba(245, 247, 251, 0.58);
+  cursor: not-allowed;
+}
+
+.pf-watch-form {
+  margin-top: 12px;
+  padding: 18px;
+  border-radius: 16px;
+  background: rgba(4, 5, 7, 0.62);
+}
+
+.pf-watch-form-grid {
+  display: grid;
+  grid-template-columns: minmax(120px, 0.7fr) minmax(180px, 1fr);
+  gap: 14px;
+}
+
+.pf-watch-form label {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+
+.pf-watch-form-wide {
+  grid-column: 1 / -1;
+}
+
+.pf-watch-form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 16px;
+}
+
+.pf-watch-feedback {
+  min-height: 20px;
+  padding: 10px 0 6px;
+  color: rgba(245, 247, 251, 0.5);
+  font-size: 0.78rem;
+}
+
+.pf-watch-error {
+  color: #ffb4ab;
+}
+
+.pf-watch-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 7px;
+  padding: 24px 0 28px;
+  color: rgba(245, 247, 251, 0.58);
+  font-size: 0.82rem;
+}
+
+.pf-watch-empty strong {
+  color: rgba(245, 247, 251, 0.9);
+  font-size: 1rem;
+}
+
+.pf-watch-empty .primary-button {
+  margin-top: 8px;
+}
+
+.pf-watch-list {
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.pf-watch-row {
+  display: grid;
+  grid-template-columns: minmax(150px, 0.75fr) 72px minmax(240px, 1.6fr) auto;
+  align-items: center;
+  gap: 18px;
+  min-height: 76px;
+  padding: 14px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.075);
+}
+
+.pf-watch-row:last-child {
+  border-bottom: 0;
+}
+
+.pf-watch-symbol {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.pf-watch-symbol strong {
+  color: #fff;
+  font-family: var(--font-jetbrains-mono), monospace;
+  font-size: 1rem;
+  letter-spacing: -0.02em;
+}
+
+.pf-watch-symbol span {
+  overflow: hidden;
+  color: rgba(245, 247, 251, 0.48);
+  font-size: 0.72rem;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.pf-watch-priority {
+  width: max-content;
+  padding: 4px 8px;
+  border-radius: 999px;
+  font-size: 0.7rem;
+  font-weight: 700;
+}
+
+.pf-watch-priority-core {
+  background: rgba(168, 180, 255, 0.16);
+  color: #d7dcff;
+}
+
+.pf-watch-priority-normal {
+  background: rgba(255, 255, 255, 0.08);
+  color: rgba(245, 247, 251, 0.75);
+}
+
+.pf-watch-priority-idea {
+  background: rgba(251, 191, 36, 0.1);
+  color: #f8d47a;
+}
+
+.pf-watch-context {
+  min-width: 0;
+  color: rgba(245, 247, 251, 0.68);
+  font-size: 0.8rem;
+  line-height: 1.45;
+}
+
+.pf-watch-context > span {
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.pf-watch-context > div {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  margin-top: 7px;
+}
+
+.pf-watch-context > div span {
+  padding: 2px 7px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 999px;
+  color: rgba(245, 247, 251, 0.58);
+  font-size: 0.68rem;
+}
+
+.pf-watch-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.pf-watch-actions button {
+  min-height: 32px;
+  color: rgba(245, 247, 251, 0.65);
+  font-size: 0.75rem;
+  transition: color 160ms ease-out;
+}
+
+.pf-watch-actions button:hover {
+  color: #fff;
+}
+
+.pf-watch-actions button.danger:hover {
+  color: #ffb4ab;
+}
+
+.pf-watch-actions button:disabled,
+.pf-watch button:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+@media (max-width: 760px) {
+  .pf-watch,
+  .pf-watch-heading,
+  .pf-watch-editor,
+  .pf-watch-form,
+  .pf-watch-row,
+  .pf-watch-heading > div {
+    min-width: 0;
+    max-width: 100%;
+  }
+
+  .pf-watch-heading {
+    align-items: center;
+    flex-wrap: wrap;
+  }
+
+  .pf-watch-heading p {
+    max-width: 28ch;
+  }
+
+  .pf-watch-summary {
+    gap: 14px;
+  }
+
+  .pf-watch-editor-bar {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .pf-watch-passcode,
+  .pf-watch-form-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .pf-watch-form-wide {
+    grid-column: auto;
+  }
+
+  .pf-watch-row {
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 8px 14px;
+    padding: 15px 0;
+  }
+
+  .pf-watch-priority {
+    justify-self: end;
+  }
+
+  .pf-watch-context {
+    grid-column: 1 / -1;
+  }
+
+  .pf-watch-context > span {
+    white-space: normal;
+  }
+
+  .pf-watch-actions {
+    grid-column: 1 / -1;
+    justify-content: flex-end;
+    padding-top: 4px;
+  }
+}
+
 /* Blog / content pages: keep readable on gradient */
 .prose-custom {
   color: #1d1d1f;
