@@ -4,10 +4,10 @@
   "total": 98,
   "pctAbove200": 65.3,
   "pctAbove50": 62.2,
-  "advancers": 77,
-  "decliners": 20,
-  "adDiff": 57,
-  "breadthScore": 67,
+  "advancers": 70,
+  "decliners": 28,
+  "adDiff": 42,
+  "breadthScore": 65,
   "missing": 0,
-  "updatedAt": 1785159613038
+  "updatedAt": 1785168060489
 }
