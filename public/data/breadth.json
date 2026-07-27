@@ -2,12 +2,12 @@
   "date": "2026-07-27",
   "universe": "SP100",
   "total": 98,
-  "pctAbove200": 65.3,
-  "pctAbove50": 62.2,
-  "advancers": 70,
-  "decliners": 28,
-  "adDiff": 42,
-  "breadthScore": 65,
+  "pctAbove200": 63.3,
+  "pctAbove50": 63.3,
+  "advancers": 67,
+  "decliners": 31,
+  "adDiff": 36,
+  "breadthScore": 64,
   "missing": 0,
-  "updatedAt": 1785168060489
+  "updatedAt": 1785168451412
 }
