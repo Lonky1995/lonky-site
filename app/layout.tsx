@@ -5,8 +5,8 @@ import {
   Instrument_Sans,
   Plus_Jakarta_Sans,
   JetBrains_Mono,
-  Noto_Serif_SC,
 } from "next/font/google";
+import localFont from "next/font/local";
 import { LocaleProvider } from "@/components/locale-provider";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
@@ -28,9 +28,14 @@ const plusJakartaSans = Plus_Jakarta_Sans({
   weight: ["400", "500", "600", "700", "800"],
 });
 
-const notoSerifSC = Noto_Serif_SC({
+const notoSerifSC = localFont({
   variable: "--font-noto-serif-sc",
-  weight: ["400", "500", "700"],
+  src: [
+    { path: "../public/fonts/noto-serif-sc-400.woff2", weight: "400", style: "normal" },
+    { path: "../public/fonts/noto-serif-sc-500.woff2", weight: "500", style: "normal" },
+    { path: "../public/fonts/noto-serif-sc-700.woff2", weight: "700", style: "normal" },
+  ],
+  display: "swap",
 });
 
 const jetbrainsMono = JetBrains_Mono({
