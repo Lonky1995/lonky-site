@@ -1,23 +1,23 @@
 {
   "schemaVersion": 1,
   "methodologyVersion": "posture-v3-macro-action",
-  "date": "2026-07-27",
-  "score": 64,
+  "date": "2026-07-28",
+  "score": 66,
   "verdict": "选择性",
   "factors": [
     {
       "key": "trend",
       "label": "趋势",
-      "score": 62,
-      "raw": 5.8,
-      "note": "5日 -0.4% · 20日 +1.4% · 距20日线 -1.0%",
+      "score": 59,
+      "raw": 5.7,
+      "note": "5日 -1.2% · 20日 -0.3% · 距20日线 -1.0%",
       "inputs": {
-        "dev200": 0.05751592286968843,
-        "ret5": -0.004042636337910466,
-        "ret20": 0.013854785388002666,
-        "dev20": -0.010135831933763662,
-        "longScore": 83.75796143484422,
-        "momentumScore": 47.582974807442405
+        "dev200": 0.05688894228156416,
+        "ret5": -0.012401774736729543,
+        "ret20": -0.0026990553306343035,
+        "dev20": -0.010123794802279429,
+        "longScore": 83.44447114078207,
+        "momentumScore": 42.04163426522462
       }
     },
     {
@@ -48,29 +48,29 @@
     {
       "key": "leadership",
       "label": "参与结构",
-      "score": 66,
-      "raw": 0.9,
+      "score": 78,
+      "raw": 1.7,
       "note": "等权指数扩散",
       "inputs": {
-        "excessReturn20": 0.009301507703148415,
-        "rspReturn20": 0.02315629309115108,
-        "spyReturn20": 0.013854785388002666
+        "excessReturn20": 0.016951108839200257,
+        "rspReturn20": 0.014252053508565954,
+        "spyReturn20": -0.0026990553306343035
       }
     },
     {
       "key": "breadth",
       "label": "广度",
-      "score": 66,
-      "raw": 66.3,
+      "score": 69,
+      "raw": 68.4,
       "note": "参与度尚可",
       "inputs": {
         "universe": "SP100",
         "total": 98,
-        "pctAbove200": 66.3,
-        "pctAbove50": 63.3,
-        "advancers": 69,
-        "decliners": 29,
-        "adDiff": 40,
+        "pctAbove200": 68.4,
+        "pctAbove50": 65.3,
+        "advancers": 78,
+        "decliners": 20,
+        "adDiff": 58,
         "missing": 0
       }
     },
@@ -102,7 +102,7 @@
     "leadership": 0.15,
     "liquidity": 0.1
   },
-  "updatedAt": 1785202624801,
+  "updatedAt": 1785246014329,
   "history": [
     {
       "date": "2026-07-24",
@@ -122,6 +122,16 @@
       "vol": 63,
       "leadership": 66,
       "breadth": 66,
+      "liquidity": 55
+    },
+    {
+      "date": "2026-07-28",
+      "score": 66,
+      "trend": 59,
+      "credit": 66,
+      "vol": 63,
+      "leadership": 78,
+      "breadth": 69,
       "liquidity": 55
     }
   ]
