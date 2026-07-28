@@ -1,11 +1,31 @@
 {
-  "generatedAt": "2026-07-27T16:01:11.319Z",
+  "generatedAt": "2026-07-28T16:00:47.381Z",
   "windowHours": 48,
   "candidateCount": 1183,
   "headlines": [
     {
-      "headline": "英伟达洽谈为OpenAI俄亥俄州数据中心提供2500亿美元融资担保，项目总规模或达5000亿",
-      "why": "史上最大单笔AI基础设施融资，英伟达从芯片卖家变身金融担保方，重塑AI产业链权力结构",
+      "headline": "中国据报已开始生产国产DUV光刻机并将交付中芯、华虹、长鑫，引发ASML等半导体股暴跌",
+      "why": "若属实，这是半导体供应链格局的重大转折点，直接冲击西方芯片设备垄断地位；即便是小作文，市场已用脚投票——ASML单日跌超8%",
+      "author": "AB Kuai.Dong",
+      "handle": "_forab",
+      "url": "https://x.com/_FORAB/status/2081736154806911079",
+      "likes": 321,
+      "views": 208127,
+      "postedAt": "2026-07-27 21:39:10"
+    },
+    {
+      "headline": "中国存储芯片厂长鑫科技（CXMT）A股上市首日暴涨近470%，市值突破4870亿美元",
+      "why": "国产DRAM龙头上市即成A股市值第一，同步引发SK海力士、美光等全球存储股崩跌，标志中国存储产业进入资本市场主战场",
+      "author": "Serenity",
+      "handle": "aleabitoreddit",
+      "url": "https://x.com/aleabitoreddit/status/2081579593815978273",
+      "likes": 2090,
+      "views": 675125,
+      "postedAt": "2026-07-27 11:17:03"
+    },
+    {
+      "headline": "英伟达据报正洽谈为OpenAI俄亥俄州数据中心提供2500亿美元融资担保，总项目规模或达5000亿",
+      "why": "英伟达从卖芯片转向替客户融资担保，商业模式突变引发债市CDS飙升至历史新高，市场开始质疑这是否是AI泡沫的循环融资风险",
       "author": "unusual_whales",
       "handle": "unusual_whales",
       "url": "https://x.com/unusual_whales/status/2081525324416991520",
@@ -14,108 +34,88 @@
       "postedAt": "2026-07-27 07:41:24"
     },
     {
-      "headline": "Strategy持仓比特币达843,775枚，同时持有37.5亿美元美元储备",
-      "why": "Saylor持续加仓并建立庞大美元储备，显示机构级BTC持仓策略正在系统化、金融化",
-      "author": "Michael Saylor",
-      "handle": "saylor",
-      "url": "https://x.com/saylor/status/2081711984936915201",
-      "likes": 5147,
-      "views": 455446,
-      "postedAt": "2026-07-27 20:03:08"
-    },
-    {
-      "headline": "中国DRAM芯片厂长鑫科技A股上市首日暴涨近500%，市值一度突破3万亿人民币",
-      "why": "国产存储芯片首次形成可交易的市场锚点，直接冲击海力士等全球存储股估值逻辑，高盛已发警告",
-      "author": "Polymarket",
-      "handle": "polymarket",
-      "url": "https://x.com/Polymarket/status/2081610029774287206",
-      "likes": 58,
-      "views": 16461,
-      "postedAt": "2026-07-27 13:18:00"
-    },
-    {
-      "headline": "BitMart宣布关停所有运营，一周内第二家加密交易所关闭（此前BitMEX也已关停）",
-      "why": "熊市加速出清二线交易所，流动性向头部集中，历史上此类事件往往出现在周期底部附近",
+      "headline": "韩国KOSPI股市单日暴跌逾10%触发熔断，三星和SK海力士均跌超12%",
+      "why": "存储股崩盘叠加中国半导体突破消息，韩国散户深度套牢，历史上韩国市场是全球金融危机的先行预警指标",
       "author": "Watcher.Guru",
       "handle": "watcherguru",
-      "url": "https://x.com/WatcherGuru/status/2081255288527618414",
-      "likes": 2687,
-      "views": 250222,
-      "postedAt": "2026-07-26 13:48:23"
+      "url": "https://x.com/WatcherGuru/status/2081911598453563712",
+      "likes": 469,
+      "views": 74371,
+      "postedAt": "2026-07-28 09:16:19"
     },
     {
-      "headline": "特朗普叫停对伊朗军事打击计划，美伊双方互相暂停攻击并重启外交谈判",
-      "why": "中东局势骤然降温，布伦特原油单日暴跌7%+，直接推动美股科技股反弹，风险资产全线受益",
-      "author": "unusual_whales",
-      "handle": "unusual_whales",
-      "url": "https://x.com/unusual_whales/status/2081142206212211086",
-      "likes": 625,
-      "views": 108102,
-      "postedAt": "2026-07-26 06:19:02"
+      "headline": "美国参议院加密货币清晰法案（Clarity Act）面临8月7日前投票窗口关闭压力，多空消息交替冲击币价",
+      "why": "法案若通过将为美国数字资产监管提供框架，BlackRock、富达、高盛等机构集体背书；参议院搁置消息直接导致BTC和ETH急跌",
+      "author": "Watcher.Guru",
+      "handle": "watcherguru",
+      "url": "https://x.com/WatcherGuru/status/2082101866469503348",
+      "likes": 675,
+      "views": 82148,
+      "postedAt": "2026-07-28 21:52:23"
     }
   ],
   "insights": [
     {
-      "headline": "币圈正在炒股票代币，山寨币产业链被彻底打散",
-      "why": "Colin Wu指出交易所上股票代币后，合约、现货、操盘对手盘的钱都被虹吸，这是2017年以来最大结构性变局，值得深思",
-      "author": "Colin Wu",
-      "handle": "colinwu",
-      "url": "https://x.com/colinwu/status/2081401825161568692",
-      "likes": 195,
-      "views": 32736,
-      "postedAt": "2026-07-26 23:30:40"
+      "headline": "Anthropic首次公开阐明对开源权重模型的立场",
+      "why": "Anthropic此前被批评反对开源，此次官方表态引发行业广泛讨论，Naval等人同步指出闭源模型有动机揭露开源模型的后门与偏见，开源vs闭源之争进入新阶段",
+      "author": "Anthropic",
+      "handle": "anthropicai",
+      "url": "https://x.com/AnthropicAI/status/2081864750296658008",
+      "likes": 6965,
+      "views": 5284104,
+      "postedAt": "2026-07-28 06:10:10"
     },
     {
-      "headline": "Saylor：拒绝比特币与银行、机构、政府融合，等于把BTC限制在1%潜力内",
-      "why": "反共识观点——大多数比特币原教旨主义者反对机构化，但Saylor认为这恰恰是阻碍BTC实现全球货币潜力的最大障碍",
-      "author": "Michael Saylor",
-      "handle": "saylor",
-      "url": "https://x.com/saylor/status/2081473219664507321",
-      "likes": 942,
-      "views": 68807,
-      "postedAt": "2026-07-27 04:14:22"
+      "headline": "超大规模云厂商CDS价格集体升至历史新高，债市率先给AI基建热潮贴上风险标签",
+      "why": "英伟达、甲骨文、SpaceX、Meta等公司违约保险成本创纪录，说明债市已在股价大幅下跌前预判AI资本开支的循环融资风险，是比股价更早的预警信号",
+      "author": "AB Kuai.Dong",
+      "handle": "_forab",
+      "url": "https://x.com/_FORAB/status/2081951801390375157",
+      "likes": 89,
+      "views": 29215,
+      "postedAt": "2026-07-28 11:56:04"
     },
     {
-      "headline": "Naval：开源模型存在后门和偏见时，闭源厂商反而有动力去发现并揭露",
-      "why": "提出开源与闭源AI安全性的反直觉关系——竞争机制可能比监管更有效地保障AI安全",
-      "author": "Naval",
-      "handle": "naval",
-      "url": "https://x.com/naval/status/2081417049935417673",
-      "likes": 1594,
-      "views": 88147,
-      "postedAt": "2026-07-27 00:31:10"
+      "headline": "SemiAnalysis揭示AMD与OpenAI、Meta的算力协议实为变相折扣，折扣幅度高达105%",
+      "why": "这意味着AI算力采购的真实价格远低于账面数字，科技公司间的AI军备竞赛存在大量补贴性交叉持股，重新定价整个AI供应链的盈利逻辑",
+      "author": "SemiAnalysis",
+      "handle": "semianalysis_",
+      "url": "https://x.com/SemiAnalysis_/status/2081847226364506233",
+      "likes": 71,
+      "views": 10442,
+      "postedAt": "2026-07-28 05:00:32"
     },
     {
-      "headline": "高盛警告：长鑫科技IPO暴涨暴露出存储行业面临中国竞争者的新威胁",
-      "why": "长鑫上市不仅是A股事件，更是全球存储行业供给侧的结构性信号，高盛已将其定性为行业新问题",
-      "author": "zerohedge",
-      "handle": "zerohedge",
-      "url": "https://x.com/zerohedge/status/2081718017029734520",
-      "likes": 15,
-      "views": 14298,
-      "postedAt": "2026-07-27 20:27:06"
+      "headline": "Raoul Pal指出比特币与全球流动性相关性达87%，纳斯达克更高达97%",
+      "why": "这一数据说明市场普遍误读了资产涨跌的驱动因素——新闻、财报、叙事都是噪音，全球货币供应量才是底层锚，对宏观择时有直接指导意义",
+      "author": "Raoul Pal",
+      "handle": "raoulgmi",
+      "url": "https://x.com/RaoulGMI/status/2081834392440225908",
+      "likes": 349,
+      "views": 38835,
+      "postedAt": "2026-07-28 04:09:32"
     }
   ],
   "buzz": [
     {
-      "topic": "美联储7月会议是否加息",
-      "gist": "市场定价加息概率约35-38%，远高于往常临近会议前的水平，新主席沃什的鹰派信号引发罕见不确定性",
-      "url": "https://x.com/WatcherGuru/status/2081760947308277793"
+      "topic": "中国半导体突破与存储股崩盘",
+      "gist": "国产DUV光刻机消息真假未定，但长鑫上市+光刻机报道双重冲击已令全球存储股集体腰斩，市场争议焦点在于这是短期情绪还是供应链格局真实转变",
+      "url": "https://x.com/_FORAB/status/2081736154806911079"
     },
     {
-      "topic": "Crypto Clarity Act能否在8月前通过",
-      "gist": "BlackRock、高盛等机构力挺，但特朗普自身加密利益被指是最大障碍，市场分歧在于通过后是利好出尽还是真正起飞",
-      "url": "https://x.com/AshCrypto/status/2081437431547437219"
+      "topic": "Crypto Clarity Act立法博弈",
+      "gist": "BlackRock、富达、高盛、Franklin Templeton等机构罕见集体背书，但参议院搁置消息与投票预期反复拉锯，每次消息变动都直接引发BTC/ETH剧烈波动",
+      "url": "https://x.com/WatcherGuru/status/2082101866469503348"
     },
     {
-      "topic": "BitMEX和BitMart相继关停是否意味着熊市底部",
-      "gist": "多空双方激烈争论：看多方认为交易所关停是历史性底部信号，看空方认为这次是行业结构性死亡而非周期底",
-      "url": "https://x.com/xtony1314/status/2081243222366736603"
+      "topic": "英伟达'中央银行化'与AI资本开支可持续性",
+      "gist": "英伟达为客户提供巨额融资担保被市场解读为循环自买，CDS飙升、股价波动加剧，市场开始认真讨论AI资本开支是否已到拐点",
+      "url": "https://x.com/zerohedge/status/2081821003693330501"
     },
     {
-      "topic": "长鑫科技上市冲击全球存储股",
-      "gist": "长鑫暴涨500%当天，海力士、ASML等全球存储半导体股大跌，市场开始重新定价中国存储竞争威胁",
-      "url": "https://x.com/DeItaone/status/2081745819598766547"
+      "topic": "美联储7月FOMC加息预期分歧",
+      "gist": "Citadel预测意外加息引发市场恐慌，但BofA和多数机构预计维持不变，76%市场概率显示按兵不动，分歧本身已成为本周最大不确定性",
+      "url": "https://x.com/WatcherGuru/status/2081863412695359912"
     }
   ]
 }
