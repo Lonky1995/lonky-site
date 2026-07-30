@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "methodologyVersion": "posture-v3-macro-action",
   "date": "2026-07-29",
-  "score": 63,
+  "score": 59,
   "verdict": "选择性",
   "factors": [
     {
@@ -12,12 +12,12 @@
       "raw": 4.3,
       "note": "5日 -2.4% · 20日 -2.3% · 距20日线 -2.2%",
       "inputs": {
-        "dev200": 0.043180567818852156,
-        "ret5": -0.02365502200933889,
-        "ret20": -0.02281827068575326,
-        "dev20": -0.02154601977208348,
-        "longScore": 76.59028390942608,
-        "momentumScore": 31.129940958567
+        "dev200": 0.04279660362750137,
+        "ret5": -0.02401626951739999,
+        "ret20": -0.023179827791689478,
+        "dev20": -0.021890342464421897,
+        "longScore": 76.39830181375069,
+        "momentumScore": 30.83449137411112
       }
     },
     {
@@ -37,24 +37,24 @@
     {
       "key": "vol",
       "label": "波动",
-      "score": 50,
-      "raw": 20.3,
+      "score": 48,
+      "raw": 20.66,
       "note": "波动回升",
       "inputs": {
-        "vix": 20.3,
-        "change5Pct": 0.21995192307692313
+        "vix": 20.66,
+        "change5Pct": 0.24158653846153832
       }
     },
     {
       "key": "leadership",
       "label": "参与结构",
-      "score": 100,
+      "score": 81,
       "raw": 3.7,
       "note": "等权指数扩散",
       "inputs": {
-        "excessReturn20": 0.037012001004877004,
-        "rspReturn20": 0.014193730319123743,
-        "spyReturn20": -0.02281827068575326
+        "excessReturn20": 0.03709156346871145,
+        "rspReturn20": 0.013911735677021975,
+        "spyReturn20": -0.023179827791689478
       }
     },
     {
@@ -77,18 +77,18 @@
     {
       "key": "liquidity",
       "label": "美元流动性",
-      "score": 54,
-      "raw": 46,
-      "note": "中性 · 稳定 · 结构脆弱",
+      "score": 53,
+      "raw": 47,
+      "note": "中性 · 转弱 · 结构脆弱",
       "inputs": {
         "source": "DollarLiquidity DLI",
-        "percentile5y": 46,
+        "percentile5y": 47,
         "status": "neutral",
-        "momentum": "stable",
+        "momentum": "deteriorating",
         "confidence": "high",
         "vulnerability": "elevated",
         "buffer": 11.92,
-        "dataAsOf": "2026-07-28",
+        "dataAsOf": "2026-07-29",
         "indicators": 12,
         "totalIndicators": 12
       }
@@ -102,7 +102,7 @@
     "leadership": 0.15,
     "liquidity": 0.1
   },
-  "updatedAt": 1785355814616,
+  "updatedAt": 1785389716448,
   "history": [
     {
       "date": "2026-07-24",
@@ -136,13 +136,13 @@
     },
     {
       "date": "2026-07-29",
-      "score": 63,
+      "score": 59,
       "trend": 49,
       "credit": 63,
-      "vol": 50,
-      "leadership": 100,
+      "vol": 48,
+      "leadership": 81,
       "breadth": 62,
-      "liquidity": 54
+      "liquidity": 53
     }
   ]
 }
