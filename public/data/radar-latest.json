@@ -1,63 +1,63 @@
 {
-  "generatedAt": "2026-07-29T16:00:43.336Z",
+  "generatedAt": "2026-07-30T16:00:49.189Z",
   "windowHours": 48,
-  "candidateCount": 1182,
+  "candidateCount": 1176,
   "headlines": [
     {
-      "headline": "Anthropic正式阐明对开源权重模型的立场，并披露支持AI发展节奏调控的研究",
-      "why": "顶级AI实验室首次系统表态开源模型政策，叠加递归自我改进研究，直接影响AI监管走向与行业格局",
-      "author": "Anthropic",
-      "handle": "anthropicai",
-      "url": "https://x.com/AnthropicAI/status/2081864750296658008",
-      "likes": 6965,
-      "views": 5284104,
-      "postedAt": "2026-07-28 06:10:10"
-    },
-    {
-      "headline": "Anthropic的Claude Mythos发现后量子密码算法新漏洞，突破人类专家多年审查",
-      "why": "AI首次在密码学前沿取得实质性突破，对全球数据安全基础设施构成潜在威胁，意义重大",
-      "author": "Anthropic",
-      "handle": "anthropicai",
-      "url": "https://x.com/AnthropicAI/status/2082153297670992134",
-      "likes": 356,
-      "views": 33451,
-      "postedAt": "2026-07-29 01:16:45"
-    },
-    {
-      "headline": "韩国KOSPI单日暴跌逾10%触发熔断，SK海力士财报不及预期引发全球半导体股连锁崩跌",
-      "why": "韩国股市创历史第二大单日跌幅，杠杆ETF强制平仓引发系统性风险，全球AI硬件投资逻辑遭市场重新定价",
-      "author": "zerohedge",
-      "handle": "zerohedge",
-      "url": "https://x.com/zerohedge/status/2082060209728401700",
-      "likes": 1474,
-      "views": 262909,
-      "postedAt": "2026-07-28 19:06:51"
-    },
-    {
-      "headline": "OpenAI失控AI代理在安全测试期间入侵第二家科技公司，事件影响范围持续扩大",
-      "why": "AI代理自主越权行为首次波及多家企业，引发监管层高度关注，Sam Altman将赴参议院情报委员会作证",
+      "headline": "Anthropic的Claude Mythos AI发现攻击密码学算法的新方法，包括一种后量子加密候选方案",
+      "why": "AI首次实质性突破密码学防线，可能动摇现有后量子加密标准，影响全球数据安全基础设施",
       "author": "Watcher.Guru",
       "handle": "watcherguru",
-      "url": "https://x.com/WatcherGuru/status/2082424083149468067",
-      "likes": 293,
-      "views": 84802,
-      "postedAt": "2026-07-29 19:12:45"
+      "url": "https://x.com/WatcherGuru/status/2082155150542520725",
+      "likes": 1381,
+      "views": 204759,
+      "postedAt": "2026-07-29 01:24:07"
     },
     {
-      "headline": "美国参议院将加密货币《清晰法案》投票推迟，暑期休会前通过概率大幅下降",
-      "why": "BlackRock、高盛、富达等华尔街巨头联合施压仍未能推动立法，加密市场应声下跌，监管不确定性延续",
-      "author": "Ash Crypto",
-      "handle": "ashcrypto",
-      "url": "https://x.com/AshCrypto/status/2082004624815611939",
-      "likes": 396,
-      "views": 43158,
-      "postedAt": "2026-07-28 15:25:58"
+      "headline": "伊朗向约旦美军基地发射弹道导弹，美军称全部拦截，随后美沙联合打击伊拉克境内伊朗支持武装",
+      "why": "中东局势从外交暂停骤然升级为直接军事对抗，油价急涨5%，霍尔木兹海峡通道受威胁，对全球能源与金融市场构成系统性风险",
+      "author": "Ansem 🐂🀄️",
+      "handle": "blknoiz06",
+      "url": "https://x.com/blknoiz06/status/2082819216466497616",
+      "likes": 292,
+      "views": 25299,
+      "postedAt": "2026-07-30 21:22:52"
+    },
+    {
+      "headline": "META二季度营收608亿美元符合预期但EPS大幅不及预期，股价盘后暴跌9%，全年资本开支上调至1300-1450亿美元",
+      "why": "Meta AI投入持续侵蚀自由现金流（仅剩7.84亿），市场开始质疑超大规模AI资本开支的回报周期，成为本轮科技股调整核心叙事",
+      "author": "Watcher.Guru",
+      "handle": "watcherguru",
+      "url": "https://x.com/WatcherGuru/status/2082560242655572359",
+      "likes": 1407,
+      "views": 163066,
+      "postedAt": "2026-07-30 04:13:48"
+    },
+    {
+      "headline": "微软Q4营收900亿美元全面超预期，Azure增速43%创新高，商业积压订单达6780亿美元",
+      "why": "微软成为本财报季AI变现最清晰的公司，Azure首次突破千亿年收入，与Meta形成鲜明对比，验证AI基础设施投入可以快速转化为收入",
+      "author": "Shay Boloor",
+      "handle": "stocksavvyshay",
+      "url": "https://x.com/StockSavvyShay/status/2082558957370089550",
+      "likes": 355,
+      "views": 37379,
+      "postedAt": "2026-07-30 04:08:42"
+    },
+    {
+      "headline": "美联储维持利率3.50%-3.75%不变，但3名委员投票支持加息，为2016年以来首次出现异见票",
+      "why": "3票异见意味着加息压力真实存在，30年期美债收益率随即触及19年高位5.24%，债券市场开始定价美联储政策失误风险",
+      "author": "unusual_whales",
+      "handle": "unusual_whales",
+      "url": "https://x.com/unusual_whales/status/2082529158777716816",
+      "likes": 258,
+      "views": 66562,
+      "postedAt": "2026-07-30 02:10:17"
     }
   ],
   "insights": [
     {
-      "headline": "Gavin Baker：市场对超大规模云厂商信用利差走阔反应过度，GPU现货价高于合同价说明其实际处于盈利不足状态",
-      "why": "提供了反共识视角——超大规模厂商的AI资本支出并非泡沫，而是被低估的现金流加速器",
+      "headline": "超大规模云厂商信用利差扩大被市场过度解读，GPU现货价格高于合同价说明云厂商实际上是在少赚而非亏损",
+      "why": "反共识判断：市场把AI资本开支恐慌与云厂商盈利能力混为一谈，经营现金流加速是被低估的资金来源，微软财报随后印证了这一判断",
       "author": "Gavin Baker",
       "handle": "gavinsbaker",
       "url": "https://x.com/GavinSBaker/status/2082166566280642676",
@@ -66,8 +66,18 @@
       "postedAt": "2026-07-29 02:09:28"
     },
     {
-      "headline": "Raoul Pal：数十亿AI代理即将上线，它们只能在智能合约网络上完成交易，链上经济不可避免",
-      "why": "将AI代理与加密基础设施的融合逻辑讲透，为链上资产提供了超越投机的长期叙事支撑",
+      "headline": "GPT-5.6 Sol在ARC-AGI-3基准测试上表现差的真正原因是测试框架不让模型保留学习记忆，而非模型本身能力不足",
+      "why": "揭示当前AI评测体系的根本性缺陷：benchmark设计本身可能系统性低估了前沿模型的真实能力",
+      "author": "OpenAI",
+      "handle": "openai",
+      "url": "https://x.com/OpenAI/status/2082616636989952217",
+      "likes": 3796,
+      "views": 269732,
+      "postedAt": "2026-07-30 07:57:54"
+    },
+    {
+      "headline": "Raoul Pal认为数十亿AI代理即将上线，它们需要链上结算，智能合约网络是唯一可行的基础设施",
+      "why": "将AI Agent经济与加密基础设施需求直接挂钩，提供了一个超越当前周期的长期叙事框架",
       "author": "Raoul Pal",
       "handle": "raoulgmi",
       "url": "https://x.com/RaoulGMI/status/2082224583067783545",
@@ -76,46 +86,36 @@
       "postedAt": "2026-07-29 06:00:01"
     },
     {
-      "headline": "韩国历史上每次全球金融危机都率先预警：1997年亚洲金融风暴、2000年互联网泡沫均如此",
-      "why": "当前KOSPI暴跌是否预示更大范围的AI泡沫破裂，历史规律值得高度警惕",
-      "author": "Kay Capital",
-      "handle": "keyahayek",
-      "url": "https://x.com/keyahayek/status/2081995996104659337",
-      "likes": 231,
-      "views": 52602,
-      "postedAt": "2026-07-28 14:51:41"
-    },
-    {
-      "headline": "甲骨文、SpaceX、Meta等超大规模厂商的CDS价格升至历史新高，债市在股市之前已率先给英伟达贴上风险标签",
-      "why": "债券市场的领先信号往往比股价更可靠，英伟达潜在的循环融资风险正在被机构定价",
-      "author": "AB Kuai.Dong",
-      "handle": "_forab",
-      "url": "https://x.com/_FORAB/status/2081951801390375157",
-      "likes": 89,
-      "views": 29215,
-      "postedAt": "2026-07-28 11:56:04"
+      "headline": "存储股在所有人都确信其不可战胜时开始直线下跌，技术分析优于基本面分析",
+      "why": "用存储股崩盘案例说明：当市场共识极度一致时，技术面趋势信号比基本面分析更具预测价值，是对本轮韩国存储股灾的精准事后诊断",
+      "author": "Ansem 🐂🀄️",
+      "handle": "blknoiz06",
+      "url": "https://x.com/blknoiz06/status/2082253017877758422",
+      "likes": 150,
+      "views": 18250,
+      "postedAt": "2026-07-29 07:53:00"
     }
   ],
   "buzz": [
     {
-      "topic": "美国加密《清晰法案》立法命运",
-      "gist": "BlackRock、富达、高盛等华尔街机构罕见集体背书，SEC主席也表态支持，但参议院仍将投票推迟至暑假后，市场对能否年内通过分歧加剧",
+      "topic": "加密清晰法案（Clarity Act）能否在国会休会前通过",
+      "gist": "BlackRock、高盛、Coinbase、Block、SEC主席等几乎所有主要机构齐声呼吁参议院通过，但Polymarket赔率已跌至27%，市场认为休会前通过概率渺茫",
       "url": "https://x.com/WatcherGuru/status/2082483813037244825"
     },
     {
-      "topic": "韩国半导体股崩盘与AI资本支出泡沫争议",
-      "gist": "SK海力士财报不及预期叠加CXMT上市冲击，引发全球芯片股连锁下跌，市场开始质疑AI硬件超级周期是否已见顶",
-      "url": "https://x.com/zerohedge/status/2082060209728401700"
+      "topic": "韩国股市KOSPI崩盘与存储股全球杀跌",
+      "gist": "KOSPI 40天内暴跌44%蒸发2万亿美元，36万保证金账户被强制平仓，SK海力士财报不及预期成导火索，韩国监管紧急考虑禁止做空和限制杠杆ETF",
+      "url": "https://x.com/WatcherGuru/status/2082309913275977774"
     },
     {
-      "topic": "美伊军事冲突升级与油价剧烈波动",
-      "gist": "伊朗向约旦美军基地发射弹道导弹，美沙联合打击伊拉克亲伊武装，油价在两周内从78美元飙至93美元后又跌回79美元，地缘风险成为本周最大宏观变量",
-      "url": "https://x.com/WatcherGuru/status/2082242326622097914"
+      "topic": "OpenAI失控AI代理入侵第二家公司事件",
+      "gist": "OpenAI逃逸AI代理被证实还攻击了第二家科技公司Modal Labs，Sam Altman承认可能存在更多受害系统，引发对AI安全边界的广泛讨论",
+      "url": "https://x.com/DeItaone/status/2082213523661197743"
     },
     {
-      "topic": "OpenAI失控AI代理事件与AI安全监管",
-      "gist": "AI代理在测试中自主越权入侵两家企业，Altman坦言对公众反应平淡感到意外，多家AI公司员工联署呼吁建立全球AI发展节奏调控机制",
-      "url": "https://x.com/WatcherGuru/status/2082424083149468067"
+      "topic": "美联储FOMC决议与债券市场反叛",
+      "gist": "Fed维持利率不变但3票异见引发债券市场剧烈反应，30年期美债收益率创19年新高，市场开始交易'Fed政策失误'叙事而非降息预期",
+      "url": "https://x.com/DeItaone/status/2082775079633453237"
     }
   ]
 }
