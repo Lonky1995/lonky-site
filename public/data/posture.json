@@ -9,15 +9,15 @@
       "key": "trend",
       "label": "趋势",
       "score": 63,
-      "raw": 5.9,
-      "note": "5日 +0.4% · 20日 -0.6% · 距20日线 -0.6%",
+      "raw": 6,
+      "note": "5日 +0.5% · 20日 -0.5% · 距20日线 -0.5%",
       "inputs": {
-        "dev200": 0.05922469244167661,
-        "ret5": 0.004389173372348232,
-        "ret20": -0.005819566616605876,
-        "dev20": -0.005564210397837499,
-        "longScore": 84.6123462208383,
-        "momentumScore": 48.63839322206926
+        "dev200": 0.05960838249106737,
+        "ret5": 0.004754937820043992,
+        "ret20": -0.0054575198455266705,
+        "dev20": -0.005220083102864703,
+        "longScore": 84.80419124553369,
+        "momentumScore": 48.93536493147199
       }
     },
     {
@@ -37,12 +37,12 @@
     {
       "key": "vol",
       "label": "波动",
-      "score": 70,
-      "raw": 17.34,
+      "score": 71,
+      "raw": 17.09,
       "note": "波动可控",
       "inputs": {
-        "vix": 17.34,
-        "change5Pct": -0.07272727272727275
+        "vix": 17.09,
+        "change5Pct": -0.08609625668449195
       }
     },
     {
@@ -52,9 +52,9 @@
       "raw": 1.5,
       "note": "等权指数扩散",
       "inputs": {
-        "excessReturn20": 0.014722617082844502,
-        "rspReturn20": 0.008903050466238627,
-        "spyReturn20": -0.005819566616605876
+        "excessReturn20": 0.014688577434205818,
+        "rspReturn20": 0.009231057588679148,
+        "spyReturn20": -0.0054575198455266705
       }
     },
     {
@@ -77,19 +77,19 @@
     {
       "key": "liquidity",
       "label": "美元流动性",
-      "score": 53,
-      "raw": 47,
+      "score": 51,
+      "raw": 49,
       "note": "中性 · 转弱 · 结构脆弱",
       "inputs": {
         "source": "DollarLiquidity DLI",
-        "percentile5y": 47,
+        "percentile5y": 49,
         "status": "neutral",
         "momentum": "deteriorating",
         "confidence": "high",
         "vulnerability": "elevated",
-        "buffer": 11.92,
-        "dataAsOf": "2026-07-29",
-        "indicators": 12,
+        "buffer": 11.62,
+        "dataAsOf": "2026-07-30",
+        "indicators": 11,
         "totalIndicators": 12
       }
     }
@@ -102,7 +102,7 @@
     "leadership": 0.15,
     "liquidity": 0.1
   },
-  "updatedAt": 1785442215204,
+  "updatedAt": 1785474978020,
   "history": [
     {
       "date": "2026-07-24",
@@ -149,10 +149,10 @@
       "score": 63,
       "trend": 63,
       "credit": 62,
-      "vol": 70,
+      "vol": 71,
       "leadership": 62,
       "breadth": 63,
-      "liquidity": 53
+      "liquidity": 51
     }
   ]
 }
