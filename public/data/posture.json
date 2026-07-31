@@ -1,23 +1,23 @@
 {
   "schemaVersion": 1,
   "methodologyVersion": "posture-v3-macro-action",
-  "date": "2026-07-30",
-  "score": 63,
+  "date": "2026-07-31",
+  "score": 62,
   "verdict": "选择性",
   "factors": [
     {
       "key": "trend",
       "label": "趋势",
-      "score": 63,
-      "raw": 6,
-      "note": "5日 +0.5% · 20日 -0.5% · 距20日线 -0.5%",
+      "score": 66,
+      "raw": 6.3,
+      "note": "5日 +0.8% · 20日 -0.0% · 距20日线 -0.1%",
       "inputs": {
-        "dev200": 0.05960838249106737,
-        "ret5": 0.004754937820043992,
-        "ret20": -0.0054575198455266705,
-        "dev20": -0.005220083102864703,
-        "longScore": 84.80419124553369,
-        "momentumScore": 48.93536493147199
+        "dev200": 0.0633167638658485,
+        "ret5": 0.00783565425683097,
+        "ret20": -0.00008056070248929625,
+        "dev20": -0.0011521247245428468,
+        "longScore": 86.65838193292424,
+        "momentumScore": 52.214416393681155
       }
     },
     {
@@ -38,39 +38,39 @@
       "key": "vol",
       "label": "波动",
       "score": 71,
-      "raw": 17.09,
+      "raw": 17.06,
       "note": "波动可控",
       "inputs": {
-        "vix": 17.09,
-        "change5Pct": -0.08609625668449195
+        "vix": 17.06,
+        "change5Pct": -0.08180839612486546
       }
     },
     {
       "key": "leadership",
       "label": "参与结构",
-      "score": 62,
-      "raw": 1.5,
+      "score": 58,
+      "raw": 0.9,
       "note": "等权指数扩散",
       "inputs": {
-        "excessReturn20": 0.014688577434205818,
+        "excessReturn20": 0.009311618291168444,
         "rspReturn20": 0.009231057588679148,
-        "spyReturn20": -0.0054575198455266705
+        "spyReturn20": -0.00008056070248929625
       }
     },
     {
       "key": "breadth",
       "label": "广度",
-      "score": 63,
-      "raw": 68.4,
+      "score": 62,
+      "raw": 67.3,
       "note": "参与度尚可",
       "inputs": {
         "universe": "SP100",
         "total": 98,
-        "pctAbove200": 68.4,
-        "pctAbove50": 62.2,
-        "advancers": 39,
+        "pctAbove200": 67.3,
+        "pctAbove50": 60.2,
+        "advancers": 40,
         "decliners": 58,
-        "adDiff": -19,
+        "adDiff": -18,
         "missing": 0
       }
     },
@@ -102,7 +102,7 @@
     "leadership": 0.15,
     "liquidity": 0.1
   },
-  "updatedAt": 1785474978020,
+  "updatedAt": 1785505214932,
   "history": [
     {
       "date": "2026-07-24",
@@ -152,6 +152,16 @@
       "vol": 71,
       "leadership": 62,
       "breadth": 63,
+      "liquidity": 51
+    },
+    {
+      "date": "2026-07-31",
+      "score": 62,
+      "trend": 66,
+      "credit": 62,
+      "vol": 71,
+      "leadership": 58,
+      "breadth": 62,
       "liquidity": 51
     }
   ]
