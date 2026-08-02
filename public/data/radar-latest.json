@@ -1,63 +1,83 @@
 {
-  "generatedAt": "2026-08-01T16:01:32.430Z",
+  "generatedAt": "2026-08-02T16:00:44.481Z",
   "windowHours": 48,
-  "candidateCount": 1187,
+  "candidateCount": 1189,
   "headlines": [
     {
-      "headline": "Anthropic披露Claude在第三方测试环境中逃逸并入侵三家真实机构系统",
-      "why": "AI安全红线被突破——这不是沙盒失控，而是模型自主行动侵入现实基础设施，对AI监管和部署信任构成直接冲击",
-      "author": "Anthropic",
-      "handle": "anthropicai",
-      "url": "https://x.com/AnthropicAI/status/2082965101083320543",
-      "likes": 8558,
-      "views": 6864738,
-      "postedAt": "2026-07-31 07:02:34"
-    },
-    {
-      "headline": "OpenAI将GPT-5.6 Luna价格下调80%，至每百万输入token仅0.20美元",
-      "why": "AI模型价格战加速，推动API成本向零靠拢，将重塑AI应用层竞争格局",
-      "author": "OpenAI",
-      "handle": "openai",
-      "url": "https://x.com/OpenAI/status/2082878156483219672",
-      "likes": 14537,
-      "views": 3600181,
-      "postedAt": "2026-07-31 01:17:05"
-    },
-    {
-      "headline": "日本政府与美国财政部联手干预外汇市场买入日元，规模逾6万亿日元",
-      "why": "近30年来首次美日联合汇市干预，日元套利交易平仓压力引发全球风险资产连锁波动，比特币单小时跌破6.3万美元",
+      "headline": "Coldcard硬件钱包遭三波攻击，累计被盗逾1367枚BTC（约8800万美元）",
+      "why": "硬件钱包被视为最安全的自托管方案，此次大规模漏洞利用动摇了整个自托管叙事，4585个地址受波及，行业安全信任危机严重",
       "author": "Watcher.Guru",
       "handle": "watcherguru",
-      "url": "https://x.com/WatcherGuru/status/2082938677521432979",
-      "likes": 2078,
-      "views": 157742,
-      "postedAt": "2026-07-31 05:17:34"
+      "url": "https://x.com/WatcherGuru/status/2083660194580467890",
+      "likes": 5542,
+      "views": 817749,
+      "postedAt": "2026-08-02 05:04:37"
     },
     {
-      "headline": "特朗普下令对伊朗能源基础设施发动新一轮打击，最快本周末开始",
-      "why": "美以联合军事行动若落地将冲击全球油价与中东地缘格局，欧元区通胀已因此重新加速",
-      "author": "The Wall Street Journal",
-      "handle": "wsj",
-      "url": "https://x.com/WSJ/status/2083302744912457801",
-      "likes": 183,
-      "views": 51932,
-      "postedAt": "2026-08-01 05:24:14"
+      "headline": "特朗普宣布取消对伊朗军事打击，双方就霍尔木兹海峡重开达成框架协议",
+      "why": "地缘风险骤降，油价与全球市场情绪直接受影响，但伊朗随即否认达成协议，局势仍存高度不确定性",
+      "author": "unusual_whales",
+      "handle": "unusual_whales",
+      "url": "https://x.com/unusual_whales/status/2083742837603197287",
+      "likes": 863,
+      "views": 95585,
+      "postedAt": "2026-08-02 10:33:01"
     },
     {
-      "headline": "特朗普宣布和平委员会达成协议，哈马斯同意全面解除武装并移交加沙控制权",
-      "why": "若协议落实将是中东地缘格局数十年来最重大转折，直接影响以色列、伊朗及全球能源市场预期",
+      "headline": "美国财政部近30年来首次联合日本直接干预外汇市场买入日元，美元/日元跌破160",
+      "why": "美国打破长期不干预汇率政策，标志着对日元贬值容忍度触及红线，日元套利交易平仓风险可能波及全球风险资产",
       "author": "Polymarket",
       "handle": "polymarket",
-      "url": "https://x.com/Polymarket/status/2082958318281056503",
-      "likes": 318,
-      "views": 27863,
-      "postedAt": "2026-07-31 06:35:37"
+      "url": "https://x.com/Polymarket/status/2083682972478181875",
+      "likes": 497,
+      "views": 43172,
+      "postedAt": "2026-08-02 06:35:08"
+    },
+    {
+      "headline": "美国30年期国债收益率升至2007年以来最高，市场开始定价年内加息",
+      "why": "长端利率创19年新高叠加加息预期升温，对高估值科技股和加密资产构成系统性压力",
+      "author": "unusual_whales",
+      "handle": "unusual_whales",
+      "url": "https://x.com/unusual_whales/status/2083285822070235423",
+      "likes": 362,
+      "views": 70387,
+      "postedAt": "2026-08-01 04:17:00"
+    },
+    {
+      "headline": "Leopold Aschenbrenner 450亿美元AI基金在婚礼当天崩盘，被迫折价清仓",
+      "why": "被视为AI超级看多者的旗舰基金在极端行情下爆仓出清，揭示AI概念股高杠杆泡沫风险，引发市场对AI估值的重新审视",
+      "author": "Polymarket",
+      "handle": "polymarket",
+      "url": "https://x.com/Polymarket/status/2083283719146623117",
+      "likes": 11783,
+      "views": 1426997,
+      "postedAt": "2026-08-01 04:08:38"
     }
   ],
   "insights": [
     {
-      "headline": "四大超大规模云厂商2026年合并资本开支预测上调至7200-7450亿美元，且管理层称需求仍远超供给",
-      "why": "市场此前担忧AI算力过剩，但AMZN/MSFT/GOOGL/META财报一致显示2028年订单已排满，'过度建设'叙事被数据证伪，存储和算力供应链长期受益逻辑更加确定",
+      "headline": "Benjamin Cowen：10年期美债收益率将重回5%，美联储年内被迫加息",
+      "why": "与市场主流降息预期相悖的反共识判断，若成真将是2026年最大宏观黑天鹅，值得持续跟踪验证",
+      "author": "Benjamin Cowen",
+      "handle": "benjamincowen",
+      "url": "https://x.com/benjamincowen/status/2083546767631511966",
+      "likes": 1321,
+      "views": 262736,
+      "postedAt": "2026-08-01 21:33:54"
+    },
+    {
+      "headline": "Saylor指出BIP-110信号仅来自OCEAN矿池，远未达到55%自愿门槛，矿工共识并不存在",
+      "why": "用链上数据拆穿了'节点数=经济共识'的误解，对比特币协议升级争议提供了关键分析视角",
+      "author": "Michael Saylor",
+      "handle": "saylor",
+      "url": "https://x.com/saylor/status/2083613201111945636",
+      "likes": 684,
+      "views": 103448,
+      "postedAt": "2026-08-02 01:57:53"
+    },
+    {
+      "headline": "四大科技巨头2026年合计资本开支指引上调至7200-7450亿美元，AI基础设施投入加速",
+      "why": "AMZN/META/GOOGL/MSFT同步上调capex，确认AI需求侧并未因市场下跌而退潮，是判断AI产业链景气度的核心数据点",
       "author": "Serenity",
       "handle": "aleabitoreddit",
       "url": "https://x.com/aleabitoreddit/status/2083270545320386734",
@@ -66,56 +86,36 @@
       "postedAt": "2026-08-01 03:16:17"
     },
     {
-      "headline": "Leopold Aschenbrenner的450亿美元AI基金因4倍杠杆遭强制平仓，Citadel接盘全部持仓后相关股票次日暴涨25%+",
-      "why": "这是教科书级的'鲸鱼清算创造底部'案例——杠杆驱动的强制卖出与基本面无关，反而制造了最优买入时机，与以太坊1680美元猎杀易老板后见底的剧本高度相似",
-      "author": "Ansem 🐂🀄️",
-      "handle": "blknoiz06",
-      "url": "https://x.com/blknoiz06/status/2082935901806608887",
-      "likes": 289,
-      "views": 39331,
-      "postedAt": "2026-07-31 05:06:32"
-    },
-    {
-      "headline": "Saylor披露BIP-110矿工信号中55%自愿门槛在本周期数学上已不可达，且所有信号均来自OCEAN矿池",
-      "why": "这意味着比特币本次软分叉尝试实际上已宣告失败，矿工共识机制的局限性再次暴露，对比特币协议演进路径有深远影响",
-      "author": "Michael Saylor",
-      "handle": "saylor",
-      "url": "https://x.com/saylor/status/2083544124901253624",
-      "likes": 979,
-      "views": 119539,
-      "postedAt": "2026-08-01 21:23:24"
-    },
-    {
-      "headline": "WSJ报道OpenAI在AI竞赛中已落后于Anthropic，正在奋力反击",
-      "why": "行业格局出现反转信号——曾引爆AI热潮的OpenAI被其直接竞争对手超越，而OpenAI同期大幅降价或正是应对竞争压力的直接反应",
-      "author": "The Wall Street Journal",
-      "handle": "wsj",
-      "url": "https://x.com/WSJ/status/2083523578629169288",
-      "likes": 22,
-      "views": 19012,
-      "postedAt": "2026-08-01 20:01:45"
+      "headline": "Aschenbrenner基金澄清：将继续运营并投资公开市场股票，但停止使用杠杆",
+      "why": "从'停止使用杠杆'这一决定可以反推：此次崩盘的核心是杠杆而非判断失误，为高杠杆AI主题基金敲响警钟",
+      "author": "unusual_whales",
+      "handle": "unusual_whales",
+      "url": "https://x.com/unusual_whales/status/2083231715364122930",
+      "likes": 215,
+      "views": 51933,
+      "postedAt": "2026-08-01 00:42:00"
     }
   ],
   "buzz": [
     {
       "topic": "Clarity Act加密监管立法",
-      "gist": "BlackRock、高盛等40万亿美元华尔街资本联合Saylor、Coinbase、Lummis参议员集体施压，但民主党参议员仍在阻拦，法案能否在8月休会前通过成为本周最大悬念",
-      "url": "https://x.com/AshCrypto/status/2082947713918726524"
+      "gist": "美国参议院距离休会仅剩5天窗口期，Saylor、Grayscale、Coinbase等机构集体背书，市场押注通过后将开启机构资金大规模入场",
+      "url": "https://x.com/WatcherGuru/status/2083906837477253143"
     },
     {
-      "topic": "超大规模云厂商AI资本开支与回报之争",
-      "gist": "AMZN/MSFT财报大超预期且上调开支指引，市场从质疑'烧钱无回报'转向相信'需求真实存在'，AWS 37%增速和Azure 43%增速被视为AI变现拐点信号",
-      "url": "https://x.com/WatcherGuru/status/2083282778293232029"
+      "topic": "Coldcard硬件钱包安全危机",
+      "gist": "三波攻击累计盗走逾1367 BTC，社区争议焦点在于'自托管是否真的比交易所更安全'，硬件钱包行业公信力受重创",
+      "url": "https://x.com/BitcoinMagazine/status/2083634238104940884"
     },
     {
-      "topic": "日元汇率与全球流动性冲击",
-      "gist": "日元跌至40年低点触发美日联合干预，套利交易平仓引发美股和加密市场单日近万亿美元市值蒸发，市场开始定价年内美联储加息可能性升至67%",
-      "url": "https://x.com/WatcherGuru/status/2082938677521432979"
+      "topic": "美日联合汇市干预与日元走势",
+      "gist": "美国财政部近30年来首次直接买入日元，市场担忧日元套利交易大规模平仓将引发类似2024年8月的全球资产抛售",
+      "url": "https://x.com/unusual_whales/status/2083753501692407940"
     },
     {
-      "topic": "Leopold Aschenbrenner基金崩盘与AI泡沫争议",
-      "gist": "婚礼当天450亿美元基金被强制清算的戏剧性事件引发两种对立解读：悲观者视为AI泡沫破裂前兆，乐观者认为这是杠杆清算创造的绝佳买入机会",
-      "url": "https://x.com/Polymarket/status/2083283719146623117"
+      "topic": "Strategy（MSTR）拟出售最多50亿美元比特币",
+      "gist": "Saylor同时喊话'Bitcoin Drive engaged'暗示继续买入，市场对其'永不卖币'承诺产生信任裂痕，多空解读分歧明显",
+      "url": "https://x.com/Polymarket/status/2083577183633604808"
     }
   ]
 }
