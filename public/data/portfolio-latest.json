@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-01T07:19:23.471Z",
+  "generatedAt": "2026-08-02T12:31:44.462Z",
   "positions": [
     {
       "id": "pos_1784266016509_6374qc",
@@ -18,43 +18,42 @@
       "status": "active"
     }
   ],
-  "watchlist": [],
-  "equityCurve": [
+  "watchlist": [
     {
-      "t": "2026-07-21",
-      "v": 20059
+      "type": "event",
+      "symbol": "ORCL",
+      "text": "本周事件"
     },
     {
-      "t": "2026-07-22",
-      "v": 9110
+      "type": "validate",
+      "symbol": "ORCL",
+      "text": "想法验证"
     },
     {
-      "t": "2026-07-23",
-      "v": 8982
+      "type": "todo",
+      "symbol": "ORCL",
+      "text": "支持「数据中心 AI 需求」叙事：Q4 FY2026 IaaS 云收入 +93% YoY，总 RPO $4550 亿（+359% YoY），需求端数据是实的（Oracle IR, Jun 10）。"
     },
     {
-      "t": "2026-07-24",
-      "v": 10387
+      "type": "risk",
+      "symbol": "ORCL",
+      "text": "风险预警"
     },
     {
-      "t": "2026-07-26",
-      "v": 8875
+      "type": "todo",
+      "symbol": "ORCL",
+      "text": "待跟进"
     },
     {
-      "t": "2026-07-28",
-      "v": 8980
+      "type": "risk",
+      "symbol": "ORCL",
+      "text": "_2 个工具异常_："
     },
     {
-      "t": "2026-07-29",
-      "v": 8933
-    },
-    {
-      "t": "2026-07-30",
-      "v": 9139
-    },
-    {
-      "t": "2026-07-31",
-      "v": 9188
+      "type": "risk",
+      "symbol": "ORCL",
+      "text": "ORCL 近 30 天无 8-K 申报"
     }
-  ]
+  ],
+  "equityCurve": []
 }
