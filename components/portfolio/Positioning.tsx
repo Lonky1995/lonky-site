@@ -12,6 +12,32 @@ function crowdingColor(v: number): string {
   return "rgba(245,247,251,0.75)";
 }
 
+// 拥挤度总分口径（hover 提示用）
+const CROWDING_GUIDE = {
+  source: "综合 COT 资管/杠杆基金净仓、NAAIM 暴露、CTA 复制动量四个分量",
+  how: "越高 = 机构仓位越拥挤（偏空信号），越低 = 燃料充足；仅在极端区间作为战略 overlay",
+};
+
+// 四分量口径与解读（hover 提示用）。key 对应 positioning.json components[].key。
+const COMPONENT_GUIDE: Record<string, { source: string; how: string }> = {
+  asset_mgr: {
+    source: "CFTC COT 持仓报告 · 资产管理机构净多头",
+    how: "反映'聪明钱'方向；分位越高代表资管越拥挤在多头一侧",
+  },
+  lev_money: {
+    source: "CFTC COT 持仓报告 · 杠杆基金（对冲基金）净仓",
+    how: "投机性资金的方向；净仓与分位共同反映杠杆资金拥挤度",
+  },
+  naaim: {
+    source: "NAAIM 主动型基金经理股票仓位调查（0–100%）",
+    how: "越高 = 机构越满仓；用固定阈值映射，非历史分位数",
+  },
+  cta: {
+    source: "复制 CTA 趋势策略的动量信号（SPY/QQQ 相对 50 日均线）",
+    how: "反映趋势跟踪资金的方向；分位越高代表动量越偏多",
+  },
+};
+
 function fmtDate(d: string): string {
   return d || "—";
 }
@@ -73,9 +99,17 @@ function ComponentSlider({ percentile }: { percentile: number | null }) {
 
 function ComponentRow({ c }: { c: PositioningComponent }) {
   const naaimNote = c.windowPoints === 0; // NAAIM 用固定阈值映射，非历史分位数
+  const guide = COMPONENT_GUIDE[c.key];
   return (
-    <div className="flex items-center justify-between gap-3 py-2.5" style={{ borderTop: "1px solid rgba(245,247,251,0.08)" }}>
-      <span className="w-28 shrink-0 truncate text-sm" style={{ color: "rgba(245,247,251,0.85)" }}>
+    <div className="group relative flex items-center justify-between gap-3 py-2.5" style={{ borderTop: "1px solid rgba(245,247,251,0.08)" }}>
+      {/* 标签（带下划虚线，提示可 hover） */}
+      <span
+        aria-describedby={guide ? `pos-${c.key}-guide` : undefined}
+        className="w-28 shrink-0 truncate text-sm decoration-dotted underline-offset-4 focus:outline-none focus-visible:rounded focus-visible:ring-1 focus-visible:ring-white/40 group-hover:underline data-[guide=true]:cursor-help"
+        data-guide={guide ? "true" : undefined}
+        style={{ color: "rgba(245,247,251,0.85)" }}
+        tabIndex={guide ? 0 : undefined}
+      >
         {c.label}
       </span>
       <span className="w-16 shrink-0 text-right font-mono text-sm font-bold">
@@ -88,6 +122,27 @@ function ComponentRow({ c }: { c: PositioningComponent }) {
       <span className="hidden w-20 shrink-0 text-right text-xs sm:inline" style={{ color: "rgba(245,247,251,0.35)" }}>
         {fmtDate(c.date)}
       </span>
+
+      {/* hover 口径提示卡片 */}
+      {guide && (
+        <div
+          id={`pos-${c.key}-guide`}
+          className="pointer-events-none absolute left-0 top-full z-20 mt-1.5 w-64 rounded-xl p-3 text-xs leading-relaxed opacity-0 shadow-lg transition-opacity duration-150 group-focus-within:opacity-100 group-hover:opacity-100"
+          style={{
+            background: "rgba(9,11,17,0.96)",
+            border: "1px solid rgba(255,255,255,0.12)",
+            color: "rgba(245,247,251,0.85)",
+          }}
+        >
+          <div className="mb-1 font-bold" style={{ color: "rgba(245,247,251,0.95)" }}>
+            {c.label}
+          </div>
+          <div className="mb-1" style={{ color: "rgba(245,247,251,0.6)" }}>
+            {guide.source}
+          </div>
+          <div>{guide.how}</div>
+        </div>
+      )}
     </div>
   );
 }
@@ -142,7 +197,7 @@ export default function Positioning() {
     <>
       <div className="mt-8 flex items-center justify-between" data-reveal>
         <p className="pf-panel-title" style={{ margin: 0 }}>
-          持仓与资金流
+          资金流与机构仓位
         </p>
         <div className="flex items-center gap-2 text-xs" style={{ color: "rgba(245,247,251,0.5)" }}>
           {data && (
@@ -165,16 +220,39 @@ export default function Positioning() {
 
       {state === "loading" && (
         <div className="pf-panel mt-3 text-sm" data-reveal style={{ color: "rgba(245,247,251,0.5)" }}>
-          持仓与资金流加载中…
+          资金流与机构仓位加载中…
         </div>
       )}
 
       {data && (
         <div className="pf-panel mt-3" data-reveal>
           {/* 拥挤度综合分 */}
-          <div>
-            <div className="text-xs" style={{ color: "rgba(245,247,251,0.5)" }}>
+          <div className="group relative">
+            <span
+              aria-describedby="pos-crowding-guide"
+              className="inline-block cursor-help text-xs decoration-dotted underline-offset-4 focus:outline-none focus-visible:rounded focus-visible:ring-1 focus-visible:ring-white/40 group-hover:underline"
+              style={{ color: "rgba(245,247,251,0.5)" }}
+              tabIndex={0}
+            >
               拥挤度
+            </span>
+            {/* hover 口径提示卡片 */}
+            <div
+              id="pos-crowding-guide"
+              className="pointer-events-none absolute left-0 top-full z-20 mt-1.5 w-64 rounded-xl p-3 text-xs leading-relaxed opacity-0 shadow-lg transition-opacity duration-150 group-focus-within:opacity-100 group-hover:opacity-100"
+              style={{
+                background: "rgba(9,11,17,0.96)",
+                border: "1px solid rgba(255,255,255,0.12)",
+                color: "rgba(245,247,251,0.85)",
+              }}
+            >
+              <div className="mb-1 font-bold" style={{ color: "rgba(245,247,251,0.95)" }}>
+                拥挤度综合分
+              </div>
+              <div className="mb-1" style={{ color: "rgba(245,247,251,0.6)" }}>
+                {CROWDING_GUIDE.source}
+              </div>
+              <div>{CROWDING_GUIDE.how}</div>
             </div>
             {data.crowding != null ? (
               <>
