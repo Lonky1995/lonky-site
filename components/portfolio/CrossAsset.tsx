@@ -49,6 +49,38 @@ function Sparkline({ data, up }: { data: number[]; up: boolean }) {
   );
 }
 
+// 把 summary 中的 **加粗** 转成 <strong>，并按句号切成短段落，提升长文字墙的可读性
+function SummaryText({ text }: { text: string }) {
+  const paragraphs = text
+    .split(/(?<=[。！？])/)
+    .map((s) => s.trim())
+    .filter(Boolean);
+
+  const renderInline = (s: string) => {
+    const parts = s.split(/(\*\*[^*]+\*\*)/g).filter(Boolean);
+    return parts.map((part, i) => {
+      if (part.startsWith("**") && part.endsWith("**")) {
+        return (
+          <strong key={i} style={{ color: "rgba(245,247,251,0.98)", fontWeight: 600 }}>
+            {part.slice(2, -2)}
+          </strong>
+        );
+      }
+      return <span key={i}>{part}</span>;
+    });
+  };
+
+  return (
+    <div className="space-y-2">
+      {paragraphs.map((p, i) => (
+        <p key={i} className="m-0">
+          {renderInline(p)}
+        </p>
+      ))}
+    </div>
+  );
+}
+
 function Card({ c }: { c: AssetCard }) {
   const up = c.changePct >= 0;
   return (
@@ -178,7 +210,7 @@ export default function CrossAsset() {
               className="pf-panel text-sm leading-relaxed"
               style={{ color: "rgba(245,247,251,0.8)" }}
             >
-              {data.summary}
+              <SummaryText text={data.summary} />
             </div>
           )}
           {/* 所有卡片连续密排（组名作为卡片内小标签） */}
