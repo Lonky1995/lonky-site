@@ -98,11 +98,11 @@
       "label": "拥挤度",
       "score": 35,
       "raw": 65,
-      "note": "中性",
+      "note": "中性（数据滞后）",
       "inputs": {
         "crowding": 65,
         "dataAsOf": "2026-07-31",
-        "stale": "false"
+        "stale": "true"
       }
     },
     {
@@ -131,7 +131,7 @@
     "crowding": 0.1,
     "valuation": 0.1
   },
-  "updatedAt": 1785559767151,
+  "updatedAt": 1785756897076,
   "history": [
     {
       "date": "2026-07-31",
