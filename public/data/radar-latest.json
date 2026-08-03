@@ -1,11 +1,11 @@
 {
-  "generatedAt": "2026-08-02T16:00:44.481Z",
+  "generatedAt": "2026-08-03T16:01:14.204Z",
   "windowHours": 48,
-  "candidateCount": 1189,
+  "candidateCount": 1187,
   "headlines": [
     {
-      "headline": "Coldcard硬件钱包遭三波攻击，累计被盗逾1367枚BTC（约8800万美元）",
-      "why": "硬件钱包被视为最安全的自托管方案，此次大规模漏洞利用动摇了整个自托管叙事，4585个地址受波及，行业安全信任危机严重",
+      "headline": "Coldcard硬件钱包遭多波次攻击，累计被盗逾1367枚BTC（约8800万美元）",
+      "why": "四波有组织攻击针对同一硬件钱包固件漏洞，规模持续扩大，动摇市场对冷钱包安全性的信心，是近年最大规模自托管钱包安全事件",
       "author": "Watcher.Guru",
       "handle": "watcherguru",
       "url": "https://x.com/WatcherGuru/status/2083660194580467890",
@@ -14,8 +14,8 @@
       "postedAt": "2026-08-02 05:04:37"
     },
     {
-      "headline": "特朗普宣布取消对伊朗军事打击，双方就霍尔木兹海峡重开达成框架协议",
-      "why": "地缘风险骤降，油价与全球市场情绪直接受影响，但伊朗随即否认达成协议，局势仍存高度不确定性",
+      "headline": "特朗普宣布取消对伊朗军事打击，称双方已就霍尔木兹海峡开放达成框架协议",
+      "why": "中东局势急转直下，油价单日暴跌逾10%，但伊朗随即否认协议内容，真实进展存在重大分歧，市场波动风险极高",
       "author": "unusual_whales",
       "handle": "unusual_whales",
       "url": "https://x.com/unusual_whales/status/2083742837603197287",
@@ -24,8 +24,8 @@
       "postedAt": "2026-08-02 10:33:01"
     },
     {
-      "headline": "美国财政部近30年来首次联合日本直接干预外汇市场买入日元，美元/日元跌破160",
-      "why": "美国打破长期不干预汇率政策，标志着对日元贬值容忍度触及红线，日元套利交易平仓风险可能波及全球风险资产",
+      "headline": "美国财政部15年来首次直接入场干预外汇市场，联合日本买入日元",
+      "why": "打破美国长期不干预汇率的政策惯例，贝森特明确表示不排除再次干预，标志着美元政策出现结构性转向",
       "author": "Polymarket",
       "handle": "polymarket",
       "url": "https://x.com/Polymarket/status/2083682972478181875",
@@ -34,40 +34,40 @@
       "postedAt": "2026-08-02 06:35:08"
     },
     {
-      "headline": "美国30年期国债收益率升至2007年以来最高，市场开始定价年内加息",
-      "why": "长端利率创19年新高叠加加息预期升温，对高估值科技股和加密资产构成系统性压力",
-      "author": "unusual_whales",
-      "handle": "unusual_whales",
-      "url": "https://x.com/unusual_whales/status/2083285822070235423",
-      "likes": 362,
-      "views": 70387,
-      "postedAt": "2026-08-01 04:17:00"
+      "headline": "美联储被预期将在下次FOMC会议上加息",
+      "why": "若加息预期落地，将对风险资产形成压制，与此前降息预期形成反转，是影响全市场定价的关键变量",
+      "author": "Watcher.Guru",
+      "handle": "watcherguru",
+      "url": "https://x.com/WatcherGuru/status/2083631325353779693",
+      "likes": 967,
+      "views": 132858,
+      "postedAt": "2026-08-02 03:09:54"
     },
     {
-      "headline": "Leopold Aschenbrenner 450亿美元AI基金在婚礼当天崩盘，被迫折价清仓",
-      "why": "被视为AI超级看多者的旗舰基金在极端行情下爆仓出清，揭示AI概念股高杠杆泡沫风险，引发市场对AI估值的重新审视",
-      "author": "Polymarket",
-      "handle": "polymarket",
-      "url": "https://x.com/Polymarket/status/2083283719146623117",
-      "likes": 11783,
-      "views": 1426997,
-      "postedAt": "2026-08-01 04:08:38"
+      "headline": "美国参议院本周日程未列入加密货币清晰法案，通过概率从86%骤降至22%",
+      "why": "本届国会最重要的加密监管立法面临夏季休会前的最后窗口，失败将使行业监管框架推迟至少数月",
+      "author": "Watcher.Guru",
+      "handle": "watcherguru",
+      "url": "https://x.com/WatcherGuru/status/2084098458495942780",
+      "likes": 807,
+      "views": 88498,
+      "postedAt": "2026-08-03 10:06:07"
     }
   ],
   "insights": [
     {
-      "headline": "Benjamin Cowen：10年期美债收益率将重回5%，美联储年内被迫加息",
-      "why": "与市场主流降息预期相悖的反共识判断，若成真将是2026年最大宏观黑天鹅，值得持续跟踪验证",
-      "author": "Benjamin Cowen",
-      "handle": "benjamincowen",
-      "url": "https://x.com/benjamincowen/status/2083546767631511966",
-      "likes": 1321,
-      "views": 262736,
-      "postedAt": "2026-08-01 21:33:54"
+      "headline": "Karpathy：LLM评测范式正在升级，Opus 5用1M token预算生成可玩3D宝可梦世界",
+      "why": "标志着AI能力评估从简单任务转向长上下文、复杂创作，预示模型能力已进入新阶段",
+      "author": "Andrej Karpathy",
+      "handle": "karpathy",
+      "url": "https://x.com/karpathy/status/2083749667410727319",
+      "likes": 21072,
+      "views": 2302120,
+      "postedAt": "2026-08-02 11:00:09"
     },
     {
-      "headline": "Saylor指出BIP-110信号仅来自OCEAN矿池，远未达到55%自愿门槛，矿工共识并不存在",
-      "why": "用链上数据拆穿了'节点数=经济共识'的误解，对比特币协议升级争议提供了关键分析视角",
+      "headline": "Saylor：节点数量不等于经济共识，BIP-110仅有不到1%的经济权重支持",
+      "why": "直接反驳比特币社区常见的节点投票逻辑，对理解比特币治理机制有重要参考价值",
       "author": "Michael Saylor",
       "handle": "saylor",
       "url": "https://x.com/saylor/status/2083613201111945636",
@@ -76,46 +76,46 @@
       "postedAt": "2026-08-02 01:57:53"
     },
     {
-      "headline": "四大科技巨头2026年合计资本开支指引上调至7200-7450亿美元，AI基础设施投入加速",
-      "why": "AMZN/META/GOOGL/MSFT同步上调capex，确认AI需求侧并未因市场下跌而退潮，是判断AI产业链景气度的核心数据点",
-      "author": "Serenity",
-      "handle": "aleabitoreddit",
-      "url": "https://x.com/aleabitoreddit/status/2083270545320386734",
-      "likes": 346,
-      "views": 56315,
-      "postedAt": "2026-08-01 03:16:17"
+      "headline": "Ash Crypto：2025年是史上最差牛市——BTC未见顶，ETH未破5k，山寨季缺席",
+      "why": "对本轮周期的系统性复盘，解释了为何持有者亏损感受远超历史熊市，有助于重新校准下轮周期预期",
+      "author": "Ash Crypto",
+      "handle": "ashcrypto",
+      "url": "https://x.com/AshCrypto/status/2083950213736116375",
+      "likes": 1376,
+      "views": 114836,
+      "postedAt": "2026-08-03 00:17:03"
     },
     {
-      "headline": "Aschenbrenner基金澄清：将继续运营并投资公开市场股票，但停止使用杠杆",
-      "why": "从'停止使用杠杆'这一决定可以反推：此次崩盘的核心是杠杆而非判断失误，为高杠杆AI主题基金敲响警钟",
-      "author": "unusual_whales",
-      "handle": "unusual_whales",
-      "url": "https://x.com/unusual_whales/status/2083231715364122930",
-      "likes": 215,
-      "views": 51933,
-      "postedAt": "2026-08-01 00:42:00"
+      "headline": "Strategy计划出售最多50亿美元比特币以建立美元储备并支付股息",
+      "why": "Saylor此前以永不卖币著称，此举揭示MicroStrategy商业模式的真实财务压力，对MSTR估值逻辑构成挑战",
+      "author": "Ash Crypto",
+      "handle": "ashcrypto",
+      "url": "https://x.com/AshCrypto/status/2083585080208011566",
+      "likes": 152,
+      "views": 24468,
+      "postedAt": "2026-08-02 00:06:08"
     }
   ],
   "buzz": [
     {
-      "topic": "Clarity Act加密监管立法",
-      "gist": "美国参议院距离休会仅剩5天窗口期，Saylor、Grayscale、Coinbase等机构集体背书，市场押注通过后将开启机构资金大规模入场",
-      "url": "https://x.com/WatcherGuru/status/2083906837477253143"
+      "topic": "Coldcard钱包安全危机",
+      "gist": "多波次攻击累计盗走逾1367 BTC，社区争议焦点在于：冷钱包是否比交易所更安全，以及小团队（5人）能否承担如此重要的安全职责",
+      "url": "https://x.com/DefiIgnas/status/2083797339043487746"
     },
     {
-      "topic": "Coldcard硬件钱包安全危机",
-      "gist": "三波攻击累计盗走逾1367 BTC，社区争议焦点在于'自托管是否真的比交易所更安全'，硬件钱包行业公信力受重创",
-      "url": "https://x.com/BitcoinMagazine/status/2083634238104940884"
+      "topic": "美伊谈判与霍尔木兹海峡",
+      "gist": "特朗普宣布达成协议与伊朗否认之间的信息战持续发酵，市场对局势真实走向高度不确定，油价剧烈波动",
+      "url": "https://x.com/unusual_whales/status/2083943098988867978"
     },
     {
-      "topic": "美日联合汇市干预与日元走势",
-      "gist": "美国财政部近30年来首次直接买入日元，市场担忧日元套利交易大规模平仓将引发类似2024年8月的全球资产抛售",
-      "url": "https://x.com/unusual_whales/status/2083753501692407940"
+      "topic": "加密清晰法案能否本周通过",
+      "gist": "参议院日程未列入该法案引发恐慌，但部分人士认为SEC/CFTC将加速自行出台规则，监管明确化只是时间问题",
+      "url": "https://x.com/AshCrypto/status/2084021090414723515"
     },
     {
-      "topic": "Strategy（MSTR）拟出售最多50亿美元比特币",
-      "gist": "Saylor同时喊话'Bitcoin Drive engaged'暗示继续买入，市场对其'永不卖币'承诺产生信任裂痕，多空解读分歧明显",
-      "url": "https://x.com/Polymarket/status/2083577183633604808"
+      "topic": "Strategy卖币与MSTR估值逻辑重估",
+      "gist": "Saylor出售BTC引发争议，核心问题是：当NAV折价出现且需变现支付股息时，MSTR的比特币杠杆溢价是否还成立",
+      "url": "https://x.com/blknoiz06/status/2084261214927094219"
     }
   ]
 }
