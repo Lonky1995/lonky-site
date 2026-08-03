@@ -1,23 +1,23 @@
 {
   "schemaVersion": 1,
   "methodologyVersion": "posture-v4-crowding-valuation",
-  "date": "2026-07-31",
-  "score": 62,
+  "date": "2026-08-03",
+  "score": 65,
   "verdict": "选择性",
   "factors": [
     {
       "key": "trend",
       "label": "趋势",
-      "score": 68,
-      "raw": 6.7,
-      "note": "5日 +1.1% · 20日 +0.3% · 距20日线 +0.2%",
+      "score": 70,
+      "raw": 7,
+      "note": "5日 +1.5% · 20日 -0.2% · 距20日线 +0.6%",
       "inputs": {
-        "dev200": 0.06659740962877447,
-        "ret5": 0.010961796110592337,
-        "ret20": 0.0030210263433496642,
-        "dev20": 0.001790947901586959,
-        "longScore": 88.29870481438724,
-        "momentumScore": 54.754419061284715
+        "dev200": 0.07027950023696694,
+        "ret5": 0.014868283970828955,
+        "ret20": -0.0015986050473858482,
+        "dev20": 0.005960762676670894,
+        "longScore": 90.13975011848348,
+        "momentumScore": 56.67658137460231
       }
     },
     {
@@ -48,29 +48,29 @@
     {
       "key": "leadership",
       "label": "参与结构",
-      "score": 48,
-      "raw": -0.3,
-      "note": "结构中性",
+      "score": 56,
+      "raw": 0.7,
+      "note": "等权指数扩散",
       "inputs": {
-        "excessReturn20": -0.0025557152829058793,
-        "rspReturn20": 0.0004653110604437849,
-        "spyReturn20": 0.0030210263433496642
+        "excessReturn20": 0.0073660469078510316,
+        "rspReturn20": 0.005767441860465183,
+        "spyReturn20": -0.0015986050473858482
       }
     },
     {
       "key": "breadth",
       "label": "广度",
-      "score": 63,
-      "raw": 66.3,
+      "score": 70,
+      "raw": 69.4,
       "note": "参与度尚可",
       "inputs": {
         "universe": "SP100",
         "total": 98,
-        "pctAbove200": 66.3,
-        "pctAbove50": 61.2,
-        "advancers": 52,
-        "decliners": 46,
-        "adDiff": 6,
+        "pctAbove200": 69.4,
+        "pctAbove50": 66.3,
+        "advancers": 78,
+        "decliners": 20,
+        "adDiff": 58,
         "missing": 0
       }
     },
@@ -98,11 +98,11 @@
       "label": "拥挤度",
       "score": 35,
       "raw": 65,
-      "note": "中性（数据滞后）",
+      "note": "中性",
       "inputs": {
         "crowding": 65,
-        "dataAsOf": "2026-07-31",
-        "stale": "true"
+        "dataAsOf": "2026-08-03",
+        "stale": "false"
       }
     },
     {
@@ -131,7 +131,7 @@
     "crowding": 0.1,
     "valuation": 0.1
   },
-  "updatedAt": 1785756897076,
+  "updatedAt": 1785764412861,
   "history": [
     {
       "date": "2026-07-31",
@@ -141,6 +141,18 @@
       "vol": 76,
       "leadership": 48,
       "breadth": 63,
+      "liquidity": 49,
+      "crowding": 35,
+      "valuation": 20
+    },
+    {
+      "date": "2026-08-03",
+      "score": 65,
+      "trend": 70,
+      "credit": 63,
+      "vol": 76,
+      "leadership": 56,
+      "breadth": 70,
       "liquidity": 49,
       "crowding": 35,
       "valuation": 20
