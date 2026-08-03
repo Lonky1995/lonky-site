@@ -8,16 +8,16 @@
     {
       "key": "trend",
       "label": "趋势",
-      "score": 70,
-      "raw": 7,
-      "note": "5日 +1.5% · 20日 -0.2% · 距20日线 +0.6%",
+      "score": 77,
+      "raw": 8.1,
+      "note": "5日 +2.5% · 20日 +0.8% · 距20日线 +1.6%",
       "inputs": {
-        "dev200": 0.07027950023696694,
-        "ret5": 0.014868283970828955,
-        "ret20": -0.0015986050473858482,
-        "dev20": 0.005960762676670894,
-        "longScore": 90.13975011848348,
-        "momentumScore": 56.67658137460231
+        "dev200": 0.08100989472766518,
+        "ret5": 0.025098431855389736,
+        "ret20": 0.008465552124374387,
+        "dev20": 0.01558619996313726,
+        "longScore": 95.50494736383258,
+        "momentumScore": 64.9724692935714
       }
     },
     {
@@ -38,39 +38,39 @@
       "key": "vol",
       "label": "波动",
       "score": 76,
-      "raw": 15.99,
+      "raw": 15.76,
       "note": "波动低位",
       "inputs": {
-        "vix": 15.99,
-        "change5Pct": -0.1393972012917114
+        "vix": 15.76,
+        "change5Pct": -0.15586502410283887
       }
     },
     {
       "key": "leadership",
       "label": "参与结构",
-      "score": 56,
-      "raw": 0.7,
-      "note": "等权指数扩散",
+      "score": 51,
+      "raw": 0.1,
+      "note": "结构中性",
       "inputs": {
-        "excessReturn20": 0.0073660469078510316,
-        "rspReturn20": 0.005767441860465183,
-        "spyReturn20": -0.0015986050473858482
+        "excessReturn20": 0.0014646804337650199,
+        "rspReturn20": 0.009930232558139407,
+        "spyReturn20": 0.008465552124374387
       }
     },
     {
       "key": "breadth",
       "label": "广度",
-      "score": 70,
-      "raw": 69.4,
+      "score": 66,
+      "raw": 67.3,
       "note": "参与度尚可",
       "inputs": {
         "universe": "SP100",
         "total": 98,
-        "pctAbove200": 69.4,
-        "pctAbove50": 66.3,
-        "advancers": 78,
-        "decliners": 20,
-        "adDiff": 58,
+        "pctAbove200": 67.3,
+        "pctAbove50": 62.2,
+        "advancers": 65,
+        "decliners": 33,
+        "adDiff": 32,
         "missing": 0
       }
     },
@@ -131,7 +131,7 @@
     "crowding": 0.1,
     "valuation": 0.1
   },
-  "updatedAt": 1785764412861,
+  "updatedAt": 1785787812121,
   "history": [
     {
       "date": "2026-07-31",
@@ -148,11 +148,11 @@
     {
       "date": "2026-08-03",
       "score": 65,
-      "trend": 70,
+      "trend": 77,
       "credit": 63,
       "vol": 76,
-      "leadership": 56,
-      "breadth": 70,
+      "leadership": 51,
+      "breadth": 66,
       "liquidity": 49,
       "crowding": 35,
       "valuation": 20
