@@ -9,6 +9,10 @@
     "lint": "eslint",
     "sync": "npx tsx scripts/sync-vault.ts",
     "migrate:discussions": "npx tsx scripts/migrate-discussions.ts",
+    "research:login": "npx tsx scripts/xhs-research/collect.ts --login",
+    "research:collect": "npx tsx scripts/xhs-research/collect.ts",
+    "research:analyze": "npx tsx scripts/xhs-research/analyze.ts",
+    "test:research": "node --test --import tsx tests/research/*.test.ts",
     "test:podcast": "node --test --import tsx tests/podcast/**/*.test.ts"
   },
   "dependencies": {
