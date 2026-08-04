@@ -1,121 +1,121 @@
 {
-  "generatedAt": "2026-08-03T16:01:14.204Z",
+  "generatedAt": "2026-08-04T16:02:02.383Z",
   "windowHours": 48,
-  "candidateCount": 1187,
+  "candidateCount": 1190,
   "headlines": [
     {
-      "headline": "Coldcard硬件钱包遭多波次攻击，累计被盗逾1367枚BTC（约8800万美元）",
-      "why": "四波有组织攻击针对同一硬件钱包固件漏洞，规模持续扩大，动摇市场对冷钱包安全性的信心，是近年最大规模自托管钱包安全事件",
+      "headline": "OpenAI 内部模型以 GPT-5.6 API 仅 2000 美元成本，在数学和理论计算机科学领域取得 10 项长期悬而未决问题的突破",
+      "why": "这标志着大模型在硬核科研推理上出现实质能力跃迁，可能改变学术研究与 AI 产业的竞争格局",
+      "author": "OpenAI",
+      "handle": "openai",
+      "url": "https://x.com/OpenAI/status/2084352161404920316",
+      "likes": 11855,
+      "views": 1091693,
+      "postedAt": "2026-08-04 02:54:15"
+    },
+    {
+      "headline": "Michael Saylor 的 Strategy 公司出售 1,637 枚比特币，与其个人\"永不卖币\"信条形成反差",
+      "why": "长期被视为比特币信仰灯塔的机构行为转向，动摇市场标志性叙事，引发对 BTC 机构持仓逻辑的重新定价",
       "author": "Watcher.Guru",
       "handle": "watcherguru",
-      "url": "https://x.com/WatcherGuru/status/2083660194580467890",
-      "likes": 5542,
-      "views": 817749,
-      "postedAt": "2026-08-02 05:04:37"
+      "url": "https://x.com/WatcherGuru/status/2084247457140232624",
+      "likes": 216,
+      "views": 50852,
+      "postedAt": "2026-08-03 19:58:11"
     },
     {
-      "headline": "特朗普宣布取消对伊朗军事打击，称双方已就霍尔木兹海峡开放达成框架协议",
-      "why": "中东局势急转直下，油价单日暴跌逾10%，但伊朗随即否认协议内容，真实进展存在重大分歧，市场波动风险极高",
-      "author": "unusual_whales",
-      "handle": "unusual_whales",
-      "url": "https://x.com/unusual_whales/status/2083742837603197287",
-      "likes": 863,
-      "views": 95585,
-      "postedAt": "2026-08-02 10:33:01"
-    },
-    {
-      "headline": "美国财政部15年来首次直接入场干预外汇市场，联合日本买入日元",
-      "why": "打破美国长期不干预汇率的政策惯例，贝森特明确表示不排除再次干预，标志着美元政策出现结构性转向",
-      "author": "Polymarket",
-      "handle": "polymarket",
-      "url": "https://x.com/Polymarket/status/2083682972478181875",
-      "likes": 497,
-      "views": 43172,
-      "postedAt": "2026-08-02 06:35:08"
-    },
-    {
-      "headline": "美联储被预期将在下次FOMC会议上加息",
-      "why": "若加息预期落地，将对风险资产形成压制，与此前降息预期形成反转，是影响全市场定价的关键变量",
+      "headline": "Coldcard 硬件钱包被曝严重漏洞，黑客已盗取超 1 亿美元比特币",
+      "why": "硬件钱包主张的安全信任被打破，触发链上大规模恐慌转移，暴露自我托管基础设施的脆弱性",
       "author": "Watcher.Guru",
       "handle": "watcherguru",
-      "url": "https://x.com/WatcherGuru/status/2083631325353779693",
-      "likes": 967,
-      "views": 132858,
-      "postedAt": "2026-08-02 03:09:54"
+      "url": "https://x.com/WatcherGuru/status/2084413716494266594",
+      "likes": 797,
+      "views": 100247,
+      "postedAt": "2026-08-04 06:58:51"
     },
     {
-      "headline": "美国参议院本周日程未列入加密货币清晰法案，通过概率从86%骤降至22%",
-      "why": "本届国会最重要的加密监管立法面临夏季休会前的最后窗口，失败将使行业监管框架推迟至少数月",
+      "headline": "Telegram 被苹果 App Store 全球下架",
+      "why": "影响超 8 亿用户的即时通讯基础设施中断，可能改变加密社区基础工具格局，并引发去中心化通信路由讨论",
       "author": "Watcher.Guru",
       "handle": "watcherguru",
-      "url": "https://x.com/WatcherGuru/status/2084098458495942780",
-      "likes": 807,
-      "views": 88498,
-      "postedAt": "2026-08-03 10:06:07"
+      "url": "https://x.com/WatcherGuru/status/2084448699514753341",
+      "likes": 21482,
+      "views": 2644351,
+      "postedAt": "2026-08-04 09:17:51"
+    },
+    {
+      "headline": "布伦特原油暴跌 10%，因美国与伊朗停止军事打击并接近达成霍尔木兹海峡协议",
+      "why": "地缘供给风险溢价急速消退，能源价格和通胀预期骤变，全球风险资产定价迎来短期重定价窗口",
+      "author": "Watcher.Guru",
+      "handle": "watcherguru",
+      "url": "https://x.com/WatcherGuru/status/2084037204234445124",
+      "likes": 2383,
+      "views": 224120,
+      "postedAt": "2026-08-03 06:02:43"
     }
   ],
   "insights": [
     {
-      "headline": "Karpathy：LLM评测范式正在升级，Opus 5用1M token预算生成可玩3D宝可梦世界",
-      "why": "标志着AI能力评估从简单任务转向长上下文、复杂创作，预示模型能力已进入新阶段",
-      "author": "Andrej Karpathy",
-      "handle": "karpathy",
-      "url": "https://x.com/karpathy/status/2083749667410727319",
-      "likes": 21072,
-      "views": 2302120,
-      "postedAt": "2026-08-02 11:00:09"
+      "headline": "市场对 Palantir 的定价已从\"AI 应用唯一赢家\"退化为\"AI 应用赢家之一\"，一字之差导致估值倍数崩溃",
+      "why": "揭示了 AI 叙事从稀缺性溢价走向竞争性折价的转折，当市场发现应用层并非赢家通吃时，高估值会瞬间瓦解",
+      "author": "Shay Boloor",
+      "handle": "stocksavvyshay",
+      "url": "https://x.com/StockSavvyShay/status/2084350497969070092",
+      "likes": 48,
+      "views": 21503,
+      "postedAt": "2026-08-04 02:47:38"
     },
     {
-      "headline": "Saylor：节点数量不等于经济共识，BIP-110仅有不到1%的经济权重支持",
-      "why": "直接反驳比特币社区常见的节点投票逻辑，对理解比特币治理机制有重要参考价值",
-      "author": "Michael Saylor",
-      "handle": "saylor",
-      "url": "https://x.com/saylor/status/2083613201111945636",
-      "likes": 684,
-      "views": 103448,
-      "postedAt": "2026-08-02 01:57:53"
+      "headline": "Citadel 通过先喊话加息制造恐慌再抄底的叙事劫持手法，两日账面浮盈约 50 亿美元",
+      "why": "暴露了顶级对冲基金如何利用宏观叙事定价权在极端波动中收割，散户与机构之间的信息与工具不对称被极致放大",
+      "author": "Roger波杰克",
+      "handle": "roger9949",
+      "url": "https://x.com/roger9949/status/2084446679168958665",
+      "likes": 18,
+      "views": 2547,
+      "postedAt": "2026-08-04 09:09:50"
     },
     {
-      "headline": "Ash Crypto：2025年是史上最差牛市——BTC未见顶，ETH未破5k，山寨季缺席",
-      "why": "对本轮周期的系统性复盘，解释了为何持有者亏损感受远超历史熊市，有助于重新校准下轮周期预期",
-      "author": "Ash Crypto",
-      "handle": "ashcrypto",
-      "url": "https://x.com/AshCrypto/status/2083950213736116375",
-      "likes": 1376,
-      "views": 114836,
-      "postedAt": "2026-08-03 00:17:03"
+      "headline": "散户投资本质就是动量交易，每次动量消退时死伤最惨的就是散户",
+      "why": "一针见血指出散户困境：追逐热度本质是追涨杀跌，却往往在市场轮动时成为最后接棒者，对普通投资者有强反思价值",
+      "author": "勃勃OC",
+      "handle": "bboczeng",
+      "url": "https://x.com/bboczeng/status/2084207270305636557",
+      "likes": 165,
+      "views": 29739,
+      "postedAt": "2026-08-03 17:18:30"
     },
     {
-      "headline": "Strategy计划出售最多50亿美元比特币以建立美元储备并支付股息",
-      "why": "Saylor此前以永不卖币著称，此举揭示MicroStrategy商业模式的真实财务压力，对MSTR估值逻辑构成挑战",
-      "author": "Ash Crypto",
-      "handle": "ashcrypto",
-      "url": "https://x.com/AshCrypto/status/2083585080208011566",
-      "likes": 152,
-      "views": 24468,
-      "postedAt": "2026-08-02 00:06:08"
+      "headline": "冷钱包漏洞仅用 AI 花费 2 美元便发现，加密产品安全正由公司审计投入决定",
+      "why": "安全研究员指出 AI 正在重构黑客经济学，攻击成本断崖式下降，迫使安全行业彻底改变防御模型",
+      "author": "Wu Blockchain",
+      "handle": "wublockchain",
+      "url": "https://x.com/WuBlockchain/status/2084497001618747800",
+      "likes": 13,
+      "views": 5418,
+      "postedAt": "2026-08-04 12:29:47"
     }
   ],
   "buzz": [
     {
-      "topic": "Coldcard钱包安全危机",
-      "gist": "多波次攻击累计盗走逾1367 BTC，社区争议焦点在于：冷钱包是否比交易所更安全，以及小团队（5人）能否承担如此重要的安全职责",
-      "url": "https://x.com/DefiIgnas/status/2083797339043487746"
+      "topic": "美国《清晰法案》本周能否投票",
+      "gist": "加密行业集体呼吁通过该法案以建立监管框架，但参议院日程屡次缺席，社区在失望与希望间反复",
+      "url": "https://x.com/WatcherGuru/status/2084391835321966604"
     },
     {
-      "topic": "美伊谈判与霍尔木兹海峡",
-      "gist": "特朗普宣布达成协议与伊朗否认之间的信息战持续发酵，市场对局势真实走向高度不确定，油价剧烈波动",
-      "url": "https://x.com/unusual_whales/status/2083943098988867978"
+      "topic": "Telegram 被苹果下架",
+      "gist": "全球性事件引发用户恐慌与猜测，去中心化替代方案讨论激增，同时 DOJ 与平台治理争议被反复提及",
+      "url": "https://x.com/wolfyxbt/status/2084453945343402337"
     },
     {
-      "topic": "加密清晰法案能否本周通过",
-      "gist": "参议院日程未列入该法案引发恐慌，但部分人士认为SEC/CFTC将加速自行出台规则，监管明确化只是时间问题",
-      "url": "https://x.com/AshCrypto/status/2084021090414723515"
+      "topic": "Strategy 出售比特币打破\"永不做空\"人设",
+      "gist": "社区争议极大，Saylor 强调个人未卖但公司行为被视为信仰动摇，市场短期解读为利空信号",
+      "url": "https://x.com/CryptoNobler/status/2084265365475901770"
     },
     {
-      "topic": "Strategy卖币与MSTR估值逻辑重估",
-      "gist": "Saylor出售BTC引发争议，核心问题是：当NAV折价出现且需变现支付股息时，MSTR的比特币杠杆溢价是否还成立",
-      "url": "https://x.com/blknoiz06/status/2084261214927094219"
+      "topic": "冷钱包黑客事件引爆硬件安全信任危机",
+      "gist": "超过 7000 个地址受影响，用户质疑闭源钱包设计，行业开始呼吁开源与可验证的安全方案",
+      "url": "https://x.com/Polymarket/status/2084432471936897196"
     }
   ]
 }
