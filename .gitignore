@@ -44,3 +44,14 @@ next-env.d.ts
 .velite
 /public/static
 .gitnexus
+
+# 竞品调研的原始抓取数据与报告
+# 默认不入库：内容来自第三方平台，且随时可重新采集。
+# 确实要留档的报告用 `git add -f` 单独加。
+/data/research
+# collect.ts --debug 的产物
+/debug-*.png
+/debug-*.html
+
+# 选题 agent 的快照与运行记录（每天增长，且可重新采集）
+/data/topic-agent
