@@ -1,13 +1,13 @@
 {
-  "date": "2026-08-05",
+  "date": "2026-08-06",
   "universe": "SP100",
   "total": 98,
-  "pctAbove200": 68.4,
-  "pctAbove50": 72.4,
-  "advancers": 56,
-  "decliners": 42,
-  "adDiff": 14,
-  "breadthScore": 68,
+  "pctAbove200": 72.4,
+  "pctAbove50": 74.5,
+  "advancers": 66,
+  "decliners": 32,
+  "adDiff": 34,
+  "breadthScore": 72,
   "missing": 0,
-  "updatedAt": 1785960611999
+  "updatedAt": 1786023620735
 }
