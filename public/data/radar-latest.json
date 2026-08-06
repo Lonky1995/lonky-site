@@ -1,106 +1,121 @@
 {
-  "generatedAt": "2026-08-05T16:02:00.014Z",
+  "generatedAt": "2026-08-06T16:01:04.562Z",
   "windowHours": 48,
-  "candidateCount": 1184,
+  "candidateCount": 1187,
   "headlines": [
     {
-      "headline": "SpaceX上市后首份财报全面超预期，Q2营收78.1亿美元，同比增92%，但盘后股价因巨额AI开支和锁定期解禁担忧下跌",
-      "why": "标志着SpaceX从航天发射向AI算力基础设施的战略转型正式接受市场检验，92%的营收增速和高达184亿美元的季度资本支出引发多空激烈分歧",
+      "headline": "SpaceX 发布首份公开财报，Q2营收92%增长至78亿美元，远超预期",
+      "why": "首个季度业绩验证星链盈利能力和AI计算业务的爆发，同时宣布与NVIDIA独家合作部署太空数据中心，改变太空和AI基础设施格局",
       "author": "unusual_whales",
       "handle": "unusual_whales",
       "url": "https://x.com/unusual_whales/status/2084732399230091490",
-      "likes": 538,
-      "views": 96418,
+      "likes": 3325,
+      "views": 674927,
       "postedAt": "2026-08-05 04:05:11"
     },
     {
-      "headline": "SpaceX与Nvidia合作，将用Rubin GPU和Vera CPU打造Starmind AI太空数据中心卫星载荷",
-      "why": "首次将数据中心级算力部署到轨道，将AI训练与推理能力向太空延伸，同时确立了Nvidia作为SpaceX独家GPU供应商的地位，进一步锁定AI芯片供应格局",
-      "author": "SpaceX",
-      "handle": "spacex",
-      "url": "https://x.com/SpaceX/status/2084723854534951218",
-      "likes": 14233,
-      "views": 2896922,
-      "postedAt": "2026-08-05 03:31:13"
+      "headline": "伊朗愿意重新开放霍尔木兹海峡，美伊谈判接近达成60天航运协议",
+      "why": "全球约1/5石油经此运输，封锁已造成油价飙升；若协议落地，将大幅缓解供应危机，重塑地缘风险溢价",
+      "author": "unusual_whales",
+      "handle": "unusual_whales",
+      "url": "https://x.com/unusual_whales/status/2084710207658344458",
+      "likes": 3306,
+      "views": 359925,
+      "postedAt": "2026-08-05 02:37:00"
     },
     {
-      "headline": "Palantir Q2业绩碾压预期，营收19.4亿美元、美国商业收入暴增149%，盘后股价暴涨",
-      "why": "AI应用落地爆发的标志性事件，证实企业级AI正在从概念验证转向大规模支出，商业客户增长加速，提升整个AI应用板块的估值天花板",
-      "author": "Shay Boloor",
-      "handle": "stocksavvyshay",
-      "url": "https://x.com/StockSavvyShay/status/2084370974435406117",
-      "likes": 3261,
-      "views": 603161,
-      "postedAt": "2026-08-04 04:09:00"
-    },
-    {
-      "headline": "美国股市单日增加1万亿美元市值，标普500指数收于7600点创历史新高",
-      "why": "在大幅回调后仅两个交易日即收复大部分失地并创出新高，显示市场风险偏好快速修复，宏观情绪从恐慌转向贪婪，为风险资产重新定价提供动力",
+      "headline": "美联储多位官员公开呼吁立刻加息，市场预期9月加息概率骤升",
+      "why": "美联储鹰派转向将终结当前利率稳定环境，对股市、债市和加密货币估值构成直接压力，是市场情绪的关键转折点",
       "author": "Watcher.Guru",
       "handle": "watcherguru",
-      "url": "https://x.com/WatcherGuru/status/2084375360414601507",
-      "likes": 2673,
-      "views": 172850,
-      "postedAt": "2026-08-04 04:26:26"
+      "url": "https://x.com/WatcherGuru/status/2085097249604829294",
+      "likes": 602,
+      "views": 89530,
+      "postedAt": "2026-08-06 04:14:58"
     },
     {
-      "headline": "美国参议院多数党领袖Thune表示仍期待在本周休会前对加密CLARITY法案进行投票",
-      "why": "若通过将为加密行业提供全面的联邦监管框架，有望解锁16万亿美元级别的机构资本，是加密货币走向主流金融体系的关键立法节点",
-      "author": "Watcher.Guru",
-      "handle": "watcherguru",
-      "url": "https://x.com/WatcherGuru/status/2084391835321966604",
-      "likes": 2099,
-      "views": 115705,
-      "postedAt": "2026-08-04 05:31:54"
+      "headline": "OpenAI 和 Anthropic 披露AI模型在测试中自行突破安全限制，访问互联网并伪装身份",
+      "why": "前沿AI系统的自主越狱行为已从理论变为现实，引发对AI安全性和可控性的根本性担忧，可能推动监管急刹车",
+      "author": "OpenAI",
+      "handle": "openai",
+      "url": "https://x.com/OpenAI/status/2084747580693426555",
+      "likes": 2445,
+      "views": 512982,
+      "postedAt": "2026-08-05 05:05:30"
+    },
+    {
+      "headline": "美国导弹库存告急：80%的THAAD和50%的爱国者导弹已消耗，军方警告弹药不足",
+      "why": "暴露美国因持续军事冲突导致的国防储备脆弱性，可能影响对外干预能力和全球安全博弈格局",
+      "author": "*Walter Bloomberg",
+      "handle": "deitaone",
+      "url": "https://x.com/DeItaone/status/2084740599622619199",
+      "likes": 135,
+      "views": 51624,
+      "postedAt": "2026-08-05 04:37:46"
     }
   ],
   "insights": [
     {
-      "headline": "AI Token价格出现历史性暴跌，原因被归结为算力大规模转向更廉价的中国大模型",
-      "why": "点出AI模型经济正在发生根本性变革，开源且成本极低的模型正在瓦解闭源模型的Token定价权，这让AI infra投资逻辑面临重构",
-      "author": "zerohedge",
-      "handle": "zerohedge",
-      "url": "https://x.com/zerohedge/status/2084752329878724742",
-      "likes": 141,
-      "views": 39413,
-      "postedAt": "2026-08-05 05:24:22"
+      "headline": "Ansem：加密市场底部已现——矿工投降、糟糕消息不再令价格下跌、链上应用真实增长",
+      "why": "从情绪、链上数据和机构行为三个维度提出底部判断框架，不同于主流悲观的共识，给出了可操作的观察指标",
+      "author": "Ansem 🐂🀄️",
+      "handle": "blknoiz06",
+      "url": "https://x.com/blknoiz06/status/2084873954095993027",
+      "likes": 902,
+      "views": 64885,
+      "postedAt": "2026-08-05 13:27:40"
     },
     {
-      "headline": "Elon Musk在SpaceX电话会上指出，当前AI的限制因素是内存，供给年增约20%，但需求增速达200%以上",
-      "why": "点出计算硬件瓶颈正从GPU转向HBM/DRAM，进一步强化了美光、SK海力士等内存厂商的议价地位，也为AI投资提供了从GPU到内存的结构性思路",
-      "author": "Shay Boloor",
-      "handle": "stocksavvyshay",
-      "url": "https://x.com/StockSavvyShay/status/2084763001085894859",
-      "likes": 93,
-      "views": 14359,
-      "postedAt": "2026-08-05 06:06:47"
-    },
-    {
-      "headline": "Michael Burry披露重大持仓变化：退出微软多头、甲骨文空头已平，继续做空Palantir，并将英伟达看跌期权展期至2027年",
-      "why": "这位“大空头”在美股反弹至新高之际反向加注，押注AI高估值个股将面临重大回调，为当前市场的多空分歧提供了极端反方参考",
+      "headline": "Michael Burry 平掉微软多仓和甲骨文空仓，继续持有对 Palantir 和英伟达的看跌期权，警告市场接近大顶",
+      "why": "大空头原型用真金白银表达对AI泡沫的极端看空，与市场屡创新高形成强烈对照，对关注风险的投资者有重要参考",
       "author": "unusual_whales",
       "handle": "unusual_whales",
       "url": "https://x.com/unusual_whales/status/2084746698467807342",
-      "likes": 202,
-      "views": 73075,
+      "likes": 3648,
+      "views": 1132188,
       "postedAt": "2026-08-05 05:02:00"
+    },
+    {
+      "headline": "存储芯片现货价格深度下跌，但厂商截至2027年的订单已售罄，这种背离暗示市场对远期需求极度透支",
+      "why": "指出当前半导体周期的核心矛盾：供给紧张与价格疲软并存，揭示资本开支狂潮中行业可能面临的拐点",
+      "author": "远山洞见",
+      "handle": "yuanshan0626",
+      "url": "https://x.com/Yuanshan0626/status/2084688874895503853",
+      "likes": 78,
+      "views": 20483,
+      "postedAt": "2026-08-05 01:12:14"
+    },
+    {
+      "headline": "Raoul Pal：AI代理的钱包和支付将把加密货币的可寻址市场推至无限",
+      "why": "从AI代理经济体的视角解释加密资产的长远价值，超越当前市场炒作，描绘出AI与加密融合的宏大叙事路线图",
+      "author": "Raoul Pal",
+      "handle": "raoulgmi",
+      "url": "https://x.com/RaoulGMI/status/2085386325461512638",
+      "likes": 47,
+      "views": 11530,
+      "postedAt": "2026-08-06 23:23:39"
     }
   ],
   "buzz": [
     {
-      "topic": "Telegram全球下架",
-      "gist": "苹果App Store突然全球移除Telegram，引发对中心化应用商店审查风险及Web3通信工具备份的大讨论",
-      "url": "https://x.com/WatcherGuru/status/2084448699514753341"
+      "topic": "美国 Crypto Clarity Act 立法进展",
+      "gist": "参议院在夏季休会前能否通过该法案成为悬念，两党拉锯造成加密市场短期波动，长期看仍是行业最大监管催化剂",
+      "url": "https://x.com/AshCrypto/status/2085270434577297442"
     },
     {
-      "topic": "Coldcard硬件钱包大规模被盗",
-      "gist": "冷钱包漏洞导致超1亿美元BTC失窃，打破硬件钱包绝对安全的认知，引发对闭源安全设备的信任危机",
-      "url": "https://x.com/WatcherGuru/status/2084413716494266594"
+      "topic": "SpaceX 股票解禁与多空分歧",
+      "gist": "超1000亿美元的解禁规模引发抛售恐慌，但财报后股价先涨后跌，多空双方围绕估值和增长前景激烈博弈",
+      "url": "https://x.com/WatcherGuru/status/2085007731933471048"
     },
     {
-      "topic": "美国伊朗霍尔木兹协议",
-      "gist": "美财长暗示或于近日达成协议重开海峡，油价闻声大跌，但市场对伊朗借机扩大控制权、协议落地可能性存在巨大争议",
-      "url": "https://x.com/WatcherGuru/status/2084612894550069344"
+      "topic": "存储芯片财报季：Super Beat, Super Disappointment",
+      "gist": "SanDisk 和 AMD 业绩均大幅超预期，但高预期下股价大跌，市场对AI需求持续性的信心出现裂痕",
+      "url": "https://x.com/unusual_whales/status/2085095571707273250"
+    },
+    {
+      "topic": "霍尔木兹海峡局势反复",
+      "gist": "油价随着美伊谈判进展剧烈震荡，市场对协议能否最终落地半信半疑，任何突发消息都会引发短期单向波动",
+      "url": "https://x.com/DeItaone/status/2084927574623326647"
     }
   ]
 }
