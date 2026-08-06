@@ -1,23 +1,23 @@
 {
   "schemaVersion": 1,
   "methodologyVersion": "posture-v4-crowding-valuation",
-  "date": "2026-08-05",
-  "score": 68,
+  "date": "2026-08-06",
+  "score": 69,
   "verdict": "选择性",
   "factors": [
     {
       "key": "trend",
       "label": "趋势",
-      "score": 89,
-      "raw": 9.7,
-      "note": "5日 +5.5% · 20日 +3.3% · 距20日线 +2.9%",
+      "score": 85,
+      "raw": 9.6,
+      "note": "5日 +3.8% · 20日 +2.4% · 距20日线 +2.7%",
       "inputs": {
-        "dev200": 0.09663258135758812,
-        "ret5": 0.05526005538343415,
-        "ret20": 0.032693855647974335,
-        "dev20": 0.028535695841937603,
+        "dev200": 0.09571784872138234,
+        "ret5": 0.03777184538014522,
+        "ret20": 0.023938752976546906,
+        "dev20": 0.027212548006393833,
         "longScore": 100,
-        "momentumScore": 81.62754122197492
+        "momentumScore": 75.6512566249375
       }
     },
     {
@@ -37,40 +37,40 @@
     {
       "key": "vol",
       "label": "波动",
-      "score": 80,
-      "raw": 15.71,
+      "score": 79,
+      "raw": 15.81,
       "note": "波动低位",
       "inputs": {
-        "vix": 15.71,
-        "change5Pct": -0.23959341723136496
+        "vix": 15.81,
+        "change5Pct": -0.2347531461761858
       }
     },
     {
       "key": "leadership",
       "label": "参与结构",
-      "score": 52,
-      "raw": 0.3,
-      "note": "结构中性",
+      "score": 55,
+      "raw": 0.7,
+      "note": "等权指数扩散",
       "inputs": {
-        "excessReturn20": 0.002932911552779638,
-        "rspReturn20": 0.03562676720075397,
-        "spyReturn20": 0.032693855647974335
+        "excessReturn20": 0.006506211894647507,
+        "rspReturn20": 0.030444964871194413,
+        "spyReturn20": 0.023938752976546906
       }
     },
     {
       "key": "breadth",
       "label": "广度",
-      "score": 68,
-      "raw": 68.4,
+      "score": 72,
+      "raw": 72.4,
       "note": "参与度尚可",
       "inputs": {
         "universe": "SP100",
         "total": 98,
-        "pctAbove200": 68.4,
-        "pctAbove50": 72.4,
-        "advancers": 56,
-        "decliners": 42,
-        "adDiff": 14,
+        "pctAbove200": 72.4,
+        "pctAbove50": 74.5,
+        "advancers": 66,
+        "decliners": 32,
+        "adDiff": 34,
         "missing": 0
       }
     },
@@ -96,12 +96,12 @@
     {
       "key": "crowding",
       "label": "拥挤度",
-      "score": 17,
-      "raw": 83,
-      "note": "偏拥挤",
+      "score": 35,
+      "raw": 65,
+      "note": "中性",
       "inputs": {
-        "crowding": 83,
-        "dataAsOf": "2026-08-05",
+        "crowding": 65,
+        "dataAsOf": "2026-08-06",
         "stale": "false"
       }
     },
@@ -131,7 +131,7 @@
     "crowding": 0.1,
     "valuation": 0.1
   },
-  "updatedAt": 1785960614175,
+  "updatedAt": 1786023628589,
   "history": [
     {
       "date": "2026-07-31",
@@ -179,6 +179,18 @@
       "breadth": 68,
       "liquidity": 48,
       "crowding": 17,
+      "valuation": 20
+    },
+    {
+      "date": "2026-08-06",
+      "score": 69,
+      "trend": 85,
+      "credit": 65,
+      "vol": 79,
+      "leadership": 55,
+      "breadth": 72,
+      "liquidity": 48,
+      "crowding": 35,
       "valuation": 20
     }
   ]
