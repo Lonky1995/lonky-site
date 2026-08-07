@@ -1,48 +1,48 @@
 {
   "schemaVersion": 1,
   "methodologyVersion": "posture-v4-crowding-valuation",
-  "date": "2026-08-06",
-  "score": 66,
+  "date": "2026-08-07",
+  "score": 65,
   "verdict": "选择性",
   "factors": [
     {
       "key": "trend",
       "label": "趋势",
-      "score": 85,
-      "raw": 9.4,
-      "note": "5日 +3.6% · 20日 +2.2% · 距20日线 +2.6%",
+      "score": 84,
+      "raw": 9.6,
+      "note": "5日 +3.2% · 20日 +2.1% · 距20日线 +2.8%",
       "inputs": {
-        "dev200": 0.09415342547891314,
-        "ret5": 0.03628200461109077,
-        "ret20": 0.022468771201660243,
-        "dev20": 0.025813503741696886,
+        "dev200": 0.09645241963246787,
+        "ret5": 0.03176579253845224,
+        "ret20": 0.02094178422412063,
+        "dev20": 0.02761491772187763,
         "longScore": 100,
-        "momentumScore": 74.44329798453926
+        "momentumScore": 73.28386745746339
       }
     },
     {
       "key": "credit",
       "label": "信用",
       "score": 65,
-      "raw": 273,
+      "raw": 275,
       "note": "利差低位 · 近期稳定",
       "inputs": {
         "source": "ICE BofA US High Yield OAS",
-        "valueBps": 273,
-        "change20Bps": 6,
-        "dataAsOf": "2026-08-04",
-        "zScore": -0.9713
+        "valueBps": 275,
+        "change20Bps": 5,
+        "dataAsOf": "2026-08-05",
+        "zScore": -0.9173
       }
     },
     {
       "key": "vol",
       "label": "波动",
       "score": 75,
-      "raw": 15.29,
+      "raw": 15.15,
       "note": "波动低位",
       "inputs": {
-        "vix": 15.29,
-        "change5Pct": -0.10532475131655938
+        "vix": 15.15,
+        "change5Pct": -0.11351667641895846
       }
     },
     {
@@ -52,56 +52,56 @@
       "raw": 0.1,
       "note": "结构中性",
       "inputs": {
-        "excessReturn20": 0.0014656550278480118,
-        "rspReturn20": 0.023934426229508254,
-        "spyReturn20": 0.022468771201660243
+        "excessReturn20": 0.0011067458738727165,
+        "rspReturn20": 0.022048530097993346,
+        "spyReturn20": 0.02094178422412063
       }
     },
     {
       "key": "breadth",
       "label": "广度",
-      "score": 66,
-      "raw": 70.4,
+      "score": 64,
+      "raw": 68.4,
       "note": "参与度尚可",
       "inputs": {
         "universe": "SP100",
         "total": 98,
-        "pctAbove200": 70.4,
+        "pctAbove200": 68.4,
         "pctAbove50": 69.4,
-        "advancers": 43,
-        "decliners": 55,
-        "adDiff": -12,
+        "advancers": 37,
+        "decliners": 61,
+        "adDiff": -24,
         "missing": 0
       }
     },
     {
       "key": "liquidity",
       "label": "美元流动性",
-      "score": 48,
-      "raw": 52,
+      "score": 47,
+      "raw": 53,
       "note": "中性 · 转弱 · 结构脆弱",
       "inputs": {
         "source": "DollarLiquidity DLI",
-        "percentile5y": 52,
+        "percentile5y": 53,
         "status": "neutral",
         "momentum": "deteriorating",
         "confidence": "high",
         "vulnerability": "elevated",
-        "buffer": 11.64,
-        "dataAsOf": "2026-08-05",
-        "indicators": 12,
+        "buffer": 11.67,
+        "dataAsOf": "2026-08-06",
+        "indicators": 11,
         "totalIndicators": 12
       }
     },
     {
       "key": "crowding",
       "label": "拥挤度",
-      "score": 35,
-      "raw": 65,
-      "note": "中性",
+      "score": 17,
+      "raw": 83,
+      "note": "偏拥挤",
       "inputs": {
-        "crowding": 65,
-        "dataAsOf": "2026-08-06",
+        "crowding": 83,
+        "dataAsOf": "2026-08-07",
         "stale": "false"
       }
     },
@@ -131,7 +131,7 @@
     "crowding": 0.1,
     "valuation": 0.1
   },
-  "updatedAt": 1786047030039,
+  "updatedAt": 1786110016241,
   "history": [
     {
       "date": "2026-07-31",
@@ -191,6 +191,18 @@
       "breadth": 66,
       "liquidity": 48,
       "crowding": 35,
+      "valuation": 20
+    },
+    {
+      "date": "2026-08-07",
+      "score": 65,
+      "trend": 84,
+      "credit": 65,
+      "vol": 75,
+      "leadership": 51,
+      "breadth": 64,
+      "liquidity": 47,
+      "crowding": 17,
       "valuation": 20
     }
   ]
