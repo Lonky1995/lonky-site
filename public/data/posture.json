@@ -1,23 +1,23 @@
 {
   "schemaVersion": 1,
   "methodologyVersion": "posture-v4-crowding-valuation",
-  "date": "2026-08-07",
-  "score": 68,
+  "date": "2026-08-10",
+  "score": 64,
   "verdict": "选择性",
   "factors": [
     {
       "key": "trend",
       "label": "趋势",
-      "score": 86,
-      "raw": 10,
-      "note": "5日 +3.5% · 20日 +2.4% · 距20日线 +3.1%",
+      "score": 83,
+      "raw": 9.9,
+      "note": "5日 +2.0% · 20日 +3.2% · 距20日线 +2.9%",
       "inputs": {
-        "dev200": 0.09993267140873541,
-        "ret5": 0.035058832978595245,
-        "ret20": 0.02420027816411685,
-        "dev20": 0.030725681695028095,
+        "dev200": 0.09869724537462843,
+        "ret5": 0.020114297781355983,
+        "ret20": 0.031688401831360125,
+        "dev20": 0.028682009078210724,
         "longScore": 100,
-        "momentumScore": 75.96155125189392
+        "momentumScore": 71.54683592508225
       }
     },
     {
@@ -38,58 +38,58 @@
       "key": "vol",
       "label": "波动",
       "score": 73,
-      "raw": 14.87,
+      "raw": 14.9,
       "note": "波动低位",
       "inputs": {
-        "vix": 14.87,
-        "change5Pct": -0.07004377736085055
+        "vix": 14.9,
+        "change5Pct": -0.06816760475297057
       }
     },
     {
       "key": "leadership",
       "label": "参与结构",
-      "score": 52,
-      "raw": 0.3,
-      "note": "结构中性",
+      "score": 44,
+      "raw": -0.7,
+      "note": "上涨仍偏集中",
       "inputs": {
-        "excessReturn20": 0.0028645841783936365,
-        "rspReturn20": 0.027064862342510487,
-        "spyReturn20": 0.02420027816411685
+        "excessReturn20": -0.0071820301747294035,
+        "rspReturn20": 0.02450637165663072,
+        "spyReturn20": 0.031688401831360125
       }
     },
     {
       "key": "breadth",
       "label": "广度",
-      "score": 72,
-      "raw": 74.5,
+      "score": 64,
+      "raw": 69.4,
       "note": "参与度尚可",
       "inputs": {
         "universe": "SP100",
         "total": 98,
-        "pctAbove200": 74.5,
-        "pctAbove50": 68.4,
-        "advancers": 65,
-        "decliners": 32,
-        "adDiff": 33,
+        "pctAbove200": 69.4,
+        "pctAbove50": 67.3,
+        "advancers": 32,
+        "decliners": 63,
+        "adDiff": -31,
         "missing": 0
       }
     },
     {
       "key": "liquidity",
       "label": "美元流动性",
-      "score": 47,
-      "raw": 53,
+      "score": 46,
+      "raw": 54,
       "note": "中性 · 转弱 · 结构脆弱",
       "inputs": {
         "source": "DollarLiquidity DLI",
-        "percentile5y": 53,
+        "percentile5y": 54,
         "status": "neutral",
         "momentum": "deteriorating",
         "confidence": "high",
         "vulnerability": "elevated",
-        "buffer": 11.67,
+        "buffer": 11.7,
         "dataAsOf": "2026-08-07",
-        "indicators": 11,
+        "indicators": 12,
         "totalIndicators": 12
       }
     },
@@ -101,7 +101,7 @@
       "note": "偏拥挤",
       "inputs": {
         "crowding": 80,
-        "dataAsOf": "2026-08-07",
+        "dataAsOf": "2026-08-10",
         "stale": "false"
       }
     },
@@ -110,13 +110,13 @@
       "label": "估值",
       "score": 50,
       "raw": 15.099,
-      "note": "PB 15.10 · 50分位（样本积累中）",
+      "note": "PB 15.10 · 50分位（样本积累中）（数据滞后）",
       "inputs": {
         "pb": 15.099,
         "percentile": 50,
         "windowPoints": 2,
         "dataAsOf": "2026-08-07",
-        "stale": "false",
+        "stale": "true",
         "lowSample": "true"
       }
     }
@@ -131,7 +131,7 @@
     "crowding": 0.1,
     "valuation": 0.1
   },
-  "updatedAt": 1786133413905,
+  "updatedAt": 1786369220861,
   "history": [
     {
       "date": "2026-07-31",
@@ -202,6 +202,18 @@
       "leadership": 52,
       "breadth": 72,
       "liquidity": 47,
+      "crowding": 20,
+      "valuation": 50
+    },
+    {
+      "date": "2026-08-10",
+      "score": 64,
+      "trend": 83,
+      "credit": 66,
+      "vol": 73,
+      "leadership": 44,
+      "breadth": 64,
+      "liquidity": 46,
       "crowding": 20,
       "valuation": 50
     }
