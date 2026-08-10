@@ -3,11 +3,11 @@
   "universe": "SP100",
   "total": 98,
   "pctAbove200": 69.4,
-  "pctAbove50": 67.3,
-  "advancers": 32,
-  "decliners": 63,
-  "adDiff": -31,
-  "breadthScore": 64,
+  "pctAbove50": 70.4,
+  "advancers": 56,
+  "decliners": 41,
+  "adDiff": 15,
+  "breadthScore": 68,
   "missing": 0,
-  "updatedAt": 1786369214722
+  "updatedAt": 1786392609663
 }
