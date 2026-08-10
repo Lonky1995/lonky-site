@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-09T12:30:34.423Z",
+  "generatedAt": "2026-08-10T20:10:35.289Z",
   "positions": [
     {
       "id": "pos_1784266016509_6374qc",
@@ -16,7 +16,7 @@
       "stopLoss": "110",
       "conviction": 3,
       "status": "active",
-      "lastReview": "本周：本周事件；想法验证；支持「数据中心 AI 需求」叙事：Q4 FY2026 IaaS 云收入 +93% YoY，总 RPO $4550 亿（+359% YoY），需求端数据是实的（Oracle IR, Jun 10）。；风险预警；待跟进；_2 个工具异常_：；ORCL 近 30 天无 8-K 申报"
+      "lastReview": "本周：本周事件；想法验证；你的「收入验证」信号是成立的：Q4 FY2026 收入 $192 亿（+21% YoY），IaaS 云 +93%，RPO $4550 亿（+359%）。但市场不奖励这个。；风险预警；待跟进"
     }
   ],
   "watchlist": [
@@ -46,5 +46,10 @@
       "text": "待跟进"
     }
   ],
-  "equityCurve": []
+  "equityCurve": [
+    {
+      "t": "2026-08-10",
+      "v": 9632
+    }
+  ]
 }
