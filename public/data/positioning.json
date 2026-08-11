@@ -1,5 +1,5 @@
 {
-  "date": "2026-08-10",
+  "date": "2026-08-11",
   "crowding": 80,
   "components": [
     {
@@ -26,7 +26,7 @@
       "value": 1,
       "percentile": 100,
       "windowPoints": 706,
-      "date": "2026-08-10",
+      "date": "2026-08-11",
       "source": "cta-model"
     }
   ],
@@ -34,17 +34,17 @@
     {
       "symbol": "SPY",
       "weight": 1,
-      "price": 772.91,
-      "ma50": 747.56,
+      "price": 774.52,
+      "ma50": 747.92,
       "signal": "long"
     },
     {
       "symbol": "QQQ",
       "weight": 0.2,
-      "price": 722.71,
-      "ma50": 714.31,
+      "price": 722.19,
+      "ma50": 713.95,
       "signal": "long"
     }
   ],
-  "updatedAt": 1786368904858
+  "updatedAt": 1786455308205
 }
