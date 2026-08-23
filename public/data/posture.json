@@ -1,94 +1,94 @@
 {
   "schemaVersion": 1,
-  "methodologyVersion": "posture-v4-crowding-valuation",
-  "date": "2026-08-11",
-  "score": 64,
+  "methodologyVersion": "posture-v5-eight-factor-aggregate",
+  "date": "2026-08-21",
+  "score": 57,
   "verdict": "选择性",
   "factors": [
     {
       "key": "trend",
       "label": "趋势",
-      "score": 80,
-      "raw": 10,
-      "note": "5日 +0.4% · 20日 +3.0% · 距20日线 +2.9%",
+      "score": 70,
+      "raw": 8.2,
+      "note": "5日 -1.4% · 20日 +3.6% · 距20日线 +0.4%",
       "inputs": {
-        "dev200": 0.1001434028594057,
-        "ret5": 0.004129244292326195,
-        "ret20": 0.030173057739116382,
-        "dev20": 0.02925616850420476,
-        "longScore": 100,
-        "momentumScore": 66.15731388869638
+        "dev200": 0.0822218365377494,
+        "ret5": -0.01367957338279624,
+        "ret20": 0.03625512565466282,
+        "dev20": 0.004450845896839528,
+        "longScore": 96.1109182688747,
+        "momentumScore": 52.9662784471249
       }
     },
     {
       "key": "credit",
       "label": "信用",
       "score": 66,
-      "raw": 270,
+      "raw": 275,
       "note": "利差低位 · 近期稳定",
       "inputs": {
         "source": "ICE BofA US High Yield OAS",
-        "valueBps": 270,
-        "change20Bps": 1,
-        "dataAsOf": "2026-08-07",
-        "zScore": -1.0522
+        "valueBps": 275,
+        "change20Bps": -2,
+        "dataAsOf": "2026-08-20",
+        "zScore": -0.8903
       }
     },
     {
       "key": "vol",
       "label": "波动",
-      "score": 71,
-      "raw": 15.46,
+      "score": 68,
+      "raw": 15.13,
       "note": "波动低位",
       "inputs": {
-        "vix": 15.46,
-        "change5Pct": -0.02522068095838581
+        "vix": 15.13,
+        "change5Pct": 0.06175438596491234
       }
     },
     {
       "key": "leadership",
       "label": "参与结构",
       "score": 51,
-      "raw": 0.1,
+      "raw": 0.2,
       "note": "结构中性",
       "inputs": {
-        "excessReturn20": 0.0006069844253251411,
-        "rspReturn20": 0.030780042164441523,
-        "spyReturn20": 0.030173057739116382
+        "excessReturn20": 0.0016715494401537967,
+        "rspReturn20": 0.03792667509481662,
+        "spyReturn20": 0.03625512565466282
       }
     },
     {
       "key": "breadth",
       "label": "广度",
-      "score": 63,
-      "raw": 68.4,
+      "score": 66,
+      "raw": 68.8,
       "note": "参与度尚可",
       "inputs": {
         "universe": "SP100",
-        "total": 98,
-        "pctAbove200": 68.4,
-        "pctAbove50": 66.3,
-        "advancers": 32,
-        "decliners": 65,
-        "adDiff": -33,
-        "missing": 0
+        "total": 96,
+        "pctAbove200": 68.8,
+        "pctAbove50": 58.3,
+        "advancers": 68,
+        "decliners": 28,
+        "adDiff": 40,
+        "missing": 2
       }
     },
     {
       "key": "liquidity",
       "label": "美元流动性",
-      "score": 46,
-      "raw": 54,
-      "note": "中性 · 转弱 · 结构脆弱",
+      "score": 41,
+      "raw": 59,
+      "note": "中性 · 稳定 · 结构脆弱",
       "inputs": {
         "source": "DollarLiquidity DLI",
-        "percentile5y": 54,
+        "percentile5y": 59,
         "status": "neutral",
-        "momentum": "deteriorating",
+        "momentum": "stable",
         "confidence": "high",
         "vulnerability": "elevated",
-        "buffer": 11.7,
-        "dataAsOf": "2026-08-10",
+        "buffer": 11.47,
+        "dataAsOf": "2026-08-21",
         "indicators": 12,
         "totalIndicators": 12
       }
@@ -96,27 +96,27 @@
     {
       "key": "crowding",
       "label": "拥挤度",
-      "score": 20,
-      "raw": 80,
-      "note": "偏拥挤",
+      "score": 19,
+      "raw": 81,
+      "note": "偏拥挤（数据滞后）",
       "inputs": {
-        "crowding": 80,
-        "dataAsOf": "2026-08-11",
-        "stale": "false"
+        "crowding": 81,
+        "dataAsOf": "2026-08-20",
+        "stale": "true"
       }
     },
     {
       "key": "valuation",
       "label": "估值",
-      "score": 50,
-      "raw": 15.099,
-      "note": "PB 15.10 · 50分位（样本积累中）（数据滞后）",
+      "score": 58,
+      "raw": 14.692,
+      "note": "PB 14.69 · 25分位（样本积累中）",
       "inputs": {
-        "pb": 15.099,
-        "percentile": 50,
-        "windowPoints": 2,
-        "dataAsOf": "2026-08-07",
-        "stale": "true",
+        "pb": 14.692,
+        "percentile": 25,
+        "windowPoints": 4,
+        "dataAsOf": "2026-08-21",
+        "stale": "false",
         "lowSample": "true"
       }
     }
@@ -131,91 +131,19 @@
     "crowding": 0.1,
     "valuation": 0.1
   },
-  "updatedAt": 1786455615392,
+  "updatedAt": 1787498766332,
   "history": [
     {
-      "date": "2026-08-03",
-      "score": 65,
-      "trend": 77,
-      "credit": 63,
-      "vol": 76,
+      "date": "2026-08-21",
+      "score": 57,
+      "trend": 70,
+      "credit": 66,
+      "vol": 68,
       "leadership": 51,
       "breadth": 66,
-      "liquidity": 49,
-      "crowding": 35,
-      "valuation": 20
-    },
-    {
-      "date": "2026-08-04",
-      "score": 66,
-      "trend": 88,
-      "credit": 63,
-      "vol": 73,
-      "leadership": 45,
-      "breadth": 70,
-      "liquidity": 49,
-      "crowding": 35,
-      "valuation": 20
-    },
-    {
-      "date": "2026-08-05",
-      "score": 68,
-      "trend": 89,
-      "credit": 65,
-      "vol": 80,
-      "leadership": 52,
-      "breadth": 68,
-      "liquidity": 48,
-      "crowding": 17,
-      "valuation": 20
-    },
-    {
-      "date": "2026-08-06",
-      "score": 66,
-      "trend": 85,
-      "credit": 65,
-      "vol": 75,
-      "leadership": 51,
-      "breadth": 66,
-      "liquidity": 48,
-      "crowding": 35,
-      "valuation": 20
-    },
-    {
-      "date": "2026-08-07",
-      "score": 68,
-      "trend": 86,
-      "credit": 66,
-      "vol": 73,
-      "leadership": 52,
-      "breadth": 72,
-      "liquidity": 47,
-      "crowding": 20,
-      "valuation": 50
-    },
-    {
-      "date": "2026-08-10",
-      "score": 65,
-      "trend": 83,
-      "credit": 66,
-      "vol": 71,
-      "leadership": 47,
-      "breadth": 68,
-      "liquidity": 45,
-      "crowding": 20,
-      "valuation": 50
-    },
-    {
-      "date": "2026-08-11",
-      "score": 64,
-      "trend": 80,
-      "credit": 66,
-      "vol": 71,
-      "leadership": 51,
-      "breadth": 63,
-      "liquidity": 46,
-      "crowding": 20,
-      "valuation": 50
+      "liquidity": 41,
+      "crowding": 19,
+      "valuation": 58
     }
   ]
 }
