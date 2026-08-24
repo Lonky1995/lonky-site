@@ -1,8 +1,8 @@
 "use client";
 
-import MarketBreadth from "@/components/portfolio/MarketBreadth";
-import CrossAsset from "@/components/portfolio/CrossAsset";
-import Positioning from "@/components/portfolio/Positioning";
+import MarketBreadth from "@/components/market/MarketBreadth";
+import CrossAsset from "@/components/market/CrossAsset";
+import Positioning from "@/components/market/Positioning";
 
 /** Public market observatory. It intentionally consumes only the published
  * macro snapshots and never reads portfolio, watchlist, journal, or user data. */
