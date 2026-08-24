@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import type { PositioningData, PositioningComponent } from "@/data/portfolio";
+import type { PositioningData, PositioningComponent } from "@/data/market";
 
 // 持仓与资金流：读 /data/positioning.json（gateway cron 推送）。
 // 拥挤度综合分 + 四分量（COT资管/杠杆基金净仓、NAAIM暴露、CTA复制动量）+ CTA持仓表。
