@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "methodologyVersion": "posture-v5-eight-factor-aggregate",
   "date": "2026-08-21",
-  "score": 57,
+  "score": 59,
   "verdict": "选择性",
   "factors": [
     {
@@ -61,17 +61,17 @@
       "key": "breadth",
       "label": "广度",
       "score": 66,
-      "raw": 68.8,
+      "raw": 68.4,
       "note": "参与度尚可",
       "inputs": {
         "universe": "SP100",
-        "total": 96,
-        "pctAbove200": 68.8,
-        "pctAbove50": 58.3,
-        "advancers": 68,
-        "decliners": 28,
+        "total": 98,
+        "pctAbove200": 68.4,
+        "pctAbove50": 58.2,
+        "advancers": 69,
+        "decliners": 29,
         "adDiff": 40,
-        "missing": 2
+        "missing": 0
       }
     },
     {
@@ -96,26 +96,26 @@
     {
       "key": "crowding",
       "label": "拥挤度",
-      "score": 19,
-      "raw": 81,
-      "note": "偏拥挤（数据滞后）",
+      "score": 42,
+      "raw": 58,
+      "note": "中性（数据滞后）",
       "inputs": {
-        "crowding": 81,
-        "dataAsOf": "2026-08-20",
+        "crowding": 58,
+        "dataAsOf": "2026-08-21",
         "stale": "true"
       }
     },
     {
       "key": "valuation",
       "label": "估值",
-      "score": 58,
-      "raw": 14.692,
-      "note": "PB 14.69 · 25分位（样本积累中）",
+      "score": 53,
+      "raw": 14.737,
+      "note": "PB 14.74 · 40分位（样本积累中）",
       "inputs": {
-        "pb": 14.692,
-        "percentile": 25,
-        "windowPoints": 4,
-        "dataAsOf": "2026-08-21",
+        "pb": 14.737,
+        "percentile": 40,
+        "windowPoints": 5,
+        "dataAsOf": "2026-08-24",
         "stale": "false",
         "lowSample": "true"
       }
@@ -131,19 +131,19 @@
     "crowding": 0.1,
     "valuation": 0.1
   },
-  "updatedAt": 1787498766332,
+  "updatedAt": 1787553560060,
   "history": [
     {
       "date": "2026-08-21",
-      "score": 57,
+      "score": 59,
       "trend": 70,
       "credit": 66,
       "vol": 68,
       "leadership": 51,
       "breadth": 66,
       "liquidity": 41,
-      "crowding": 19,
-      "valuation": 58
+      "crowding": 42,
+      "valuation": 53
     }
   ]
 }
