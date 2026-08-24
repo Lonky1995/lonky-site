@@ -1,17 +1,17 @@
 {
   "schemaVersion": 1,
-  "date": "2026-08-07",
+  "date": "2026-08-24",
   "broad": {
-    "pb": 15.099,
-    "percentile": 50,
-    "windowPoints": 2,
-    "constituents": 90
+    "pb": 14.737,
+    "percentile": 40,
+    "windowPoints": 5,
+    "constituents": 91
   },
   "tech": {
-    "pb": 17.855,
-    "percentile": 50,
-    "windowPoints": 2,
+    "pb": 17.251,
+    "percentile": 40,
+    "windowPoints": 5,
     "constituents": 19
   },
-  "updatedAt": 1786113015479
+  "updatedAt": 1787552851326
 }
