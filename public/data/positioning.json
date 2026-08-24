@@ -1,32 +1,32 @@
 {
-  "date": "2026-08-11",
-  "crowding": 80,
+  "date": "2026-08-21",
+  "crowding": 58,
   "components": [
     {
       "key": "asset_mgr",
       "label": "COT 资管净仓",
-      "value": 47.6,
-      "percentile": 78,
+      "value": 46.4,
+      "percentile": 71.5,
       "windowPoints": 200,
-      "date": "2026-07-28",
+      "date": "2026-08-18",
       "source": "cftc"
     },
     {
       "key": "lev_money",
       "label": "COT 杠杆基金净仓",
-      "value": -15,
-      "percentile": 63,
+      "value": -13.6,
+      "percentile": 75.5,
       "windowPoints": 200,
-      "date": "2026-07-28",
+      "date": "2026-08-18",
       "source": "cftc"
     },
     {
       "key": "cta",
       "label": "CTA 复制动量",
-      "value": 1,
-      "percentile": 100,
+      "value": 0.833,
+      "percentile": 26.3,
       "windowPoints": 706,
-      "date": "2026-08-11",
+      "date": "2026-08-21",
       "source": "cta-model"
     }
   ],
@@ -34,17 +34,17 @@
     {
       "symbol": "SPY",
       "weight": 1,
-      "price": 774.52,
-      "ma50": 747.92,
+      "price": 765.72,
+      "ma50": 751.75,
       "signal": "long"
     },
     {
       "symbol": "QQQ",
       "weight": 0.2,
-      "price": 722.19,
-      "ma50": 713.95,
-      "signal": "long"
+      "price": 713.44,
+      "ma50": 713.44,
+      "signal": "flat"
     }
   ],
-  "updatedAt": 1786455308205
+  "updatedAt": 1787552572599
 }
