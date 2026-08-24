@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import type { AssetCard, CrossAssetData } from "@/data/portfolio";
+import type { AssetCard, CrossAssetData } from "@/data/market";
 
 // 跨资产锚点墙：读 /data/cross-asset.json（gateway cron 推送）。
 // 按分组平铺卡片，每卡：标签 + 涨跌% + 现价 + 迷你走势（inline SVG sparkline）。

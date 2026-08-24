@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { Area, AreaChart, ResponsiveContainer, Tooltip, YAxis } from "recharts";
-import type { PostureData } from "@/data/portfolio";
+import type { PostureData } from "@/data/market";
 
 // 市场环境卡片：读 /data/posture.json（gateway cron 收盘后推送）。
 // 顶部姿态总分 + 六因子横向进度条平铺 + 最近7天真实快照走势。
