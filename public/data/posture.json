@@ -1,73 +1,73 @@
 {
   "schemaVersion": 1,
   "methodologyVersion": "posture-v5-eight-factor-aggregate",
-  "date": "2026-08-25",
-  "score": 58,
+  "date": "2026-08-26",
+  "score": 57,
   "verdict": "选择性",
   "factors": [
     {
       "key": "trend",
       "label": "趋势",
-      "score": 71,
+      "score": 72,
       "raw": 8.1,
-      "note": "5日 -0.2% · 20日 +3.4% · 距20日线 +0.1%",
+      "note": "5日 -0.4% · 20日 +5.0% · 距20日线 -0.1%",
       "inputs": {
-        "dev200": 0.08114143556317388,
-        "ret5": -0.002006645384064254,
-        "ret20": 0.03381205625894235,
-        "dev20": 0.001453323980106891,
-        "longScore": 95.57071778158695,
-        "momentumScore": 55.45090224183793
+        "dev200": 0.08055274488553232,
+        "ret5": -0.003965880425454427,
+        "ret20": 0.05010555753571122,
+        "dev20": -0.0008035208824119788,
+        "longScore": 95.27637244276616,
+        "momentumScore": 56.7611258199964
       }
     },
     {
       "key": "credit",
       "label": "信用",
       "score": 68,
-      "raw": 269,
+      "raw": 270,
       "note": "利差低位 · 近期收窄",
       "inputs": {
         "source": "ICE BofA US High Yield OAS",
-        "valueBps": 269,
-        "change20Bps": -12,
-        "dataAsOf": "2026-08-24",
-        "zScore": -1.0522
+        "valueBps": 270,
+        "change20Bps": -14,
+        "dataAsOf": "2026-08-25",
+        "zScore": -1.0252
       }
     },
     {
       "key": "vol",
       "label": "波动",
-      "score": 71,
-      "raw": 15.45,
+      "score": 69,
+      "raw": 15.39,
       "note": "波动低位",
       "inputs": {
-        "vix": 15.45,
-        "change5Pct": -0.024621212121212155
+        "vix": 15.39,
+        "change5Pct": 0.033579583613163155
       }
     },
     {
       "key": "leadership",
       "label": "参与结构",
-      "score": 37,
-      "raw": -1.5,
+      "score": 33,
+      "raw": -2,
       "note": "上涨仍偏集中",
       "inputs": {
-        "excessReturn20": -0.015069808107901927,
-        "rspReturn20": 0.01874224815104042,
-        "spyReturn20": 0.03381205625894235
+        "excessReturn20": -0.020392490275710218,
+        "rspReturn20": 0.029713067260001003,
+        "spyReturn20": 0.05010555753571122
       }
     },
     {
       "key": "breadth",
       "label": "广度",
-      "score": 66,
-      "raw": 72.4,
+      "score": 65,
+      "raw": 71.4,
       "note": "参与度尚可",
       "inputs": {
         "universe": "SP100",
         "total": 98,
-        "pctAbove200": 72.4,
-        "pctAbove50": 60.2,
+        "pctAbove200": 71.4,
+        "pctAbove50": 61.2,
         "advancers": 47,
         "decliners": 50,
         "adDiff": -3,
@@ -131,7 +131,7 @@
     "crowding": 0.1,
     "valuation": 0.1
   },
-  "updatedAt": 1787731215645,
+  "updatedAt": 1787775010399,
   "history": [
     {
       "date": "2026-08-21",
@@ -165,6 +165,18 @@
       "vol": 71,
       "leadership": 37,
       "breadth": 66,
+      "liquidity": 41,
+      "crowding": 42,
+      "valuation": 53
+    },
+    {
+      "date": "2026-08-26",
+      "score": 57,
+      "trend": 72,
+      "credit": 68,
+      "vol": 69,
+      "leadership": 33,
+      "breadth": 65,
       "liquidity": 41,
       "crowding": 42,
       "valuation": 53
