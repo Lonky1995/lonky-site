@@ -64,6 +64,23 @@ export const projects: Project[] = [
     year: "2026",
   },
   {
+    id: "trading-analyzer",
+    title: {
+      zh: "交易风格分析器",
+      en: "Trading Style Analyzer",
+    },
+    description: {
+      zh: "导入交易记录，AI 诊断你的交易风格、盈亏分布与行为偏差。",
+      en: "Import your trade history and let AI diagnose your trading style, P&L distribution, and behavioral biases.",
+    },
+    category: "Tool",
+    techStack: ["Next.js", "TypeScript", "DeepSeek"],
+    link: "/tools/trading-analyzer",
+    featured: false,
+    status: "live",
+    year: "2026",
+  },
+  {
     id: "lonkyclaw",
     title: {
       zh: "LonkyClaw",

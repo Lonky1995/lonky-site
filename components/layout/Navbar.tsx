@@ -9,7 +9,8 @@ const links = [
   { href: "/", key: "home" as const },
   { href: "/projects", key: "projects" as const },
   { href: "/blog", key: "blog" as const },
-  { href: "/market", key: "portfolio" as const, fallback: "市场" },
+  { href: "/market", key: "portfolio" as const, fallback: "美股" },
+  { href: "/crypto", key: "crypto" as const, fallback: "crypto" },
 ];
 
 export function Navbar() {
@@ -26,7 +27,7 @@ export function Navbar() {
   if (hideNavbar) return null;
 
   const labelFor = (key: (typeof links)[number]["key"], fallback?: string) => {
-    if (key === "portfolio") return fallback ?? "市场";
+    if (key === "portfolio" || key === "crypto") return fallback ?? key;
     return dict.nav[key] ?? fallback ?? key;
   };
 
