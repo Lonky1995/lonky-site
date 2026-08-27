@@ -3,12 +3,12 @@
   "total": 98,
   "pctAbove200": 71.4,
   "pctAbove50": 61.2,
-  "advancers": 47,
-  "decliners": 50,
-  "adDiff": -3,
+  "advancers": 46,
+  "decliners": 51,
+  "adDiff": -5,
   "breadthScore": 65,
   "missing": 0,
   "asOf": "2026-08-26",
   "date": "2026-08-26",
-  "updatedAt": 1787775008308
+  "updatedAt": 1787817610841
 }
