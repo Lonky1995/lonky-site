@@ -55,3 +55,6 @@ next-env.d.ts
 
 # 选题 agent 的快照与运行记录（每天增长，且可重新采集）
 /data/topic-agent
+
+# local mock data for development
+/.mock-data
