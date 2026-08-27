@@ -12,12 +12,12 @@
       "raw": 8.1,
       "note": "5日 -0.4% · 20日 +5.0% · 距20日线 -0.1%",
       "inputs": {
-        "dev200": 0.08055274488553232,
-        "ret5": -0.003965880425454427,
-        "ret20": 0.05010555753571122,
-        "dev20": -0.0008035208824119788,
-        "longScore": 95.27637244276616,
-        "momentumScore": 56.7611258199964
+        "dev200": 0.08065095508777187,
+        "ret5": -0.0038748602189684345,
+        "ret20": 0.05020151893181257,
+        "dev20": -0.0007167738783857569,
+        "longScore": 95.32547754388594,
+        "momentumScore": 56.836375122850704
       }
     },
     {
@@ -37,24 +37,24 @@
     {
       "key": "vol",
       "label": "波动",
-      "score": 69,
-      "raw": 15.39,
+      "score": 70,
+      "raw": 15.21,
       "note": "波动低位",
       "inputs": {
-        "vix": 15.39,
-        "change5Pct": 0.033579583613163155
+        "vix": 15.21,
+        "change5Pct": 0.02149093351242448
       }
     },
     {
       "key": "leadership",
       "label": "参与结构",
       "score": 33,
-      "raw": -2,
+      "raw": -2.1,
       "note": "上涨仍偏集中",
       "inputs": {
-        "excessReturn20": -0.020392490275710218,
-        "rspReturn20": 0.029713067260001003,
-        "spyReturn20": 0.05010555753571122
+        "excessReturn20": -0.020627514389097046,
+        "rspReturn20": 0.029574004542715526,
+        "spyReturn20": 0.05020151893181257
       }
     },
     {
@@ -68,27 +68,27 @@
         "total": 98,
         "pctAbove200": 71.4,
         "pctAbove50": 61.2,
-        "advancers": 47,
-        "decliners": 50,
-        "adDiff": -3,
+        "advancers": 46,
+        "decliners": 51,
+        "adDiff": -5,
         "missing": 0
       }
     },
     {
       "key": "liquidity",
       "label": "美元流动性",
-      "score": 41,
-      "raw": 59,
+      "score": 40,
+      "raw": 60,
       "note": "中性 · 稳定 · 结构脆弱",
       "inputs": {
         "source": "DollarLiquidity DLI",
-        "percentile5y": 59,
+        "percentile5y": 60,
         "status": "neutral",
         "momentum": "stable",
         "confidence": "high",
         "vulnerability": "elevated",
         "buffer": 11.47,
-        "dataAsOf": "2026-08-25",
+        "dataAsOf": "2026-08-26",
         "indicators": 12,
         "totalIndicators": 12
       }
@@ -110,13 +110,13 @@
       "label": "估值",
       "score": 53,
       "raw": 14.737,
-      "note": "PB 14.74 · 40分位（样本积累中）",
+      "note": "PB 14.74 · 40分位（样本积累中）（数据滞后）",
       "inputs": {
         "pb": 14.737,
         "percentile": 40,
         "windowPoints": 5,
         "dataAsOf": "2026-08-24",
-        "stale": "false",
+        "stale": "true",
         "lowSample": "true"
       }
     }
@@ -131,7 +131,7 @@
     "crowding": 0.1,
     "valuation": 0.1
   },
-  "updatedAt": 1787775010399,
+  "updatedAt": 1787817612770,
   "history": [
     {
       "date": "2026-08-21",
@@ -174,10 +174,10 @@
       "score": 57,
       "trend": 72,
       "credit": 68,
-      "vol": 69,
+      "vol": 70,
       "leadership": 33,
       "breadth": 65,
-      "liquidity": 41,
+      "liquidity": 40,
       "crowding": 42,
       "valuation": 53
     }
