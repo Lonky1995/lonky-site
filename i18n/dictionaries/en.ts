@@ -1,7 +1,7 @@
 const en = {
   nav: {
     home: "Home",
-    projects: "Vibecoding Portfolio",
+    projects: "vibecoding",
     blog: "Ideas & Notes",
     about: "About Me",
   },

@@ -3,7 +3,7 @@ import type { Dictionary } from "./en";
 const zh: Dictionary = {
   nav: {
     home: "首页",
-    projects: "Vibecoding 作品集",
+    projects: "vibecoding",
     blog: "想法和笔记",
     about: "关于我",
   },
