@@ -34,17 +34,17 @@
     {
       "symbol": "SPY",
       "weight": 1,
-      "price": 768.42,
-      "ma50": 753.33,
+      "price": 771.58,
+      "ma50": 754,
       "signal": "long"
     },
     {
       "symbol": "QQQ",
       "weight": 0.2,
-      "price": 716.94,
-      "ma50": 712.1,
+      "price": 719.13,
+      "ma50": 712.12,
       "signal": "long"
     }
   ],
-  "updatedAt": 1787837703072
+  "updatedAt": 1787924123976
 }
