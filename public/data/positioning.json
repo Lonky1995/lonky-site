@@ -1,5 +1,5 @@
 {
-  "date": "2026-08-27",
+  "date": "2026-08-31",
   "crowding": 82,
   "components": [
     {
@@ -22,11 +22,11 @@
     },
     {
       "key": "cta",
-      "label": "CTA 复制动量",
+      "label": "SPY/QQQ 50日趋势拥挤代理",
       "value": 1,
       "percentile": 100,
       "windowPoints": 706,
-      "date": "2026-08-27",
+      "date": "2026-08-31",
       "source": "cta-model"
     }
   ],
@@ -34,17 +34,17 @@
     {
       "symbol": "SPY",
       "weight": 1,
-      "price": 771.58,
-      "ma50": 754,
+      "price": 767.05,
+      "ma50": 754.36,
       "signal": "long"
     },
     {
       "symbol": "QQQ",
       "weight": 0.2,
-      "price": 719.13,
-      "ma50": 712.12,
+      "price": 716.76,
+      "ma50": 711.59,
       "signal": "long"
     }
   ],
-  "updatedAt": 1787925604750
+  "updatedAt": 1788208212290
 }
