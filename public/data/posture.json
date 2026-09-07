@@ -79,17 +79,17 @@
       "label": "美元流动性",
       "score": 37,
       "raw": 63,
-      "note": "中性 · 转弱 · 结构脆弱",
+      "note": "中性 · 稳定 · 结构脆弱",
       "inputs": {
         "source": "DollarLiquidity DLI",
         "percentile5y": 63,
         "status": "neutral",
-        "momentum": "deteriorating",
+        "momentum": "stable",
         "confidence": "high",
         "vulnerability": "elevated",
-        "buffer": 11.29,
-        "dataAsOf": "2026-09-03",
-        "indicators": 11,
+        "buffer": 11.3,
+        "dataAsOf": "2026-09-04",
+        "indicators": 12,
         "totalIndicators": 12
       }
     },
@@ -98,11 +98,11 @@
       "label": "拥挤度",
       "score": 22,
       "raw": 78,
-      "note": "偏拥挤",
+      "note": "偏拥挤（数据滞后）",
       "inputs": {
         "crowding": 78,
         "dataAsOf": "2026-09-04",
-        "stale": "false"
+        "stale": "true"
       }
     },
     {
@@ -110,13 +110,13 @@
       "label": "估值",
       "score": 65,
       "raw": 14.613,
-      "note": "PB 14.61 · 14.3分位（样本积累中）",
+      "note": "PB 14.61 · 14.3分位（样本积累中）（数据滞后）",
       "inputs": {
         "pb": 14.613,
         "percentile": 14.3,
         "windowPoints": 7,
         "dataAsOf": "2026-09-04",
-        "stale": "false",
+        "stale": "true",
         "lowSample": "true"
       }
     }
@@ -131,7 +131,7 @@
     "crowding": 0.1,
     "valuation": 0.1
   },
-  "updatedAt": 1788553818001,
+  "updatedAt": 1788789644145,
   "history": [
     {
       "date": "2026-08-27",
