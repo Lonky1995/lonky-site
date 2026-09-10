@@ -1,14 +1,14 @@
 {
   "universe": "SP100",
-  "total": 98,
-  "pctAbove200": 63.3,
-  "pctAbove50": 44.9,
-  "advancers": 24,
-  "decliners": 74,
-  "adDiff": -50,
-  "breadthScore": 53,
-  "missing": 0,
-  "asOf": "2026-09-09",
-  "date": "2026-09-09",
-  "updatedAt": 1788985812935
+  "total": 96,
+  "pctAbove200": 62.5,
+  "pctAbove50": 43.8,
+  "advancers": 43,
+  "decliners": 52,
+  "adDiff": -9,
+  "breadthScore": 55,
+  "missing": 2,
+  "asOf": "2026-09-10",
+  "date": "2026-09-10",
+  "updatedAt": 1789048873902
 }
