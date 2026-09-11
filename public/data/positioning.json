@@ -1,23 +1,23 @@
 {
   "date": "2026-09-10",
-  "crowding": 51,
+  "crowding": 49,
   "components": [
     {
       "key": "asset_mgr",
       "label": "COT 资管净仓",
-      "value": 46.6,
-      "percentile": 72.5,
+      "value": 45.6,
+      "percentile": 68,
       "windowPoints": 200,
-      "date": "2026-08-25",
+      "date": "2026-09-01",
       "source": "cftc"
     },
     {
       "key": "lev_money",
       "label": "COT 杠杆基金净仓",
-      "value": -15.4,
-      "percentile": 60,
+      "value": -15.5,
+      "percentile": 59,
       "windowPoints": 200,
-      "date": "2026-08-25",
+      "date": "2026-09-01",
       "source": "cftc"
     },
     {
@@ -46,5 +46,5 @@
       "signal": "flat"
     }
   ],
-  "updatedAt": 1789072222412
+  "updatedAt": 1789135202729
 }
