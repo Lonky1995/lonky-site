@@ -27,7 +27,10 @@ export async function getBreadthData(): Promise<ParseResult> {
   try {
     res = await fetch(`${API_URL}/data.json`, {
       headers: { "X-Internal-Token": TOKEN },
-      next: { revalidate: 300 },
+      // Do not persist a transient HTTP 200 error page in Next's data cache.
+      // The VPS refreshes its source data every 15 minutes, so fresh reads here
+      // are preferable to serving a cached malformed response for days.
+      cache: "no-store",
     });
   } catch {
     return { ok: false, error: "数据源请求失败，VPS 可能暂时不可达" };
@@ -39,9 +42,19 @@ export async function getBreadthData(): Promise<ParseResult> {
 
   let json: unknown;
   try {
-    json = await res.json();
-  } catch {
-    return { ok: false, error: "数据源返回内容不是合法 JSON" };
+    json = JSON.parse(await res.text());
+  } catch (error) {
+    // The endpoint has historically returned an HTML error page with HTTP 200.
+    // Log only response metadata so production diagnostics never expose data or credentials.
+    console.error("Crypto breadth source returned invalid JSON", {
+      status: res.status,
+      contentType: res.headers.get("content-type"),
+      error: error instanceof Error ? error.name : "UnknownError",
+    });
+    return {
+      ok: false,
+      error: "数据源响应格式异常（已记录诊断信息）",
+    };
   }
 
   return parseBreadthPayload(json);
