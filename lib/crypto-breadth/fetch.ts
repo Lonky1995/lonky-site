@@ -15,18 +15,11 @@ async function getMockBreadthData(): Promise<ParseResult> {
   }
 }
 
-export async function getBreadthData(): Promise<ParseResult> {
-  if (!API_URL || !TOKEN) {
-    if (process.env.NODE_ENV === "development") {
-      return getMockBreadthData();
-    }
-    return { ok: false, error: "服务端未配置 CRYPTO_BREADTH_API_URL / CRYPTO_BREADTH_TOKEN" };
-  }
-
+async function fetchBreadthDataOnce(): Promise<ParseResult> {
   let res: Response;
   try {
     res = await fetch(`${API_URL}/data.json`, {
-      headers: { "X-Internal-Token": TOKEN },
+      headers: { "X-Internal-Token": TOKEN! },
       // Do not persist a transient HTTP 200 error page in Next's data cache.
       // The VPS refreshes its source data every 15 minutes, so fresh reads here
       // are preferable to serving a cached malformed response for days.
@@ -44,8 +37,9 @@ export async function getBreadthData(): Promise<ParseResult> {
   try {
     json = JSON.parse(await res.text());
   } catch (error) {
-    // The endpoint has historically returned an HTML error page with HTTP 200.
-    // Log only response metadata so production diagnostics never expose data or credentials.
+    // The endpoint has historically returned an HTML error page with HTTP 200,
+    // and跨境链路偶发丢包也会导致响应体不完整。Log only response metadata so
+    // production diagnostics never expose data or credentials.
     console.error("Crypto breadth source returned invalid JSON", {
       status: res.status,
       contentType: res.headers.get("content-type"),
@@ -58,4 +52,20 @@ export async function getBreadthData(): Promise<ParseResult> {
   }
 
   return parseBreadthPayload(json);
+}
+
+export async function getBreadthData(): Promise<ParseResult> {
+  if (!API_URL || !TOKEN) {
+    if (process.env.NODE_ENV === "development") {
+      return getMockBreadthData();
+    }
+    return { ok: false, error: "服务端未配置 CRYPTO_BREADTH_API_URL / CRYPTO_BREADTH_TOKEN" };
+  }
+
+  const first = await fetchBreadthDataOnce();
+  if (first.ok) return first;
+
+  // 跨境网络链路偶发丢包/中断是已观测到的瞬时故障，重试一次即可恢复。
+  await new Promise((resolve) => setTimeout(resolve, 1000));
+  return fetchBreadthDataOnce();
 }
