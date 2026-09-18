@@ -2,93 +2,93 @@
   "schemaVersion": 1,
   "methodologyVersion": "posture-v5-eight-factor-aggregate",
   "date": "2026-09-18",
-  "score": 51,
+  "score": 53,
   "verdict": "谨慎",
   "factors": [
     {
       "key": "trend",
       "label": "趋势",
-      "score": 61,
-      "raw": 6.1,
-      "note": "5日 -0.6% · 20日 -0.4% · 距20日线 -0.6%",
+      "score": 63,
+      "raw": 6.3,
+      "note": "5日 -0.3% · 20日 -0.1% · 距20日线 -0.3%",
       "inputs": {
-        "dev200": 0.06070062644511243,
-        "ret5": -0.005940153606615262,
-        "ret20": -0.0037372147915027965,
-        "dev20": -0.0058315389884801005,
-        "longScore": 85.35031322255621,
-        "momentumScore": 45.453233336384415
+        "dev200": 0.06339469444661772,
+        "ret5": -0.0034018500830835796,
+        "ret20": -0.001193286126409565,
+        "dev20": -0.003419453136090378,
+        "longScore": 86.69734722330887,
+        "momentumScore": 47.52735123920709
       }
     },
     {
       "key": "credit",
       "label": "信用",
-      "score": 66,
+      "score": 67,
       "raw": 270,
       "note": "利差低位 · 近期稳定",
       "inputs": {
         "source": "ICE BofA US High Yield OAS",
         "valueBps": 270,
-        "change20Bps": -3,
-        "dataAsOf": "2026-09-16",
+        "change20Bps": -5,
+        "dataAsOf": "2026-09-17",
         "zScore": -0.9971
       }
     },
     {
       "key": "vol",
       "label": "波动",
-      "score": 71,
-      "raw": 15.38,
+      "score": 73,
+      "raw": 14.83,
       "note": "波动低位",
       "inputs": {
-        "vix": 15.38,
-        "change5Pct": -0.029040404040403978
+        "vix": 14.83,
+        "change5Pct": -0.0637626262626263
       }
     },
     {
       "key": "leadership",
       "label": "参与结构",
       "score": 21,
-      "raw": -3.4,
+      "raw": -3.5,
       "note": "上涨仍偏集中",
       "inputs": {
-        "excessReturn20": -0.03423718143148613,
-        "rspReturn20": -0.037974396222988926,
-        "spyReturn20": -0.0037372147915027965
+        "excessReturn20": -0.035078731305949296,
+        "rspReturn20": -0.03627201743235886,
+        "spyReturn20": -0.001193286126409565
       }
     },
     {
       "key": "breadth",
       "label": "广度",
-      "score": 46,
-      "raw": 56.7,
+      "score": 49,
+      "raw": 58.2,
       "note": "涨势偏窄",
       "inputs": {
         "universe": "SP100",
-        "total": 90,
-        "pctAbove200": 56.7,
-        "pctAbove50": 37.8,
-        "advancers": 18,
-        "decliners": 72,
-        "adDiff": -54,
-        "missing": 8
+        "total": 98,
+        "pctAbove200": 58.2,
+        "pctAbove50": 36.7,
+        "advancers": 32,
+        "decliners": 66,
+        "adDiff": -34,
+        "missing": 0
       }
     },
     {
       "key": "liquidity",
       "label": "美元流动性",
-      "score": 44,
-      "raw": 56,
+      "score": 43,
+      "raw": 57,
       "note": "中性 · 改善 · 结构脆弱",
       "inputs": {
         "source": "DollarLiquidity DLI",
-        "percentile5y": 56,
+        "percentile5y": 57,
         "status": "neutral",
         "momentum": "improving",
         "confidence": "high",
         "vulnerability": "elevated",
         "buffer": 11.74,
-        "dataAsOf": "2026-09-17",
+        "dataAsOf": "2026-09-18",
         "indicators": 11,
         "totalIndicators": 12
       }
@@ -101,22 +101,22 @@
       "note": "中性",
       "inputs": {
         "crowding": 67,
-        "dataAsOf": "2026-09-17",
+        "dataAsOf": "2026-09-18",
         "stale": "false"
       }
     },
     {
       "key": "valuation",
       "label": "估值",
-      "score": 66,
-      "raw": 14.58,
-      "note": "PB 14.58 · 12.5分位（样本积累中）（数据滞后）",
+      "score": 67,
+      "raw": 11.406,
+      "note": "PB 11.41 · 11.1分位（样本积累中）",
       "inputs": {
-        "pb": 14.58,
-        "percentile": 12.5,
-        "windowPoints": 8,
-        "dataAsOf": "2026-09-11",
-        "stale": "true",
+        "pb": 11.406,
+        "percentile": 11.1,
+        "windowPoints": 9,
+        "dataAsOf": "2026-09-18",
+        "stale": "false",
         "lowSample": "true"
       }
     }
@@ -131,7 +131,7 @@
     "crowding": 0.1,
     "valuation": 0.1
   },
-  "updatedAt": 1789740111855,
+  "updatedAt": 1789763415443,
   "history": [
     {
       "date": "2026-09-10",
@@ -207,15 +207,15 @@
     },
     {
       "date": "2026-09-18",
-      "score": 51,
-      "trend": 61,
-      "credit": 66,
-      "vol": 71,
+      "score": 53,
+      "trend": 63,
+      "credit": 67,
+      "vol": 73,
       "leadership": 21,
-      "breadth": 46,
-      "liquidity": 44,
+      "breadth": 49,
+      "liquidity": 43,
       "crowding": 33,
-      "valuation": 66
+      "valuation": 67
     }
   ]
 }
