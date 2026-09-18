@@ -1,23 +1,23 @@
 {
   "schemaVersion": 1,
   "methodologyVersion": "posture-v5-eight-factor-aggregate",
-  "date": "2026-09-17",
-  "score": 54,
+  "date": "2026-09-18",
+  "score": 51,
   "verdict": "谨慎",
   "factors": [
     {
       "key": "trend",
       "label": "趋势",
-      "score": 65,
-      "raw": 6.5,
-      "note": "5日 +0.6% · 20日 -0.8% · 距20日线 -0.2%",
+      "score": 61,
+      "raw": 6.1,
+      "note": "5日 -0.6% · 20日 -0.4% · 距20日线 -0.6%",
       "inputs": {
-        "dev200": 0.06527059318851203,
-        "ret5": 0.006294287637069074,
-        "ret20": -0.008399864769978782,
-        "dev20": -0.002288221741638896,
-        "longScore": 87.635296594256,
-        "momentumScore": 49.93537783681359
+        "dev200": 0.06070062644511243,
+        "ret5": -0.005940153606615262,
+        "ret20": -0.0037372147915027965,
+        "dev20": -0.0058315389884801005,
+        "longScore": 85.35031322255621,
+        "momentumScore": 45.453233336384415
       }
     },
     {
@@ -37,57 +37,57 @@
     {
       "key": "vol",
       "label": "波动",
-      "score": 76,
-      "raw": 15.44,
+      "score": 71,
+      "raw": 15.38,
       "note": "波动低位",
       "inputs": {
-        "vix": 15.44,
-        "change5Pct": -0.13452914798206284
+        "vix": 15.38,
+        "change5Pct": -0.029040404040403978
       }
     },
     {
       "key": "leadership",
       "label": "参与结构",
-      "score": 24,
-      "raw": -3.1,
+      "score": 21,
+      "raw": -3.4,
       "note": "上涨仍偏集中",
       "inputs": {
-        "excessReturn20": -0.031047156439549695,
-        "rspReturn20": -0.03944702120952848,
-        "spyReturn20": -0.008399864769978782
+        "excessReturn20": -0.03423718143148613,
+        "rspReturn20": -0.037974396222988926,
+        "spyReturn20": -0.0037372147915027965
       }
     },
     {
       "key": "breadth",
       "label": "广度",
-      "score": 56,
-      "raw": 60.2,
-      "note": "参与度尚可",
+      "score": 46,
+      "raw": 56.7,
+      "note": "涨势偏窄",
       "inputs": {
         "universe": "SP100",
-        "total": 98,
-        "pctAbove200": 60.2,
-        "pctAbove50": 41.8,
-        "advancers": 60,
-        "decliners": 38,
-        "adDiff": 22,
-        "missing": 0
+        "total": 90,
+        "pctAbove200": 56.7,
+        "pctAbove50": 37.8,
+        "advancers": 18,
+        "decliners": 72,
+        "adDiff": -54,
+        "missing": 8
       }
     },
     {
       "key": "liquidity",
       "label": "美元流动性",
-      "score": 43,
-      "raw": 57,
+      "score": 44,
+      "raw": 56,
       "note": "中性 · 改善 · 结构脆弱",
       "inputs": {
         "source": "DollarLiquidity DLI",
-        "percentile5y": 57,
+        "percentile5y": 56,
         "status": "neutral",
         "momentum": "improving",
         "confidence": "high",
         "vulnerability": "elevated",
-        "buffer": 11.64,
+        "buffer": 11.74,
         "dataAsOf": "2026-09-17",
         "indicators": 11,
         "totalIndicators": 12
@@ -96,11 +96,11 @@
     {
       "key": "crowding",
       "label": "拥挤度",
-      "score": 24,
-      "raw": 76,
-      "note": "偏拥挤",
+      "score": 33,
+      "raw": 67,
+      "note": "中性",
       "inputs": {
-        "crowding": 76,
+        "crowding": 67,
         "dataAsOf": "2026-09-17",
         "stale": "false"
       }
@@ -131,20 +131,8 @@
     "crowding": 0.1,
     "valuation": 0.1
   },
-  "updatedAt": 1789677016036,
+  "updatedAt": 1789740111855,
   "history": [
-    {
-      "date": "2026-09-09",
-      "score": 53,
-      "trend": 63,
-      "credit": 67,
-      "vol": 69,
-      "leadership": 36,
-      "breadth": 53,
-      "liquidity": 39,
-      "crowding": 22,
-      "valuation": 65
-    },
     {
       "date": "2026-09-10",
       "score": 54,
@@ -215,6 +203,18 @@
       "breadth": 56,
       "liquidity": 43,
       "crowding": 24,
+      "valuation": 66
+    },
+    {
+      "date": "2026-09-18",
+      "score": 51,
+      "trend": 61,
+      "credit": 66,
+      "vol": 71,
+      "leadership": 21,
+      "breadth": 46,
+      "liquidity": 44,
+      "crowding": 33,
       "valuation": 66
     }
   ]
