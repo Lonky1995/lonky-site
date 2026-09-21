@@ -6,6 +6,7 @@ export const metadata: Metadata = {
   description: "公开宏观市场观察：市场姿态、跨资产、资金流与拥挤度。",
 };
 
-export default function MarketPage() {
-  return <MarketDashboard />;
+export default async function MarketPage({ searchParams }: { searchParams: Promise<{ tab?: string }> }) {
+  const { tab } = await searchParams;
+  return <MarketDashboard initialTab={tab === "thesis" ? "thesis" : "overview"} />;
 }
