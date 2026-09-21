@@ -25,8 +25,9 @@ const REPO = "lonky-thesis-data";
 const PATH = "theses/latest.json";
 
 function headers() {
-  const token = process.env.GITHUB_TOKEN;
-  if (!token) throw new Error("GITHUB_TOKEN not configured");
+  // Keep the private research store isolated from the token used by public-site features.
+  const token = process.env.THESIS_GITHUB_TOKEN;
+  if (!token) throw new Error("THESIS_GITHUB_TOKEN not configured");
   return { Authorization: `Bearer ${token}`, Accept: "application/vnd.github+json" };
 }
 
