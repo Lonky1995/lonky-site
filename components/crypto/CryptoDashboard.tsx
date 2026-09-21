@@ -3,6 +3,7 @@
 import { useState } from "react";
 import type { CryptoBreadthPayload } from "@/types/crypto-breadth";
 import MarketPulseHero from "./sections/MarketPulseHero";
+import TradingPlaybook from "./sections/TradingPlaybook";
 import InterpretationGrid from "./sections/InterpretationGrid";
 import RotationAndSelloff from "./sections/RotationAndSelloff";
 import CrowdingPanel from "./sections/CrowdingPanel";
@@ -50,6 +51,7 @@ export default function CryptoDashboard({ data }: { data: CryptoBreadthPayload }
 
       {tab === "summary" && (
         <div className="flex flex-col gap-6">
+          <TradingPlaybook data={data} />
           <RotationAndSelloff rotation={data.rotation_context} selloff={data.selloff_profile} />
           <InterpretationGrid items={data.interpretations} />
         </div>
