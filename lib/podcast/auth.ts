@@ -4,6 +4,7 @@ export type SessionUser = {
   id: string;
   name: string;
   image: string | null;
+  email: string | null;
 };
 
 type Session = {
@@ -52,17 +53,28 @@ async function resolveClerkSession(): Promise<Session | null> {
     const name =
       pickFirst([asString(user?.fullName), fullName, asString(user?.username)]) || "User";
     const image = pickFirst([asString(user?.imageUrl)]);
+    const email = pickFirst([asString(user?.primaryEmailAddress?.emailAddress)]);
 
     return {
       user: {
         id: userId,
         name,
         image,
+        email,
       },
     };
   } catch {
     return null;
   }
+}
+
+/**
+ * Private routes must never accept the header/cookie compatibility fallback
+ * below. They use this Clerk-only resolver instead.
+ */
+export async function clerkAuth(): Promise<Session | null> {
+  if (!isClerkConfigured()) return null;
+  return resolveClerkSession();
 }
 
 export async function auth(req: NextRequest): Promise<Session | null> {
@@ -99,6 +111,7 @@ export async function auth(req: NextRequest): Promise<Session | null> {
       id,
       name,
       image,
+      email: null,
     },
   };
 }
