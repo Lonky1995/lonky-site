@@ -3,6 +3,26 @@ import { parseBreadthPayload, type ParseResult } from "./schema";
 const API_URL = process.env.CRYPTO_BREADTH_API_URL; // 例如 http://<VPS_IP>:8080
 const TOKEN = process.env.CRYPTO_BREADTH_TOKEN;
 
+/**
+ * Python's default JSON encoder emits bare NaN/Infinity for non-finite
+ * floating-point values. Browsers and JSON.parse reject those tokens even
+ * though the HTTP response is labelled application/json. Treat only values
+ * in JSON value position as missing; quoted strings such as "NaN" stay intact.
+ */
+export function parseSourceJson(body: string): unknown {
+  try {
+    return JSON.parse(body);
+  } catch (initialError) {
+    const repaired = body.replace(
+      /([\[{,:]\s*)(?:NaN|-?Infinity)(?=\s*[,}\]])/g,
+      "$1null",
+    );
+
+    if (repaired === body) throw initialError;
+    return JSON.parse(repaired);
+  }
+}
+
 async function getMockBreadthData(): Promise<ParseResult> {
   const fs = await import("node:fs/promises");
   const path = await import("node:path");
@@ -35,7 +55,7 @@ async function fetchBreadthDataOnce(): Promise<ParseResult> {
 
   let json: unknown;
   try {
-    json = JSON.parse(await res.text());
+    json = parseSourceJson(await res.text());
   } catch (error) {
     // The endpoint has historically returned an HTML error page with HTTP 200,
     // and跨境链路偶发丢包也会导致响应体不完整。Log only response metadata so
