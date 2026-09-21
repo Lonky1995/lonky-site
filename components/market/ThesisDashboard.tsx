@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
-import Link from "next/link";
 import type { ThesisCategory, ThesisProjection, ThesisSnapshot, ThesisStatus } from "@/lib/thesis-store";
 
 const statusLabel: Record<ThesisStatus, string> = { exploring: "研究中", monitoring: "跟踪中", supported: "获得支持", weakened: "出现反例", invalidated: "已失效", archived: "已归档" };
@@ -33,9 +32,8 @@ function DetailList({ title, items }: { title: string; items: string[] }) { retu
 
 export default function ThesisDashboard() {
   const [data, setData] = useState<ThesisSnapshot | null>(null); const [error, setError] = useState<string | null>(null); const [active, setActive] = useState<ThesisCategory | "all">("all"); const [selectedId, setSelectedId] = useState<string | null>(null);
-  useEffect(() => { fetch("/api/private/theses", { cache: "no-store" }).then(async (response) => { const body = await response.json(); if (!response.ok) throw new Error(body.error || "thesis_read_failed"); setData(body); setSelectedId(body.theses[0]?.id ?? null); }).catch((cause) => setError(cause instanceof Error ? cause.message : "thesis_read_failed")); }, []);
+  useEffect(() => { fetch("/api/private/theses").then(async (response) => { const body = await response.json(); if (!response.ok) throw new Error(body.error || "thesis_read_failed"); setData(body); setSelectedId(body.theses[0]?.id ?? null); }).catch((cause) => setError(cause instanceof Error ? cause.message : "thesis_read_failed")); }, []);
   const visible = useMemo(() => (data?.theses ?? []).filter((item) => active === "all" || item.category === active), [data, active]); const selected = visible.find((item) => item.id === selectedId) ?? visible[0];
-  if (error === "sign_in_required") return <div className="mt-10 rounded-2xl border border-white/10 bg-white/[0.035] p-8"><p className="text-lg text-white">Thesis 是私有研究记录。</p><Link className="mt-4 inline-block text-sm text-accent underline underline-offset-4" href="/sign-in?redirect_url=/market?tab=thesis">登录后查看</Link></div>;
   if (error) return <div className="mt-10 rounded-2xl border border-rose-300/25 bg-rose-300/5 p-6 text-sm text-rose-100">Thesis 暂不可用：{error}</div>;
   if (!data) return <div className="mt-10 text-sm text-muted">正在读取研究记录…</div>;
   return <div className="mt-9"><div className="flex flex-wrap gap-2 border-y border-white/10 py-4">{(["all", "crypto", "us-equities", "market-structure"] as const).map((key) => <button key={key} onClick={() => setActive(key)} className={`rounded-full px-3 py-1.5 text-sm transition ${active === key ? "bg-white text-black" : "text-muted hover:bg-white/10 hover:text-white"}`}>{key === "all" ? `全部 ${data.theses.length}` : categoryLabel[key]}</button>)}</div>{visible.length === 0 ? <p className="py-16 text-sm text-muted">这个分类还没有 Thesis。</p> : <div className="mt-7 grid gap-7 lg:grid-cols-[minmax(0,1fr)_360px]"><div className="grid gap-4 sm:grid-cols-2">{visible.map((thesis) => <ThesisCard key={thesis.id} thesis={thesis} selected={thesis.id === selected?.id} onSelect={() => setSelectedId(thesis.id)} />)}</div>{selected && <ThesisDetail thesis={selected} />}</div>}</div>;
