@@ -1,8 +1,10 @@
 import { createHmac, timingSafeEqual } from "node:crypto";
 
-export function isThesisOwner(userId: string): boolean {
+export function isThesisOwner(user: { id: string; email: string | null }): boolean {
   const ownerId = process.env.THESIS_OWNER_USER_ID;
-  return Boolean(ownerId && userId && ownerId === userId);
+  if (ownerId && user.id && ownerId === user.id) return true;
+  const ownerEmail = process.env.THESIS_OWNER_EMAIL?.trim().toLowerCase();
+  return Boolean(ownerEmail && user.email && ownerEmail === user.email.trim().toLowerCase());
 }
 
 export function validSyncSignature(raw: string, timestamp: string | null, signature: string | null): boolean {

@@ -4,7 +4,9 @@
 
 ## Vercel production variables
 
-- `THESIS_OWNER_USER_ID`: the one Clerk user ID permitted to read the page.
+- `THESIS_OWNER_USER_ID`: the one Clerk user ID permitted to read the page (preferred).
+- `THESIS_OWNER_EMAIL`: an alternative owner binding using the Clerk account's email address.
+- `THESIS_GITHUB_TOKEN`: a dedicated GitHub token with read/write access to `Lonky1995/lonky-thesis-data`; do not reuse the public site's GitHub token.
 - `THESIS_SYNC_SECRET`: a random, shared HMAC secret. Never expose it to the browser.
 - `GITHUB_TOKEN`: existing token with read/write access to `Lonky1995/lonky-thesis-data`.
 
