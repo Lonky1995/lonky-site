@@ -1,5 +1,15 @@
 export type ThesisStatus = "exploring" | "monitoring" | "supported" | "weakened" | "invalidated" | "archived";
 export type ThesisCategory = "crypto" | "us-equities" | "market-structure" | "other";
+export type ThesisLifecycle = "open" | "closed";
+export type ThesisInstrument = {
+  symbol: string;
+  initialPrice: number | null;
+  initialPriceAt: string | null;
+  initialPriceBasis: "creation_quote" | "created_day_close" | "unavailable";
+  currentPrice: number | null;
+  currentPriceAt: string | null;
+  source: string | null;
+};
 
 export type ThesisProjection = {
   id: string;
@@ -7,7 +17,11 @@ export type ThesisProjection = {
   symbols: string[];
   category: ThesisCategory;
   status: ThesisStatus;
+  lifecycle: ThesisLifecycle;
+  closedAt?: string;
+  closeReason?: string;
   revision: number;
+  instruments: ThesisInstrument[];
   claim: { text: string; horizon?: string; scope?: string };
   causalChain: string[];
   keyQuestions: string[];
