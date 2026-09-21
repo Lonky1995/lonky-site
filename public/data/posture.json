@@ -1,23 +1,23 @@
 {
   "schemaVersion": 1,
   "methodologyVersion": "posture-v5-eight-factor-aggregate",
-  "date": "2026-09-18",
+  "date": "2026-09-21",
   "score": 53,
   "verdict": "谨慎",
   "factors": [
     {
       "key": "trend",
       "label": "趋势",
-      "score": 63,
-      "raw": 6.3,
-      "note": "5日 -0.3% · 20日 -0.1% · 距20日线 -0.3%",
+      "score": 69,
+      "raw": 7.1,
+      "note": "5日 +0.9% · 20日 +0.2% · 距20日线 +0.4%",
       "inputs": {
-        "dev200": 0.06339469444661772,
-        "ret5": -0.0034018500830835796,
-        "ret20": -0.001193286126409565,
-        "dev20": -0.003419453136090378,
-        "longScore": 86.69734722330887,
-        "momentumScore": 47.52735123920709
+        "dev200": 0.07104380343542394,
+        "ret5": 0.008871306907791032,
+        "ret20": 0.002494384370265834,
+        "dev20": 0.004226850113618674,
+        "longScore": 90.52190171771197,
+        "momentumScore": 54.78178306884754
       }
     },
     {
@@ -37,40 +37,40 @@
     {
       "key": "vol",
       "label": "波动",
-      "score": 73,
-      "raw": 14.83,
+      "score": 76,
+      "raw": 14.87,
       "note": "波动低位",
       "inputs": {
-        "vix": 14.83,
-        "change5Pct": -0.0637626262626263
+        "vix": 14.87,
+        "change5Pct": -0.1304093567251463
       }
     },
     {
       "key": "leadership",
       "label": "参与结构",
-      "score": 21,
-      "raw": -3.5,
+      "score": 11,
+      "raw": -4.6,
       "note": "上涨仍偏集中",
       "inputs": {
-        "excessReturn20": -0.035078731305949296,
-        "rspReturn20": -0.03627201743235886,
-        "spyReturn20": -0.001193286126409565
+        "excessReturn20": -0.04647823423718511,
+        "rspReturn20": -0.04398384986691928,
+        "spyReturn20": 0.002494384370265834
       }
     },
     {
       "key": "breadth",
       "label": "广度",
-      "score": 49,
+      "score": 50,
       "raw": 58.2,
       "note": "涨势偏窄",
       "inputs": {
         "universe": "SP100",
         "total": 98,
         "pctAbove200": 58.2,
-        "pctAbove50": 36.7,
-        "advancers": 32,
-        "decliners": 66,
-        "adDiff": -34,
+        "pctAbove50": 35.7,
+        "advancers": 41,
+        "decliners": 57,
+        "adDiff": -16,
         "missing": 0
       }
     },
@@ -87,9 +87,9 @@
         "momentum": "improving",
         "confidence": "high",
         "vulnerability": "elevated",
-        "buffer": 11.74,
+        "buffer": 11.7,
         "dataAsOf": "2026-09-18",
-        "indicators": 11,
+        "indicators": 12,
         "totalIndicators": 12
       }
     },
@@ -98,11 +98,11 @@
       "label": "拥挤度",
       "score": 33,
       "raw": 67,
-      "note": "中性",
+      "note": "中性（数据滞后）",
       "inputs": {
         "crowding": 67,
         "dataAsOf": "2026-09-18",
-        "stale": "false"
+        "stale": "true"
       }
     },
     {
@@ -110,13 +110,13 @@
       "label": "估值",
       "score": 67,
       "raw": 11.406,
-      "note": "PB 11.41 · 11.1分位（样本积累中）",
+      "note": "PB 11.41 · 11.1分位（样本积累中）（数据滞后）",
       "inputs": {
         "pb": 11.406,
         "percentile": 11.1,
         "windowPoints": 9,
         "dataAsOf": "2026-09-18",
-        "stale": "false",
+        "stale": "true",
         "lowSample": "true"
       }
     }
@@ -131,20 +131,8 @@
     "crowding": 0.1,
     "valuation": 0.1
   },
-  "updatedAt": 1789763415443,
+  "updatedAt": 1789999223931,
   "history": [
-    {
-      "date": "2026-09-10",
-      "score": 54,
-      "trend": 58,
-      "credit": 66,
-      "vol": 58,
-      "leadership": 36,
-      "breadth": 53,
-      "liquidity": 40,
-      "crowding": 49,
-      "valuation": 65
-    },
     {
       "date": "2026-09-11",
       "score": 54,
@@ -213,6 +201,18 @@
       "vol": 73,
       "leadership": 21,
       "breadth": 49,
+      "liquidity": 43,
+      "crowding": 33,
+      "valuation": 67
+    },
+    {
+      "date": "2026-09-21",
+      "score": 53,
+      "trend": 69,
+      "credit": 67,
+      "vol": 76,
+      "leadership": 11,
+      "breadth": 50,
       "liquidity": 43,
       "crowding": 33,
       "valuation": 67
