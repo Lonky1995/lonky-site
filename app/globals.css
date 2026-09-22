@@ -19,6 +19,24 @@ body {
   color: var(--color-foreground);
 }
 
+/* Public portfolio — an editorial ledger rather than a performance dashboard. */
+.portfolio-page { width: min(1180px, calc(100% - 2.5rem)); margin: 0 auto; padding: clamp(5.5rem, 11vw, 9rem) 0 5rem; }
+.portfolio-hero { display: flex; align-items: end; justify-content: space-between; gap: 2rem; }
+.portfolio-hero h1 { margin: .35rem 0 0; max-width: 8.5em; font-family: var(--font-serif); font-size: clamp(2.5rem, 5vw, 4.8rem); font-weight: 500; letter-spacing: -.065em; line-height: 1.08; }
+.portfolio-hero-note { min-width: 15rem; padding-bottom: .4rem; color: rgba(245,247,251,.55); font-size: .75rem; letter-spacing: .04em; line-height: 1.6; }
+.portfolio-hero-note p { margin: 0; color: rgba(245,247,251,.85); }.portfolio-hero-note time { display: block; }
+.portfolio-live-dot { display: inline-block; width: .48rem; height: .48rem; margin-right: .45rem; border-radius: 50%; background: #bcc9a6; box-shadow: 0 0 0 4px rgba(188,201,166,.1); }
+.portfolio-rule { display: flex; align-items: baseline; justify-content: space-between; margin-top: clamp(4.5rem, 9vw, 7.5rem); padding: .8rem 0; border-top: 1px solid rgba(245,247,251,.7); border-bottom: 1px solid rgba(245,247,251,.16); color: rgba(245,247,251,.62); font-size: .7rem; font-weight: 700; letter-spacing: .16em; }
+.portfolio-rule strong { color: #d5ddca; font-family: var(--font-mono); font-size: 1rem; }
+.portfolio-row { display: grid; grid-template-columns: 3.5rem minmax(0, .8fr) minmax(20rem, 1.2fr); gap: 2rem; padding: clamp(2rem, 4vw, 3.6rem) 0; border-bottom: 1px solid rgba(245,247,251,.14); }
+.portfolio-index { color: rgba(245,247,251,.3); font-family: var(--font-mono); font-size: .75rem; }.portfolio-title-row { display: flex; align-items: flex-start; justify-content: space-between; gap: 1rem; }
+.portfolio-title-row h2 { margin: 0; font-family: var(--font-mono); font-size: clamp(1.7rem, 3vw, 2.5rem); letter-spacing: -.06em; }.portfolio-company { margin: .42rem 0 0; color: rgba(245,247,251,.5); font-size: .78rem; line-height: 1.4; }
+.portfolio-side { padding: .32rem .45rem; border: 1px solid currentColor; font-family: var(--font-mono); font-size: .63rem; font-weight: 700; letter-spacing: .08em; }.portfolio-side.is-long { color: #c7dbb1; }.portfolio-side.is-short { color: #e5aea6; }
+.portfolio-stats { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 1.1rem .75rem; margin-top: 2.6rem; }.portfolio-stats span, .portfolio-label { display: block; margin-bottom: .22rem; color: rgba(245,247,251,.4); font-family: var(--font-mono); font-size: .62rem; font-weight: 700; letter-spacing: .1em; }.portfolio-stats strong { display: block; color: rgba(245,247,251,.9); font-family: var(--font-mono); font-size: .8rem; font-weight: 500; line-height: 1.35; }.portfolio-conviction { color: #d5ddca !important; letter-spacing: .08em; }
+.portfolio-thesis { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem 2rem; }.portfolio-thesis section:first-child { grid-column: 1 / -1; }.portfolio-thesis p:not(.portfolio-label) { margin: 0; color: rgba(245,247,251,.8); font-family: var(--font-serif); font-size: .98rem; line-height: 1.7; }.portfolio-check { padding-top: .8rem; border-top: 1px solid rgba(245,247,251,.12); }.portfolio-check.is-validate .portfolio-label { color: #b6cc9d; }.portfolio-check.is-invalidate .portfolio-label { color: #e1aaa2; }
+.portfolio-footer { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-top: 1rem; padding-top: 1.2rem; border-top: 1px solid rgba(245,247,251,.7); color: rgba(245,247,251,.42); font-size: .76rem; line-height: 1.65; }.portfolio-footer p { margin: 0; }.portfolio-status { padding: 3rem 0; border-bottom: 1px solid rgba(245,247,251,.14); color: rgba(245,247,251,.5); font-family: var(--font-serif); }
+@media (max-width: 760px) { .portfolio-page { width: min(100% - 2rem, 1180px); padding-top: 5rem; }.portfolio-hero { align-items: flex-start; flex-direction: column; }.portfolio-hero-note { min-width: 0; }.portfolio-row { grid-template-columns: 2rem minmax(0,1fr); gap: 1rem; }.portfolio-thesis { grid-column: 2; grid-template-columns: 1fr; gap: 1.15rem; }.portfolio-thesis section:first-child { grid-column: auto; }.portfolio-footer { grid-template-columns: 1fr; } }
+
 /* Scrollbar */
 ::-webkit-scrollbar {
   width: 6px;
