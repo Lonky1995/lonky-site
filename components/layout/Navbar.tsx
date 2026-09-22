@@ -9,6 +9,7 @@ const links = [
   { href: "/", key: "home" as const },
   { href: "/projects", key: "projects" as const },
   { href: "/blog", key: "blog" as const },
+  { href: "/market", key: "portfolio" as const, fallback: "美股" },
   { href: "/portfolio", key: "portfolio" as const, fallback: "持仓" },
   { href: "/crypto", key: "crypto" as const, fallback: "crypto" },
 ];
