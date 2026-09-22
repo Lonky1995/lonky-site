@@ -1,1 +1,99 @@
-{"generatedAt":"2026-09-22T15:09:19.470Z","positions":[{"id":"pos_1790089759467_xwl68y","symbol":"GLW","companyName":"Corning Incorporated","direction":"long","size":"60","entryTime":1790089759467,"entryPrice":"154.80","logic":"判断整体市场重新回到半导体主线：Meta 的 Muse 重新带动 AI 产品升级，以及算力与半导体需求。技术面上，日线级别收敛，预期后续向上。","validate":"日线向上有效突破当前收敛区间，并由半导体/AI 算力需求继续强化确认。","invalidate":"日线向下有效跌破当前收敛区间，或 AI 算力与半导体需求再加速的判断被后续数据否定。","conviction":3,"status":"active"},{"id":"pos_1790089759437_bkkgra","symbol":"SOXL","companyName":"Direxion Daily Semiconductor Bull 3X Shares","direction":"long","size":"25","entryTime":1790089759437,"entryPrice":"131.83","logic":"判断整体市场重新回到半导体主线：Meta 的 Muse 重新带动 AI 产品升级，以及算力与半导体需求。技术面上，日线级别收敛，预期后续向上。","validate":"日线向上有效突破当前收敛区间，并由半导体/AI 算力需求继续强化确认。","invalidate":"日线向下有效跌破当前收敛区间，或 AI 算力与半导体需求再加速的判断被后续数据否定。","conviction":3,"status":"active"},{"id":"pos_1784266016509_6374qc","symbol":"ORCL","companyName":"Oracle Corporation","direction":"long","size":"21","entryTime":1781673780000,"entryPrice":"187","logic":"1.数据中心，和 openai 绑定深\n2.当时跌到了水平位置，想着抄底","plan":"不说了，抄底抄到半山腰","validate":"收入、capaex指引","invalidate":"懵逼了，错的一塌糊涂","stopLoss":"110","conviction":3,"status":"active","lastReview":"本周：本周事件；想法验证；认知陷阱提醒：$129.88 → $158.83 这 +22% 是宏观驱动（加息预期降温 + 超跌修复），不是你 OpenAI 绑定逻辑被验证。别把反弹误读成我看对了。；风险预警；待跟进"}],"watchlist":[],"equityCurve":[]}
+{
+  "generatedAt": "2026-09-22T15:18:56.274Z",
+  "positions": [
+    {
+      "id": "pos_1790089759467_xwl68y",
+      "symbol": "GLW",
+      "companyName": "Corning Incorporated",
+      "direction": "long",
+      "size": "60",
+      "entryTime": 1790089759467,
+      "entryPrice": "154.80",
+      "logic": "判断整体市场重新回到半导体主线：Meta 的 Muse 重新带动 AI 产品升级，以及算力与半导体需求。技术面上，日线级别收敛，预期后续向上。",
+      "validate": "日线向上有效突破当前收敛区间，并由半导体/AI 算力需求继续强化确认。",
+      "invalidate": "日线向下有效跌破当前收敛区间，或 AI 算力与半导体需求再加速的判断被后续数据否定。",
+      "conviction": 3,
+      "status": "active"
+    },
+    {
+      "id": "pos_1790089759437_bkkgra",
+      "symbol": "SOXL",
+      "companyName": "Direxion Daily Semiconductor Bull 3X Shares",
+      "direction": "long",
+      "size": "25",
+      "entryTime": 1790089759437,
+      "entryPrice": "131.83",
+      "logic": "判断整体市场重新回到半导体主线：Meta 的 Muse 重新带动 AI 产品升级，以及算力与半导体需求。技术面上，日线级别收敛，预期后续向上。",
+      "validate": "日线向上有效突破当前收敛区间，并由半导体/AI 算力需求继续强化确认。",
+      "invalidate": "日线向下有效跌破当前收敛区间，或 AI 算力与半导体需求再加速的判断被后续数据否定。",
+      "conviction": 3,
+      "status": "active"
+    },
+    {
+      "id": "pos_1784266016509_6374qc",
+      "symbol": "ORCL",
+      "companyName": "Oracle Corporation",
+      "direction": "long",
+      "size": "21",
+      "entryTime": 1781673780000,
+      "entryPrice": "187",
+      "logic": "1.数据中心，和 openai 绑定深\n2.当时跌到了水平位置，想着抄底",
+      "plan": "不说了，抄底抄到半山腰",
+      "validate": "收入、capaex指引",
+      "invalidate": "懵逼了，错的一塌糊涂",
+      "stopLoss": "110",
+      "conviction": 3,
+      "status": "active",
+      "lastReview": "本周：本周事件；想法验证；认知陷阱提醒：$129.88 → $158.83 这 +22% 是**宏观驱动**（加息预期降温 + 超跌修复），不是你\"OpenAI 绑定\"逻辑被验证。别把反弹误读成\"我看对了\"。；风险预警；待跟进"
+    }
+  ],
+  "watchlist": [
+    {
+      "type": "event",
+      "symbol": "ORCL",
+      "text": "本周事件"
+    },
+    {
+      "type": "validate",
+      "symbol": "ORCL",
+      "text": "想法验证"
+    },
+    {
+      "type": "risk",
+      "symbol": "ORCL",
+      "text": "认知陷阱提醒：$129.88 → $158.83 这 +22% 是**宏观驱动**（加息预期降温 + 超跌修复），不是你\"OpenAI 绑定\"逻辑被验证。别把反弹误读成\"我看对了\"。"
+    },
+    {
+      "type": "risk",
+      "symbol": "ORCL",
+      "text": "风险预警"
+    },
+    {
+      "type": "todo",
+      "symbol": "ORCL",
+      "text": "待跟进"
+    }
+  ],
+  "equityCurve": [
+    {
+      "t": "2026-09-14",
+      "v": 9499
+    },
+    {
+      "t": "2026-09-15",
+      "v": 9408
+    },
+    {
+      "t": "2026-09-16",
+      "v": 9468
+    },
+    {
+      "t": "2026-09-17",
+      "v": 9622
+    },
+    {
+      "t": "2026-09-18",
+      "v": 9560
+    }
+  ]
+}
