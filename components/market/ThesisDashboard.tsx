@@ -46,7 +46,20 @@ function ThesisCard({ thesis, onOpen }: { thesis: ThesisProjection; onOpen: () =
 }
 
 function DetailList({ title, items }: { title: string; items: string[] }) {
-  return <section className="border-t border-white/10 py-5"><p className="text-xs uppercase tracking-[0.16em] text-muted">{title}</p><ul className="mt-3 space-y-2 text-sm leading-6 text-white/80">{items.length ? items.map((item) => <li key={item} className="border-l border-white/20 pl-3">{item}</li>) : <li className="text-muted">尚未记录</li>}</ul></section>;
+  return <section className="border-t border-white/10 py-5">{title && <p className="text-xs uppercase tracking-[0.16em] text-muted">{title}</p>}<ul className={`${title ? "mt-3" : ""} space-y-2 text-sm leading-6 text-white/80`}>{items.length ? items.map((item) => <li key={item} className="border-l border-white/20 pl-3">{item}</li>) : <li className="text-muted">尚未记录</li>}</ul></section>;
+}
+
+function EvidenceEntry({ item, compact = false }: { item: ThesisProjection["evidence"][number]; compact?: boolean }) {
+  const label = item.stance === "supports" ? "支持" : item.stance === "weakens" ? "反证" : "上下文";
+  const tone = item.stance === "supports" ? "text-emerald-300" : item.stance === "weakens" ? "text-orange-300" : "text-sky-200";
+  return <li className={compact ? "border-l border-white/15 pl-3" : "border-b border-white/10 pb-4 last:border-0 last:pb-0"}>
+    <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-xs"><span className={tone}>{label}</span><span className="text-white/35">{shortDate(item.source.observedAt)} · {item.source.name}</span></div>
+    <p className={compact ? "mt-1 text-sm leading-6 text-white/75" : "mt-2 text-sm leading-6 text-white/85"}>{item.statement}</p>
+  </li>;
+}
+
+function SectionHeading({ eyebrow, title, summary }: { eyebrow: string; title: string; summary?: string }) {
+  return <div className="mb-4"><p className="text-[11px] uppercase tracking-[0.18em] text-muted">{eyebrow}</p><h3 className="mt-1 text-base font-medium text-white">{title}</h3>{summary && <p className="mt-1 text-sm leading-6 text-muted">{summary}</p>}</div>;
 }
 
 function InstrumentDetails({ instruments }: { instruments: ThesisInstrument[] }) {
@@ -61,20 +74,30 @@ function ThesisModal({ thesis, onClose }: { thesis: ThesisProjection; onClose: (
     return () => window.removeEventListener("keydown", closeOnEscape);
   }, [onClose]);
 
-  return <div className="fixed inset-0 z-50 flex items-end bg-black/70 p-0 backdrop-blur-sm sm:items-center sm:justify-center sm:p-6" role="presentation" onMouseDown={(event) => { if (event.target === event.currentTarget) onClose(); }}>
-    <section role="dialog" aria-modal="true" aria-labelledby="thesis-core-conclusion" className="max-h-[92vh] w-full max-w-4xl overflow-y-auto rounded-t-3xl border border-white/15 bg-[#121511] shadow-2xl sm:rounded-3xl">
-      <div className="flex items-start justify-between gap-6 border-b border-white/10 px-6 py-5 sm:px-9">
-        <div><p className="text-xs uppercase tracking-[0.16em] text-muted">核心结论</p><h2 id="thesis-core-conclusion" className="mt-3 max-w-3xl font-serif text-2xl leading-tight text-white sm:text-3xl">{thesis.claim.text}</h2></div>
+  const history = thesis.evidence.slice().sort((a, b) => b.source.observedAt.localeCompare(a.source.observedAt));
+  const context = history.filter((item) => item.stance === "context");
+  const supports = history.filter((item) => item.stance === "supports");
+  const weakens = history.filter((item) => item.stance === "weakens");
+  const nextSignals = thesis.validationSignals.filter((item) => item.status === "pending");
+  return <div className="fixed inset-0 z-50 overflow-y-auto bg-black/70 p-3 backdrop-blur-sm sm:p-6" role="presentation" onMouseDown={(event) => { if (event.target === event.currentTarget) onClose(); }}>
+    <section role="dialog" aria-modal="true" aria-labelledby="thesis-title" className="mx-auto flex min-h-0 w-full max-w-5xl flex-col overflow-hidden rounded-3xl border border-white/15 bg-[#121511] shadow-2xl sm:my-6 sm:max-h-[calc(100dvh-3rem)]">
+      <header className="shrink-0 border-b border-white/10 bg-[#151914] px-6 py-5 sm:px-9">
+        <div className="flex items-start justify-between gap-6"><div><p className="text-[11px] uppercase tracking-[0.18em] text-muted">Thesis · 持续研究</p><h2 id="thesis-title" className="mt-2 max-w-3xl font-serif text-2xl leading-tight text-white sm:text-3xl">{thesis.title}</h2><p className="mt-3 text-sm leading-6 text-white/75">{thesis.claim.text}</p></div>
         <button type="button" onClick={onClose} className="shrink-0 rounded-full border border-white/15 px-3 py-1.5 text-sm text-muted transition hover:border-white/35 hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white">关闭</button>
-      </div>
-      <div className="grid gap-9 px-6 py-7 sm:px-9 lg:grid-cols-[minmax(0,1fr)_220px]">
-        <div>
-          <p className={`text-sm ${thesis.lifecycle === "closed" ? "text-zinc-400" : "text-emerald-300"}`}>{thesis.lifecycle === "closed" ? "已关闭" : "开放"} <span className={`ml-2 ${statusTone[thesis.status]}`}>研究状态 · {statusLabel[thesis.status]}</span> <span className="ml-2 text-muted">r{thesis.revision}</span></p>
-          <p className="mt-3 text-sm text-muted">研究主题 · {thesis.title} · 创建于 {shortDate(thesis.createdAt)}</p>
-          {thesis.lifecycle === "closed" && <p className="mt-3 text-sm text-zinc-400">关闭说明 · {thesis.closeReason || "用户结束跟踪"}</p>}
-          <div className="mt-7"><InstrumentDetails instruments={thesis.instruments || []} /><DetailList title="因果链" items={thesis.causalChain} /><DetailList title="下一步看什么" items={thesis.keyQuestions} /></div>
+        </div><div className="mt-4 flex flex-wrap gap-x-4 gap-y-2 text-xs"><span className={`text-sm ${statusTone[thesis.status]}`}>{statusLabel[thesis.status]}</span><span className="text-muted">{categoryLabel[thesis.category]} · r{thesis.revision}</span><span className="text-muted">创建 {shortDate(thesis.createdAt)} · 更新 {shortDate(thesis.updatedAt)}</span></div>
+        {thesis.lifecycle === "closed" && <p className="mt-3 text-sm text-zinc-400">关闭说明 · {thesis.closeReason || "用户结束跟踪"}</p>}
+      </header>
+      <div className="min-h-0 overflow-y-auto overscroll-contain px-6 py-7 sm:px-9 sm:py-9">
+        <div className="grid gap-10 lg:grid-cols-[minmax(0,1fr)_260px]">
+          <main className="min-w-0 space-y-9">
+            <section><SectionHeading eyebrow="Research history" title="历史研究与上下文" summary="按来源时间记录，讨论本身不等于验证结论。" />{history.length ? <ol className="space-y-4">{history.map((item) => <EvidenceEntry key={item.id} item={item} />)}</ol> : <p className="text-sm text-muted">尚未沉淀研究记录。</p>}</section>
+            <section className="border-t border-white/10 pt-7"><SectionHeading eyebrow="Mechanism" title="因果链" summary="这个 Thesis 依赖哪些环节成立。" /><DetailList title="" items={thesis.causalChain} /></section>
+            <section className="border-t border-white/10 pt-7"><SectionHeading eyebrow="Evidence" title="证据支持与反证" summary={`支持 ${supports.length} 条 · 反证 ${weakens.length} 条 · 上下文 ${context.length} 条`} /><div className="grid gap-6 sm:grid-cols-2"><div><p className="mb-3 text-sm text-emerald-300">支持</p><ul className="space-y-4">{supports.length ? supports.map((item) => <EvidenceEntry key={item.id} item={item} compact />) : <li className="text-sm text-muted">尚无支持证据。</li>}</ul></div><div><p className="mb-3 text-sm text-orange-300">反证 / 削弱</p><ul className="space-y-4">{weakens.length ? weakens.map((item) => <EvidenceEntry key={item.id} item={item} compact />) : <li className="text-sm text-muted">尚未记录反证；这不等于 Thesis 已被证实。</li>}</ul></div></div></section>
+            <section className="border-t border-white/10 pt-7"><SectionHeading eyebrow="Next checks" title="下一步看什么" summary="待观察的验证条件和未解问题。" /><div className="grid gap-6 sm:grid-cols-2"><div><p className="mb-3 text-sm text-white/85">验证信号</p><ul className="space-y-2 text-sm leading-6 text-white/80">{nextSignals.length ? nextSignals.map((signal) => <li key={signal.id} className="border-l border-white/20 pl-3"><span className={signal.direction === "support" ? "text-emerald-300" : "text-orange-300"}>{signal.direction === "support" ? "确认" : "削弱"}</span><span className="ml-2">{signal.condition}</span></li>) : <li className="text-muted">尚未定义待验证信号。</li>}</ul></div><div><p className="mb-3 text-sm text-white/85">待回答问题</p><ul className="space-y-2 text-sm leading-6 text-white/80">{thesis.keyQuestions.length ? thesis.keyQuestions.map((item) => <li key={item} className="border-l border-white/20 pl-3">{item}</li>) : <li className="text-muted">暂无待回答问题。</li>}</ul></div></div></section>
+            {thesis.alternatives.length > 0 && <section className="border-t border-white/10 pt-7"><SectionHeading eyebrow="Competing explanations" title="竞争解释" /><DetailList title="" items={thesis.alternatives.map((item) => item.whatWouldDifferentiate ? `${item.text}；区分条件：${item.whatWouldDifferentiate}` : item.text)} /></section>}
+          </main>
+          <aside className="h-fit border-t border-white/10 pt-7 lg:sticky lg:top-0 lg:border-l lg:border-t-0 lg:pl-8 lg:pt-0"><InstrumentDetails instruments={thesis.instruments || []} /><section className="border-t border-white/10 py-5"><p className="text-xs uppercase tracking-[0.16em] text-muted">研究健康度</p><div className="mt-3 space-y-1 text-sm"><p className="text-emerald-300">支持 {evidenceCount(thesis, "supports")}</p><p className="text-orange-300">反证 {evidenceCount(thesis, "weakens")}</p><p className="text-sky-200">上下文 {context.length}</p><p className="text-muted">待验证 {nextSignals.length}</p></div></section></aside>
         </div>
-        <aside className="border-t border-white/10 pt-5 lg:border-l lg:border-t-0 lg:pl-7 lg:pt-0"><p className="text-xs uppercase tracking-[0.16em] text-muted">证据状态</p><div className="mt-3 space-y-1 text-sm"><p className="text-emerald-300">支持 {evidenceCount(thesis, "supports")}</p><p className="text-orange-300">削弱 {evidenceCount(thesis, "weakens")}</p><p className="text-muted">记录 {thesis.evidence.length}</p></div>{thesis.evidence.length > 0 && <ul className="mt-6 space-y-4 text-sm leading-6 text-muted">{thesis.evidence.slice().reverse().map((item) => <li key={item.id}><span className={item.stance === "supports" ? "text-emerald-300" : item.stance === "weakens" ? "text-orange-300" : "text-sky-200"}>{item.stance === "supports" ? "支持" : item.stance === "weakens" ? "削弱" : "上下文"}</span><p className="mt-1">{item.statement}</p><p className="mt-1 text-xs text-white/35">{item.source.name} · {shortDate(item.source.observedAt)}</p></li>)}</ul>}</aside>
       </div>
     </section>
   </div>;
