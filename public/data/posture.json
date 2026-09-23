@@ -1,94 +1,94 @@
 {
   "schemaVersion": 1,
   "methodologyVersion": "posture-v5-eight-factor-aggregate",
-  "date": "2026-09-21",
-  "score": 54,
+  "date": "2026-09-23",
+  "score": 53,
   "verdict": "谨慎",
   "factors": [
     {
       "key": "trend",
       "label": "趋势",
-      "score": 74,
-      "raw": 7.9,
-      "note": "5日 +1.7% · 20日 +1.0% · 距20日线 +1.2%",
+      "score": 71,
+      "raw": 7.1,
+      "note": "5日 +1.9% · 20日 +0.3% · 距20日线 +0.4%",
       "inputs": {
-        "dev200": 0.07918978867412929,
-        "ret5": 0.016586058248344138,
-        "ret20": 0.010160371937522727,
-        "dev20": 0.011517701559777382,
-        "longScore": 94.59489433706464,
-        "momentumScore": 61.06131525896095
+        "dev200": 0.07098615521683649,
+        "ret5": 0.019229494065380326,
+        "ret20": 0.0034468801817446604,
+        "dev20": 0.0042204568023831435,
+        "longScore": 90.49307760841825,
+        "momentumScore": 58.39113031954526
       }
     },
     {
       "key": "credit",
       "label": "信用",
       "score": 67,
-      "raw": 268,
+      "raw": 266,
       "note": "利差低位 · 近期稳定",
       "inputs": {
         "source": "ICE BofA US High Yield OAS",
-        "valueBps": 268,
-        "change20Bps": -2,
-        "dataAsOf": "2026-09-18",
-        "zScore": -1.0557
+        "valueBps": 266,
+        "change20Bps": -3,
+        "dataAsOf": "2026-09-21",
+        "zScore": -1.1144
       }
     },
     {
       "key": "vol",
       "label": "波动",
-      "score": 76,
-      "raw": 14.87,
+      "score": 77,
+      "raw": 14.79,
       "note": "波动低位",
       "inputs": {
-        "vix": 14.87,
-        "change5Pct": -0.1304093567251463
+        "vix": 14.79,
+        "change5Pct": -0.16487859966120844
       }
     },
     {
       "key": "leadership",
       "label": "参与结构",
-      "score": 8,
-      "raw": -5.1,
+      "score": 11,
+      "raw": -4.7,
       "note": "上涨仍偏集中",
       "inputs": {
-        "excessReturn20": -0.050716153053596114,
-        "rspReturn20": -0.040555781116073386,
-        "spyReturn20": 0.010160371937522727
+        "excessReturn20": -0.04732120944178897,
+        "rspReturn20": -0.04387432926004431,
+        "spyReturn20": 0.0034468801817446604
       }
     },
     {
       "key": "breadth",
       "label": "广度",
-      "score": 56,
-      "raw": 60.2,
-      "note": "参与度尚可",
+      "score": 48,
+      "raw": 55.1,
+      "note": "涨势偏窄",
       "inputs": {
         "universe": "SP100",
         "total": 98,
-        "pctAbove200": 60.2,
-        "pctAbove50": 39.8,
-        "advancers": 63,
-        "decliners": 35,
-        "adDiff": 28,
+        "pctAbove200": 55.1,
+        "pctAbove50": 37.8,
+        "advancers": 39,
+        "decliners": 59,
+        "adDiff": -20,
         "missing": 0
       }
     },
     {
       "key": "liquidity",
       "label": "美元流动性",
-      "score": 43,
-      "raw": 57,
+      "score": 42,
+      "raw": 58,
       "note": "中性 · 稳定 · 结构脆弱",
       "inputs": {
         "source": "DollarLiquidity DLI",
-        "percentile5y": 57,
+        "percentile5y": 58,
         "status": "neutral",
         "momentum": "stable",
         "confidence": "high",
         "vulnerability": "elevated",
         "buffer": 11.7,
-        "dataAsOf": "2026-09-21",
+        "dataAsOf": "2026-09-22",
         "indicators": 12,
         "totalIndicators": 12
       }
@@ -131,20 +131,8 @@
     "crowding": 0.1,
     "valuation": 0.1
   },
-  "updatedAt": 1790039105056,
+  "updatedAt": 1790179135883,
   "history": [
-    {
-      "date": "2026-09-11",
-      "score": 54,
-      "trend": 61,
-      "credit": 66,
-      "vol": 66,
-      "leadership": 35,
-      "breadth": 62,
-      "liquidity": 42,
-      "crowding": 24,
-      "valuation": 66
-    },
     {
       "date": "2026-09-14",
       "score": 56,
@@ -214,6 +202,18 @@
       "leadership": 8,
       "breadth": 56,
       "liquidity": 43,
+      "crowding": 33,
+      "valuation": 67
+    },
+    {
+      "date": "2026-09-23",
+      "score": 53,
+      "trend": 71,
+      "credit": 67,
+      "vol": 77,
+      "leadership": 11,
+      "breadth": 48,
+      "liquidity": 42,
       "crowding": 33,
       "valuation": 67
     }
