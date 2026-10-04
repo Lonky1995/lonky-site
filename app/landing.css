@@ -3555,3 +3555,175 @@ body:has(.lonky-home) {
     font-size: clamp(24px, 7.6vw, 40px);
   }
 }
+
+/* iPhone character: compositor-only pointer motion, independent of video seeking. */
+.lonky-home .phone-character {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+.lonky-home .phone-character-halo {
+  position: absolute;
+  width: 66%;
+  height: 90%;
+  right: -10%;
+  bottom: -15%;
+  background: radial-gradient(ellipse, #e6e6e1 0%, transparent 67%);
+}
+.lonky-home .phone-portrait {
+  position: absolute;
+  width: min(58vw, 810px);
+  height: min(82vw, 930px);
+  right: -3%;
+  bottom: -140px;
+}
+.lonky-home .phone-torso {
+  position: absolute;
+  inset: 46% 0 0;
+  background: url('/images/iphone-suit.webp') center top / 100% auto no-repeat;
+  mask-image: linear-gradient(#000 75%, transparent 100%);
+}
+.lonky-home .phone-head-stage {
+  position: absolute;
+  width: 29%;
+  aspect-ratio: 0.49;
+  left: 35.5%;
+  top: 21%;
+  perspective: 1100px;
+}
+.lonky-home .phone-head {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  transform-style: preserve-3d;
+  transform: rotateY(-9deg) rotateZ(-3deg);
+  will-change: transform;
+}
+.lonky-home .phone-front, .lonky-home .phone-back {
+  position: absolute;
+  inset: 0;
+  border-radius: 15% / 7.4%;
+  background: linear-gradient(140deg, #eeeeeb, #777773 28%, #cececa 60%, #fafaf8 86%, #858580);
+  padding: 5px;
+  backface-visibility: hidden;
+}
+.lonky-home .phone-front {
+  transform: translateZ(12px);
+  box-shadow: inset 0 0 0 1px #d9d9d4, 0 26px 35px -24px #0009;
+}
+.lonky-home .phone-back { transform: rotateY(180deg) translateZ(12px); }
+.lonky-home .phone-screen {
+  position: absolute;
+  inset: 5px;
+  border-radius: inherit;
+  overflow: hidden;
+  border: 6px solid #101011;
+  background: radial-gradient(ellipse at 26% 20%, #44464b, #212329 43%, #0a0c0f 88%);
+  box-shadow: inset 0 0 0 1px #57585a;
+}
+.lonky-home .phone-island {
+  position: absolute;
+  width: 32%;
+  height: 5.6%;
+  left: 34%;
+  top: 3%;
+  border-radius: 50px;
+  background: #030405;
+  box-shadow: 0 0 1px #505156;
+}
+.lonky-home .phone-island span {
+  position: absolute;
+  width: 10%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  right: 10%;
+  top: 31%;
+  background: radial-gradient(circle at 32% 30%, #686d77, #161b27 52%, #020306 80%);
+}
+.lonky-home .phone-eyes {
+  position: absolute;
+  display: flex;
+  justify-content: space-between;
+  top: 40%;
+  left: 20%;
+  width: 60%;
+  height: 18%;
+  will-change: transform;
+}
+.lonky-home .phone-eyes span {
+  width: 29%;
+  height: 100%;
+  border-radius: 50%;
+  background: #f6f6f2;
+  box-shadow: 0 0 22px #fff2, inset -3px -4px 8px #d8d8d4;
+}
+.lonky-home .phone-smile {
+  position: absolute;
+  width: 21%;
+  height: 5%;
+  top: 65%;
+  left: 39.5%;
+  border-bottom: 3px solid #ececea;
+  border-radius: 0 0 50% 50%;
+  opacity: .8;
+}
+.lonky-home .phone-home-indicator {
+  position: absolute;
+  width: 35%;
+  height: 3px;
+  left: 32.5%;
+  bottom: 2%;
+  background: #e2e2de;
+  border-radius: 6px;
+  opacity: .65;
+}
+.lonky-home .phone-glass {
+  position: absolute;
+  inset: 5px;
+  border-radius: inherit;
+  background: linear-gradient(123deg, #ffffff16 2%, transparent 40%, #ffffff08 70%, transparent 71%);
+}
+.lonky-home .phone-edge {
+  position: absolute;
+  background: linear-gradient(90deg, #a5a5a1, #e1e1dd 40%, #888884);
+  backface-visibility: hidden;
+}
+.lonky-home .phone-edge-left, .lonky-home .phone-edge-right {
+  top: 7.4%;
+  height: 85.2%;
+  width: 24px;
+}
+.lonky-home .phone-edge-left { left: -12px; transform: rotateY(-90deg); }
+.lonky-home .phone-edge-right { right: -12px; transform: rotateY(90deg); }
+.lonky-home .phone-edge-top, .lonky-home .phone-edge-bottom {
+  left: 15%;
+  width: 70%;
+  height: 24px;
+}
+.lonky-home .phone-edge-top { top: -12px; transform: rotateX(90deg); }
+.lonky-home .phone-edge-bottom { bottom: -12px; transform: rotateX(-90deg); }
+.lonky-home .phone-edge i {
+  position: absolute;
+  width: 6px;
+  height: 10%;
+  top: 27%;
+  left: 9px;
+  border-radius: 4px;
+  background: #a6a6a2;
+  border: 1px solid #777772;
+}
+.lonky-home .phone-edge-left i:first-child { top: 11%; height: 4%; }
+.lonky-home .phone-edge-left i:last-child { top: 41%; }
+@media (min-width: 1500px) {
+  .lonky-home .phone-portrait { right: 2%; bottom: -125px; }
+}
+@media (max-width: 760px) {
+  .lonky-home .phone-portrait { width: 520px; height: 650px; right: -100px; bottom: 80px; opacity: 1; }
+  .lonky-home .phone-head-stage { top: 9%; }
+  .lonky-home .hero .copy { z-index: 3; }
+  .lonky-home .phone-character::after { content: ''; position: absolute; inset: 0; background: linear-gradient(180deg, transparent 0%, transparent 56%, #fafaf8c9 68%, #fafaf8 83%); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .lonky-home .phone-head, .lonky-home .phone-eyes { will-change: auto; }
+}

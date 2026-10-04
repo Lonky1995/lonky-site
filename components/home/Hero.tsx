@@ -5,7 +5,7 @@ import { RobotBackdrop } from "./RobotBackdrop";
 export function Hero() {
   return (
     <section className="hero" id="hero" aria-label="Lonky 个人介绍">
-      <RobotBackdrop english={false}></RobotBackdrop>
+      <RobotBackdrop />
       <nav className="nav" aria-label="主导航">
         <Link className="logo animated-name" href="/" aria-label="Lonky">
           <span className="name-letters" aria-hidden="true">

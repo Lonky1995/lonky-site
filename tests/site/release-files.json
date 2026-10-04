@@ -20,5 +20,6 @@
   "public/images/logos/okx.png",
   "tests/site/project-groups.test.ts",
   "public/images/logos/wechat.png",
-  "components/home/motion/CryptoMotion.tsx"
+  "components/home/motion/CryptoMotion.tsx",
+  "public/images/iphone-suit.webp"
 ]
