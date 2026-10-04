@@ -1,11 +1,7 @@
 import type { Metadata } from "next";
 import { cookies } from "next/headers";
 import Script from "next/script";
-import {
-  Instrument_Sans,
-  Plus_Jakarta_Sans,
-  JetBrains_Mono,
-} from "next/font/google";
+import { Instrument_Sans, Inter, JetBrains_Mono } from "next/font/google";
 import localFont from "next/font/local";
 import { LocaleProvider } from "@/components/locale-provider";
 import { Navbar } from "@/components/layout/Navbar";
@@ -15,6 +11,8 @@ import { siteConfig } from "@/data/site-config";
 import { defaultLocale, type Locale } from "@/i18n/config";
 import { getDictionary } from "@/i18n";
 import "./globals.css";
+import "./mainframe.css";
+import "./landing.css";
 
 const instrumentSans = Instrument_Sans({
   variable: "--font-instrument",
@@ -22,7 +20,7 @@ const instrumentSans = Instrument_Sans({
   weight: ["400", "500", "600", "700"],
 });
 
-const plusJakartaSans = Plus_Jakarta_Sans({
+const plusJakartaSans = Inter({
   variable: "--font-inter",
   subsets: ["latin"],
   weight: ["400", "500", "600", "700", "800"],
@@ -31,9 +29,21 @@ const plusJakartaSans = Plus_Jakarta_Sans({
 const notoSerifSC = localFont({
   variable: "--font-noto-serif-sc",
   src: [
-    { path: "../public/fonts/noto-serif-sc-400.woff2", weight: "400", style: "normal" },
-    { path: "../public/fonts/noto-serif-sc-500.woff2", weight: "500", style: "normal" },
-    { path: "../public/fonts/noto-serif-sc-700.woff2", weight: "700", style: "normal" },
+    {
+      path: "../public/fonts/noto-serif-sc-400.woff2",
+      weight: "400",
+      style: "normal",
+    },
+    {
+      path: "../public/fonts/noto-serif-sc-500.woff2",
+      weight: "500",
+      style: "normal",
+    },
+    {
+      path: "../public/fonts/noto-serif-sc-700.woff2",
+      weight: "700",
+      style: "normal",
+    },
   ],
   display: "swap",
 });
@@ -71,8 +81,7 @@ export default async function RootLayout({
 }>) {
   const hasClerk = !!process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY;
   const cookieStore = await cookies();
-  const locale =
-    (cookieStore.get("locale")?.value as Locale) || defaultLocale;
+  const locale = (cookieStore.get("locale")?.value as Locale) || defaultLocale;
   const dict = getDictionary(locale);
   const html = (
     <html lang={locale}>

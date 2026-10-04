@@ -31,6 +31,19 @@ export type Project = {
 
 export const projects: Project[] = [
   {
+    id: "clayyard",
+    title: { zh: "ClayYard", en: "ClayYard" },
+    description: {
+      zh: "为你的 Agent 构建统一的数据与工具入口。连接不同来源，让请求、调用和返回结果有迹可循。",
+      en: "One MCP entry connecting data and tools for your agent, with traceable calls and results.",
+    },
+    category: "AI",
+    techStack: ["MCP", "Agent"],
+    featured: true,
+    status: "in-progress",
+    year: "2026",
+  },
+  {
     id: "xhs-kit",
     title: {
       zh: "小红书工具：舆情工具和评论截流",
@@ -87,8 +100,8 @@ export const projects: Project[] = [
       en: "LonkyClaw",
     },
     description: {
-      zh: "我的个人 Agent 系统：Trading Agent 自动分析加密市场，生活助理 Agent 处理日常琐事。",
-      en: "My personal agent system: a Trading Agent for crypto market analysis and a Life Assistant Agent for daily tasks.",
+      zh: "个人市场研究 Harness：连接问题与假设、证据、研究判断、计划检查和复盘，保留每次判断的依据与变化，关键推进由人确认。",
+      en: "A personal market research harness connecting questions, evidence, theses, plan checks and reviews, with human confirmation for key transitions.",
     },
     category: "AI",
     techStack: ["TypeScript", "Python", "Claude", "Docker"],

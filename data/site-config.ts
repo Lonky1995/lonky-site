@@ -1,5 +1,5 @@
 export const siteConfig = {
-  name: "lonky'home",
+  name: "Lonky",
   title: "Lonky - Product Manager & Vibecoder",
   description:
     "Product Manager turned Vibecoder. Building AI-powered tools, crypto platforms, and everything in between.",

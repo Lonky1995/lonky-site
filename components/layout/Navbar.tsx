@@ -8,9 +8,6 @@ import { useLocale } from "@/components/locale-provider";
 const links = [
   { href: "/", key: "home" as const },
   { href: "/projects", key: "projects" as const },
-  { href: "/blog", key: "blog" as const },
-  { href: "/market", key: "portfolio" as const, fallback: "美股" },
-  { href: "/portfolio", key: "portfolio" as const, fallback: "持仓" },
   { href: "/crypto", key: "crypto" as const, fallback: "crypto" },
 ];
 
@@ -19,16 +16,25 @@ export function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const { dict, setLocale, locale } = useLocale();
 
+  const editorial =
+    pathname === "/" ||
+    pathname === "/projects" ||
+    pathname.startsWith("/blog") ||
+    (pathname.startsWith("/podcast-notes/") &&
+      pathname !== "/podcast-notes/new");
+
   const hideNavbar =
     pathname === "/sign-in" ||
     pathname.startsWith("/sign-in/") ||
     pathname === "/sign-up" ||
     pathname.startsWith("/sign-up/");
 
-  if (hideNavbar) return null;
+  if (hideNavbar || pathname === "/") return null;
 
   const labelFor = (key: (typeof links)[number]["key"], fallback?: string) => {
-    if (key === "portfolio" || key === "crypto") return fallback ?? key;
+    if (key === "crypto") return "Crypto";
+    if (editorial && key === "projects")
+      return locale === "zh" ? "作品" : "Work";
     return dict.nav[key] ?? fallback ?? key;
   };
 
@@ -37,10 +43,19 @@ export function Navbar() {
 
   return (
     <>
-      <header className="apple-nav">
+      <header
+        className={`apple-nav ${editorial ? "mf-nav" : ""}`}
+        data-site-theme={editorial ? "editorial" : "dashboard"}
+      >
         <Link href="/" className="apple-nav-mark">
-          <span className="apple-nav-dot" aria-hidden />
-          lonky
+          {editorial ? (
+            <span className="mf-nav-star" aria-hidden>
+              ✳︎
+            </span>
+          ) : (
+            <span className="apple-nav-dot" aria-hidden />
+          )}
+          Lonky
         </Link>
 
         <nav className="apple-nav-links" aria-label="Main">
@@ -63,24 +78,39 @@ export function Navbar() {
           >
             {dict.common.langSwitch}
           </button>
-          <Link href="/projects" className="apple-nav-cta">
-            {locale === "zh" ? "作品" : "Work"}
+          <Link
+            href={editorial ? "/#contact" : "/projects"}
+            className="apple-nav-cta"
+          >
+            {editorial
+              ? locale === "zh"
+                ? "聊聊新想法"
+                : "Say hello"
+              : locale === "zh"
+                ? "作品"
+                : "Work"}
           </Link>
           <button
             type="button"
             className="apple-nav-mobile-btn"
-            aria-label="Toggle menu"
+            aria-label={locale === "zh" ? "切换菜单" : "Toggle menu"}
+            aria-expanded={mobileOpen}
+            aria-controls="site-mobile-menu"
             onClick={() => setMobileOpen((v) => !v)}
           >
             <span
               style={{
-                transform: mobileOpen ? "translateY(6.5px) rotate(45deg)" : undefined,
+                transform: mobileOpen
+                  ? "translateY(6.5px) rotate(45deg)"
+                  : undefined,
               }}
             />
             <span style={{ opacity: mobileOpen ? 0 : 1 }} />
             <span
               style={{
-                transform: mobileOpen ? "translateY(-6.5px) rotate(-45deg)" : undefined,
+                transform: mobileOpen
+                  ? "translateY(-6.5px) rotate(-45deg)"
+                  : undefined,
               }}
             />
           </button>
@@ -88,7 +118,10 @@ export function Navbar() {
       </header>
 
       {mobileOpen && (
-        <div className="apple-nav-drawer">
+        <div
+          className={`apple-nav-drawer ${editorial ? "mf-nav-drawer" : ""}`}
+          id="site-mobile-menu"
+        >
           {links.map((l) => (
             <Link
               key={l.href}
