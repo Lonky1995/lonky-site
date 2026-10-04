@@ -93,7 +93,9 @@ export function Hero() {
             <span
               className="title-character"
               style={{ "--char": "5" } as CSSProperties}
-            ></span>
+            >
+              {"\u00a0"}
+            </span>
           </span>
           <span className="title-mask" aria-hidden="true">
             <span
