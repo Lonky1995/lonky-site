@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "velite && next dev",
-    "build": "velite && next build",
+    "build": "velite && next build --webpack",
     "start": "next start",
     "lint": "eslint",
     "sync": "npx tsx scripts/sync-vault.ts",
