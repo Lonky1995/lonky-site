@@ -19,6 +19,9 @@ export function RobotBackdrop() {
     let visible = true;
     let frame = 0;
     let previousTime = 0;
+    let breathingTime = 0;
+    let idleWeight = 1;
+    let lastPointerMove = -Infinity;
     let x = 0, y = 0, targetX = 0, targetY = 0;
 
     const render = (time: number) => {
@@ -30,17 +33,27 @@ export function RobotBackdrop() {
       const blend = 1 - Math.exp(-delta / 32);
       x += (targetX - x) * blend;
       y += (targetY - y) * blend;
-      camera.style.transform = `rotateX(${-y * 8}deg) rotateY(${x * 14}deg) rotateZ(${x * 2}deg)`;
+      // One continuous phase prevents a jump when pointer tracking settles.
+      // Freeze this clock while hidden/offscreen rather than skipping ahead on resume.
+      breathingTime += delta;
+      const phase = (breathingTime / 6200) * Math.PI * 2;
+      const idleTarget = time - lastPointerMove < 250 ? 0.35 : 1;
+      idleWeight += (idleTarget - idleWeight) * (1 - Math.exp(-delta / 280));
+      const driftX = Math.sin(phase) * 3 * idleWeight;
+      const driftY = (Math.cos(phase) - 1) * 4 * idleWeight;
+      const nod = Math.sin(phase + Math.PI / 3) * 0.9 * idleWeight;
+      const tilt = Math.sin(phase) * 1.1 * idleWeight;
+      camera.style.transform = `translate3d(${driftX}px, ${driftY}px, 0) rotateX(${-y * 8 + nod}deg) rotateY(${x * 14}deg) rotateZ(${x * 2 + tilt}deg)`;
       gaze.style.transform = `translate(${x * 8}px, ${y * 6}px)`;
       stage.dataset.pointer = `${x.toFixed(3)},${y.toFixed(3)}`;
-      if (Math.abs(targetX - x) + Math.abs(targetY - y) > 0.001) frame = requestAnimationFrame(render);
-      else previousTime = 0;
+      frame = requestAnimationFrame(render);
     };
     const start = () => {
       if (!frame && visible && !document.hidden && !preference.matches) frame = requestAnimationFrame(render);
     };
     const move = (event: PointerEvent) => {
       if (event.pointerType !== "mouse" || preference.matches) return;
+      lastPointerMove = performance.now();
       targetX = Math.max(-1, Math.min(1, ((event.clientX - bounds.left) / bounds.width - 0.5) * 2));
       targetY = Math.max(-1, Math.min(1, ((event.clientY - bounds.top) / bounds.height - 0.5) * 2));
       start();
