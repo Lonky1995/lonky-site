@@ -152,7 +152,7 @@ export function Hero() {
               <rect x="3" y="3" width="14" height="14" rx="3"></rect>
               <path d="M3 8h14M8 8v9"></path>
             </svg>
-            <span>{"6 年产品"}</span>
+            <span>{"古典产品经理"}</span>
           </span>
           <span className="identity-tag">
             <svg viewBox="0 0 24 20" aria-hidden="true">

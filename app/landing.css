@@ -3581,7 +3581,7 @@ body:has(.lonky-home) {
 .lonky-home .phone-torso {
   position: absolute;
   inset: 46% 0 0;
-  background: url('/images/iphone-suit.webp') center top / 100% auto no-repeat;
+  background: url('/images/iphone-suit-soft.webp') center top / 100% auto no-repeat;
   mask-image: linear-gradient(#000 75%, transparent 100%);
 }
 .lonky-home .phone-head-stage {
@@ -3604,13 +3604,13 @@ body:has(.lonky-home) {
   position: absolute;
   inset: 0;
   border-radius: 15% / 7.4%;
-  background: linear-gradient(140deg, #eeeeeb, #777773 28%, #cececa 60%, #fafaf8 86%, #858580);
+  background: linear-gradient(140deg, #f3f3f0, #b8b8b2 28%, #deded8 60%, #fafaf8 86%, #bababa);
   padding: 5px;
   backface-visibility: hidden;
 }
 .lonky-home .phone-front {
   transform: translateZ(12px);
-  box-shadow: inset 0 0 0 1px #d9d9d4, 0 26px 35px -24px #0009;
+  box-shadow: inset 0 0 0 1px #d9d9d4, 0 26px 35px -24px #49494350;
 }
 .lonky-home .phone-back { transform: rotateY(180deg) translateZ(12px); }
 .lonky-home .phone-screen {
@@ -3618,9 +3618,9 @@ body:has(.lonky-home) {
   inset: 5px;
   border-radius: inherit;
   overflow: hidden;
-  border: 6px solid #101011;
-  background: radial-gradient(ellipse at 26% 20%, #44464b, #212329 43%, #0a0c0f 88%);
-  box-shadow: inset 0 0 0 1px #57585a;
+  border: 6px solid #9a9b97;
+  background: radial-gradient(ellipse at 26% 20%, #f4f4f0, #e6e7e2 43%, #cdd0ca 88%);
+  box-shadow: inset 0 0 0 1px #b9bbb5;
 }
 .lonky-home .phone-island {
   position: absolute;
@@ -3629,8 +3629,8 @@ body:has(.lonky-home) {
   left: 34%;
   top: 3%;
   border-radius: 50px;
-  background: #030405;
-  box-shadow: 0 0 1px #505156;
+  background: #555854;
+  box-shadow: 0 0 1px #777a73;
 }
 .lonky-home .phone-island span {
   position: absolute;
@@ -3655,8 +3655,8 @@ body:has(.lonky-home) {
   width: 29%;
   height: 100%;
   border-radius: 50%;
-  background: #f6f6f2;
-  box-shadow: 0 0 22px #fff2, inset -3px -4px 8px #d8d8d4;
+  background: #555b54;
+  box-shadow: inset 0 2px 4px #ffffff18;
 }
 .lonky-home .phone-smile {
   position: absolute;
@@ -3664,7 +3664,7 @@ body:has(.lonky-home) {
   height: 5%;
   top: 65%;
   left: 39.5%;
-  border-bottom: 3px solid #ececea;
+  border-bottom: 3px solid #666d64;
   border-radius: 0 0 50% 50%;
   opacity: .8;
 }
@@ -3674,7 +3674,7 @@ body:has(.lonky-home) {
   height: 3px;
   left: 32.5%;
   bottom: 2%;
-  background: #e2e2de;
+  background: #81867e;
   border-radius: 6px;
   opacity: .65;
 }
@@ -3682,11 +3682,11 @@ body:has(.lonky-home) {
   position: absolute;
   inset: 5px;
   border-radius: inherit;
-  background: linear-gradient(123deg, #ffffff16 2%, transparent 40%, #ffffff08 70%, transparent 71%);
+  background: linear-gradient(123deg, #ffffff25 2%, transparent 40%, #ffffff12 70%, transparent 71%);
 }
 .lonky-home .phone-edge {
   position: absolute;
-  background: linear-gradient(90deg, #a5a5a1, #e1e1dd 40%, #888884);
+  background: linear-gradient(90deg, #c4c5bf, #eeeee9 40%, #aaaDa5);
   backface-visibility: hidden;
 }
 .lonky-home .phone-edge-left, .lonky-home .phone-edge-right {
