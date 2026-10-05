@@ -2,7 +2,7 @@
 
 import { useEffect, useRef } from "react";
 
-/** The phone follows pointer position directly; no video decoding or React updates per frame. */
+/** The camera follows pointer position directly; no video decoding or React updates per frame. */
 export function RobotBackdrop() {
   const surface = useRef<HTMLDivElement>(null);
   const head = useRef<HTMLDivElement>(null);
@@ -10,10 +10,10 @@ export function RobotBackdrop() {
 
   useEffect(() => {
     const stage = surface.current;
-    const phone = head.current;
+    const camera = head.current;
     const gaze = eyes.current;
     const host = stage?.closest<HTMLElement>(".hero");
-    if (!stage || !phone || !gaze || !host) return;
+    if (!stage || !camera || !gaze || !host) return;
     const preference = matchMedia("(prefers-reduced-motion: reduce)");
     let bounds = host.getBoundingClientRect();
     let visible = true;
@@ -30,8 +30,8 @@ export function RobotBackdrop() {
       const blend = 1 - Math.exp(-delta / 32);
       x += (targetX - x) * blend;
       y += (targetY - y) * blend;
-      phone.style.transform = `rotateX(${-y * 14}deg) rotateY(${x * 25 - 9}deg) rotateZ(${x * 3 - 3}deg)`;
-      gaze.style.transform = `translate(${x * 13}px, ${y * 10}px)`;
+      camera.style.transform = `rotateX(${-y * 8}deg) rotateY(${x * 14}deg) rotateZ(${x * 2}deg)`;
+      gaze.style.transform = `translate(${x * 8}px, ${y * 6}px)`;
       stage.dataset.pointer = `${x.toFixed(3)},${y.toFixed(3)}`;
       if (Math.abs(targetX - x) + Math.abs(targetY - y) > 0.001) frame = requestAnimationFrame(render);
       else previousTime = 0;
@@ -51,7 +51,7 @@ export function RobotBackdrop() {
       cancelAnimationFrame(frame); frame = 0; previousTime = 0;
       if (preference.matches) {
         x = y = targetX = targetY = 0;
-        phone.style.transform = "rotateY(-9deg) rotateZ(-3deg)";
+        camera.style.transform = "none";
         gaze.style.transform = "none";
         stage.dataset.pointer = "0.000,0.000";
       } else start();
@@ -86,25 +86,18 @@ export function RobotBackdrop() {
   }, []);
 
   return (
-    <div ref={surface} className="phone-character" aria-hidden="true">
-      <div className="phone-character-halo" />
-      <div className="phone-portrait">
-        <div className="phone-torso" />
-        <div className="phone-head-stage">
-          <div ref={head} className="phone-head">
-            <div className="phone-back" />
-            <div className="phone-edge phone-edge-left"><i /><i /><i /></div>
-            <div className="phone-edge phone-edge-right"><i /></div>
-            <div className="phone-edge phone-edge-top" />
-            <div className="phone-edge phone-edge-bottom" />
-            <div className="phone-front">
-              <div className="phone-screen">
-                <div className="phone-island"><span /></div>
-                <div ref={eyes} className="phone-eyes"><span /><span /></div>
-                <div className="phone-smile" />
-                <div className="phone-home-indicator" />
+    <div ref={surface} className="camera-character" aria-hidden="true">
+      <div className="camera-character-halo" />
+      <div className="camera-portrait">
+        <div className="camera-torso" />
+        <div className="camera-head-stage">
+          <div ref={head} className="camera-head">
+            <div className="camera-shell" />
+            <div className="camera-lens-face">
+              <div ref={eyes} className="camera-gaze">
+                <div className="camera-eyes"><span /><span /></div>
+                <div className="camera-smile" />
               </div>
-              <div className="phone-glass" />
             </div>
           </div>
         </div>
