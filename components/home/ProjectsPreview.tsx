@@ -5,7 +5,6 @@ const order = ["clayyard", "agent", "xhs", "podcast"];
 export function ProjectsPreview() {
   const host = useRef<HTMLElement>(null);
   const [active, setActive] = useState("clayyard");
-  const [paused, setPaused] = useState(false);
   const [expanded, setExpanded] = useState(false);
   const [cycle, setCycle] = useState(0);
   function choose(kind: string) {
@@ -36,7 +35,7 @@ export function ProjectsPreview() {
     let visible = false;
     function sync() {
       clearTimeout(timer);
-      if (!visible || paused || document.hidden || reduced.matches) return;
+      if (!visible || document.hidden || reduced.matches) return;
       timer = setTimeout(
         () =>
           setActive(
@@ -62,7 +61,7 @@ export function ProjectsPreview() {
       document.removeEventListener("visibilitychange", sync);
       reduced.removeEventListener("change", sync);
     };
-  }, [active, paused, cycle]);
+  }, [active, cycle]);
   return (
     <section className="section work-showcase in-view" id="work" ref={host}>
       <div className="showcase-heading reveal" data-reveal="">
@@ -460,16 +459,6 @@ export function ProjectsPreview() {
             </div>
           </div>
         </article>
-      </div>
-      <div className="showcase-controls">
-        <button
-          type="button"
-          id="project-autoplay"
-          aria-pressed={paused}
-          onClick={() => setPaused((value) => !value)}
-        >
-          {paused ? "继续轮播" : "暂停轮播"}
-        </button>
       </div>
     </section>
   );
