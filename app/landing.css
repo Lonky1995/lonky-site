@@ -3728,3 +3728,17 @@ body:has(.lonky-home) {
 @media (prefers-reduced-motion: reduce) {
   .lonky-home .phone-head, .lonky-home .phone-eyes { will-change: auto; }
 }
+
+/* Keep tall windows from creating an oversized empty hero above the introduction. */
+.lonky-home .hero {
+  --hero-height: min(100svh, 780px);
+  min-height: var(--hero-height);
+}
+.lonky-home .hero .copy {
+  min-height: calc(var(--hero-height) - 100px);
+}
+@media (max-width: 700px) {
+  .lonky-home .hero .copy {
+    min-height: calc(var(--hero-height) - 90px);
+  }
+}
