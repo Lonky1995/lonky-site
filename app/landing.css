@@ -3580,8 +3580,8 @@ body:has(.lonky-home) {
 }
 .lonky-home .phone-torso {
   position: absolute;
-  inset: 46% 0 0;
-  background: url('/images/iphone-suit-soft.webp') center top / 100% auto no-repeat;
+  inset: calc(46% + clamp(30px, 4.3vw, 60px)) 0 0;
+  background: url('/images/iphone-jacket.webp') center top / 100% auto no-repeat;
   mask-image: linear-gradient(#000 75%, transparent 100%);
 }
 .lonky-home .phone-head-stage {
@@ -3721,6 +3721,7 @@ body:has(.lonky-home) {
 @media (max-width: 760px) {
   .lonky-home .phone-portrait { width: 520px; height: 650px; right: -100px; bottom: 80px; opacity: 1; }
   .lonky-home .phone-head-stage { top: 9%; }
+  .lonky-home .phone-torso { top: 46%; }
   .lonky-home .hero .copy { z-index: 3; }
   .lonky-home .phone-character::after { content: ''; position: absolute; inset: 0; background: linear-gradient(180deg, transparent 0%, transparent 56%, #fafaf8c9 68%, #fafaf8 83%); }
 }
