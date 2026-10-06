@@ -44,20 +44,32 @@ export function ProjectsPreview() {
         3000,
       );
     }
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        visible = entry.isIntersecting;
-        el?.classList.toggle("in-view", visible);
-        sync();
-      },
-      { threshold: 0.1 },
-    );
-    observer.observe(el);
+    const stage = el.querySelector(".showcase-stage");
+    if (!stage) return;
+    let observer: IntersectionObserver | undefined;
+    function observeStage() {
+      observer?.disconnect();
+      // Start only when the card reaches the middle of the viewport.
+      // Pixel margins also work for cards taller than a mobile viewport.
+      const inset = Math.round(window.innerHeight * 0.4);
+      observer = new IntersectionObserver(
+        ([entry]) => {
+          visible = entry.isIntersecting;
+          el?.classList.toggle("in-view", visible);
+          sync();
+        },
+        { rootMargin: `-${inset}px 0px -${inset}px 0px` },
+      );
+      observer.observe(stage!);
+    }
+    observeStage();
+    window.addEventListener("resize", observeStage);
     document.addEventListener("visibilitychange", sync);
     reduced.addEventListener("change", sync);
     return () => {
       clearTimeout(timer);
-      observer.disconnect();
+      observer?.disconnect();
+      window.removeEventListener("resize", observeStage);
       document.removeEventListener("visibilitychange", sync);
       reduced.removeEventListener("change", sync);
     };
