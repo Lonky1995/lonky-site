@@ -164,7 +164,15 @@ export function ProjectsPreview() {
                 "为你的 Agent 构建统一的数据与工具入口。围绕市场研究、客户研究与电商任务，连接不同来源，让请求、调用和返回结果有迹可循。"
               }
             </p>
-            <span className="project-note">{"开发中，敬请期待"}</span>
+            <a
+              className="project-link"
+              href="/clayyard"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              {"访问官网 "}
+              <span aria-hidden="true">{"↗"}</span>
+            </a>
             <span className="project-note">
               {"Agent 数据与工具接入层 / 开发中"}
             </span>

@@ -1,0 +1,38 @@
+/* Clay-style panels: the next scene slides over the scene held above it.
+   Native scrolling remains in control; no wheel interception or scroll tween. */
+.scene-stack {
+  --scene-top: 24px;
+  position: relative;
+  isolation: isolate;
+  margin-bottom: 16px;
+}
+.scene-stack > .finance-module.page-section {
+  margin: 0 0 16px;
+  opacity: 1;
+  transform: none;
+  transition: none;
+  will-change: auto;
+}
+.scene-stack > .finance-module:last-child { margin-bottom: 0; }
+.scene-stack > .finance-module:nth-child(1) { z-index: 1; }
+.scene-stack > .finance-module:nth-child(2) { z-index: 2; }
+.scene-stack > .finance-module:nth-child(3) { z-index: 3; }
+@media (min-width: 761px) and (prefers-reduced-motion: no-preference) {
+  .scene-stack > .finance-module .finance-inner {
+    padding-top: clamp(28px, 4vh, 48px);
+    padding-bottom: clamp(28px, 4vh, 48px);
+  }
+  .scene-stack.is-stacking > .finance-module {
+    position: sticky;
+    top: var(--scene-top);
+    margin-bottom: clamp(96px, 20vh, 200px);
+  }
+  .scene-stack.is-stacking > .finance-module:last-child {
+    margin-bottom: 0;
+  }
+}
+@media (max-width: 620px) {
+  .scene-stack { margin-bottom: 10px; }
+  .scene-stack > .finance-module.page-section { margin-bottom: 10px; }
+  .scene-stack > .finance-module:last-child { margin-bottom: 0; }
+}

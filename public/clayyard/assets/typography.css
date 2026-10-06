@@ -1,0 +1,24 @@
+/* Shared typography for the current bilingual site. */
+:root{--font-reading:"Manrope","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;--font-code:"DM Mono",monospace}
+body{font-family:var(--font-reading)}
+.headline,.value-heading h2,.final-cta h2{font-family:var(--font-reading);font-weight:500}
+.hero .headline{font-size:clamp(40px,5.3vw,80px);line-height:1.08;letter-spacing:-.045em}
+.subhead{font-family:var(--font-reading);font-size:clamp(16px,1.4vw,20px);line-height:1.55;letter-spacing:-.015em}
+.hero .tasks li{font-family:var(--font-reading);font-size:14px;line-height:1.5}
+.hero .provider b{font-family:var(--font-reading);font-size:13px;line-height:1.4;letter-spacing:-.015em}
+.finance-board-head h3{font-family:var(--font-reading);font-size:clamp(24px,2.2vw,28px);line-height:1.3;letter-spacing:-.025em;max-width:650px}
+.finance-field{font-family:var(--font-code);font-size:12px;line-height:1.25}
+.finance-logo,.creator-module .finance-logo,.commerce-module .finance-logo{font-family:var(--font-reading);font-size:13px;line-height:1.4;letter-spacing:-.015em}
+.value-heading h2{font-size:clamp(40px,4.4vw,64px);line-height:1.12;letter-spacing:-.045em}
+.case-price b{font-family:var(--font-reading);font-size:14px;line-height:1.4;letter-spacing:-.015em}
+.case-price span{font-family:var(--font-reading);font-size:12px;line-height:1.5;letter-spacing:0}
+.case-price strong{font-family:var(--font-code);font-size:19px;line-height:1.2;letter-spacing:-.035em}
+.case-total span{font-family:var(--font-reading);font-size:12px;line-height:1.5;letter-spacing:0}
+.case-total output{font-family:var(--font-code);font-size:36px;line-height:1.1;letter-spacing:-.055em}
+.billing-side header b{font-size:15px;line-height:1.4}.billing-side header span{font-size:11px;line-height:1.4}
+.beta-free-panel p,.beta-free-panel span,.beta-includes span,.value-proof span,.value-beta-chip{font-family:var(--font-reading);font-size:12px;line-height:1.5;letter-spacing:0}
+.final-cta h2{font-size:clamp(44px,5vw,64px);line-height:1.1;letter-spacing:-.045em}
+.final-kicker,.final-footer{font-family:var(--font-reading);font-size:11px;line-height:1.5}
+html[lang="zh-CN"] .headline,html[lang="zh-CN"] .value-heading h2,html[lang="zh-CN"] .final-cta h2{letter-spacing:-.02em}
+html[lang="zh-CN"] .subhead,html[lang="zh-CN"] .finance-board-head h3,html[lang="zh-CN"] .tasks li{letter-spacing:0}
+@media(max-width:600px){.hero .headline{font-size:clamp(34px,8.2vw,48px);line-height:1.12}.subhead{font-size:16px}.hero .tasks li{font-size:14px}.hero .provider b{font-size:12px}.finance-board-head h3{font-size:24px;line-height:1.35}.finance-field{font-size:11px}.finance-logo,.creator-module .finance-logo,.commerce-module .finance-logo{font-size:12px}.value-heading h2,.final-cta h2{font-size:clamp(36px,9vw,48px);line-height:1.12}.case-price b{font-size:14px}.case-price span{font-size:11px}.case-price strong{font-size:18px}.case-total output{font-size:32px}.value-beta-chip,.value-proof span{font-size:11px}.final-footer{font-size:11px}}
